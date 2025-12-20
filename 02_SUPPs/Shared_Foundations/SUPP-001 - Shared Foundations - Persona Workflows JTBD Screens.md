@@ -154,4 +154,6 @@ Note: Store Operator can complete surveys and request replacements, but replacem
 
 | Version | Date | Description |
 |---------|------|-------------|
-| v0.1 | 2025-12-20 | Stable filename adopted; version tracked in file |
+| v0.1 | 2025-12-17 | Initial draft with simplified 6-role model (PSP_ADMIN, PSP_OPS, BRAND_ADMIN, REGIONAL_ADMIN, STORE_USER, INTEGRATION_USER) |
+| v0.2 | 2025-12-18 | Expanded to 9-persona model with granular permission levels: PSP Level (Platform Admin, PSP Admin, Production Operator), Brand Level (Brand Admin, Campaign Manager, Regional Manager), Store Level (Store Manager, Store Operator), System (Integration User). Added detailed JTBD workflows and minimum screens per persona. |
+| v0.3 | 2025-12-20 | Stable filename adopted; version tracked in file |

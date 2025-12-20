@@ -208,4 +208,6 @@ Deterministic roles, permissions, and completion/override authority for v1. Auth
 
 | Version | Date | Description |
 |---------|------|-------------|
-| v0.7 | 2025-12-20 | Stable filename adopted; version tracked in file |
+| v0.5 | 2025-12-17 | Initial 6-role model with unified permission matrix; no impersonation controls or MFA requirements defined |
+| v0.6 | 2025-12-18 | Added Support Agent role (PSP_OPS with support_scope flag per D17); split Store role into Manager/Operator for replacement approval workflow; added impersonation controls (30-min sessions, audit trails, scope restrictions) |
+| v0.7 | 2025-12-20 | Added MFA requirements (mandatory for Platform/PSP/Brand Admins); separated permission matrix by level (PSP/Brand/Store/System); added API security section with idempotency and audit requirements; stable filename adopted |

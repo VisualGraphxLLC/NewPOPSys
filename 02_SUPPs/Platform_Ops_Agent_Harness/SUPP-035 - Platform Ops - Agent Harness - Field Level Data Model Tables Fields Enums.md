@@ -923,7 +923,8 @@ enum ConflictStatus {
 
 | Version | Date | Changes |
 |---------|------|---------|
-| v0.9 | 2025-12-18 | Initial draft with core tables |
+| v0.8 | 2025-12-18 | Added computed field metadata to survey templates (is_computed, compute_expr, allow_override, hidden_default, on_hide_behavior); added rules_json action parameters (HIDE, SHOW, COMPUTE, AUTO_FILL); added store_survey_response provenance storage (input_json, response_json_meta) for audit trail |
+| v0.9 | 2025-12-18 | Initial draft with core tables (restructured from v0.8) |
 | v1.0 | 2025-12-18 | Added missing tables (kit_definitions, kit_items, location_slots, store_groups, audit_events, webhook_endpoints, export_jobs, notification_preferences). Defined all enums. Changed status to Locked. |
 | v1.1 | 2025-12-19 | Aligned enums with Glossary: Updated CampaignStatus (added PUBLISHED, CANCELLED), StoreAssignmentStatus (added ASSIGNED, READY, REOPENED, WAIVED), IssueRequestStatus (renamed to match Glossary states). Added missing enums: AssignmentItemStatus, SlotVerificationStatus. Added derived status section: FulfillmentStatus, ReceiptStatus, ExecutionStatus, VerificationStatus, StorePhase. |
 | v1.2 | 2025-12-20 | Added quantity tracking fields to assignment_items (shipped_qty, delivered_qty, received_good_qty, received_damaged_qty, installed_qty, verified_qty). Added media_assets table with RetentionClass enum for data retention policy enforcement. |

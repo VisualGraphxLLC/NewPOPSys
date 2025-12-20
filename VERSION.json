@@ -1,7 +1,8 @@
 {
-  "version": "1.36",
+  "version": "1.37",
   "lastUpdated": "2025-12-20",
   "status": "Locked",
   "betaTarget": "End of Q1",
-  "budget": "$150,000"
+  "budget": "$150,000",
+  "notes": "Archive cleanup: restored comprehensive content to SUPP-004/006, updated changelogs with historical context, consolidated images to 04_Reference, removed redundant archive files"
 }
