@@ -10,7 +10,8 @@ stateDiagram-v2
   READY --> IN_PROGRESS : store starts
   IN_PROGRESS --> SUBMITTED : proofs submitted
 
-  SUBMITTED --> COMPLETE : approved / waived
+  SUBMITTED --> COMPLETE : approved
+  SUBMITTED --> WAIVED : admin waives compliance
   SUBMITTED --> REWORK_REQUIRED : rejected
 
   REWORK_REQUIRED --> IN_PROGRESS : retake started
@@ -19,7 +20,6 @@ stateDiagram-v2
   COMPLETE --> REOPENED : admin reopen
   REOPENED --> IN_PROGRESS : work continues
 
-  ASSIGNED --> WAIVED : admin waiver
   WAIVED --> [*]
   COMPLETE --> [*]
 ```
@@ -35,4 +35,4 @@ stateDiagram-v2
 | COMPLETE | All items satisfied/waived |
 | REWORK_REQUIRED | Photos rejected, needs retry |
 | REOPENED | Admin reopened completed work |
-| WAIVED | Admin waived requirements |
+| WAIVED | Admin waived approval review (execution completed) |
