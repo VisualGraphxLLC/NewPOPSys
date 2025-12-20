@@ -299,7 +299,7 @@ Each module below is implemented per its SUPP. This master document provides the
   ----------------------------------------------------------------------------------------------------
   Module                                              Status                  Authoritative Spec
   --------------------------------------------------- ----------------------- ------------------------
-  Module 1 --- Identity/RBAC                          Locked                  SUPP-003 v0.5
+  Module 1 --- Identity/RBAC                          Locked                  SUPP-003 v0.6
 
   Module 2 --- Stores/Regions/Groups                  Locked                  SUPP-013 v0.2
 
@@ -361,9 +361,9 @@ Update workflow: edit the relevant SUPP(s) → bump version → regenerate this 
   ----------- ----------- ----------- ---------------------------- ---------------------------------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------
   App A.01    SUPP-001    v0.2        Shared Foundations           Shared Foundations - Persona Workflows JTBD Screens                                            02_SUPPs/Shared_Foundations/SUPP-001 - Shared Foundations - Persona Workflows JTBD Screens - v0.2.docx
 
-  App A.02    SUPP-002    v0.3        Shared Foundations           Shared Foundations - Core Domain Model and State Machines                                      02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.3.md
+  App A.02    SUPP-002    v0.4        Shared Foundations           Shared Foundations - Core Domain Model and State Machines                                      02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.4.md
 
-  App A.03    SUPP-003    v0.5        Shared Foundations           Shared Foundations - RBAC and Permissions Matrix                                               02_SUPPs/Shared_Foundations/SUPP-003 - Shared Foundations - RBAC and Permissions Matrix - v0.5.docx
+  App A.03    SUPP-003    v0.6        Shared Foundations           Shared Foundations - RBAC and Permissions Matrix                                               02_SUPPs/Shared_Foundations/SUPP-003 - Shared Foundations - RBAC and Permissions Matrix - v0.6.md
 
   App A.04    SUPP-004    v0.4        Shared Foundations           Shared Foundations - Notifications and Escalation Matrix                                       02_SUPPs/Shared_Foundations/SUPP-004 - Shared Foundations - Notifications and Escalation Matrix - v0.4.md
 
@@ -506,17 +506,17 @@ Source file: 02_SUPPs/Shared_Foundations/SUPP-001 - Shared Foundations - Persona
 
 --- End embedded SUPP ---
 
-### App A.02 --- SUPP-002: Shared Foundations - Core Domain Model and State Machines (v0.3)
+### App A.02 --- SUPP-002: Shared Foundations - Core Domain Model and State Machines (v0.4)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.3.md
+Source file: 02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.4.md
 
 --- Begin embedded SUPP ---
 
 --- End embedded SUPP ---
 
-### App A.03 --- SUPP-003: Shared Foundations - RBAC and Permissions Matrix (v0.5)
+### App A.03 --- SUPP-003: Shared Foundations - RBAC and Permissions Matrix (v0.6)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-003 - Shared Foundations - RBAC and Permissions Matrix - v0.5.docx
+Source file: 02_SUPPs/Shared_Foundations/SUPP-003 - Shared Foundations - RBAC and Permissions Matrix - v0.6.md
 
 --- Begin embedded SUPP ---
 
@@ -2791,7 +2791,7 @@ Purpose: Define v1 personas, jobs-to-be-done, canonical workflows (happy + excep
 
 - Late shipping thresholds configurable per campaign; escalations routed per notifications matrix.
 
-SUPP-002 --- Core Domain Model & State Machines (v0.2)
+SUPP-002 --- Core Domain Model & State Machines (v0.4)
 
 Date: 2025-12-17
 
@@ -2850,7 +2850,7 @@ Campaign → Store Assignment → Orders/Shipments (PSP) → Store Execution →
 
   PhotoReview                         PENDING, APPROVED, REJECTED, SUPERSEDED
 
-  Issue/Reorder                       ISSUE_SUBMITTED, APPROVAL_PENDING, APPROVED, REJECTED, REORDER_IN_PRODUCTION, REORDER_SHIPPED, REORDER_DELIVERED, CLOSED
+  Issue/Reorder                       OPEN, TRIAGED, AWAITING_APPROVAL, APPROVED, DENIED, IN_FULFILLMENT, RESOLVED, CLOSED
 
   NonComplianceCase                   OPEN, ACKNOWLEDGED, RESOLVED, WAIVED, CLOSED
   --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2910,7 +2910,7 @@ ACKNOWLEDGED \--\> CANCELLED\
 
 - Retention-aware: proof URLs may expire; exports include asset IDs/pointers.
 
-SUPP-003 --- RBAC & Permissions Matrix (v0.5)
+SUPP-003 --- RBAC & Permissions Matrix (v0.6)
 
 Date: 2025-12-17
 
@@ -6623,11 +6623,11 @@ v0.8 locks override policy toggles and export behavior for computed/overridden f
 - Add campaign-level tightening (allow_overrides_override=false) under feature flag if brands demand it.
 
 - Add admin review UI (post-v1) to filter by is_overridden and reason.
-\n\n# APPENDIX - SUPPLEMENTARY DOCUMENTS (Compiled)\n\n\n\n---\n\n## SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.3.md\n\n# SUPP-002 — Core Domain Model and State Machines
+\n\n# APPENDIX - SUPPLEMENTARY DOCUMENTS (Compiled)\n\n\n\n---\n\n## SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.4.md\n\n# SUPP-002 — Core Domain Model and State Machines
 
-> **Version**: v0.3  
-> **Status**: Locked  
-> **Updated**: 2025-12-18  
+> **Version**: v0.4
+> **Status**: Locked
+> **Updated**: 2025-12-20
 > **Dependencies**: SUPP-001 (Personas)
 
 ---
@@ -6782,10 +6782,23 @@ REJECTED → PENDING (retake) → SUPERSEDED
 
 ### IssueRequest
 ```
-SUBMITTED → APPROVAL_PENDING → APPROVED → REORDER_CREATED → CLOSED
-                    ↓
-                 REJECTED
+OPEN → TRIAGED → AWAITING_APPROVAL → APPROVED → IN_FULFILLMENT → RESOLVED
+                                   ↘ DENIED → CLOSED
 ```
+
+**State Definitions:**
+| State | Description | Next States |
+|-------|-------------|-------------|
+| OPEN | Issue just reported by store | TRIAGED |
+| TRIAGED | PSP reviewed, categorized, assigned | AWAITING_APPROVAL |
+| AWAITING_APPROVAL | Pending approval decision | APPROVED, DENIED |
+| APPROVED | Approved, reorder will be created | IN_FULFILLMENT |
+| DENIED | Rejected with reason | CLOSED |
+| IN_FULFILLMENT | Reorder created and being fulfilled | RESOLVED |
+| RESOLVED | Replacement delivered, issue closed | (terminal) |
+| CLOSED | Denied issue, no action taken | (terminal) |
+
+> **Note:** Canonical state machine aligned with SUPP-035 (D16).
 
 ---
 

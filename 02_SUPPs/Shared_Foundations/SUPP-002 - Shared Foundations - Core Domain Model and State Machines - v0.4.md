@@ -1,8 +1,8 @@
 # SUPP-002 — Core Domain Model and State Machines
 
-> **Version**: v0.3  
-> **Status**: Locked  
-> **Updated**: 2025-12-18  
+> **Version**: v0.4
+> **Status**: Locked
+> **Updated**: 2025-12-20
 > **Dependencies**: SUPP-001 (Personas)
 
 ---
@@ -157,10 +157,23 @@ REJECTED → PENDING (retake) → SUPERSEDED
 
 ### IssueRequest
 ```
-SUBMITTED → APPROVAL_PENDING → APPROVED → REORDER_CREATED → CLOSED
-                    ↓
-                 REJECTED
+OPEN → TRIAGED → AWAITING_APPROVAL → APPROVED → IN_FULFILLMENT → RESOLVED
+                                   ↘ DENIED → CLOSED
 ```
+
+**State Definitions:**
+| State | Description | Next States |
+|-------|-------------|-------------|
+| OPEN | Issue just reported by store | TRIAGED |
+| TRIAGED | PSP reviewed, categorized, assigned | AWAITING_APPROVAL |
+| AWAITING_APPROVAL | Pending approval decision | APPROVED, DENIED |
+| APPROVED | Approved, reorder will be created | IN_FULFILLMENT |
+| DENIED | Rejected with reason | CLOSED |
+| IN_FULFILLMENT | Reorder created and being fulfilled | RESOLVED |
+| RESOLVED | Replacement delivered, issue closed | (terminal) |
+| CLOSED | Denied issue, no action taken | (terminal) |
+
+> **Note:** Canonical state machine aligned with SUPP-035 (D16).
 
 ---
 

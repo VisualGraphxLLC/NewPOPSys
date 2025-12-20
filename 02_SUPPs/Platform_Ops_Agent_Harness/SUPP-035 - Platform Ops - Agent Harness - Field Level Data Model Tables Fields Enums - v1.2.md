@@ -1,8 +1,8 @@
 # SUPP-035 — Field-Level Data Model Tables Fields Enums
 
-> **Version**: v1.1
+> **Version**: v1.2
 > **Status**: Locked
-> **Updated**: 2025-12-19
+> **Updated**: 2025-12-20
 > **Dependencies**: SUPP-002 (Domain Model), SUPP-013 (Stores), SUPP-015 (Campaigns)
 
 ---
@@ -526,8 +526,14 @@ enum StorePhase {
 | `store_assignment_id` | UUID | FK store_assignments.id, NOT NULL | |
 | `kit_item_id` | UUID | FK kit_items.id, NOT NULL | |
 | `location_slot_id` | UUID | FK location_slots.id, NULLABLE | Mapped slot |
-| `quantity` | INT | DEFAULT 1 | |
-| `status` | TEXT | DEFAULT 'PENDING' | Item-level status |
+| `quantity` | INT | DEFAULT 1 | Required quantity |
+| `status` | AssignmentItemStatus | DEFAULT 'PLANNED' | Item-level status |
+| `shipped_qty` | INT | DEFAULT 0 | Sum from shipment_items |
+| `delivered_qty` | INT | DEFAULT 0 | Sum where shipment DELIVERED |
+| `received_good_qty` | INT | DEFAULT 0 | From receipt survey |
+| `received_damaged_qty` | INT | DEFAULT 0 | From receipt survey |
+| `installed_qty` | INT | DEFAULT 0 | From install survey |
+| `verified_qty` | INT | DEFAULT 0 | From photo approval count |
 
 ---
 
@@ -772,6 +778,38 @@ CREATE INDEX idx_photo_uploads_assignment ON photo_uploads(store_assignment_id);
 CREATE INDEX idx_photo_uploads_review_status ON photo_uploads(review_status);
 CREATE INDEX idx_audit_events_entity ON audit_events(entity_type, entity_id);
 CREATE INDEX idx_audit_events_tenant_time ON audit_events(tenant_id, created_at DESC);
+
+-- Media Assets (retention management)
+CREATE INDEX idx_media_assets_expiry ON media_assets(expires_at) WHERE deleted_at IS NULL;
+CREATE INDEX idx_media_assets_retention ON media_assets(retention_class, expires_at);
+CREATE INDEX idx_media_assets_linked ON media_assets(linked_entity_type, linked_entity_id);
+```
+
+---
+
+## 11. Media & Retention
+
+### `media_assets`
+| Field | Type | Constraints | Notes |
+|-------|------|-------------|-------|
+| `tenant_id` | UUID | FK psp_tenants.id, NOT NULL | |
+| `asset_type` | TEXT | NOT NULL | 'PROOF_PHOTO', 'ISSUE_PHOTO', 'REFERENCE_IMAGE' |
+| `s3_key` | TEXT | NOT NULL | Storage path |
+| `s3_bucket` | TEXT | NOT NULL | Bucket name |
+| `file_size_bytes` | BIGINT | | |
+| `mime_type` | TEXT | | image/jpeg, etc. |
+| `retention_class` | RetentionClass | NOT NULL | See enum |
+| `expires_at` | TIMESTAMPTZ | | Auto-delete date |
+| `linked_entity_type` | TEXT | | 'proof_submission', 'issue_request', 'photo_rule' |
+| `linked_entity_id` | UUID | | Polymorphic FK |
+
+### Retention Class Enum
+```typescript
+enum RetentionClass {
+  OPERATIONAL = 'OPERATIONAL',   // 90 days after campaign end, auto-delete
+  COMPLIANCE = 'COMPLIANCE',     // 1 year after campaign end, manual delete
+  ARCHIVE = 'ARCHIVE',           // 7 years, export before delete
+}
 ```
 
 ---
@@ -783,6 +821,7 @@ CREATE INDEX idx_audit_events_tenant_time ON audit_events(tenant_id, created_at 
 | v0.9 | 2025-12-18 | Initial draft with core tables |
 | v1.0 | 2025-12-18 | Added missing tables (kit_definitions, kit_items, location_slots, store_groups, audit_events, webhook_endpoints, export_jobs, notification_preferences). Defined all enums. Changed status to Locked. |
 | v1.1 | 2025-12-19 | Aligned enums with Glossary: Updated CampaignStatus (added PUBLISHED, CANCELLED), StoreAssignmentStatus (added ASSIGNED, READY, REOPENED, WAIVED), IssueRequestStatus (renamed to match Glossary states). Added missing enums: AssignmentItemStatus, SlotVerificationStatus. Added derived status section: FulfillmentStatus, ReceiptStatus, ExecutionStatus, VerificationStatus, StorePhase. |
+| v1.2 | 2025-12-20 | Added quantity tracking fields to assignment_items (shipped_qty, delivered_qty, received_good_qty, received_damaged_qty, installed_qty, verified_qty). Added media_assets table with RetentionClass enum for data retention policy enforcement. |
 
 ---
 

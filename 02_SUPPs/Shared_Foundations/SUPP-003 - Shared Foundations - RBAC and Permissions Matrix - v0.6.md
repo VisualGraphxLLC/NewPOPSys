@@ -1,6 +1,15 @@
-Date: 2025-12-17
+# SUPP-003 — RBAC and Permissions Matrix
 
-Purpose: Deterministic roles, permissions, and completion/override authority for v1. Authoritative for UI access rules, API authorization, and audit coverage.
+> **Version**: v0.6
+> **Status**: Locked
+> **Updated**: 2025-12-20
+> **Dependencies**: SUPP-001 (Personas), SUPP-031 (Supportability)
+
+---
+
+## Purpose
+
+Deterministic roles, permissions, and completion/override authority for v1. Authoritative for UI access rules, API authorization, and audit coverage.
 
 # Locked Inputs
 
@@ -27,6 +36,9 @@ Purpose: Deterministic roles, permissions, and completion/override authority for
 | Platform Admin | PSP leadership | All Privileged + Impersonate | Full system configuration, tenant management, user impersonation for support, security & audit access |
 | PSP Admin | PSP admin staff | PSP All Privileged | Brand onboarding, PSP-level settings, user management, reporting & exports |
 | Production Operator | PSP fulfillment team | Status & Shipping Updates | Update order statuses, create shipments & tracking, process batches, view fulfillment queues |
+| Support Agent | PSP support staff | Read-Only + Debug | View all orders/shipments/issues, access audit logs, replay failed webhooks, impersonate Store Users (read-only) |
+
+> **Note:** Support Agent uses `PSP_OPS` role enum with `support_scope = true` flag. Cannot modify any data or approve/deny anything. Per decision D17.
 
 ## Brand Level (Brand & Campaign Management)
 
@@ -90,21 +102,23 @@ Purpose: Deterministic roles, permissions, and completion/override authority for
 
 ## PSP Level Permissions
 
-| Capability | Platform Admin | PSP Admin | Production Operator |
-|------------|----------------|-----------|---------------------|
-| Manage tenant settings | Y | N | N |
-| Impersonate users | Y | N | N |
-| Onboard brand (skeletonize) | Y | Y | N |
-| Invite/manage PSP users | Y | Y | N |
-| View all brands/campaigns | Y | Y | Y (read-only) |
-| View orders (totals + store) | Y | Y | Y |
-| Update order status | Y | Y | Y |
-| Create/update shipments + tracking | Y | Y | Y |
-| Manage batches | Y | Y | Y |
-| Approve/reject issues (policy-based) | Y | Y | Y* |
-| Trigger exports | Y | Y | Y* |
-| View audit logs | Y | Y | Y* |
-| Webhook/API configuration | Y | Y | N |
+| Capability | Platform Admin | PSP Admin | Production Operator | Support Agent |
+|------------|----------------|-----------|---------------------|---------------|
+| Manage tenant settings | Y | N | N | N |
+| Impersonate users | Y | N | N | Y* (Store Users, read-only) |
+| Onboard brand (skeletonize) | Y | Y | N | N |
+| Invite/manage PSP users | Y | Y | N | N |
+| View all brands/campaigns | Y | Y | Y (read-only) | Y (read-only) |
+| View orders (totals + store) | Y | Y | Y | Y (read-only) |
+| Update order status | Y | Y | Y | N |
+| Create/update shipments + tracking | Y | Y | Y | N |
+| Manage batches | Y | Y | Y | N |
+| Approve/reject issues (policy-based) | Y | Y | Y* | N |
+| Trigger exports | Y | Y | Y* | N |
+| View audit logs | Y | Y | Y* | Y (read-only) |
+| Webhook/API configuration | Y | Y | N | N |
+| Replay failed webhooks | Y | Y | N | Y (retry only) |
+| Access audit explorer | Y | Y | Y* | Y (read-only) |
 
 ## Brand Level Permissions
 
