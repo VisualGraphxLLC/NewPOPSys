@@ -1,233 +1,213 @@
-# Core Data Object Model (v1, PSP-Led)
+# Core Data Model (ERD)
 
-Entity relationships for the NewPOPSys v1 data architecture.
+Entity Relationship Diagrams showing the complete NewPOPSys v1 data model.
+
+> **Source**: SUPP-002 (Domain Model), SUPP-035 (Field-Level Data Model)
+
+---
+
+## Full ERD (All Entities)
 
 ```mermaid
 erDiagram
-    PSP ||--o{ Brand : "manages"
-    PSP ||--o{ User : "has"
+    %% TENANCY & IDENTITY
+    tenants ||--o{ brands : "has"
+    tenants ||--o{ users : "contains"
+    tenants ||--o{ api_keys : "owns"
+    tenants ||--o{ webhook_endpoints : "configures"
 
-    Brand ||--o{ Campaign : "owns"
-    Brand ||--o{ Store : "has"
-    Brand ||--o{ Region : "has"
+    brands ||--o{ campaigns : "runs"
+    brands ||--o{ stores : "manages"
+    brands ||--o{ regions : "defines"
+    brands ||--o{ store_groups : "creates"
+    brands ||--o{ survey_templates : "designs"
+    brands ||--o{ kit_definitions : "builds"
+    brands ||--o{ photo_rules : "sets"
 
-    Region ||--o{ Store : "contains"
+    users ||--o{ memberships : "has"
+    memberships }o--|| brands : "scoped to"
+    memberships }o--o| regions : "regional scope"
+    memberships }o--o| stores : "store scope"
 
-    Campaign ||--o{ CampaignStore : "includes"
-    Campaign ||--o{ PromoItem : "defines"
-    Campaign ||--o{ Kit : "packages"
+    %% GEOGRAPHY & STORES
+    regions ||--o{ districts : "contains"
+    regions ||--o{ territories : "contains"
+    regions ||--o{ stores : "groups"
 
-    Store ||--o{ CampaignStore : "participates"
+    districts ||--o{ territories : "contains"
+    districts ||--o{ stores : "groups"
 
-    CampaignStore ||--o{ StoreAssignment : "creates"
-    CampaignStore ||--o{ Fulfillment : "receives"
+    territories ||--o{ stores : "groups"
 
-    Kit ||--o{ KitItem : "contains"
-    PromoItem ||--o{ KitItem : "used in"
+    stores ||--o{ store_layouts : "has"
+    stores ||--o{ store_group_memberships : "belongs to"
 
-    StoreAssignment ||--o{ AssignmentItem : "has"
-    AssignmentItem ||--o{ Photo : "documented by"
+    store_groups ||--o{ store_group_memberships : "contains"
+    store_layouts ||--o{ location_slots : "defines"
 
-    PromoItem ||--o{ AssignmentItem : "tracks"
-    PromoItem ||--o{ Slot : "placed in"
+    %% SURVEYS & PHOTO RULES
+    survey_templates ||--o{ survey_versions : "has versions"
 
-    Photo ||--o{ PhotoReview : "reviewed by"
+    %% CAMPAIGNS & KITS
+    campaigns ||--o{ store_assignments : "targets"
+    campaigns }o--|| kit_definitions : "uses"
+    campaigns }o--o| survey_versions : "pins"
 
-    StoreAssignment ||--o{ IssueRequest : "raises"
-    IssueRequest ||--o{ Fulfillment : "triggers"
+    kit_definitions ||--o{ kit_items : "contains"
+    kit_items }o--o| photo_rules : "requires"
 
-    Fulfillment ||--o{ Shipment : "has"
-    Shipment ||--o{ ShipmentItem : "contains"
+    store_assignments }o--|| stores : "assigned to"
+    store_assignments ||--o{ assignment_items : "includes"
+    store_assignments ||--|| store_orders : "generates"
+    store_assignments }o--o| store_layouts : "pins layout"
+    store_assignments }o--o| survey_versions : "pins survey"
 
-    PSP {
+    assignment_items }o--|| kit_items : "for item"
+    assignment_items }o--o| location_slots : "at slot"
+
+    %% FULFILLMENT
+    store_orders ||--o{ order_lines : "contains"
+    store_orders ||--o{ shipments : "fulfilled by"
+
+    order_lines }o--|| kit_items : "for item"
+
+    shipments ||--o{ shipment_lines : "contains"
+    shipment_lines }o--|| kit_items : "ships item"
+
+    %% EXECUTION & VERIFICATION
+    store_assignments ||--o| receive_verifications : "receipt"
+    store_assignments ||--o{ store_survey_responses : "answers"
+    store_assignments ||--o{ photo_uploads : "captures"
+    store_assignments ||--o{ issue_requests : "reports"
+
+    photo_uploads }o--o| assignment_items : "for item"
+    photo_uploads }o--o| location_slots : "at slot"
+    photo_uploads ||--o{ photo_reviews : "reviewed"
+    photo_uploads ||--o{ retake_requests : "triggers"
+
+    %% ISSUES & REORDERS
+    issue_requests ||--o{ issue_lines : "affects"
+    issue_requests ||--o| reorders : "generates"
+
+    issue_lines }o--|| kit_items : "for item"
+    reorders }o--|| store_orders : "replacement order"
+
+    %% NOTIFICATIONS & AUDIT
+    users ||--o{ notification_preferences : "configures"
+    users ||--o{ notifications : "receives"
+    tenants ||--o{ audit_events : "logs"
+    webhook_endpoints ||--o{ webhook_deliveries : "sends"
+```
+
+---
+
+## Simplified Core Loop ERD
+
+```mermaid
+erDiagram
+    BRAND ||--o{ CAMPAIGN : "runs"
+    CAMPAIGN ||--o{ STORE_ASSIGNMENT : "assigns"
+    STORE_ASSIGNMENT }o--|| STORE : "to"
+    STORE_ASSIGNMENT ||--|| STORE_ORDER : "generates"
+    STORE_ORDER ||--o{ SHIPMENT : "shipped via"
+    STORE_ASSIGNMENT ||--o{ PHOTO_UPLOAD : "captures"
+    PHOTO_UPLOAD ||--o{ PHOTO_REVIEW : "reviewed"
+    STORE_ASSIGNMENT ||--o{ ISSUE_REQUEST : "reports"
+    ISSUE_REQUEST ||--o| REORDER : "triggers"
+
+    BRAND {
         uuid id PK
         string name
-        string domain
-        jsonb settings
     }
-
-    Brand {
+    CAMPAIGN {
         uuid id PK
-        uuid psp_id FK
         string name
-        string logo_url
+        enum status
     }
-
-    Region {
+    STORE {
         uuid id PK
-        uuid brand_id FK
-        string name
-        string code
-    }
-
-    Store {
-        uuid id PK
-        uuid brand_id FK
-        uuid region_id FK
         string store_number
-        string name
-        string tier
-        jsonb address
     }
-
-    Campaign {
+    STORE_ASSIGNMENT {
         uuid id PK
-        uuid brand_id FK
-        string name
-        enum status
-        date start_date
-        date end_date
-        date execution_deadline
-    }
-
-    CampaignStore {
-        uuid id PK
-        uuid campaign_id FK
-        uuid store_id FK
-        enum phase
-    }
-
-    PromoItem {
-        uuid id PK
-        uuid campaign_id FK
-        string name
-        string sku
-        int quantity_per_store
-    }
-
-    Kit {
-        uuid id PK
-        uuid campaign_id FK
-        string name
-        string tier
-    }
-
-    KitItem {
-        uuid id PK
-        uuid kit_id FK
-        uuid promo_item_id FK
-        int quantity
-    }
-
-    Slot {
-        uuid id PK
-        uuid promo_item_id FK
-        string name
-        string location_type
-    }
-
-    StoreAssignment {
-        uuid id PK
-        uuid campaign_store_id FK
-        enum status
-        timestamp started_at
-        timestamp submitted_at
-    }
-
-    AssignmentItem {
-        uuid id PK
-        uuid store_assignment_id FK
-        uuid promo_item_id FK
-        enum status
-        int required_qty
-        int verified_qty
-    }
-
-    Photo {
-        uuid id PK
-        uuid assignment_item_id FK
-        string storage_url
-        timestamp uploaded_at
-        jsonb metadata
-    }
-
-    PhotoReview {
-        uuid id PK
-        uuid photo_id FK
-        uuid reviewer_id FK
-        enum status
-        string notes
-        timestamp reviewed_at
-    }
-
-    IssueRequest {
-        uuid id PK
-        uuid store_assignment_id FK
-        enum type
-        enum status
-        string description
-    }
-
-    Fulfillment {
-        uuid id PK
-        uuid campaign_store_id FK
-        uuid issue_request_id FK
-        enum status
-        int required_qty
-        int shipped_qty
-        int delivered_qty
-    }
-
-    Shipment {
-        uuid id PK
-        uuid fulfillment_id FK
-        string carrier
-        string tracking_number
         enum status
     }
-
-    ShipmentItem {
+    STORE_ORDER {
         uuid id PK
-        uuid shipment_id FK
-        uuid promo_item_id FK
-        int quantity
+        string order_number
     }
-
-    User {
+    SHIPMENT {
         uuid id PK
-        uuid psp_id FK
-        string email
-        enum role
-        jsonb permissions
+        enum status
+    }
+    PHOTO_UPLOAD {
+        uuid id PK
+        enum review_status
+    }
+    ISSUE_REQUEST {
+        uuid id PK
+        enum status
     }
 ```
 
-## Entity Groups
+---
 
-### Organization
-| Entity | Purpose |
-|--------|---------|
-| PSP | Print service provider tenant |
-| Brand | Client organization under PSP |
-| Region | Geographic grouping of stores |
-| Store | Physical retail location |
+## Module Ownership
 
-### Campaign
-| Entity | Purpose |
-|--------|---------|
-| Campaign | Marketing initiative with timeline |
-| CampaignStore | Store participation in campaign |
-| PromoItem | Promotional material to install |
-| Kit | Packaged set of items by tier |
-| Slot | Installation location for item |
+```mermaid
+flowchart TB
+    subgraph SHARED["Shared Foundations"]
+        T[tenants]
+        B[brands]
+        U[users]
+        M[memberships]
+    end
 
-### Execution
-| Entity | Purpose |
-|--------|---------|
-| StoreAssignment | Store's work for campaign |
-| AssignmentItem | Single item to install |
-| Photo | Proof of installation |
-| PhotoReview | Verification decision |
+    subgraph BRAND_ADMIN["Brand Admin Module"]
+        R[regions]
+        S[stores]
+        ST[survey_templates]
+        KD[kit_definitions]
+        C[campaigns]
+        SA[store_assignments]
+    end
 
-### Fulfillment
-| Entity | Purpose |
-|--------|---------|
-| Fulfillment | Order for store materials |
-| Shipment | Carrier tracking record |
-| ShipmentItem | Items in shipment |
-| IssueRequest | Problem report from store |
+    subgraph PSP_OPS["PSP Operations Module"]
+        SO[store_orders]
+        SH[shipments]
+        RE[reorders]
+    end
 
-### Users
-| Entity | Purpose |
+    subgraph STORE_EXEC["Store Execution Module"]
+        PU[photo_uploads]
+        IR[issue_requests]
+    end
+
+    subgraph VERIFICATION["Verification"]
+        PRV[photo_reviews]
+    end
+
+    T --> B
+    B --> C
+    C --> SA
+    SA --> SO
+    SA --> PU
+    PU --> PRV
+    IR --> RE
+```
+
+---
+
+## Legend
+
+| Symbol | Meaning |
 |--------|---------|
-| User | System user with role/permissions |
+| \`\|\|--o{\` | One-to-Many |
+| \`}o--\|\|\` | Many-to-One |
+| \`\|\|--\|\|\` | One-to-One |
+| \`PK\` | Primary Key |
+| \`FK\` | Foreign Key |
+
+---
+
+*See SUPP-035 for complete field definitions.*
