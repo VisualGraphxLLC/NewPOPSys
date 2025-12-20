@@ -46,13 +46,19 @@
             --primary-dark: #18181B;
             --accent: #14B8A6;
         }
-        /* Apply theme colors */
-        .bg-blue-600 { background-color: var(--primary) !important; }
+        /* Apply theme colors - Primary */
+        .bg-blue-600, .bg-blue-700 { background-color: var(--primary) !important; }
         .hover\:bg-blue-700:hover { background-color: var(--primary-dark) !important; }
-        .text-blue-600 { color: var(--primary) !important; }
+        .text-blue-600, .text-blue-700 { color: var(--primary) !important; }
         .border-blue-600 { border-color: var(--primary) !important; }
-        .bg-blue-500 { background-color: var(--primary) !important; }
-        .text-blue-500 { color: var(--primary) !important; }
+        .bg-blue-500, .bg-blue-400 { background-color: var(--primary-light) !important; }
+        .text-blue-500 { color: var(--primary-light) !important; }
+        .bg-blue-100, .bg-blue-50 { background-color: color-mix(in srgb, var(--primary) 15%, white) !important; }
+        /* Accent colors */
+        .bg-green-600, .bg-green-500 { background-color: var(--accent) !important; }
+        .hover\:bg-green-700:hover { background-color: color-mix(in srgb, var(--accent) 85%, black) !important; }
+        .text-green-600, .text-green-500 { color: var(--accent) !important; }
+        .bg-amber-500, .bg-yellow-500 { background-color: var(--accent) !important; }
 
         /* Mobile simulator styles */
         body {
@@ -66,7 +72,7 @@
         }
 
         .tooltip-help-banner {
-            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
             padding: 12px 24px;
             text-align: center;

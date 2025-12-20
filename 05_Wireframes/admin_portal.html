@@ -46,13 +46,19 @@
             --primary-dark: #18181B;
             --accent: #14B8A6;
         }
-        /* Apply theme colors */
-        .bg-purple-600 { background-color: var(--primary) !important; }
+        /* Apply theme colors - Primary */
+        .bg-purple-600, .bg-purple-700 { background-color: var(--primary) !important; }
         .hover\:bg-purple-700:hover { background-color: var(--primary-dark) !important; }
-        .text-purple-600 { color: var(--primary) !important; }
+        .text-purple-600, .text-purple-700 { color: var(--primary) !important; }
         .border-purple-600 { border-color: var(--primary) !important; }
         .bg-purple-100 { background-color: color-mix(in srgb, var(--primary) 15%, white) !important; }
-        .text-purple-700 { color: var(--primary-dark) !important; }
+        /* Accent colors */
+        .bg-blue-600 { background-color: var(--accent) !important; }
+        .hover\:bg-blue-700:hover { background-color: color-mix(in srgb, var(--accent) 85%, black) !important; }
+        .text-blue-600, .text-blue-700 { color: var(--accent) !important; }
+        .bg-green-600, .bg-green-500 { background-color: var(--accent) !important; }
+        .hover\:bg-green-700:hover { background-color: color-mix(in srgb, var(--accent) 85%, black) !important; }
+        .text-green-600, .text-green-500 { color: var(--accent) !important; }
 
         /* Tooltip Styles - Only active when body has .tooltips-enabled */
         .tooltips-enabled [data-tooltip] {
@@ -64,7 +70,7 @@
             outline-offset: 2px;
         }
         .tooltip-help-banner {
-            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
             padding: 8px 16px;
             text-align: center;
