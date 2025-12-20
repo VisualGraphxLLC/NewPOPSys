@@ -150,6 +150,11 @@ function openDocModal(url, title, type = 'markdown') {
     const titleEl = document.getElementById('doc-modal-title');
     const linkEl = document.getElementById('doc-modal-link');
 
+    // Parse URL for anchor
+    const urlObj = new URL(url, window.location.href);
+    const anchor = urlObj.hash;
+    const baseUrl = url.split('#')[0];
+
     titleEl.textContent = title || 'Loading...';
     linkEl.href = url;
     content.innerHTML = '<div class="flex items-center justify-center h-32"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>';
@@ -160,15 +165,15 @@ function openDocModal(url, title, type = 'markdown') {
         // Display SVG diagram
         content.innerHTML = `
             <div class="diagram-container">
-                <object data="${url}" type="image/svg+xml" style="width: 100%; height: auto;">
-                    <img src="${url}" alt="${title}" />
+                <object data="${baseUrl}" type="image/svg+xml" style="width: 100%; height: auto;">
+                    <img src="${baseUrl}" alt="${title}" />
                 </object>
             </div>`;
         content.classList.remove('prose');
     } else {
         // Fetch and render markdown
         content.classList.add('prose');
-        fetch(url)
+        fetch(baseUrl)
             .then(response => {
                 if (!response.ok) throw new Error('Failed to load document');
                 return response.text();
@@ -182,6 +187,24 @@ function openDocModal(url, title, type = 'markdown') {
                 }
                 // Render any Mermaid diagrams
                 await renderMermaidDiagrams(content);
+
+                // Scroll to anchor if present
+                if (anchor) {
+                    const targetId = anchor.substring(1); // Remove #
+                    const targetEl = content.querySelector(`#${CSS.escape(targetId)}`);
+                    if (targetEl) {
+                        // Small delay to ensure rendering is complete
+                        setTimeout(() => {
+                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            // Highlight the section briefly
+                            targetEl.style.backgroundColor = '#fef3c7';
+                            setTimeout(() => {
+                                targetEl.style.transition = 'background-color 1s';
+                                targetEl.style.backgroundColor = '';
+                            }, 500);
+                        }, 100);
+                    }
+                }
             })
             .catch(err => {
                 content.innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-lg">
