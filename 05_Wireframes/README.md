@@ -137,8 +137,8 @@ All wireframes now include **interactive tooltips** that provide detailed docume
 
 | Document | Purpose |
 |----------|---------|
-| [SUPP-036](../02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation%20-%20v0.6.md) | Onboarding, Store Management screens |
-| [SUPP-037](../02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys%20-%20v1.0.md) | Survey Builder, Store Survey screens |
+| [SUPP-036](../02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md) | Onboarding, Store Management screens |
+| [SUPP-037](../02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md) | Survey Builder, Store Survey screens |
 | [Process Flow Index](../00_Index/PROCESS_FLOW_INDEX.md) | All process flow diagrams |
 
 ---

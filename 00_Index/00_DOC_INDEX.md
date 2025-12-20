@@ -1,7 +1,7 @@
 # NewPOPSys SOW Document Registry
 
-> **Last Updated**: 2025-12-19
-> **Master SOW Version**: v1.35
+> **Last Updated**: 2025-12-20
+> **Master SOW Version**: v1.36
 > **Total Documents**: 43+
 > **All SUPPs**: Locked and ready for development
 > **Next Step**: Generate OpenAPI spec, then initialize TypeScript multi-agent harness
@@ -10,7 +10,7 @@
 
 ## Quick Links
 
-- [Compiled Master SOW](../01_Main_SOW/MASTER_SOW_COMPILED_v1_35.md)
+- [Compiled Master SOW](../01_Main_SOW/MASTER_SOW_COMPILED.md)
 - [Interactive Wireframes](../05_Wireframes/index.html)
 - [SOW Framework](./SOW_FRAMEWORK.md)
 - [Stakeholder Q&A Gates](./STAKEHOLDER_QA_GATES.md)
@@ -22,7 +22,7 @@
 
 ```
 NewPOPSys v1 Documentation
-├── Master SOW (v1.35) ─────────────────────────────── Authority for scope, roadmap, acceptance
+├── Master SOW (v1.36) ─────────────────────────────── Authority for scope, roadmap, acceptance
 │   └── References all SUPPs as appendices
 │
 ├── Context Documents ──────────────────────────────── Strategic direction, constraints
@@ -208,11 +208,15 @@ SOW/
 ## Maintenance Protocol
 
 ### When Updating a SUPP
-1. Edit the SUPP file in `02_SUPPs/[Module]/`
-2. Bump version in filename (v0.x → v0.x+1)
-3. Update this registry (version, status)
-4. Regenerate compiled Master SOW
-5. Archive previous version in `99_Archive_Superseded/`
+1. Edit the SUPP file in `02_SUPPs/[Module]/` (stable filename - no version in filename)
+2. Bump the `Version` field in the file header
+3. Add entry to the Changelog section at bottom of file
+4. Update `VERSION.json` if releasing a new SOW version
+5. Regenerate compiled Master SOW
+6. Git history tracks all changes automatically
+
+> **Note:** Version numbers are tracked in file headers and changelogs, not filenames.
+> This ensures wireframe links never break when documents are updated.
 
 ### Status Definitions
 | Status | Meaning |
@@ -224,7 +228,17 @@ SOW/
 
 ---
 
-## Recent Updates (2025-12-18)
+## Recent Updates (2025-12-20)
+
+| Change | Description |
+|--------|-------------|
+| **Versioning System** | Switched to stable filenames - versions tracked in file headers and changelogs, not filenames |
+| **VERSION.json** | Added central version file that wireframes read dynamically |
+| **All SUPPs** | Added Changelog sections; filenames no longer include version |
+| **Master SOW** | Renamed to `MASTER_SOW_COMPILED.md` (stable filename) |
+| **Wireframe Links** | All links updated to use stable filenames - no more broken links |
+
+### Previous Updates (2025-12-18)
 
 | SUPP | Change |
 |------|--------|
