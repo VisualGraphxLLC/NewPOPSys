@@ -96,20 +96,23 @@ function initDocModal() {
         const href = link.getAttribute('href');
         if (!href) return;
 
-        // Handle markdown files
-        if (href.endsWith('.md')) {
+        // Strip hash/anchor to check file extension
+        const hrefWithoutHash = href.split('#')[0];
+
+        // Handle markdown files (including those with anchors like file.md#section)
+        if (hrefWithoutHash.endsWith('.md')) {
             e.preventDefault();
-            const title = link.textContent?.trim() || href.split('/').pop().replace('.md', '');
+            const title = link.textContent?.trim() || hrefWithoutHash.split('/').pop().replace('.md', '');
             openDocModal(link.href, title, 'markdown');
             return;
         }
 
         // Handle SVG diagrams
-        if (href.endsWith('.svg')) {
+        if (hrefWithoutHash.endsWith('.svg')) {
             e.preventDefault();
             const title = link.querySelector('h3')?.textContent ||
                           link.textContent?.trim() ||
-                          href.split('/').pop().replace('.svg', '').replace(/_/g, ' ');
+                          hrefWithoutHash.split('/').pop().replace('.svg', '').replace(/_/g, ' ');
             openDocModal(link.href, title, 'svg');
             return;
         }
