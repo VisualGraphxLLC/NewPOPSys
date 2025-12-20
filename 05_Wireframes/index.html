@@ -516,75 +516,125 @@
     <section id="diagrams" class="py-16 bg-gray-100">
         <div class="max-w-6xl mx-auto px-6">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">Architecture Diagrams</h2>
-            <p class="text-gray-600 mb-10">Interactive Mermaid diagrams illustrating system architecture, state machines, and data flows. Click to view all diagrams in an interactive viewer.</p>
+            <p class="text-gray-600 mb-10">Interactive Mermaid diagrams organized by category. Click any diagram to view.</p>
 
-            <!-- Main Diagrams Link -->
-            <a href="diagrams/index.md" class="block bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all group">
-                <div class="p-6 border-b bg-gradient-to-r from-blue-50 to-purple-50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="font-bold text-xl text-gray-900 group-hover:text-blue-700 transition-colors">Complete Diagram Collection</h3>
-                            <p class="text-gray-600 mt-1">15 interactive Mermaid diagrams covering all system aspects</p>
-                        </div>
-                        <div class="text-4xl opacity-50 group-hover:opacity-100 transition-opacity">→</div>
-                    </div>
+            <!-- State Diagrams Swim Lane -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">State Diagrams</div>
+                    <div class="flex-1 h-px bg-blue-200"></div>
+                    <span class="text-xs text-gray-500">Entity lifecycles and transitions</span>
                 </div>
-                <div class="p-6 grid md:grid-cols-3 gap-4">
-                    <div>
-                        <h4 class="font-semibold text-blue-800 mb-2">State Machines</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Campaign State Machine</li>
-                            <li>• Order State Machine</li>
-                            <li>• Store Assignment States</li>
-                            <li>• Photo Verification States</li>
-                            <li>• Issue/Reorder States</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-purple-800 mb-2">Flow Charts</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Campaign Lifecycle Flow</li>
-                            <li>• Store Execution Flow</li>
-                            <li>• Photo Capture Flow</li>
-                            <li>• Verification Workflow</li>
-                            <li>• Issue Resolution Flow</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-teal-800 mb-2">Architecture</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Module Responsibilities</li>
-                            <li>• Data Flow Between Modules</li>
-                            <li>• Permission Hierarchy</li>
-                            <li>• Notification Channels</li>
-                            <li>• Entity Relationships</li>
-                        </ul>
-                    </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <a href="diagrams/08-campaign-lifecycle.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📋</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Campaign Lifecycle</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Draft to archive</p>
+                    </a>
+                    <a href="diagrams/02-fulfillment-status.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📦</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Fulfillment Status</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Shipment & delivery</p>
+                    </a>
+                    <a href="diagrams/07-store-assignment-status.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🏬</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Store Assignment</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Execution states</p>
+                    </a>
+                    <a href="diagrams/05-assignment-item-status.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🏷️</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Assignment Item</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Item lifecycle</p>
+                    </a>
+                    <a href="diagrams/06-issue-request-status.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">⚠️</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Issue Request</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Reorder workflow</p>
+                    </a>
+                    <a href="diagrams/11-photo-review-status.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📸</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Photo Review</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Review states</p>
+                    </a>
                 </div>
-            </a>
+            </div>
 
-            <!-- Quick Access Cards - Link to individual diagram files -->
-            <div class="mt-8 grid md:grid-cols-4 gap-4">
-                <a href="diagrams/08-campaign-lifecycle.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                    <div class="text-2xl mb-2">🔄</div>
-                    <h4 class="font-medium text-gray-800 text-sm">Campaign Lifecycle</h4>
-                    <p class="text-xs text-gray-500">State Diagram</p>
-                </a>
-                <a href="diagrams/12-personas-by-module.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                    <div class="text-2xl mb-2">👥</div>
-                    <h4 class="font-medium text-gray-800 text-sm">Personas by Module</h4>
-                    <p class="text-xs text-gray-500">Architecture</p>
-                </a>
-                <a href="diagrams/10-module-handoffs.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                    <div class="text-2xl mb-2">🔗</div>
-                    <h4 class="font-medium text-gray-800 text-sm">Module Hand-offs</h4>
-                    <p class="text-xs text-gray-500">Flow Chart</p>
-                </a>
-                <a href="diagrams/13-status-interrelation.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                    <div class="text-2xl mb-2">📊</div>
-                    <h4 class="font-medium text-gray-800 text-sm">Status Relations</h4>
-                    <p class="text-xs text-gray-500">Flow Chart</p>
-                </a>
+            <!-- Flow Charts Swim Lane -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">Flow Charts</div>
+                    <div class="flex-1 h-px bg-purple-200"></div>
+                    <span class="text-xs text-gray-500">Process flows and data movement</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <a href="diagrams/09-campaign-flow.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🔄</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Campaign Flow</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">End-to-end flow</p>
+                    </a>
+                    <a href="diagrams/01-rollup-architecture.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📊</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Roll-up Architecture</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Qty aggregation</p>
+                    </a>
+                    <a href="diagrams/04-storephase-derivation.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🧮</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">StorePhase Derivation</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Phase computation</p>
+                    </a>
+                    <a href="diagrams/10-module-handoffs.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🤝</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Module Hand-offs</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Portal ownership</p>
+                    </a>
+                    <a href="diagrams/15-store-selection-flow.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🎯</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Store Selection</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Targeting UX</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Architecture Diagrams Swim Lane -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-teal-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">Architecture</div>
+                    <div class="flex-1 h-px bg-teal-200"></div>
+                    <span class="text-xs text-gray-500">System structure and relationships</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <a href="diagrams/12-personas-by-module.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">👥</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Personas by Module</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Role assignments</p>
+                    </a>
+                    <a href="diagrams/13-status-interrelation.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🔗</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Status Interrelation</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Cross-module status</p>
+                    </a>
+                    <a href="diagrams/14-promo-item-slot.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🧩</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Promo Item - Slot</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Item/slot binding</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sequence Diagrams Swim Lane -->
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">Sequences</div>
+                    <div class="flex-1 h-px bg-orange-200"></div>
+                    <span class="text-xs text-gray-500">Interaction flows between components</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <a href="diagrams/03-partial-shipment-sequence.md" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-orange-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📬</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-orange-700">Partial Shipment Exception</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Exception handling</p>
+                    </a>
+                </div>
             </div>
         </div>
     </section>

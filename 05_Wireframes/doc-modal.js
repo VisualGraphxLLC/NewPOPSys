@@ -6,6 +6,9 @@
 // Track if Mermaid is loaded
 let mermaidLoaded = false;
 
+// Track the base URL of the currently loaded document (for resolving relative links)
+let currentDocBaseUrl = null;
+
 function loadMermaid() {
     return new Promise((resolve) => {
         if (mermaidLoaded) {
@@ -96,6 +99,9 @@ function initDocModal() {
         const href = link.getAttribute('href');
         if (!href) return;
 
+        // Skip external links and anchors
+        if (href.startsWith('http') || href.startsWith('#')) return;
+
         // Strip hash/anchor to check file extension
         const hrefWithoutHash = href.split('#')[0];
 
@@ -103,7 +109,20 @@ function initDocModal() {
         if (hrefWithoutHash.endsWith('.md')) {
             e.preventDefault();
             const title = link.textContent?.trim() || hrefWithoutHash.split('/').pop().replace('.md', '');
-            openDocModal(link.href, title, 'markdown');
+
+            // Check if this link is inside the modal content
+            const isInsideModal = link.closest('#doc-modal-content');
+            let resolvedUrl;
+
+            if (isInsideModal && currentDocBaseUrl) {
+                // Resolve relative to the currently loaded document
+                resolvedUrl = new URL(href, currentDocBaseUrl).href;
+            } else {
+                // Resolve relative to the page
+                resolvedUrl = link.href;
+            }
+
+            openDocModal(resolvedUrl, title, 'markdown');
             return;
         }
 
@@ -113,7 +132,18 @@ function initDocModal() {
             const title = link.querySelector('h3')?.textContent ||
                           link.textContent?.trim() ||
                           hrefWithoutHash.split('/').pop().replace('.svg', '').replace(/_/g, ' ');
-            openDocModal(link.href, title, 'svg');
+
+            // Check if this link is inside the modal content
+            const isInsideModal = link.closest('#doc-modal-content');
+            let resolvedUrl;
+
+            if (isInsideModal && currentDocBaseUrl) {
+                resolvedUrl = new URL(href, currentDocBaseUrl).href;
+            } else {
+                resolvedUrl = link.href;
+            }
+
+            openDocModal(resolvedUrl, title, 'svg');
             return;
         }
     });
@@ -157,6 +187,9 @@ function openDocModal(url, title, type = 'markdown') {
     const urlObj = new URL(url, window.location.href);
     const anchor = urlObj.hash;
     const baseUrl = url.split('#')[0];
+
+    // Store the base URL for resolving relative links in the loaded content
+    currentDocBaseUrl = baseUrl;
 
     titleEl.textContent = title || 'Loading...';
     linkEl.href = url;
@@ -225,6 +258,7 @@ function closeDocModal() {
     modal.classList.add('hidden');
     document.body.style.overflow = '';
     content.classList.add('prose'); // Reset for next use
+    currentDocBaseUrl = null; // Clear the base URL
 }
 
 // Auto-initialize when DOM is ready
