@@ -820,8 +820,12 @@
         </div>
     </footer>
 
-    <!-- Load version from VERSION.json -->
+    <!-- Marked.js for Markdown rendering + Document Modal -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="doc-modal.js"></script>
+
     <script>
+        // Load version from VERSION.json
         fetch('../VERSION.json')
             .then(response => response.json())
             .then(data => {
