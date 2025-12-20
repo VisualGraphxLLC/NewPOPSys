@@ -7,7 +7,53 @@
     <title>PSP Ops / Admin Mockup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="theme-loader.js"></script>
     <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #eab308;
+            --primary-light: #facc15;
+            --primary-dark: #ca8a04;
+            --accent: #4f46e5;
+            --text-on-primary: #000000;
+        }
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+        [data-theme="merchpulse"] {
+            --primary: #7C3AED;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5B21B6;
+            --accent: #F59E0B;
+        }
+        [data-theme="fieldforge"] {
+            --primary: #3B82F6;
+            --primary-light: #60a5fa;
+            --primary-dark: #1E40AF;
+            --accent: #10B981;
+        }
+        [data-theme="nexova"] {
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0F172A;
+            --accent: #06B6D4;
+        }
+        [data-theme="prism"] {
+            --primary: #14B8A6;
+            --primary-light: #2DD4BF;
+            --primary-dark: #18181B;
+            --accent: #14B8A6;
+        }
+
+        /* Apply theme colors */
+        .bg-yellow-500 { background-color: var(--primary) !important; }
+        .bg-yellow-600:hover { background-color: var(--primary-dark) !important; }
+        .text-yellow-500 { color: var(--primary) !important; }
+        .border-yellow-500 { border-color: var(--primary) !important; }
+
         .active-nav {
             color: #facc15;
             border-bottom: 2px solid #facc15;
