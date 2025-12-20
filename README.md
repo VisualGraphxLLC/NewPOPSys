@@ -1,146 +1,89 @@
-# NewPOPSys v1 — Wireframes
+# NewPOPSys v1 — SOW Documentation
 
-> **Updated**: 2025-12-19
-> **Launch**: Open `index.html` in a browser
+> **Version**: See [VERSION.json](VERSION.json) for current release
+> **Status**: All SUPPs locked and ready for development
 
----
-
-## Overview
-
-Interactive HTML wireframes demonstrating key workflows from the SOW. Built with Tailwind CSS for responsive display.
+PSP-Led Campaign Orchestration Platform — complete Statement of Work documentation for v1 implementation.
 
 ---
 
-## Available Wireframes
-
-| File | Module | SUPP Coverage | Key Screens |
-|------|--------|---------------|-------------|
-| [index.html](index.html) | Hub | — | Landing page with links to all wireframes |
-| [mobile_app.html](mobile_app.html) | Store Execution | SUPP-017, SUPP-036, SUPP-037 | Login, Dashboard, Receipt Survey, Install Survey, Photo Capture |
-| [store_portal.html](store_portal.html) | Store Manager | SUPP-017, SUPP-001 | Dashboard, Campaign History, Photo Gallery, Team, Reports |
-| [admin_portal.html](admin_portal.html) | Brand Admin | SUPP-014, SUPP-015 | Campaign Creation, Store Selection, Kit Assignment, Dashboards |
-| [psp_ops.html](psp_ops.html) | PSP Operations | SUPP-018, SUPP-019 | Verification Queue, Photo Review, Issue Management, Reorder Approval |
-
----
-
-## Wireframe Coverage Matrix
-
-### Store Mobile App (`mobile_app.html`)
-
-| Screen | Status | Notes |
-|--------|--------|-------|
-| Login | ✅ Complete | Username/password, store selector |
-| Dashboard | ✅ Complete | Active campaigns, status badges |
-| Receipt Survey | ✅ Complete | Item checklist, exception reporting |
-| Install Survey | ✅ Complete | Location grouping, photo capture |
-| Photo Capture | ✅ Complete | Camera, ghost overlay, retake |
-| Attestation | ✅ Complete | Checkbox, signature, submit |
-| Retake Flow | ✅ Complete | Rejection reason, retake button |
-| Offline Indicator | 🟡 Placeholder | Sync status shown but not functional |
-
-### Store Manager Portal (`store_portal.html`)
-
-| Screen | Status | Notes |
-|--------|--------|-------|
-| Dashboard | ✅ Complete | KPIs, active campaigns, pending actions, team status |
-| Campaign History | ✅ Complete | Status tabs, expandable details, progress bars |
-| Photo Gallery | ✅ Complete | Grid/list view, filters, status badges |
-| Team Management | ✅ Complete | Members, invitations, activity metrics |
-| Reports | ✅ Complete | KPIs, trend charts, team contribution |
-
-### Brand Admin Portal (`admin_portal.html`)
-
-| Screen | Status | Notes |
-|--------|--------|-------|
-| Campaign List | ✅ Complete | Cards, filters, create button |
-| Campaign Create | ✅ Complete | Wizard flow, store selection |
-| Store Selection Builder | ✅ Complete | Include/exclude, preview counter |
-| Kit Assignment | ✅ Complete | Item list, slot mapping |
-| Campaign Dashboard | ✅ Complete | Store progress table, phase bars |
-| Store Detail Modal | ✅ Complete | Status, photos, actions |
-| Survey Builder | 🟡 Basic | Field palette, canvas, preview |
-| Photo Rules | 🟡 Basic | CRUD form |
-| Store Import | 🟡 Basic | Upload, mapping, validation preview |
-| Geography Tree | 🟡 Basic | Region/District hierarchy |
-
-### PSP Operations (`psp_ops.html`)
-
-| Screen | Status | Notes |
-|--------|--------|-------|
-| Verification Queue | ✅ Complete | Filter by status, sort by date |
-| Photo Review | ✅ Complete | Full image, approve/reject, reason selector |
-| Issue Dashboard | ✅ Complete | Open issues, type filters |
-| Issue Detail | ✅ Complete | Evidence photo, approve/deny/reorder |
-| Reorder Queue | ✅ Complete | Pending reorders, approve/create order |
-| Order List | 🟡 Basic | Table with status badges |
-| Shipment Tracking | 🟡 Basic | Tracking number, carrier, status |
-
----
-
-## Known Gaps
-
-| Gap | Priority | Resolution |
-|-----|----------|------------|
-| Notification preferences screen | Low | Add to admin_portal.html settings section |
-| Export job history | Low | Add to admin_portal.html reports section |
-| User management (invite/edit) | Medium | Add RBAC screens to admin_portal.html |
-| Audit log viewer | Low | Add to admin_portal.html |
-| Batch management (PSP) | Medium | Add to psp_ops.html |
-
----
-
-## How to Use
-
-1. **Open in Browser**: Double-click `index.html` or serve via local server
-2. **Navigate**: Click buttons and links to move between screens
-3. **Validate**: Compare against SUPP documents for accuracy
-4. **Report Issues**: Note any discrepancies for SOW updates
-
----
-
-## Interactive Tooltips
-
-All wireframes now include **interactive tooltips** that provide detailed documentation when you hover over key elements. Look for elements with dashed outlines.
-
-### Tooltip Information Includes:
-- **Feature Name**: What the UI element does
-- **Data Sources**: Which database entities/fields are used
-- **Dependencies**: What must happen before this works
-- **Blockers**: What this feature blocks downstream
-
-### How to Use:
-1. Look for elements with **dashed colored outlines**
-2. Hover over them to see the tooltip
-3. Each tooltip shows: Feature, Data, Dependencies, and Blockers
-
-### Color Coding by Portal:
-| Portal | Outline Color |
-|--------|---------------|
-| Mobile App | Blue (#3b82f6) |
-| Store Portal | Teal (#14b8a6) |
-| Brand Admin | Purple (#9333ea) |
-| PSP Ops | Yellow (#eab308) |
-
----
-
-## Technical Notes
-
-- Built with Tailwind CSS (CDN loaded)
-- No backend required — all interactions are simulated
-- State is not persisted between page reloads
-- Mobile wireframes are responsive (resize browser to test)
-- Tooltips use CSS-only implementation (no JavaScript dependencies)
-
----
-
-## Related Documents
+## Quick Start
 
 | Document | Purpose |
 |----------|---------|
-| [SUPP-036](../02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md) | Onboarding, Store Management screens |
-| [SUPP-037](../02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md) | Survey Builder, Store Survey screens |
-| [Process Flow Index](../00_Index/PROCESS_FLOW_INDEX.md) | All process flow diagrams |
+| [Master SOW](01_Main_SOW/MASTER_SOW_COMPILED.md) | Complete compiled specification |
+| [Document Index](00_Index/00_DOC_INDEX.md) | Registry of all documents with versions |
+| [Interactive Wireframes](05_Wireframes/index.html) | Visual prototypes for stakeholder review |
 
 ---
 
-*End of README*
+## Folder Structure
+
+```
+SOW/
+├── 00_Index/               # Document registry, framework, Q&A gates
+├── 01_Main_SOW/            # Compiled Master SOW
+├── 02_SUPPs/               # Supplemental Specifications (by module)
+│   ├── Shared_Foundations/
+│   ├── Store_Execution_Module/
+│   ├── Brand_Admin_Module/
+│   ├── PSP_Operations_Module/
+│   ├── Platform_Ops_Agent_Harness/
+│   └── Screens_Interfaces/
+├── 03_Context_Docs/        # Strategic direction, constraints
+├── 04_Reference/           # Reference materials
+├── 05_Wireframes/          # Interactive HTML prototypes
+├── 99_Archive/             # Archived versions
+└── VERSION.json            # Central version tracking
+```
+
+---
+
+## Document Modules
+
+| Module | SUPPs | Description |
+|--------|-------|-------------|
+| **Shared Foundations** | 001-008, 035 | Cross-cutting concerns: personas, domain model, RBAC, notifications |
+| **Store Execution** | 011, 017 | Store-facing workflows: offline sync, proof capture |
+| **Brand Admin** | 013-015, 033 | Campaign & store management: surveys, kits, assignment |
+| **PSP Operations** | 016, 018-019 | Fulfillment workflows: orders, verification, issues |
+| **Platform Ops** | 012, 020-034, 038 | Technical implementation: CI/CD, observability, security |
+| **Screens & Interfaces** | 036-037 | UI specifications and screen flows |
+
+---
+
+## Versioning System
+
+- **Stable Filenames**: SUPP files use consistent names (no version in filename)
+- **Version Header**: Each file tracks its version internally (e.g., `> **Version**: v0.7`)
+- **Changelog**: Each SUPP has a changelog section at the bottom
+- **VERSION.json**: Central source for SOW release version
+- **Git History**: All changes tracked automatically
+
+This ensures wireframe links never break when documents are updated.
+
+---
+
+## Key Links
+
+- [SOW Framework](00_Index/SOW_FRAMEWORK.md) — Document development workflow
+- [Stakeholder Q&A Gates](00_Index/STAKEHOLDER_QA_GATES.md) — Approval requirements
+- [Q&A Session Log](00_Index/QA_SESSION_LOG.md) — Latest decisions and next steps
+
+---
+
+## Platform Overview
+
+NewPOPSys v1 is a modernized campaign orchestration platform that helps Print Service Providers (PSPs) manage POP campaigns from creation through store execution and verification.
+
+**Core Loop**: Campaign → Store Assignment → PSP Fulfillment → Store Execution → Verification → Visibility
+
+**User Personas**:
+- PSP Level: Platform Admin, PSP Admin, Production Operator, Support Agent
+- Brand Level: Brand Admin, Campaign Manager, Regional Manager
+- Store Level: Store Manager, Store Operator
+- System: Integration User
+
+---
+
+*NewPOPSys v1 SOW Documentation | ServFlow Development*
