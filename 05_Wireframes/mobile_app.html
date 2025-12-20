@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Store App Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Mobile simulator styles */
+        body {
+            background-color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            font-size: 13px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            max-width: 500px;
+        }
+
+        #phone {
+            width: 375px;
+            height: 812px;
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            border: 12px solid #1a1a1a;
+        }
+
+        .screen {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+            background: #f3f4f6;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .safe-area-top {
+            height: 44px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #6b7280;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: #2563eb;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+        }
+
+        .btn-outline {
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        /* Tooltip Styles for Mobile - Only active when body has .tooltips-enabled */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+            outline: 2px dashed #3b82f6;
+            outline-offset: 2px;
+        }
+        .tooltip-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .tooltip-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .tooltip-toggle.active {
+            background: white;
+            color: #1d4ed8;
+        }
+
+        /* Offline Indicator Styles */
+        .offline-banner {
+            position: sticky;
+            top: 44px;
+            z-index: 40;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 8px 16px;
+            font-size: 12px;
+            display: none;
+        }
+
+        body.offline-mode .offline-banner {
+            display: block;
+        }
+
+        body.offline-mode [data-requires-connection] {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(0.5);
+        }
+
+        .sync-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0,0,0,0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+        }
+
+        .sync-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .offline-icon {
+            display: none;
+        }
+
+        body.offline-mode .offline-icon {
+            display: inline-block;
+        }
+
+        body.offline-mode .online-icon {
+            display: none;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function(e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 10px 14px;
+                        border-radius: 8px;
+                        font-size: 11px;
+                        line-height: 1.4;
+                        max-width: 280px;
+                        min-width: 180px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function() {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <a href="index.html" style="display: flex; align-items: center; gap: 4px; color: white; text-decoration: none; padding: 4px 12px; background: rgba(255,255,255,0.2); border-radius: 4px; font-size: 12px;" data-tooltip="🏠 WIREFRAME INDEX
+━━━━━━━━━━━━━━━
+Action: Return to wireframe index
+Links to: All wireframe screens
+Purpose: Navigation hub
+File: index.html">
+            <span>🏠</span> <span>Index</span>
+        </a>
+        <span data-tooltip="💡 TOOLTIP MODE
+━━━━━━━━━━━━━━━
+Feature: Interactive documentation
+Toggle: ON/OFF to show tooltips
+Hover: Over blue-outlined elements
+Shows: Feature details, data sources">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle" data-tooltip="🔘 TOOLTIP TOGGLE
+━━━━━━━━━━━━━━━
+Action: Enable/disable tooltips
+State: Click to toggle ON/OFF
+Effect: Shows blue outlines + info
+Purpose: Documentation mode">OFF</button>
+    </div>
+
+    <div id="phone" data-tooltip="📱 MOBILE SIMULATOR
+━━━━━━━━━━━━━━━
+Device: iPhone-style mockup
+Size: 375x812px (iPhone X)
+Purpose: Mobile app preview
+Contains: All app screens">
+        <!-- Status Bar Simulator -->
+        <div class="safe-area-top" data-tooltip="📱 STATUS BAR
+━━━━━━━━━━━━━━━
+Component: Mobile status bar
+Position: Sticky at top
+Shows: Time, WiFi, Battery
+Pattern: Standard iOS/Android">
+            <span data-tooltip="🕐 TIME
+━━━━━━━━━━━━━━━
+Display: Current time
+Format: 12-hour
+Static: For wireframe demo
+Real: Would show actual time">9:41</span>
+            <div class="flex gap-1" data-tooltip="📶 STATUS ICONS
+━━━━━━━━━━━━━━━
+Shows: Connectivity indicators
+Icons: WiFi, Battery status
+Purpose: System status info
+Offline: WiFi may show offline state">
+                <i data-lucide="wifi" size="14" class="online-icon" data-tooltip="📶 WIFI ICON
+━━━━━━━━━━━━━━━
+Status: Network connectivity
+Offline mode: Shows disconnected
+SUPP-011: Offline support
+Important: App works offline"></i>
+                <i data-lucide="wifi-off" size="14" class="offline-icon text-orange-400" data-tooltip="📶 OFFLINE ICON
+━━━━━━━━━━━━━━━
+Status: No network connection
+Mode: Offline operation active
+SUPP-011: Full offline support
+Note: Data queued for sync"></i>
+                <i data-lucide="battery" size="14" data-tooltip="🔋 BATTERY ICON
+━━━━━━━━━━━━━━━
+Status: Device battery level
+Display: Visual indicator
+Note: System status
+Mobile: Standard UI element"></i>
+            </div>
+        </div>
+
+        <!-- Offline Status Banner -->
+        <div class="offline-banner" data-tooltip="🔶 OFFLINE BANNER (SUPP-011)
+━━━━━━━━━━━━━━━
+Status: Working offline mode
+Feature: Local drafts + queue
+Shows: Last sync, pending count
+Auto-syncs: When connection returns">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="wifi-off" size="14" data-tooltip="📶 OFFLINE INDICATOR
+━━━━━━━━━━━━━━━
+Visual: WiFi disconnected icon
+Status: No network connection
+Mode: Offline operation enabled
+SUPP-011: PWA + IndexedDB"></i>
+                    <span class="font-semibold" data-tooltip="💬 OFFLINE MESSAGE
+━━━━━━━━━━━━━━━
+Text: Working offline status
+Purpose: User awareness
+Note: Changes saved locally
+Auto-sync: When online returns">Working Offline</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs">
+                    <span data-tooltip="🕐 LAST SYNC TIME
+━━━━━━━━━━━━━━━
+Data: Last successful sync timestamp
+Format: Relative time (2 min ago)
+Updates: On each successful sync
+Purpose: Trust + transparency">Last sync: 2 min ago</span>
+                    <span class="sync-badge" data-tooltip="📤 PENDING UPLOADS
+━━━━━━━━━━━━━━━
+Count: Items in upload queue
+Types: Photos, surveys, drafts
+Storage: IndexedDB outbox
+Auto-upload: On reconnection">
+                        <i data-lucide="upload-cloud" size="10"></i>
+                        <span>3 pending</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: LOGIN (SUPP-036) -->
+        <div id="screen-login" class="screen active p-6 bg-white" data-tooltip="🔐 LOGIN SCREEN
+━━━━━━━━━━━━━━━
+Feature: SUPP-036 Authentication
+Type: Store-based login
+Method: Store# + Access code
+Alternative: SSO for managers">
+            <div class="h-full flex flex-col justify-center">
+                <div class="mb-12 text-center" data-tooltip="🎨 APP BRANDING
+━━━━━━━━━━━━━━━
+Section: App identity
+Shows: Logo, app name, tagline
+Purpose: Brand recognition
+Design: Centered, clean layout">
+                    <div class="w-16 h-16 bg-blue-600 rounded-xl mx-auto mb-4 flex items-center justify-center" data-tooltip="🏪 APP LOGO
+━━━━━━━━━━━━━━━
+Component: App icon/logo
+Color: Brand blue (#2563eb)
+Icon: Store symbol
+Purpose: Visual identity">
+                        <i data-lucide="store" class="text-white" data-tooltip="🏪 STORE ICON
+━━━━━━━━━━━━━━━
+Visual: Store/shop symbol
+Color: White on blue
+Represents: Store-focused app
+Standard: Lucide icon library"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900" data-tooltip="📱 APP NAME
+━━━━━━━━━━━━━━━
+Text: Application title
+Name: NewPOPSys
+Purpose: Brand identity
+Placement: Login screen header">NewPOPSys</h1>
+                    <p class="text-gray-500" data-tooltip="📝 APP TAGLINE
+━━━━━━━━━━━━━━━
+Text: App description
+Purpose: Clarify app function
+Audience: Store users
+Context: Execution workflow">Store Execution Portal</p>
+                </div>
+                <div class="space-y-4" data-tooltip="📋 LOGIN FORM
+━━━━━━━━━━━━━━━
+Fields: Store# + Access code
+Submit: Sign In button
+Auth: SUPP-036 authentication
+Session: Creates JWT token">
+                    <div data-tooltip="🏪 STORE NUMBER FIELD\n📊 Data: Store.storeNumber, StoreIdAlias.externalId\n⬅️ Depends: None\n➡️ Blocks: Authentication, session creation">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-tooltip="🏷️ FIELD LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User input guidance">Store Number</label>
+                        <input type="text" value="3044"
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="e.g. 1024" data-tooltip="🏪 STORE NUMBER INPUT\n📊 Data: Store.storeNumber, StoreIdAlias.externalId\n⬅️ Depends: None\n➡️ Blocks: Dashboard access, campaign visibility">
+                    </div>
+                    <div data-tooltip="🔑 ACCESS CODE FIELD\n📊 Data: User.passwordHash, Store.accessCode\n⬅️ Depends: Store number validated\n➡️ Blocks: User session creation, JWT token">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-tooltip="🏷️ FIELD LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User input guidance">Access Code</label>
+                        <input type="password" value="********"
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" data-tooltip="🔒 PASSWORD INPUT\n📊 Data: User.passwordHash, Store.accessCode\n⬅️ Depends: Store number entered\n➡️ Blocks: Authentication, session start">
+                    </div>
+                    <button onclick="nav('screen-dashboard')" class="btn-primary cursor-pointer" data-tooltip="🚀 SIGN IN BUTTON\n📊 Data: User.id, Store.id, Membership.role\n⬅️ Depends: Store number + access code valid\n➡️ Blocks: Dashboard access, StoreAssignment visibility">Sign In</button>
+                    <p class="text-center text-xs text-gray-400 mt-4" data-tooltip="ℹ️ VERSION INFO
+━━━━━━━━━━━━━━━
+Display: App version number
+Type: Pilot/Beta build
+Purpose: Issue tracking
+Helpful: For support requests">v1.35 (Pilot Build)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: DASHBOARD (Home) -->
+        <div id="screen-dashboard" class="screen p-4 pb-24">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4" data-tooltip="🏪 STORE DASHBOARD HEADER\n📊 Data: Store.name, Store.storeNumber\n⬅️ Depends: User authenticated, session active\n➡️ Blocks: Store context for all campaigns">Good2Go #3044</h1>
+
+            <!-- Alert Banner -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r" data-tooltip="⚠️ SHIPMENT ALERT BANNER\n📊 Data: Shipment.deliveryStatus, ShipmentTracking.carrier, Shipment.estimatedDelivery\n⬅️ Depends: Shipment status updated via webhook\n➡️ Blocks: Receipt survey access enabled">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i data-lucide="alert-triangle" class="text-yellow-400" size="20" data-tooltip="⚠️ ALERT INDICATOR ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual alert indicator"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700">
+                            Shipment arriving today via UPS.<br>
+                            <span class="font-bold cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="🔗 ACTION LINK\n📊 Data: Navigation to receipt screen\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Receipt survey screen access">Verify Receipt
+                                →</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="text-lg font-semibold text-gray-800 mb-3" data-tooltip="📋 CAMPAIGN SECTION HEADER\n📊 Data: Section title for active StoreAssignments\n⬅️ Depends: User authenticated, campaigns assigned\n➡️ Blocks: Campaign list section identification">Active Campaigns</h2>
+
+            <!-- Campaign Card: Receipt Phase -->
+            <div class="card cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Install phase access, CompletionSubmission">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔵 ACTION REQUIRED BADGE\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Shipment delivered, receipt not submitted\n➡️ Blocks: User must complete receipt survey">Action
+                        Required</span>
+                    <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing, task deadlines">Start: Dec 20</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign created by Brand\n➡️ Blocks: StoreAssignment creation, order generation">Holiday Promo 2025</h3>
+                <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DESCRIPTION\n📊 Data: KitDefinition.name, KitItem.name, KitItem.quantity\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: OrderLine generation, receipt checklist">Kit: Standard + Window Clings</p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2" data-tooltip="📊 PROGRESS BAR\n📊 Data: COUNT(CompletionSubmission), COUNT(AssignmentItem)\n⬅️ Depends: Receipt and install surveys submitted\n➡️ Blocks: Visual completion indicator">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <span data-tooltip="📌 PHASE STATUS\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Install phase unlock">Receipt Pending</span>
+                    <span data-tooltip="✅ TASK COUNTER\n📊 Data: COUNT(CompletionSubmission WHERE status=COMPLETE)\n⬅️ Depends: Receipt and install surveys\n➡️ Blocks: Assignment completion status">1/5 Tasks</span>
+                </div>
+            </div>
+
+            <!-- Campaign Card: Install Phase -->
+            <div id="card-campaign-install" class="card opacity-60 grayscale" onclick="nav('screen-install')" data-tooltip="🔒 CAMPAIGN CARD - INSTALL PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, AssignmentItem.photoStatus\n⬅️ Depends: Receipt survey completed, ReceiveVerification approved\n➡️ Blocks: PhotoUpload creation, CompletionSubmission">
+                <div class="flex justify-between items-start mb-2 status-badge">
+                    <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔒 LOCKED STATUS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Receipt not completed\n➡️ Blocks: Install phase access">Locked</span>
+                    <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing">Start: Jan 05</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: StoreAssignment context">Holiday Promo 2025 (Install)</h3>
+                <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DEFINITION\n📊 Data: KitDefinition.name, COUNT(KitItem)\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: AssignmentItem creation">Kit: Full Store Reset</p>
+            </div>
+        </div>
+
+        <!-- SCREEN: RECEIPT SURVEY (SUPP-015 Stage 1) -->
+        <div id="screen-receipt" class="screen p-4 pb-24">
+            <div class="flex items-center mb-4">
+                <button onclick="nav('screen-dashboard')" class="p-2 -ml-2" data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to dashboard"><i data-lucide="arrow-left"></i></button>
+                <h1 class="text-lg font-bold ml-2" data-tooltip="📦 RECEIPT SURVEY HEADER\n📊 Data: StoreOrder.id, Shipment.id\n⬅️ Depends: Shipment delivered\n➡️ Blocks: ReceiveVerification workflow">Verify Receipt</h1>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow-sm mb-4" data-tooltip="🚚 SHIPMENT INFO CARD\n📊 Data: Shipment.trackingNumber, Shipment.carrier, Shipment.deliveryStatus\n⬅️ Depends: StoreOrder created, Shipment entity exists\n➡️ Blocks: Receipt verification access">
+                <div class="text-sm text-gray-500 mb-1" data-tooltip="📋 CAMPAIGN REFERENCE\n📊 Data: Campaign.name\n⬅️ Depends: Campaign active, StoreAssignment created\n➡️ Blocks: Context for receipt items">Holiday Promo 2025</div>
+                <div class="font-medium" data-tooltip="📦 TRACKING NUMBER\n📊 Data: ShipmentTracking.trackingNumber, ShipmentTracking.carrier\n⬅️ Depends: Shipment created by PSP\n➡️ Blocks: Carrier lookup, delivery tracking">Tracking: 1Z999AA10123456784</div>
+                <div class="text-green-600 text-sm font-semibold mt-1" data-tooltip="✅ DELIVERY STATUS\n📊 Data: Shipment.deliveryStatus, Shipment.deliveredAt\n⬅️ Depends: Carrier webhook update\n➡️ Blocks: Receipt survey enabled, ReceiveVerification">Delivered Today</div>
+            </div>
+
+            <h3 class="font-semibold text-gray-700 mb-3" data-tooltip="📝 CHECKLIST SECTION HEADER\n📊 Data: COUNT(OrderLine) for StoreOrder\n⬅️ Depends: StoreOrder created, OrderLines generated\n➡️ Blocks: Item verification checklist">Contents Checklist</h3>
+
+            <div class="space-y-3">
+                <!-- Item 1 -->
+                <div class="card flex items-center justify-between" data-tooltip="✅ RECEIPT ITEM CARD\n📊 Data: OrderLine.itemName, OrderLine.quantity, OrderLine.sku, KitItem.id\n⬅️ Depends: StoreOrder created, OrderLines generated\n➡️ Blocks: ReceiveVerification creation, issue reporting">
+                    <div>
+                        <div class="font-bold" data-tooltip="📦 ITEM NAME\n📊 Data: KitItem.name, OrderLine.itemName\n⬅️ Depends: Kit defined, OrderLine created\n➡️ Blocks: Item identification for verification">Window Cling (L)</div>
+                        <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS\n📊 Data: OrderLine.quantity, OrderLine.sku\n⬅️ Depends: Kit definition, PSP order\n➡️ Blocks: Quantity verification, SKU matching">Qty: 2 • SKU: WIN-001</div>
+                    </div>
+                    <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" data-tooltip="☑️ RECEIVED CHECKBOX\n📊 Data: ReceiveVerification.itemReceived, ReceiveVerification.orderLineId\n⬅️ Depends: Shipment delivered\n➡️ Blocks: IssueReport creation, receipt confirmation">
+                </div>
+                <!-- Item 2 -->
+                <div class="card flex items-center justify-between" data-tooltip="✅ KIT ITEM CHECKLIST
+━━━━━━━━━━━━━━━
+Data: KitItem from Campaign
+Fields: name, quantity, sku
+Action: Checkbox = received
+If unchecked: Can report issue">
+                    <div>
+                        <div class="font-bold" data-tooltip="📦 ITEM NAME
+━━━━━━━━━━━━━━━
+Data: KitItem.name
+Source: Campaign kit definition
+Type: POP material identifier
+Maps to: OrderLine.item_name">Register Mat</div>
+                        <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS
+━━━━━━━━━━━━━━━
+Qty: Expected quantity to receive
+SKU: Product identifier for PSP
+Data: OrderLine.quantity + sku
+Verification: Match against shipment">Qty: 1 • SKU: MAT-004</div>
+                    </div>
+                    <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" data-tooltip="☑️ RECEIVED CHECKBOX
+━━━━━━━━━━━━━━━
+Action: Mark item as received
+Saves: ReceiveVerification record
+Unchecked: Enables issue reporting
+Required: All items before submit">
+                </div>
+                <!-- Item 3 (Issue) -->
+                <div class="card" data-tooltip="⚠️ ISSUE REPORTING CARD\n📊 Data: IssueReport.issueType, IssueReport.orderLineId, IssueReport.description\n⬅️ Depends: Item not received or damaged\n➡️ Blocks: Reorder creation, PSP review">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <div class="font-bold" data-tooltip="📦 ITEM NAME\n📊 Data: KitItem.name, OrderLine.itemName\n⬅️ Depends: Kit defined, OrderLine created\n➡️ Blocks: Item identification for issue report">Aisle Danglers</div>
+                            <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS\n📊 Data: OrderLine.quantity, OrderLine.sku\n⬅️ Depends: Kit definition, PSP order\n➡️ Blocks: Quantity verification, issue quantity">Qty: 5 • SKU: DNG-002</div>
+                        </div>
+                        <input type="checkbox" id="chk-dangle" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+                            onchange="toggleIssue(this)" data-tooltip="☑️ RECEIVED CHECKBOX\n📊 Data: ReceiveVerification.itemReceived\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Issue panel display, IssueReport creation">
+                    </div>
+                    <div id="issue-panel" class="hidden mt-2 pt-2 border-t border-gray-100">
+                        <button class="text-sm text-red-600 font-medium flex items-center gap-1 cursor-pointer"
+                            onclick="alert('Opens SUPP-019 Issue Report Flow')" data-tooltip="🚨 ISSUE REPORT BUTTON\n📊 Data: IssueReport.issueType, IssueLine.quantity, IssueReport.photoUrl\n⬅️ Depends: Checkbox unchecked, item missing/damaged\n➡️ Blocks: Reorder generation, PSP notification">
+                            <i data-lucide="alert-circle" size="14" data-tooltip="⚠️ ISSUE ICON
+━━━━━━━━━━━━━━━
+Visual: Alert indicator
+Color: Red (problem state)
+Action: Clickable to report
+Flow: Goes to issue form"></i> Report Missing/Damaged
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="completeReceipt()" class="btn-primary cursor-pointer" data-tooltip="✅ CONFIRM RECEIPT BUTTON\n📊 Data: ReceiveVerification.status, ReceiveVerification.submittedAt, StoreAssignment.executionStatus\n⬅️ Depends: All items checked or issues reported\n➡️ Blocks: Install phase access, PhotoUpload enabled">Confirm Receipt</button>
+                <p class="text-xs text-gray-400 mt-2" data-tooltip="ℹ️ HELP TEXT
+━━━━━━━━━━━━━━━
+Guidance: What happens next
+Info: Receipt → Install transition
+Context: Sequential workflow
+Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
+            </div>
+        </div>
+
+        <!-- SCREEN: INSTALL SURVEY (SUPP-017 / SUPP-015 Stage 2) -->
+        <div id="screen-install" class="screen p-4 pb-24">
+            <div class="flex items-center mb-4">
+                <button onclick="nav('screen-dashboard')" class="p-2 -ml-2" data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to dashboard"><i data-lucide="arrow-left"></i></button>
+                <h1 class="text-lg font-bold ml-2" data-tooltip="📷 INSTALL SURVEY HEADER\n📊 Data: StoreAssignment.id, COUNT(AssignmentItem)\n⬅️ Depends: Receipt verified, install phase unlocked\n➡️ Blocks: PhotoUpload workflow">Install Photos</h1>
+            </div>
+
+            <div class="flex justify-between items-center mb-4" data-tooltip="📊 PROGRESS TRACKER\n📊 Data: COUNT(PhotoUpload WHERE status=UPLOADED), COUNT(AssignmentItem)\n⬅️ Depends: AssignmentItems created\n➡️ Blocks: Completion percentage calculation">
+                <span class="text-sm font-medium text-gray-600" data-tooltip="📊 PROGRESS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Progress section identification">Progress</span>
+                <span class="text-sm font-bold text-blue-600" data-tooltip="🔢 PROGRESS PERCENTAGE\n📊 Data: (COUNT(PhotoUpload) / COUNT(AssignmentItem)) * 100\n⬅️ Depends: Photos uploaded\n➡️ Blocks: Completion indicator, submit button enablement">33%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-6" data-tooltip="📊 PROGRESS BAR\n📊 Data: Visual of (PhotoUploads / AssignmentItems)\n⬅️ Depends: Photo count calculation\n➡️ Blocks: Visual completion feedback">
+                <div class="bg-blue-600 h-2 rounded-full" style="width: 33%"></div>
+            </div>
+
+            <!-- Group: Windows -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name, LocationSlot.id\n⬅️ Depends: StoreLayout defined\n➡️ Blocks: AssignmentItem grouping by location">Slot: Front Windows</h3>
+
+                <div class="card" data-tooltip="✅ COMPLETED PHOTO CARD\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.uploadedAt, PhotoUpload.status, AssignmentItem.id\n⬅️ Depends: Photo captured, uploaded to storage\n➡️ Blocks: PhotoReview creation, PSP verification">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-bold" data-tooltip="📦 ASSIGNMENT ITEM NAME\n📊 Data: AssignmentItem.name, LocationSlot.name, KitItem.name\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Photo requirement identification">Window Cling (Left)</h4>
+                            <p class="text-xs text-gray-500" data-tooltip="📝 PHOTO GUIDANCE\n📊 Data: PhotoRule.instructions, PhotoRule.requirements\n⬅️ Depends: PhotoRule defined for location\n➡️ Blocks: User photo quality guidance">Must be centered at eye level.</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded" data-tooltip="✅ DONE BADGE\n📊 Data: PhotoUpload.status\n⬅️ Depends: Photo uploaded successfully\n➡️ Blocks: PhotoReview enabled, submission allowed">Done</span>
+                    </div>
+                    <div
+                        class="bg-gray-100 rounded h-32 flex items-center justify-center border-2 border-dashed border-gray-300" data-tooltip="🖼️ PHOTO PREVIEW\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.uploadedAt\n⬅️ Depends: Photo captured and uploaded\n➡️ Blocks: Full-size view, retake option">
+                        <img src="https://via.placeholder.com/300x150?text=Uploaded+Photo"
+                            class="h-full w-full object-cover rounded cursor-pointer" data-tooltip="🔍 PHOTO IMAGE\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.fileSize\n⬅️ Depends: Photo uploaded to cloud storage\n➡️ Blocks: Zoom view, PhotoReview access">
+                    </div>
+                </div>
+
+                <div class="card" data-tooltip="📷 PENDING PHOTO CARD\n📊 Data: AssignmentItem.id, AssignmentItem.photoStatus, PhotoRule.id\n⬅️ Depends: Receipt verified, AssignmentItem created\n➡️ Blocks: PhotoUpload creation required for submission">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-bold" data-tooltip="📦 ASSIGNMENT ITEM NAME\n📊 Data: AssignmentItem.name, LocationSlot.name\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Photo requirement, slot assignment">Window Cling (Right)</h4>
+                            <p class="text-xs text-gray-500" data-tooltip="📝 PHOTO GUIDANCE\n📊 Data: PhotoRule.instructions, PhotoRule.requirements\n⬅️ Depends: PhotoRule defined for location\n➡️ Blocks: User photo capture guidance">Capture from outside.</p>
+                        </div>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded" data-tooltip="⏳ PENDING BADGE\n📊 Data: AssignmentItem.photoStatus\n⬅️ Depends: AssignmentItem created\n➡️ Blocks: Photo capture required, submission blocked">Pending</span>
+                    </div>
+                    <button
+                        class="w-full h-32 bg-white border-2 border-dashed border-blue-300 rounded-lg flex flex-col items-center justify-center text-blue-500 gap-2 hover:bg-blue-50 transition cursor-pointer"
+                        onclick="this.classList.add('bg-gray-100'); this.innerHTML='<span class=\'text-green-600 font-bold\'>Photo Captured</span>'"
+                        data-tooltip="📸 CAPTURE BUTTON\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.capturedAt, AssignmentItem.id\n⬅️ Depends: Camera permission, device camera\n➡️ Blocks: PhotoUpload entity creation, review enabled">
+                        <i data-lucide="camera" size="24" data-tooltip="📷 CAMERA ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual indicator for photo action"></i>
+                        <span class="text-sm font-medium" data-tooltip="💬 CAPTURE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Tap to Capture</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group: Register -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name\n⬅️ Depends: StoreLayout defined\n➡️ Blocks: Register area items grouping">Slot: Register</h3>
+                <div class="card opacity-50" data-tooltip="🔒 LOCKED ITEM CARD\n📊 Data: AssignmentItem.id, AssignmentItem.photoStatus\n⬅️ Depends: Previous slot photos completed\n➡️ Blocks: Sequential photo workflow enforcement">
+                    <h4 class="font-bold" data-tooltip="📦 LOCKED ASSIGNMENT ITEM\n📊 Data: AssignmentItem.name\n⬅️ Depends: Prior slot completion\n➡️ Blocks: Photo capture for this item">Counter Mat</h4>
+                    <p class="text-xs text-gray-500" data-tooltip="⏳ DEPENDENCY MESSAGE\n📊 Data: UI status text\n⬅️ Depends: Previous photos incomplete\n➡️ Blocks: User awareness of workflow">Pending previous section...</p>
+                </div>
+            </div>
+
+            <div class="pb-8">
+                <button onclick="alert('This would submit the audit to SUPP-018 Verification')"
+                    class="btn-primary bg-green-600 cursor-pointer" data-tooltip="🚀 SUBMIT AUDIT BUTTON\n📊 Data: CompletionSubmission.status, CompletionSubmission.submittedAt, StoreAssignment.executionStatus\n⬅️ Depends: All photos uploaded, PhotoUpload.status=UPLOADED\n➡️ Blocks: PhotoReview queue, PSP verification workflow">Submit Audit</button>
+            </div>
+        </div>
+
+        <!-- SCREEN: TASKS LIST -->
+        <div id="screen-tasks" class="screen p-4 pb-24">
+            <h1 class="text-2xl font-bold mb-4" data-tooltip="📋 TASKS SCREEN
+━━━━━━━━━━━━━━━
+Feature: Unified task list
+Source: All campaign assignments
+Filter: Store-specific tasks
+Order: Priority, Due Date">My Tasks</h1>
+            <div class="space-y-3">
+                <div class="card flex justify-between items-center cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="📦 TASK CARD - RECEIPT\n📊 Data: StoreAssignment.id, StoreAssignment.executionStatus, Campaign.startDate\n⬅️ Depends: Shipment delivered, user authenticated\n➡️ Blocks: Receipt survey navigation">
+                    <div>
+                        <div class="font-bold" data-tooltip="📝 TASK NAME\n📊 Data: Generated from StoreAssignment.executionStatus\n⬅️ Depends: StoreAssignment created\n➡️ Blocks: Task identification, workflow step">Verify Receipt</div>
+                        <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign active\n➡️ Blocks: Task campaign association">Holiday Promo 2025</div>
+                    </div>
+                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="⚠️ DUE TODAY BADGE\n📊 Data: Campaign.startDate, StoreAssignment.dueDate\n⬅️ Depends: Campaign timing, deadline calculation\n➡️ Blocks: User urgency indicator">Due Today</span>
+                </div>
+                <div class="card flex justify-between items-center opacity-60 grayscale" data-tooltip="🔒 TASK CARD - INSTALL (LOCKED)\n📊 Data: StoreAssignment.id, StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt verified, ReceiveVerification.status=APPROVED\n➡️ Blocks: Install survey access, PhotoUpload creation">
+                    <div>
+                        <div class="font-bold" data-tooltip="📝 TASK NAME\n📊 Data: Generated from AssignmentItem entities\n⬅️ Depends: AssignmentItems created\n➡️ Blocks: Task identification, photo workflow">Install Window Clings</div>
+                        <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign active\n➡️ Blocks: Task campaign association">Holiday Promo 2025</div>
+                    </div>
+                    <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="🔒 LOCKED BADGE\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt not yet completed\n➡️ Blocks: Task access, prevents premature install">Locked</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: SCANNER -->
+        <div id="screen-scan" class="screen p-4 pb-24">
+            <!-- State: Camera View -->
+            <div id="scan-state-camera" data-tooltip="📷 CAMERA SCREEN
+━━━━━━━━━━━━━━━
+Feature: Photo capture interface
+Purpose: Quick scan/photo utility
+Context: Can use from nav bar
+State: Camera viewfinder active">
+                <div class="bg-black rounded-xl h-[460px] flex items-center justify-center relative mb-4" data-tooltip="📸 CAMERA VIEWFINDER
+━━━━━━━━━━━━━━━
+Component: Live camera preview
+Guide: Frame overlay for alignment
+API: Device camera access
+Offline: Full support (SUPP-011)">
+                    <div class="text-white text-center">
+                        <i data-lucide="camera" size="48" class="mx-auto mb-2" data-tooltip="📷 CAMERA ICON
+━━━━━━━━━━━━━━━
+Visual: Camera placeholder
+State: Camera active/ready
+Real: Would show live feed
+Demo: Simulated viewfinder"></i>
+                        <p data-tooltip="💬 VIEWFINDER LABEL
+━━━━━━━━━━━━━━━
+Text: Camera active indicator
+Real: Live camera preview shown
+Demo: Placeholder for wireframe
+Production: Native camera UI">Camera Viewfinder</p>
+                    </div>
+                    <div class="absolute inset-x-8 inset-y-32 border-2 border-white/50 rounded-lg" data-tooltip="🎯 FRAME GUIDE
+━━━━━━━━━━━━━━━
+Feature: Alignment overlay
+Purpose: Help user frame subject
+Optional: Ghost image from PhotoRule
+UX: Guides correct positioning"></div>
+                </div>
+                <button onclick="capturePhoto()" class="btn-primary w-full h-16 text-lg cursor-pointer" data-tooltip="📸 CAPTURE BUTTON
+━━━━━━━━━━━━━━━
+Action: Take photo
+Stores: PhotoUpload entity
+Next: Review screen
+Flow: Capture → Review → Submit">Capture Photo</button>
+            </div>
+
+            <!-- State: Review Photo (Hidden initially) -->
+            <div id="scan-state-review" class="hidden" data-tooltip="🔍 REVIEW STATE
+━━━━━━━━━━━━━━━
+State: After photo captured
+Purpose: Review before submit
+Options: Accept or retake
+Next: Submit or back to camera">
+                <div
+                    class="bg-gray-900 rounded-xl h-[400px] flex items-center justify-center relative mb-4 overflow-hidden" data-tooltip="🖼️ PHOTO PREVIEW
+━━━━━━━━━━━━━━━
+Display: Captured photo review
+Purpose: Confirm quality
+Actions: Accept or retake
+Storage: Not yet uploaded">
+                    <img src="https://via.placeholder.com/400x600?text=Captured+Photo"
+                        class="w-full h-full object-cover opacity-80" data-tooltip="📷 CAPTURED IMAGE
+━━━━━━━━━━━━━━━
+Data: Just captured photo
+Storage: Local (temp)
+Quality: Can be reviewed
+Decision: Keep or retake">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i data-lucide="check-circle" class="text-white w-16 h-16" data-tooltip="✅ SUCCESS INDICATOR
+━━━━━━━━━━━━━━━
+Visual: Photo captured successfully
+State: Ready for review
+Next: User decides to keep/retake
+UX: Positive feedback"></i>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <button onclick="submitPhoto()" class="btn-primary w-full bg-green-600 hover:bg-green-700 cursor-pointer" data-tooltip="✅ SUBMIT PHOTO
+━━━━━━━━━━━━━━━
+Action: Accept and upload photo
+Updates: Task status to complete
+Storage: Upload to cloud
+Offline: Queues for sync (SUPP-011)">Use Photo
+                        &
+                        Submit
+                        Task</button>
+                    <button onclick="resetCamera()" class="w-full py-3 text-red-600 font-bold cursor-pointer" data-tooltip="🔄 RETAKE BUTTON
+━━━━━━━━━━━━━━━
+Action: Discard photo, try again
+Returns: To camera viewfinder
+Deletes: Temp photo (not saved)
+UX: Quality control option">Retake</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: PROFILE -->
+        <div id="screen-profile" class="screen p-4 pb-24">
+            <div class="text-center mb-8" data-tooltip="👤 PROFILE HEADER
+━━━━━━━━━━━━━━━
+Feature: User profile section
+Data: User role + store info
+Context: Logged-in session
+Purpose: User orientation">
+                <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4" data-tooltip="👤 AVATAR
+━━━━━━━━━━━━━━━
+Component: User avatar placeholder
+Future: Could show initials/photo
+Data: User entity
+UX: Visual personalization"></div>
+                <h2 class="text-xl font-bold" data-tooltip="👤 USER ROLE\n📊 Data: User.role, Membership.role\n⬅️ Depends: User authenticated, Membership created\n➡️ Blocks: Permission level, UI features">Store Manager</h2>
+                <p class="text-gray-500" data-tooltip="🏪 STORE CONTEXT\n📊 Data: Store.storeNumber, Store.name\n⬅️ Depends: User logged in, Store validated\n➡️ Blocks: All store-specific data filtering">Store #1044</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 divide-y" data-tooltip="⚙️ SETTINGS MENU
+━━━━━━━━━━━━━━━
+Component: Settings list
+Items: Account actions/options
+Pattern: Standard menu list
+Clickable: Each row is a link">
+                <div class="p-4 flex justify-between cursor-pointer" onclick="alert('Opens notifications screen')" data-tooltip="🔔 NOTIFICATIONS MENU ITEM\n📊 Data: COUNT(AuditEvent WHERE type=NOTIFICATION)\n⬅️ Depends: User authenticated, notification system\n➡️ Blocks: Notification list screen access">
+                    <span data-tooltip="🔔 NOTIFICATIONS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Menu item identification">Notifications</span>
+                    <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full" data-tooltip="🔴 UNREAD BADGE\n📊 Data: COUNT(AuditEvent WHERE read=false)\n⬅️ Depends: Notification events generated\n➡️ Blocks: User attention, unread count display">3</span>
+                </div>
+                <div class="p-4 flex justify-between cursor-pointer" onclick="alert('Opens help & support screen')" data-tooltip="❓ HELP & SUPPORT
+━━━━━━━━━━━━━━━
+Feature: Support resources
+Opens: Help center screen
+Contains: FAQs, contact info
+Purpose: User assistance">
+                    <span data-tooltip="❓ HELP LABEL
+━━━━━━━━━━━━━━━
+Text: Menu item label
+Action: Opens help center
+Shows: FAQs, guides, contact
+Access: Always available">Help & Support</span>
+                    <i data-lucide="chevron-right" size="16" class="text-gray-400" data-tooltip="➡️ NAVIGATION ARROW
+━━━━━━━━━━━━━━━
+Visual: Indicates clickable
+Pattern: Standard iOS/Android
+Action: Navigate to submenu
+UX: Affordance indicator"></i>
+                </div>
+                <div class="p-4 flex justify-between text-red-600 font-bold cursor-pointer" onclick="alert('Sign out - returns to login')" data-tooltip="🚪 SIGN OUT MENU ITEM\n📊 Data: User.sessionToken, User.lastLogoutAt\n⬅️ Depends: User authenticated\n➡️ Blocks: Session termination, login screen return">
+                    <span data-tooltip="🚪 SIGN OUT LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Sign Out</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav" data-tooltip="📱 BOTTOM NAVIGATION
+━━━━━━━━━━━━━━━
+Component: Main navigation bar
+Pattern: Standard mobile nav
+Position: Fixed at bottom
+Purpose: Primary app navigation">
+            <div id="nav-dashboard" class="nav-item active cursor-pointer" onclick="nav('screen-dashboard')" data-tooltip="🏠 HOME TAB\n📊 Data: Navigation state\n⬅️ Depends: User authenticated\n➡️ Blocks: Dashboard screen access, StoreAssignment list">
+                <i data-lucide="home" size="20" data-tooltip="🏠 HOME ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                <span data-tooltip="🏠 HOME LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Home</span>
+            </div>
+            <div id="nav-tasks" class="nav-item cursor-pointer" onclick="nav('screen-tasks')" data-tooltip="📋 TASKS TAB\n📊 Data: Navigation state, COUNT(StoreAssignment WHERE status!=COMPLETE)\n⬅️ Depends: User authenticated, StoreAssignments exist\n➡️ Blocks: Tasks list screen access">
+                <i data-lucide="list-checks" size="20" data-tooltip="📋 TASKS ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                <span data-tooltip="📋 TASKS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Tasks</span>
+            </div>
+            <div id="nav-scan" class="nav-item cursor-pointer" onclick="nav('screen-scan')" data-tooltip="📷 SCAN TAB\n📊 Data: Navigation state, camera permission\n⬅️ Depends: User authenticated, camera access\n➡️ Blocks: Camera screen access, ad-hoc photos">
+                <i data-lucide="camera" size="20" data-tooltip="📷 CAMERA ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                <span data-tooltip="📷 SCAN LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Scan</span>
+            </div>
+            <div id="nav-profile" class="nav-item cursor-pointer" onclick="nav('screen-profile')" data-tooltip="👤 PROFILE TAB\n📊 Data: Navigation state, User.id, COUNT(notifications unread)\n⬅️ Depends: User authenticated\n➡️ Blocks: Profile screen access, settings, notifications">
+                <i data-lucide="user" size="20" data-tooltip="👤 PROFILE ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                <span data-tooltip="👤 PROFILE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // State
+        let receiptComplete = false;
+
+        function nav(screenId) {
+            // Guard: Prevent going to install if receipt not done
+            if (screenId === 'screen-install' && !receiptComplete) {
+                alert("🔒 Locked: You must verify shipment receipt before starting installation.");
+                return;
+            }
+
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+
+            // Show target
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0, 0);
+
+            // Update Nav State
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            if (screenId === 'screen-dashboard') document.getElementById('nav-dashboard').classList.add('active');
+            if (screenId === 'screen-tasks') document.getElementById('nav-tasks').classList.add('active');
+            if (screenId === 'screen-scan') document.getElementById('nav-scan').classList.add('active');
+            if (screenId === 'screen-profile') document.getElementById('nav-profile').classList.add('active');
+
+            // Reset camera state if leaving scan
+            if (screenId !== 'screen-scan') resetCamera();
+        }
+
+        function capturePhoto() {
+            document.getElementById('scan-state-camera').classList.add('hidden');
+            document.getElementById('scan-state-review').classList.remove('hidden');
+        }
+
+        function resetCamera() {
+            document.getElementById('scan-state-camera').classList.remove('hidden');
+            document.getElementById('scan-state-review').classList.add('hidden');
+        }
+
+        function submitPhoto() {
+            // Simulate task completion
+            nav('screen-tasks');
+
+            // Visual feedback on Tasks screen
+            const firstTask = document.querySelector('#screen-tasks .card:first-child');
+            if (firstTask) {
+                firstTask.innerHTML = `
+                            <div class='flex items-center gap-3'>
+                                <div class='bg-green-100 text-green-600 rounded-full p-1'><i data-lucide='check' size='16'></i></div>
+                                <div>
+                                    <div class="font-bold text-gray-500 line-through">Verify Receipt</div>
+                                    <div class="text-xs text-green-600 font-bold">Completed Just Now</div>
+                                </div>
+                            </div>
+                        `;
+                firstTask.classList.add('bg-gray-50');
+            }
+
+            // Unlock second task
+            const secondTask = document.querySelector('#screen-tasks .card:nth-child(2)');
+            if (secondTask) {
+                secondTask.classList.remove('opacity-60', 'grayscale');
+                secondTask.innerHTML = `
+                             <div class="flex justify-between items-center w-full">
+                             <div>
+                                 <div class="font-bold">Install Window Clings</div>
+                                 <div class="text-xs text-gray-500">Holiday Promo 2025</div>
+                             </div>
+                             <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Next Up</span>
+                         </div>
+                         `;
+            }
+
+            lucide.createIcons();
+        }
+
+        function toggleIssue(chk) {
+            const panel = document.getElementById('issue-panel');
+            if (!chk.checked) {
+                panel.classList.remove('hidden');
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+
+        function completeReceipt() {
+            receiptComplete = true;
+
+            // Update Dashboard UI to show unlock
+            const card = document.getElementById('card-campaign-install');
+            card.classList.remove('opacity-60', 'grayscale');
+            card.querySelector('.status-badge').innerHTML = '<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Ready to Start</span>';
+
+            alert("✅ Receipt Verified! Install Phase Unlocked.");
+            nav('screen-dashboard');
+        }
+
+        function syncNow() {
+            alert('Sync Now: Would attempt to upload all queued items');
+        }
+
+        function toggleOfflineMode() {
+            document.body.classList.toggle('offline-mode');
+            lucide.createIcons();
+        }
+
+        // Demo: Toggle offline mode after 2 seconds for demonstration
+        setTimeout(() => {
+            document.body.classList.add('offline-mode');
+            lucide.createIcons();
+        }, 2000);
+    </script>
+</body>
+
+</html>

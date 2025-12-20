@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Manager Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Tooltip Styles - Only active when body has .tooltips-enabled */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+        .tooltips-enabled .has-tooltip {
+            outline: 2px dashed #9333ea;
+            outline-offset: 2px;
+        }
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+        .tooltip-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .tooltip-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .tooltip-toggle.active {
+            background: white;
+            color: #7c3aed;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function(e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        font-size: 12px;
+                        line-height: 1.5;
+                        max-width: 320px;
+                        min-width: 200px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function() {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <span>💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-4 cursor-pointer has-tooltip" onclick="nav('view-dashboard')"
+            data-tooltip="🗺️ REGIONAL CONTEXT
+━━━━━━━━━━━━━━━━━━━━
+Feature: Current region/segment scope
+Data: User.assignedRegions[]
+Source: User session / JWT token
+Access: Regional Manager role required">
+            <div class="w-8 h-8 bg-purple-600 rounded flex items-center justify-center text-white font-bold">R</div>
+            <div>
+                <span class="font-bold text-gray-700">West Coast Region</span>
+                <span class="text-sm text-gray-500 ml-2">Regional Manager</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+            <a href="#" id="link-dashboard" onclick="nav('view-dashboard')"
+                class="nav-link hover:text-purple-600 active-nav text-purple-600 border-b-2 border-purple-600 h-16 flex items-center">Dashboard</a>
+            <a href="#" id="link-exceptions" onclick="nav('view-exceptions')"
+                class="nav-link hover:text-purple-600 h-16 flex items-center has-tooltip"
+                data-tooltip="⚠️ EXCEPTION QUEUE
+━━━━━━━━━━━━━━━━━━━━
+Feature: Stores needing attention
+Count: Overdue + Rejected + Issues
+Ref: SUPP-001 Regional Workflow
+Priority: Highest to lowest">Exceptions (8)</a>
+            <a href="#" id="link-verification" onclick="nav('view-verification')"
+                class="nav-link hover:text-purple-600 h-16 flex items-center has-tooltip"
+                data-tooltip="📸 VERIFICATION QUEUE
+━━━━━━━━━━━━━━━━━━━━
+Feature: Photos pending review
+Count: PhotoUpload.status = PENDING
+Scope: Only stores in assigned region
+Ref: SUPP-018
+Action: Approve/Reject photos">Verification (15)</a>
+            <a href="#" id="link-stores" onclick="nav('view-stores')"
+                class="nav-link hover:text-purple-600 h-16 flex items-center">Stores</a>
+            <a href="#" id="link-campaigns" onclick="nav('view-campaigns')"
+                class="nav-link hover:text-purple-600 h-16 flex items-center">Campaigns</a>
+            <a href="index.html" class="flex items-center gap-1 hover:text-purple-600 text-gray-400 has-tooltip"
+                data-tooltip="🏠 RETURN TO INDEX
+━━━━━━━━━━━━━━━━━━━━
+Navigate back to wireframe hub
+to access other portals">
+                <i data-lucide="home" size="16"></i>
+                <span class="text-xs">Index</span>
+            </a>
+            <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-8">
+
+        <!-- VIEW: DASHBOARD -->
+        <div id="view-dashboard" class="view block">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Regional Overview</h1>
+                <div class="flex gap-2">
+                    <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                        data-tooltip="🔄 REGION FILTER
+━━━━━━━━━━━━━━━━━━━━
+Feature: Switch between assigned regions
+Data: User.assignedRegions[]
+Access: Regional Manager can have multiple
+Updates: All dashboard metrics">
+                        <option>West Coast Region</option>
+                        <option>Mountain Region</option>
+                    </select>
+                    <button class="bg-white border text-gray-600 px-3 py-2 rounded-lg text-sm flex items-center gap-2 has-tooltip"
+                        data-tooltip="📥 EXPORT DASHBOARD
+━━━━━━━━━━━━━━━━━━━━
+Export regional overview to file
+Includes: Stats, exceptions, stores
+Formats: CSV, XLSX, PDF
+Scope: Current region filter">
+                        <i data-lucide="download" size="16"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="🏪 STORES IN REGION
+━━━━━━━━━━━━━━━━━━━━
+Feature: Total stores under supervision
+Data: Store.region = current region
+Query: WHERE status = ACTIVE
+Source: Store master data (SUPP-013)">
+                    <div class="text-sm text-gray-500 mb-1">Stores in Region</div>
+                    <div class="text-3xl font-bold text-gray-900">234</div>
+                    <div class="text-gray-400 text-xs mt-2">Across 3 districts</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="⚠️ EXCEPTIONS REQUIRING ACTION
+━━━━━━━━━━━━━━━━━━━━
+Feature: Stores needing immediate attention
+Data: Overdue + Rejected + Critical Issues
+Count: Real-time calculation
+Blocks: Regional compliance metrics
+Priority: Sorted by severity">
+                    <div class="text-sm text-gray-500 mb-1">Exceptions</div>
+                    <div class="text-3xl font-bold text-red-600">8</div>
+                    <div class="text-red-600 text-xs mt-2 font-medium">Requires Attention</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📊 REGIONAL COMPLIANCE
+━━━━━━━━━━━━━━━━━━━━
+Feature: On-time completion rate
+Calculation: (completed on-time / total) × 100
+Data: StoreAssignment.completed_at vs deadline
+Scope: All stores in region
+Benchmark: vs network average">
+                    <div class="text-sm text-gray-500 mb-1">Regional Compliance</div>
+                    <div class="text-3xl font-bold text-green-600">92%</div>
+                    <div class="text-green-600 text-xs mt-2 font-medium">↑ 3% vs network</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📸 PHOTOS PENDING REVIEW
+━━━━━━━━━━━━━━━━━━━━
+Feature: Verification queue count
+Data: PhotoUpload.status = PENDING
+Scope: Stores in current region only
+Ref: SUPP-018 Photo Review
+Blocks: Store campaign completion">
+                    <div class="text-sm text-gray-500 mb-1">Pending Verification</div>
+                    <div class="text-3xl font-bold text-purple-600">15</div>
+                    <div class="text-xs text-gray-400 mt-2">12 stores</div>
+                </div>
+            </div>
+
+            <!-- Exception Queue + Regional Performance -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Exception Queue -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 flex justify-between has-tooltip"
+                        data-tooltip="🚨 EXCEPTION QUEUE
+━━━━━━━━━━━━━━━━━━━━
+Feature: Priority stores requiring intervention
+Data: Aggregated from multiple sources
+Sources: Overdue, Rejected Photos, Issues
+Sort: Severity descending
+Action: Click to drill into store details">
+                        Exception Queue
+                        <span class="bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-xs font-bold">8</span>
+                    </div>
+                    <div class="divide-y divide-gray-100">
+                        <!-- Exception Item 1 - Overdue -->
+                        <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip"
+                            onclick="nav('view-store-detail')"
+                            data-tooltip="🔴 CRITICAL EXCEPTION
+━━━━━━━━━━━━━━━━━━━━
+Type: Overdue Campaign
+Store: #1044 Seattle
+Campaign: Holiday Promo 2025
+Days Overdue: 3 days past deadline
+Action: Review + Escalate or Waive">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <div class="font-medium text-gray-900">Store #1044 - Seattle</div>
+                                            <div class="text-sm text-gray-500">Holiday Promo 2025</div>
+                                        </div>
+                                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold">Overdue</span>
+                                    </div>
+                                    <div class="text-sm text-red-600 mb-2">3 days past deadline • 2 photos still pending</div>
+                                    <div class="flex gap-2">
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">View Details →</button>
+                                        <span class="text-gray-300">|</span>
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">Contact Store</button>
+                                        <span class="text-gray-300">|</span>
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">Escalate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exception Item 2 - Rejected Photos -->
+                        <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip"
+                            data-tooltip="🟡 MODERATE EXCEPTION
+━━━━━━━━━━━━━━━━━━━━
+Type: Multiple Rejected Photos
+Store: #3022 Portland
+Campaign: Summer Promo 2025
+Rejections: 4 photos (2nd attempt)
+Action: Review retake quality">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="camera-off" class="w-5 h-5 text-yellow-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <div class="font-medium text-gray-900">Store #3022 - Portland</div>
+                                            <div class="text-sm text-gray-500">Summer Promo 2025</div>
+                                        </div>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Photos Rejected</span>
+                                    </div>
+                                    <div class="text-sm text-yellow-600 mb-2">4 photos rejected (2nd attempt) • Retake required</div>
+                                    <div class="flex gap-2">
+                                        <button onclick="nav('view-verification')" class="text-purple-600 text-xs font-medium hover:underline">Review Photos →</button>
+                                        <span class="text-gray-300">|</span>
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">Contact Store</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exception Item 3 - Issue Reported -->
+                        <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip"
+                            data-tooltip="🟠 ISSUE REPORTED
+━━━━━━━━━━━━━━━━━━━━
+Type: Missing Items
+Store: #8822 Phoenix
+Campaign: Holiday Promo 2025
+Issue: 2 items damaged in shipment
+Action: Approve reorder or escalate">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="package-x" class="w-5 h-5 text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <div class="font-medium text-gray-900">Store #8822 - Phoenix</div>
+                                            <div class="text-sm text-gray-500">Holiday Promo 2025</div>
+                                        </div>
+                                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-bold">Issue Reported</span>
+                                    </div>
+                                    <div class="text-sm text-orange-600 mb-2">2 items damaged in shipment • Awaiting reorder approval</div>
+                                    <div class="flex gap-2">
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">View Issue →</button>
+                                        <span class="text-gray-300">|</span>
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">Approve Reorder</button>
+                                        <span class="text-gray-300">|</span>
+                                        <button class="text-purple-600 text-xs font-medium hover:underline">Escalate to Brand</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- View All Button -->
+                        <div class="px-6 py-3 bg-gray-50 text-center">
+                            <button onclick="nav('view-exceptions')" class="text-purple-600 font-medium text-sm">View All Exceptions →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regional Performance -->
+                <div class="space-y-6">
+                    <!-- Campaign Status -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                            data-tooltip="📊 ACTIVE CAMPAIGNS
+━━━━━━━━━━━━━━━━━━━━
+Feature: Campaign status overview
+Data: Campaign assignments in region
+Shows: Progress and compliance
+Updates: Real-time">
+                            Active Campaigns
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <div class="has-tooltip"
+                                data-tooltip="🎯 CAMPAIGN PROGRESS
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Holiday Promo 2025
+Stores: 234 total
+Completed: 187 stores (80%)
+On Schedule: 45 in progress
+Exceptions: 2 overdue">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div class="text-sm font-medium text-gray-900">Holiday Promo 2025</div>
+                                    <div class="text-xs text-gray-500">80%</div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <span>187 / 234 stores</span>
+                                    <span class="text-red-600">2 overdue</span>
+                                </div>
+                            </div>
+                            <div class="has-tooltip"
+                                data-tooltip="🎯 CAMPAIGN PROGRESS
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Summer Refresh
+Stores: 234 total
+Completed: 140 stores (60%)
+On Schedule: 88 in progress
+Exceptions: 6 need attention">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div class="text-sm font-medium text-gray-900">Summer Refresh</div>
+                                    <div class="text-xs text-gray-500">60%</div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <span>140 / 234 stores</span>
+                                    <span class="text-yellow-600">6 behind</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- District Breakdown -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                            data-tooltip="🗺️ DISTRICT PERFORMANCE
+━━━━━━━━━━━━━━━━━━━━
+Feature: District-level metrics
+Data: Store.district aggregation
+Shows: Compliance by district
+Ref: SUPP-013 Geographic Hierarchy">
+                            District Performance
+                        </div>
+                        <div class="p-4 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-700">North District</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-sm font-medium text-green-600">95%</div>
+                                    <i data-lucide="trending-up" class="w-4 h-4 text-green-500"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-700">Central District</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-sm font-medium text-green-600">91%</div>
+                                    <i data-lucide="trending-up" class="w-4 h-4 text-green-500"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-700">South District</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-sm font-medium text-yellow-600">86%</div>
+                                    <i data-lucide="trending-down" class="w-4 h-4 text-yellow-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store Compliance Overview -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 flex justify-between items-center has-tooltip"
+                    data-tooltip="🏪 STORE COMPLIANCE TABLE
+━━━━━━━━━━━━━━━━━━━━
+Feature: Detailed store-level compliance
+Data: StoreAssignment + Store JOIN
+Filter: By region, district, status
+Sort: Compliance, exceptions, name
+Action: Click to drill into store">
+                    Store Compliance Overview
+                    <div class="flex gap-2">
+                        <select class="border border-gray-200 rounded px-2 py-1 text-xs bg-white has-tooltip"
+                            data-tooltip="📍 FILTER BY DISTRICT
+━━━━━━━━━━━━━━━━━━━━
+Filter store list by district
+Data: Store.district field
+Updates: Table below instantly">
+                            <option>All Districts</option>
+                            <option>North District</option>
+                            <option>Central District</option>
+                            <option>South District</option>
+                        </select>
+                        <select class="border border-gray-200 rounded px-2 py-1 text-xs bg-white has-tooltip"
+                            data-tooltip="📊 FILTER BY STATUS
+━━━━━━━━━━━━━━━━━━━━
+Filter by exception status
+With Exceptions: Needs attention
+On Track: No current issues
+Completed: All campaigns done">
+                            <option>All Statuses</option>
+                            <option>With Exceptions</option>
+                            <option>On Track</option>
+                            <option>Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🏪 STORE
+━━━━━━━━━━━━━━━━━━━━
+Store ID and location name
+Data: Store.storeNumber, Store.name
+Click: Drill into store details">Store</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📍 DISTRICT
+━━━━━━━━━━━━━━━━━━━━
+Geographic sub-region
+Data: Store.district
+Hierarchy: Region > District > Store">District</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📢 ACTIVE CAMPAIGNS
+━━━━━━━━━━━━━━━━━━━━
+Count of campaigns in progress
+Data: StoreAssignment.status = ACTIVE
+Includes: Not yet completed">Active Campaigns</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📊 COMPLIANCE %
+━━━━━━━━━━━━━━━━━━━━
+On-time completion rate (30 days)
+Calculation: Completed on-time / Total
+Green: ≥95%, Yellow: 85-94%, Red: <85%">Compliance</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚠️ EXCEPTIONS
+━━━━━━━━━━━━━━━━━━━━
+Current store issues
+Types: Overdue, Rejected, Issues
+Priority: Sorted by severity">Exceptions</th>
+                            <th class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #1044 SEATTLE
+━━━━━━━━━━━━━━━━━━━━
+District: North (Downtown)
+Campaigns: 2 active
+Compliance: 85% (below target)
+⚠️ 3 days overdue - needs attention">
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">#1044 Seattle</div>
+                                <div class="text-xs text-gray-500">Downtown</div>
+                            </td>
+                            <td class="px-6 py-4">North</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-yellow-600 font-medium">85%</div>
+                                    <div class="w-16 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold">Overdue</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #3022 PORTLAND
+━━━━━━━━━━━━━━━━━━━━
+District: North (Mall)
+Campaigns: 2 active
+Compliance: 88% (near target)
+📸 4 photos rejected - retake needed">
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">#3022 Portland</div>
+                                <div class="text-xs text-gray-500">Mall Location</div>
+                            </td>
+                            <td class="px-6 py-4">North</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-yellow-600 font-medium">88%</div>
+                                    <div class="w-16 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Rejected Photos</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #8822 PHOENIX
+━━━━━━━━━━━━━━━━━━━━
+District: South (Suburban)
+Campaigns: 1 active
+Compliance: 90% (near target)
+📦 2 items damaged - reorder pending">
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">#8822 Phoenix</div>
+                                <div class="text-xs text-gray-500">Suburban</div>
+                            </td>
+                            <td class="px-6 py-4">South</td>
+                            <td class="px-6 py-4">1</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-yellow-600 font-medium">90%</div>
+                                    <div class="w-16 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-bold">Issue</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #2105 SAN FRANCISCO
+━━━━━━━━━━━━━━━━━━━━
+District: Central (Financial)
+Campaigns: 2 active
+Compliance: 98% (excellent)
+✅ All on track - no issues">
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">#2105 San Francisco</div>
+                                <div class="text-xs text-gray-500">Financial District</div>
+                            </td>
+                            <td class="px-6 py-4">Central</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-green-600 font-medium">98%</div>
+                                    <div class="w-16 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-green-500 h-1.5 rounded-full" style="width: 98%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-green-600 text-xs">On Track</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #5501 SAN JOSE
+━━━━━━━━━━━━━━━━━━━━
+District: Central (Tech Center)
+Campaigns: 2 active
+Compliance: 96% (excellent)
+✅ All on track - no issues">
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">#5501 San Jose</div>
+                                <div class="text-xs text-gray-500">Tech Center</div>
+                            </td>
+                            <td class="px-6 py-4">Central</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-green-600 font-medium">96%</div>
+                                    <div class="w-16 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-green-500 h-1.5 rounded-full" style="width: 96%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-green-600 text-xs">On Track</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="px-6 py-3 border-t border-gray-100 text-center">
+                    <button onclick="nav('view-stores')" class="text-purple-600 font-medium text-sm">View All 234 Stores →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: EXCEPTIONS -->
+        <div id="view-exceptions" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Exception Queue</h1>
+                    <p class="text-sm text-gray-500 mt-1">Stores requiring immediate attention sorted by priority</p>
+                </div>
+                <div class="flex gap-2">
+                    <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                        data-tooltip="📋 EXCEPTION TYPE FILTER
+━━━━━━━━━━━━━━━━━━━━
+Filter by exception category
+Overdue: Past deadline
+Rejected: Photo retakes needed
+Issues: Damage, missing items, etc.">
+                        <option>All Exception Types</option>
+                        <option>Overdue Only</option>
+                        <option>Rejected Photos</option>
+                        <option>Issues Reported</option>
+                    </select>
+                    <button class="bg-white border text-gray-600 px-3 py-2 rounded-lg text-sm flex items-center gap-2 has-tooltip"
+                        data-tooltip="🔍 ADVANCED FILTERS
+━━━━━━━━━━━━━━━━━━━━
+Filter by: District, Campaign
+Date range: Exception age
+Sort: Priority, age, store name">
+                        <i data-lucide="filter" size="16"></i> Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exception List -->
+            <div class="space-y-4">
+                <!-- Critical Exception -->
+                <div class="bg-white rounded-xl shadow-sm border-l-4 border-red-500 overflow-hidden has-tooltip"
+                    data-tooltip="🔴 CRITICAL PRIORITY
+━━━━━━━━━━━━━━━━━━━━
+Type: Overdue Campaign
+Severity: High (3 days overdue)
+Impact: Regional compliance metric
+Action: Immediate intervention needed">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="font-bold text-gray-900 text-lg">Store #1044 - Seattle</div>
+                                        <div class="text-sm text-gray-500">Downtown • North District</div>
+                                    </div>
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-bold">CRITICAL</span>
+                                </div>
+                                <div class="bg-red-50 border border-red-100 rounded-lg p-4 mb-4">
+                                    <div class="font-medium text-red-900 mb-2">Campaign Overdue: Holiday Promo 2025</div>
+                                    <div class="text-sm text-red-700 space-y-1">
+                                        <div>• 3 days past installation deadline (Dec 15)</div>
+                                        <div>• 2 photos still pending submission</div>
+                                        <div>• Last activity: 5 days ago</div>
+                                        <div>• Store Manager: Jane Smith (jane@store.com)</div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="nav('view-store-detail')" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700">
+                                        View Store Details
+                                    </button>
+                                    <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                                        Contact Store
+                                    </button>
+                                    <button class="bg-white border border-purple-300 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-50 has-tooltip"
+                                        data-tooltip="🚀 ESCALATE TO BRAND ADMIN
+━━━━━━━━━━━━━━━━━━━━
+Feature: Escalation workflow
+Action: Notify Brand Admin + PSP
+Adds: Comment + notification
+Ref: SUPP-004 Escalation Matrix
+Audit: Logged in activity history">
+                                        Escalate to Brand Admin
+                                    </button>
+                                    <button class="text-purple-600 px-4 py-2 text-sm font-medium hover:underline has-tooltip"
+                                        data-tooltip="⚠️ APPLY WAIVER
+━━━━━━━━━━━━━━━━━━━━
+Feature: Completion waiver (when allowed)
+Requires: Reason code + comment
+Permission: Regional Manager role
+Ref: SUPP-001 Regional Workflow
+Audit: Permanent record">
+                                        Apply Waiver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moderate Exception - Rejected Photos -->
+                <div class="bg-white rounded-xl shadow-sm border-l-4 border-yellow-500 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="camera-off" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="font-bold text-gray-900 text-lg">Store #3022 - Portland</div>
+                                        <div class="text-sm text-gray-500">Mall Location • North District</div>
+                                    </div>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">MODERATE</span>
+                                </div>
+                                <div class="bg-yellow-50 border border-yellow-100 rounded-lg p-4 mb-4">
+                                    <div class="font-medium text-yellow-900 mb-2">Multiple Photo Rejections: Summer Promo 2025</div>
+                                    <div class="text-sm text-yellow-700 space-y-1">
+                                        <div>• 4 photos rejected on 2nd attempt</div>
+                                        <div>• Reasons: Wrong Angle (2), Too Dark (2)</div>
+                                        <div>• Store notified 12 hours ago</div>
+                                        <div>• Due date: 5 days remaining</div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="nav('view-verification')" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 has-tooltip"
+                                        data-tooltip="📸 REVIEW PHOTOS
+━━━━━━━━━━━━━━━━━━━━
+Action: Open verification queue
+Shows: Rejected photos for this store
+Ref: SUPP-018 Photo Review">
+                                        Review Photos
+                                    </button>
+                                    <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
+                                        data-tooltip="📞 CONTACT STORE
+━━━━━━━━━━━━━━━━━━━━
+Action: Send notification/email
+To: Store Manager
+Method: Email or in-app message">
+                                        Contact Store
+                                    </button>
+                                    <button class="text-purple-600 px-4 py-2 text-sm font-medium hover:underline has-tooltip"
+                                        data-tooltip="📜 VIEW HISTORY
+━━━━━━━━━━━━━━━━━━━━
+Shows: Past photo submissions
+Includes: Rejection reasons
+Timeline: All attempts visible">
+                                        View History
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issue Reported -->
+                <div class="bg-white rounded-xl shadow-sm border-l-4 border-orange-500 overflow-hidden has-tooltip"
+                    data-tooltip="🟠 ISSUE EXCEPTION
+━━━━━━━━━━━━━━━━━━━━
+Store: #8822 Phoenix (South)
+Type: Damaged items in shipment
+Items: Window Cling, Counter Mat
+Action: Review and approve reorder">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="package-x" class="w-6 h-6 text-orange-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="font-bold text-gray-900 text-lg">Store #8822 - Phoenix</div>
+                                        <div class="text-sm text-gray-500">Suburban • South District</div>
+                                    </div>
+                                    <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-bold">ISSUE</span>
+                                </div>
+                                <div class="bg-orange-50 border border-orange-100 rounded-lg p-4 mb-4">
+                                    <div class="font-medium text-orange-900 mb-2">Damaged Items Reported: Holiday Promo 2025</div>
+                                    <div class="text-sm text-orange-700 space-y-1">
+                                        <div>• 2 items damaged during shipment</div>
+                                        <div>• Items: Window Cling, Counter Mat</div>
+                                        <div>• Evidence photos attached</div>
+                                        <div>• Reorder request pending approval</div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 has-tooltip"
+                                        data-tooltip="✅ APPROVE REORDER
+━━━━━━━━━━━━━━━━━━━━
+Feature: Reorder approval workflow
+Action: Trigger PSP fulfillment
+Ref: SUPP-019 Reorder Logic
+Updates: Issue status to APPROVED
+Notifies: PSP Ops + Store">
+                                        Approve Reorder
+                                    </button>
+                                    <button class="bg-white border border-red-300 text-red-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-50 has-tooltip"
+                                        data-tooltip="❌ REJECT REQUEST
+━━━━━━━━━━━━━━━━━━━━
+Action: Deny reorder request
+Requires: Rejection reason
+Notifies: Store manager
+Updates: Issue status to REJECTED">
+                                        Reject Request
+                                    </button>
+                                    <button class="bg-white border border-purple-300 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-50 has-tooltip"
+                                        data-tooltip="🚀 ESCALATE TO BRAND ADMIN
+━━━━━━━━━━━━━━━━━━━━
+Action: Escalate for higher review
+Reason: Above regional authority
+Notifies: Brand Admin team
+Ref: SUPP-004 Escalation Matrix">
+                                        Escalate to Brand Admin
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button class="text-purple-600 font-medium">Load More Exceptions</button>
+            </div>
+        </div>
+
+        <!-- VIEW: VERIFICATION QUEUE -->
+        <div id="view-verification" class="view hidden">
+            <div class="flex justify-between items-end border-b pb-2 mb-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Photo Verification Queue</h1>
+                    <p class="text-sm text-gray-500">Reviewing store submissions for regional compliance (SUPP-018)</p>
+                </div>
+                <div class="flex gap-2">
+                    <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                        data-tooltip="📢 FILTER BY CAMPAIGN
+━━━━━━━━━━━━━━━━━━━━
+Show photos for specific campaign
+Filter: Active campaigns only
+Shows: Count pending per campaign">
+                        <option>All Campaigns</option>
+                        <option>Holiday Promo 2025</option>
+                        <option>Summer Refresh</option>
+                    </select>
+                    <button class="bg-white border text-gray-600 px-3 py-1 rounded text-sm hover:bg-gray-50 has-tooltip"
+                        data-tooltip="📊 GRID VIEW
+━━━━━━━━━━━━━━━━━━━━
+Display: Multiple photos at once
+Best for: Quick visual scan
+Actions: Click to expand">Grid View</button>
+                    <button class="bg-purple-100 text-purple-700 px-3 py-1 rounded text-sm font-bold has-tooltip"
+                        data-tooltip="📜 STREAM VIEW
+━━━━━━━━━━━━━━━━━━━━
+Display: One photo at a time
+Best for: Detailed review
+Actions: Full context visible">Stream View</button>
+                </div>
+            </div>
+
+            <!-- Review Card 1 -->
+            <div id="review-card-1" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 mb-6">
+                <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-gray-800">Store #2105 - San Francisco (Central)</span>
+                        <div class="text-xs text-gray-500">Submitted: 30 minutes ago • <span class="text-blue-600">Attempt #1</span></div>
+                    </div>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">Pending Review</span>
+                </div>
+
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Photo Evidence -->
+                    <div class="space-y-2">
+                        <div class="relative group cursor-pointer has-tooltip"
+                            data-tooltip="📸 PHOTO SUBMISSION
+━━━━━━━━━━━━━━━━━━━━
+Item: Window Cling 20x30
+Location: Front Window (Left)
+Uploaded: 30 min ago
+Size: 2.4 MB (1920x1080)
+Format: JPEG">
+                            <img src="https://via.placeholder.com/600x400?text=Window+Display+Photo"
+                                class="rounded-lg shadow-sm border w-full object-cover h-64">
+                            <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                Front Window (Left)
+                            </div>
+                        </div>
+                        <p class="text-xs text-center text-gray-400">Click to zoom / compare with reference guide</p>
+                    </div>
+
+                    <!-- Evaluation Controls -->
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-gray-700 mb-2">Review Criteria (SUPP-018)</h4>
+                            <ul class="text-sm space-y-2 mb-6">
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> Correct Item (Window Cling)
+                                </li>
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> Properly placed on glass
+                                </li>
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> Photo angle shows full display
+                                </li>
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> No visible damage or defects
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex gap-3">
+                                <button
+                                    class="flex-1 bg-red-50 text-red-700 border border-red-200 py-3 rounded-lg font-bold hover:bg-red-100 flex items-center justify-center gap-2 has-tooltip"
+                                    onclick="reject(1)"
+                                    data-tooltip="❌ REJECT PHOTO
+━━━━━━━━━━━━━━━━━━━━
+Action: Mark photo as rejected
+Requires: Rejection reason prompt
+Notifies: Store for retake
+Ref: SUPP-018 Photo Review">
+                                    <i data-lucide="x" size="18"></i> Reject
+                                </button>
+                                <button
+                                    class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 flex items-center justify-center gap-2 has-tooltip"
+                                    onclick="approve(1)"
+                                    data-tooltip="✅ APPROVE PHOTO
+━━━━━━━━━━━━━━━━━━━━
+Action: Mark photo as accepted
+Updates: Item status to VERIFIED
+Progress: Store compliance updated
+Ref: SUPP-018 Photo Review">
+                                    <i data-lucide="check" size="18"></i> Approve
+                                </button>
+                            </div>
+                            <button class="w-full bg-purple-50 text-purple-700 border border-purple-200 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 has-tooltip"
+                                data-tooltip="🚀 ESCALATE TO BRAND ADMIN
+━━━━━━━━━━━━━━━━━━━━
+Feature: Escalate unclear cases
+Action: Notify Brand Admin for review
+Ref: SUPP-004 Escalation
+Use: When unable to determine quality">
+                                Escalate to Brand Admin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div id="review-card-2" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-gray-800">Store #5501 - San Jose (Central)</span>
+                        <div class="text-xs text-gray-500">Submitted: 2 hours ago • <span class="text-blue-600">Attempt #1</span></div>
+                    </div>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">Pending Review</span>
+                </div>
+
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Photo Evidence -->
+                    <div class="space-y-2">
+                        <div class="relative group cursor-pointer">
+                            <img src="https://via.placeholder.com/600x400?text=Counter+Display+Photo"
+                                class="rounded-lg shadow-sm border w-full object-cover h-64">
+                            <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                Register Counter
+                            </div>
+                        </div>
+                        <p class="text-xs text-center text-gray-400">Click to zoom / compare with reference guide</p>
+                    </div>
+
+                    <!-- Evaluation Controls -->
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-gray-700 mb-2">Review Criteria (SUPP-018)</h4>
+                            <ul class="text-sm space-y-2 mb-6">
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> Correct Item (Counter Mat)
+                                </li>
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> Placed on counter surface
+                                </li>
+                                <li class="flex items-center gap-2 text-gray-600">
+                                    <i data-lucide="check-circle" size="16" class="text-green-500"></i> Visible in photo
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex gap-3">
+                                <button
+                                    class="flex-1 bg-red-50 text-red-700 border border-red-200 py-3 rounded-lg font-bold hover:bg-red-100 flex items-center justify-center gap-2 has-tooltip"
+                                    onclick="reject(2)"
+                                    data-tooltip="❌ REJECT PHOTO
+━━━━━━━━━━━━━━━━━━━━
+Action: Mark photo as rejected
+Requires: Rejection reason prompt
+Notifies: Store for retake">
+                                    <i data-lucide="x" size="18"></i> Reject
+                                </button>
+                                <button
+                                    class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 flex items-center justify-center gap-2 has-tooltip"
+                                    onclick="approve(2)"
+                                    data-tooltip="✅ APPROVE PHOTO
+━━━━━━━━━━━━━━━━━━━━
+Action: Mark photo as accepted
+Updates: Item status to VERIFIED
+Progress: Store compliance updated">
+                                    <i data-lucide="check" size="18"></i> Approve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: STORES -->
+        <div id="view-stores" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
+                    data-tooltip="🏪 REGIONAL STORES
+━━━━━━━━━━━━━━━━━━━━
+Full list of stores in your region
+Data: Store entity
+Scope: User.assignedRegions
+Ref: SUPP-012">Regional Stores</h1>
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Search stores..." class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-64 has-tooltip"
+                        data-tooltip="🔍 SEARCH STORES
+━━━━━━━━━━━━━━━━━━━━
+Search by: Store number, name
+Search by: Address, district
+Real-time: Filters as you type">
+                    <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                        data-tooltip="📍 FILTER BY DISTRICT
+━━━━━━━━━━━━━━━━━━━━
+Filter stores by district
+Districts: Sub-regions in territory
+Shows: Store count per district">
+                        <option>All Districts</option>
+                        <option>North District</option>
+                        <option>Central District</option>
+                        <option>South District</option>
+                    </select>
+                    <button class="bg-white border text-gray-600 px-3 py-2 rounded-lg text-sm flex items-center gap-2 has-tooltip"
+                        data-tooltip="📥 EXPORT STORES
+━━━━━━━━━━━━━━━━━━━━
+Export store list to file
+Includes: All visible stores
+Formats: CSV, XLSX available
+Filters: Applied to export">
+                        <i data-lucide="download" size="16"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🏪 STORE
+━━━━━━━━━━━━━━━━━━━━
+Store identifier and location
+Data: Store.storeNumber, Store.name
+Click: View store details">Store</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📍 DISTRICT
+━━━━━━━━━━━━━━━━━━━━
+Geographic grouping
+Data: Store.district
+Hierarchy: Region > District">District</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📢 ACTIVE CAMPAIGNS
+━━━━━━━━━━━━━━━━━━━━
+Number of campaigns in progress
+Data: StoreAssignment count
+Includes: Not yet completed">Active Campaigns</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📊 30-DAY COMPLIANCE
+━━━━━━━━━━━━━━━━━━━━
+Rolling 30-day completion rate
+Green: ≥95%, Yellow: 85-94%, Red: <85%
+Calculation: On-time / Total">30-Day Compliance</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📋 STATUS
+━━━━━━━━━━━━━━━━━━━━
+Current exception status
+Values: Overdue, Issue, On Track
+Priority: Red > Yellow > Green">Status</th>
+                            <th class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #1044 SEATTLE
+━━━━━━━━━━━━━━━━━━━━
+District: North (Downtown)
+Campaigns: 2 active
+Compliance: 85% (below target)
+⚠️ Overdue - needs attention">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">#1044</div>
+                                <div class="text-xs text-gray-500">Seattle - Downtown</div>
+                            </td>
+                            <td class="px-6 py-4">North</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-yellow-600 font-medium">85%</div>
+                                    <div class="w-20 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold">Overdue</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #3022 PORTLAND
+━━━━━━━━━━━━━━━━━━━━
+District: North (Mall)
+Campaigns: 2 active
+Compliance: 88% (near target)
+📸 Rejected photos - retake needed">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">#3022</div>
+                                <div class="text-xs text-gray-500">Portland - Mall</div>
+                            </td>
+                            <td class="px-6 py-4">North</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-yellow-600 font-medium">88%</div>
+                                    <div class="w-20 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Photos Rejected</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #8822 PHOENIX
+━━━━━━━━━━━━━━━━━━━━
+District: South (Suburban)
+Campaigns: 1 active
+Compliance: 90% (near target)
+📦 Issue reported - damaged items">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">#8822</div>
+                                <div class="text-xs text-gray-500">Phoenix - Suburban</div>
+                            </td>
+                            <td class="px-6 py-4">South</td>
+                            <td class="px-6 py-4">1</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-yellow-600 font-medium">90%</div>
+                                    <div class="w-20 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-bold">Issue</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #2105 SAN FRANCISCO
+━━━━━━━━━━━━━━━━━━━━
+District: Central (Financial)
+Campaigns: 2 active
+Compliance: 98% (excellent)
+✅ All on track - no issues">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">#2105</div>
+                                <div class="text-xs text-gray-500">San Francisco - Financial</div>
+                            </td>
+                            <td class="px-6 py-4">Central</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-green-600 font-medium">98%</div>
+                                    <div class="w-20 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-green-500 h-1.5 rounded-full" style="width: 98%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-green-600 text-xs font-medium">On Track</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-store-detail')"
+                            data-tooltip="🏪 STORE #5501 SAN JOSE
+━━━━━━━━━━━━━━━━━━━━
+District: Central (Tech Center)
+Campaigns: 2 active
+Compliance: 96% (excellent)
+✅ All on track - no issues">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">#5501</div>
+                                <div class="text-xs text-gray-500">San Jose - Tech Center</div>
+                            </td>
+                            <td class="px-6 py-4">Central</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-green-600 font-medium">96%</div>
+                                    <div class="w-20 bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-green-500 h-1.5 rounded-full" style="width: 96%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-green-600 text-xs font-medium">On Track</span>
+                            </td>
+                            <td class="px-6 py-4 text-purple-600 font-medium text-xs">View →</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button class="text-purple-600 font-medium">Load More Stores</button>
+            </div>
+        </div>
+
+        <!-- VIEW: CAMPAIGNS -->
+        <div id="view-campaigns" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
+                    data-tooltip="📢 REGIONAL CAMPAIGNS
+━━━━━━━━━━━━━━━━━━━━
+All campaigns in your region
+Data: Campaign + StoreAssignment
+Scope: User.assignedRegions
+Ref: SUPP-010 Campaign Management">Regional Campaign Performance</h1>
+                <button class="bg-white border text-gray-600 px-3 py-2 rounded-lg text-sm flex items-center gap-2 has-tooltip"
+                    data-tooltip="📥 EXPORT REPORT
+━━━━━━━━━━━━━━━━━━━━
+Export campaign performance
+Includes: Progress, compliance, exceptions
+Formats: PDF, XLSX available
+Scope: All visible campaigns">
+                    <i data-lucide="download" size="16"></i> Export Report
+                </button>
+            </div>
+
+            <!-- Campaign Cards -->
+            <div class="space-y-6">
+                <!-- Campaign 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden has-tooltip"
+                    data-tooltip="📢 HOLIDAY PROMO 2025
+━━━━━━━━━━━━━━━━━━━━
+Status: Active (in progress)
+Period: Dec 1 - Dec 31, 2025
+Stores: 234 in region
+Progress: 80% complete">
+                    <div class="px-6 py-4 bg-gray-50 border-b flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-gray-900">Holiday Promo 2025</h3>
+                            <div class="text-sm text-gray-500">Dec 1 - Dec 31, 2025</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">Active</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-4 gap-6 mb-6">
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Regional Progress</div>
+                                <div class="text-2xl font-bold text-gray-900">80%</div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Stores Completed</div>
+                                <div class="text-2xl font-bold text-green-600">187</div>
+                                <div class="text-xs text-gray-400 mt-1">of 234 stores</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Compliance Rate</div>
+                                <div class="text-2xl font-bold text-green-600">94%</div>
+                                <div class="text-xs text-green-600 mt-1">Above target</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Exceptions</div>
+                                <div class="text-2xl font-bold text-red-600">2</div>
+                                <div class="text-xs text-red-600 mt-1">Overdue stores</div>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between items-center">
+                                <div class="text-sm text-gray-600 has-tooltip"
+                                    data-tooltip="📊 DISTRICT BREAKDOWN
+━━━━━━━━━━━━━━━━━━━━
+North: 95% (leading)
+Central: 91% (on track)
+South: 86% (needs attention)">
+                                    <span class="font-medium">District Breakdown:</span>
+                                    North 95% • Central 91% • South 86%
+                                </div>
+                                <button class="text-purple-600 font-medium text-sm has-tooltip"
+                                    data-tooltip="📋 VIEW DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Action: Open campaign detail page
+Shows: Store-by-store progress
+Includes: Photos, exceptions, timeline">View Details →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campaign 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden has-tooltip"
+                    data-tooltip="📢 SUMMER REFRESH
+━━━━━━━━━━━━━━━━━━━━
+Status: Active (in progress)
+Period: Jun 15 - Jul 31, 2025
+Stores: 234 in region
+Progress: 65% complete">
+                    <div class="px-6 py-4 bg-gray-50 border-b flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-gray-900">Summer Refresh</h3>
+                            <div class="text-sm text-gray-500">Jun 15 - Jul 31, 2025</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">Active</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-4 gap-6 mb-6">
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Regional Progress</div>
+                                <div class="text-2xl font-bold text-gray-900">60%</div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Stores Completed</div>
+                                <div class="text-2xl font-bold text-yellow-600">140</div>
+                                <div class="text-xs text-gray-400 mt-1">of 234 stores</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Compliance Rate</div>
+                                <div class="text-2xl font-bold text-yellow-600">89%</div>
+                                <div class="text-xs text-yellow-600 mt-1">On target</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500 mb-1">Exceptions</div>
+                                <div class="text-2xl font-bold text-yellow-600">6</div>
+                                <div class="text-xs text-yellow-600 mt-1">Need attention</div>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between items-center">
+                                <div class="text-sm text-gray-600">
+                                    <span class="font-medium">District Breakdown:</span>
+                                    North 92% • Central 88% • South 84%
+                                </div>
+                                <button class="text-purple-600 font-medium text-sm">View Details →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: STORE DETAIL -->
+        <div id="view-store-detail" class="view hidden">
+            <div class="mb-6">
+                <button onclick="nav('view-dashboard')" class="text-sm text-gray-500 mb-2 hover:text-purple-600 flex items-center gap-1 has-tooltip"
+                    data-tooltip="⬅️ BACK TO DASHBOARD
+━━━━━━━━━━━━━━━━━━━━
+Action: Return to regional overview
+Preserves: Current filter state">
+                    <i data-lucide="arrow-left" size="16"></i> Back to Dashboard
+                </button>
+                <div class="flex justify-between items-start">
+                    <div class="has-tooltip"
+                        data-tooltip="🏪 STORE #1044 SEATTLE
+━━━━━━━━━━━━━━━━━━━━
+Location: Downtown Seattle
+District: North District
+Region: West Coast Region
+Data: Full store profile">
+                        <h1 class="text-2xl font-bold text-gray-900">Store #1044 - Seattle</h1>
+                        <div class="text-sm text-gray-500 mt-1">Downtown • North District • West Coast Region</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="bg-white border text-gray-600 px-3 py-2 rounded-lg text-sm flex items-center gap-2 has-tooltip"
+                            data-tooltip="📧 CONTACT STORE
+━━━━━━━━━━━━━━━━━━━━
+Action: Send message to store
+Recipients: Store Manager
+Methods: Email, in-app notification
+Templates: Available">
+                            <i data-lucide="mail" size="16"></i> Contact Store
+                        </button>
+                        <button class="bg-purple-600 text-white px-3 py-2 rounded-lg text-sm font-medium has-tooltip"
+                            data-tooltip="🚀 ESCALATE TO BRAND ADMIN
+━━━━━━━━━━━━━━━━━━━━
+Action: Escalate store issues
+Reason: Above regional authority
+Notifies: Brand Admin team
+Ref: SUPP-004 Escalation Matrix">
+                            Escalate to Brand Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store Stats -->
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📊 30-DAY COMPLIANCE
+━━━━━━━━━━━━━━━━━━━━
+Rolling 30-day completion rate
+Current: 85% (below 92% avg)
+Target: 95%
+Action: Review overdue items">
+                    <div class="text-sm text-gray-500 mb-1">30-Day Compliance</div>
+                    <div class="text-3xl font-bold text-yellow-600">85%</div>
+                    <div class="text-xs text-yellow-600 mt-2">Below regional avg</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📢 ACTIVE CAMPAIGNS
+━━━━━━━━━━━━━━━━━━━━
+Campaigns in progress
+Count: 2 active campaigns
+Status: 1 overdue, 1 on track
+Action: Review campaign details">
+                    <div class="text-sm text-gray-500 mb-1">Active Campaigns</div>
+                    <div class="text-3xl font-bold text-gray-900">2</div>
+                    <div class="text-xs text-gray-400 mt-2">1 overdue</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="✅ COMPLETED (30 DAYS)
+━━━━━━━━━━━━━━━━━━━━
+Successfully completed campaigns
+Count: 8 campaigns this month
+Average: Good completion rate
+History: View full history">
+                    <div class="text-sm text-gray-500 mb-1">Completed (30d)</div>
+                    <div class="text-3xl font-bold text-gray-900">8</div>
+                    <div class="text-xs text-gray-400 mt-2">campaigns</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="⚠️ ISSUES REPORTED
+━━━━━━━━━━━━━━━━━━━━
+Store-reported issues this month
+Count: 1 issue pending
+Types: Damage, missing items, etc.
+Action: Review issue details">
+                    <div class="text-sm text-gray-500 mb-1">Issues Reported</div>
+                    <div class="text-3xl font-bold text-orange-600">1</div>
+                    <div class="text-xs text-orange-600 mt-2">This month</div>
+                </div>
+            </div>
+
+            <!-- Store Campaigns -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                    data-tooltip="📢 ACTIVE CAMPAIGNS
+━━━━━━━━━━━━━━━━━━━━
+Campaigns assigned to this store
+Shows: Current progress
+Status: Overdue or on track">Active Campaigns</div>
+                <div class="divide-y divide-gray-100">
+                    <div class="p-6 has-tooltip"
+                        data-tooltip="🔴 OVERDUE CAMPAIGN
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Holiday Promo 2025
+Status: 3 days past deadline
+Pending: 2 photos still needed
+Priority: Critical - needs attention">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <div class="font-bold text-gray-900 text-lg">Holiday Promo 2025</div>
+                                <div class="text-sm text-gray-500">Due: Dec 15, 2025</div>
+                            </div>
+                            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-bold">OVERDUE</span>
+                        </div>
+                        <div class="bg-red-50 border border-red-100 rounded-lg p-4 mb-4">
+                            <div class="text-sm text-red-700">
+                                <div class="font-medium mb-2">3 days past deadline</div>
+                                <div class="space-y-1">
+                                    <div>• 2 photos still pending submission</div>
+                                    <div>• Last activity: 5 days ago</div>
+                                    <div>• Store Manager: Jane Smith</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium has-tooltip"
+                                data-tooltip="📋 VIEW CAMPAIGN DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Action: Open full campaign view
+Shows: All items, photos, progress
+Includes: Submission history">View Campaign Details</button>
+                            <button class="bg-white border border-gray-300 px-4 py-2 rounded-lg text-sm font-medium has-tooltip"
+                                data-tooltip="📧 CONTACT STORE
+━━━━━━━━━━━━━━━━━━━━
+Action: Send message to store
+Recipients: Store Manager
+Methods: Email, in-app notification">Contact Store</button>
+                            <button class="text-purple-600 px-4 py-2 text-sm font-medium hover:underline has-tooltip"
+                                data-tooltip="🎫 APPLY WAIVER
+━━━━━━━━━━━━━━━━━━━━
+Action: Request deadline waiver
+Reason: Store circumstances
+Approval: Brand Admin required
+Ref: SUPP-004 Waiver Process">Apply Waiver</button>
+                        </div>
+                    </div>
+                    <div class="p-6 has-tooltip"
+                        data-tooltip="✅ ON TRACK CAMPAIGN
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Summer Refresh
+Progress: 75% complete
+Due: Jul 31, 2025
+Status: On schedule">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <div class="font-bold text-gray-900 text-lg">Summer Refresh</div>
+                                <div class="text-sm text-gray-500">Due: Jul 31, 2025</div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">On Track</span>
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="flex-1">
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">75% complete</span>
+                        </div>
+                        <button class="text-purple-600 text-sm font-medium hover:underline has-tooltip"
+                            data-tooltip="📋 VIEW DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Action: Open full campaign view
+Shows: All items, photos, progress">View Campaign Details →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store Activity -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                    data-tooltip="📜 RECENT ACTIVITY
+━━━━━━━━━━━━━━━━━━━━
+Store activity timeline
+Shows: Submissions, notifications
+Data: AuditLog for store
+Scroll: View full history">Recent Activity</div>
+                <div class="p-6 space-y-4">
+                    <div class="flex gap-3">
+                        <div class="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                        <div>
+                            <div class="text-sm text-gray-900">Campaign overdue notification sent</div>
+                            <div class="text-xs text-gray-500">Today, 9:00 AM • Holiday Promo 2025</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                        <div>
+                            <div class="text-sm text-gray-900">2 photos submitted</div>
+                            <div class="text-xs text-gray-500">5 days ago • Summer Refresh</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                        <div>
+                            <div class="text-sm text-gray-900">Shipment received</div>
+                            <div class="text-xs text-gray-500">Dec 10 • Holiday Promo 2025</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                        <div>
+                            <div class="text-sm text-gray-900">Campaign completed</div>
+                            <div class="text-xs text-gray-500">Dec 5 • Fall Sale 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function nav(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.view').forEach(el => el.classList.remove('block'));
+
+            // Show target view
+            document.getElementById(viewId).classList.remove('hidden');
+            document.getElementById(viewId).classList.add('block');
+
+            // Reset Nav Links
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('active-nav', 'text-purple-600', 'border-b-2', 'border-purple-600');
+                el.classList.add('hover:text-purple-600');
+            });
+
+            // Set Active Link
+            const linkMap = {
+                'view-dashboard': 'link-dashboard',
+                'view-exceptions': 'link-exceptions',
+                'view-verification': 'link-verification',
+                'view-stores': 'link-stores',
+                'view-campaigns': 'link-campaigns',
+                'view-store-detail': 'link-stores'
+            };
+
+            const linkId = linkMap[viewId];
+            if (linkId) {
+                const el = document.getElementById(linkId);
+                if (el) {
+                    el.classList.add('active-nav', 'text-purple-600', 'border-b-2', 'border-purple-600');
+                }
+            }
+
+            // Re-run icons
+            lucide.createIcons();
+        }
+
+        function approve(id) {
+            const card = document.getElementById(`review-card-${id}`);
+            card.innerHTML = `<div class="p-8 text-center text-green-600 font-bold bg-green-50">
+                <i data-lucide="check-circle" class="inline mb-2 w-12 h-12"></i><br>
+                Approved! Loading next photo...
+            </div>`;
+            lucide.createIcons();
+            setTimeout(() => card.remove(), 1500);
+        }
+
+        function reject(id) {
+            const reason = prompt("Enter Rejection Reason:", "Wrong Angle");
+            if (reason) {
+                const card = document.getElementById(`review-card-${id}`);
+                card.innerHTML = `<div class="p-8 text-center text-red-600 font-bold bg-red-50">
+                    <i data-lucide="x-circle" class="inline mb-2 w-12 h-12"></i><br>
+                    Rejected: "${reason}"<br>
+                    <span class="text-xs text-gray-500">Store notified. Retake requested. (SUPP-018)</span>
+                 </div>`;
+                lucide.createIcons();
+                setTimeout(() => card.remove(), 2000);
+            }
+        }
+    </script>
+</body>
+
+</html>

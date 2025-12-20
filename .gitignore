@@ -1,0 +1,31 @@
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temp files
+*.tmp
+*.temp
+*.bak
+
+# Credentials (should never be in SOW)
+credentials.json
+secrets.yaml
+*.key
+*.pem
+.env
+
+# Large binary archives
+*.zip
+*.tar.gz
+*.rar
+
+# Keep markdown and images, ignore redundant DOCX in archive
+99_Archive/DOCX/**/*.docx

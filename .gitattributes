@@ -1,0 +1,23 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Documents - text
+*.md text
+*.txt text
+*.json text
+*.yaml text
+*.yml text
+
+# Images - binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+
+# Office documents - binary (archived only)
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.pdf binary
