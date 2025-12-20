@@ -1,0 +1,20 @@
+<svg viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Logo Icon with white background for visibility -->
+    <rect width="42" height="42" x="4" y="4" rx="9" fill="white"/>
+    <rect width="40" height="40" x="5" y="5" rx="8" fill="url(#newpopsys-grad-light)"/>
+    <defs>
+        <linearGradient id="newpopsys-grad-light" x1="0" y1="0" x2="40" y2="40">
+            <stop stop-color="#1e3a5f"/>
+            <stop offset="1" stop-color="#2d5a87"/>
+        </linearGradient>
+    </defs>
+    <!-- POP display icon -->
+    <rect x="12" y="12" width="26" height="20" rx="2" fill="#3b82f6"/>
+    <rect x="15" y="15" width="20" height="10" rx="1" fill="white"/>
+    <rect x="22" y="32" width="6" height="4" fill="#3b82f6"/>
+    <rect x="18" y="36" width="14" height="2" rx="1" fill="#3b82f6"/>
+
+    <!-- Text - Light version for dark backgrounds -->
+    <text x="55" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="white">NewPOP</text>
+    <text x="138" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#60a5fa">Sys</text>
+</svg>

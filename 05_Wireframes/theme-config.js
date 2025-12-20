@@ -10,6 +10,7 @@ window.THEME_CONFIG = {
             shortName: 'NewPOPSys',
             tagline: 'Current codename',
             logo: 'logos/newpopsys-logo.svg',
+            logoLight: 'logos/newpopsys-logo-light.svg',
             colors: {
                 primary: '#1e3a5f',
                 primaryLight: '#2d5a87',
@@ -27,6 +28,7 @@ window.THEME_CONFIG = {
             shortName: 'ShelfSync',
             tagline: 'Teal + Yellow energy',
             logo: 'logos/shelfsync-logo.svg',
+            logoLight: 'logos/shelfsync-logo-light.svg',
             colors: {
                 primary: '#012D3A',
                 primaryLight: '#00ABB9',
@@ -51,6 +53,7 @@ window.THEME_CONFIG = {
             shortName: 'MerchPulse',
             tagline: 'Purple + Citrus vibrant',
             logo: 'logos/merchpulse-logo.svg',
+            logoLight: 'logos/merchpulse-logo-light.svg',
             colors: {
                 primary: '#5B21B6',
                 primaryLight: '#7C3AED',
@@ -73,6 +76,7 @@ window.THEME_CONFIG = {
             shortName: 'FieldForge',
             tagline: 'Navy + Emerald power',
             logo: 'logos/fieldforge-logo.svg',
+            logoLight: 'logos/fieldforge-logo-light.svg',
             colors: {
                 primary: '#1E40AF',
                 primaryLight: '#3B82F6',
@@ -95,6 +99,7 @@ window.THEME_CONFIG = {
             shortName: 'Nexova',
             tagline: 'Dark + Cyan modern',
             logo: 'logos/nexova-logo.svg',
+            logoLight: 'logos/nexova-logo-light.svg',
             colors: {
                 primary: '#0F172A',
                 primaryLight: '#334155',
@@ -116,6 +121,7 @@ window.THEME_CONFIG = {
             shortName: 'PRISM',
             tagline: 'Monochrome + Teal clarity',
             logo: 'logos/prism-logo.svg',
+            logoLight: 'logos/prism-logo-light.svg',
             colors: {
                 primary: '#18181B',
                 primaryLight: '#3F3F46',

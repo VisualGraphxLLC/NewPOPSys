@@ -269,10 +269,21 @@
             brandName.textContent = theme.name || theme.shortName;
         }
 
-        // Update logo - use img for portal pages, svg for index
+        // Update logo - detect if nav bar is dark and use appropriate logo
         const logoContainer = document.getElementById('brand-logo');
-        if (logoContainer && theme.logo) {
-            logoContainer.innerHTML = `<img src="${theme.logo}" alt="${theme.name}" style="height: 32px; width: auto;">`;
+        if (logoContainer) {
+            // Detect if nav bar has a colored/dark background
+            const nav = document.querySelector('nav');
+            const needsLightLogo = nav && !nav.classList.contains('bg-white');
+
+            // Also check appearance mode - dark mode needs light logo
+            const appearanceMode = localStorage.getItem('appearanceMode') || 'light';
+            const useLightLogo = needsLightLogo || appearanceMode === 'dark' || appearanceMode === 'high-contrast';
+
+            const logoSrc = useLightLogo && theme.logoLight ? theme.logoLight : theme.logo;
+            if (logoSrc) {
+                logoContainer.innerHTML = `<img src="${logoSrc}" alt="${theme.name}" style="height: 32px; width: auto;">`;
+            }
         }
 
         // Update nav logo (index.html uses inline svg)
@@ -326,6 +337,10 @@
 
         // Update UI elements
         updateAppearanceUI(effectiveMode);
+
+        // Update logo based on new appearance mode
+        const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+        updateThemeUI(savedTheme);
     }
 
     // Update appearance UI elements
