@@ -47,14 +47,18 @@
     // Apply appearance mode (light/dark/high-contrast)
     function applyAppearance(mode) {
         document.documentElement.removeAttribute('data-appearance');
-        document.body.classList.remove('dark-mode', 'high-contrast');
+
+        // Only modify body classes if body exists (may not exist if called from head)
+        if (document.body) {
+            document.body.classList.remove('dark-mode', 'high-contrast');
+        }
 
         if (mode === 'dark') {
             document.documentElement.setAttribute('data-appearance', 'dark');
-            document.body.classList.add('dark-mode');
+            if (document.body) document.body.classList.add('dark-mode');
         } else if (mode === 'high-contrast') {
             document.documentElement.setAttribute('data-appearance', 'high-contrast');
-            document.body.classList.add('high-contrast');
+            if (document.body) document.body.classList.add('high-contrast');
         }
         localStorage.setItem('appearanceMode', mode || 'light');
 
@@ -269,6 +273,10 @@
     // Add controls and update logo when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
+            // Re-apply appearance mode now that body exists
+            const savedAppearance = localStorage.getItem('appearanceMode') || 'light';
+            applyAppearance(savedAppearance);
+
             addControlsToBanner();
             updateLogoOnLoad();
         });
