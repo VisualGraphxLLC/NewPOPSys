@@ -180,6 +180,266 @@ These decisions resolve all open scaffold questions identified during the Produc
 
 ---
 
+## D9: Offline Sync Conflict Resolution
+
+**Decision:** SERVER-AS-TRUTH + CONFLICT QUEUE
+
+**Rationale:** Preserve data integrity while providing visibility into conflicts.
+
+**Implementation:**
+- Server version always wins on sync
+- Conflicts detected when local timestamp < server timestamp for same record
+- Conflicts queued for Store Manager review
+- Conflict record includes: local value, server value, timestamps, user IDs
+- Store Manager can acknowledge or escalate
+- 30-day retention for conflict records
+
+**Documents to Update:** SUPP-011, SUPP-017
+
+---
+
+## D10: Maximum Offline Duration
+
+**Decision:** 24 HOURS
+
+**Rationale:** Balances flexibility with data freshness. Matches typical daily store operation cycle.
+
+**Implementation:**
+- App checks `lastSyncTimestamp` on every launch
+- If `now - lastSyncTimestamp > 24h`, force sync attempt
+- If sync fails (no connectivity), show warning banner but allow continued offline use
+- After 72h offline, show blocking modal requiring sync before new submissions
+- Background sync attempts every 4 hours when app is open
+
+**Documents to Update:** SUPP-011
+
+---
+
+## D11: Campaign Manager Draft Deletion
+
+**Decision:** YES - WITH APPROVAL
+
+**Rationale:** Empower Campaign Managers while maintaining Brand Admin oversight.
+
+**Implementation:**
+- Campaign Manager can request deletion of DRAFT campaigns they're assigned to
+- Request creates `DeletionRequest` record with reason
+- Brand Admin notified via email + in-app notification
+- Brand Admin approves/denies within 48 hours
+- If no response in 48h, auto-deny with "timeout" reason
+- Approved deletions are soft-delete with 30-day recovery window
+
+**Documents to Update:** SUPP-003, SUPP-015
+
+---
+
+## D12: Retake Queue Prioritization
+
+**Decision:** CAMPAIGN DEADLINE + STORE GROUPING + FIFO FALLBACK
+
+**Rationale:** Optimize for business impact while maintaining usable UX.
+
+**Implementation:**
+- Primary sort: Campaign end date (ascending) - expiring campaigns first
+- Secondary sort: Store ID (grouped) - complete one store at a time
+- Tertiary sort: Rejection timestamp (FIFO) - oldest first within store
+- Store user sees their retakes grouped by store, within deadline priority
+- PSP reviewer sees all retakes sorted by deadline, grouped by store
+
+**Documents to Update:** SUPP-017, SUPP-018
+
+---
+
+## D13: Retake Deadline Expiration
+
+**Decision:** AUTO-ESCALATE → FLAG + CONTINUE
+
+**Rationale:** Don't block campaign completion, but ensure visibility.
+
+**Implementation:**
+1. When retake deadline passes:
+   - If Regional Manager assigned: Escalate notification
+   - Regional Manager has 24h to waive or extend
+2. If no Regional Manager OR no response in 24h:
+   - Auto-flag item as `NON_COMPLIANT`
+   - Item status = `RETAKE_EXPIRED`
+   - Store can complete campaign (not blocking)
+3. Non-compliant items:
+   - Visible in campaign dashboard with warning badge
+   - Included in compliance reports
+   - Cannot be retroactively approved (audit trail locked)
+
+**Documents to Update:** SUPP-018, SUPP-019
+
+---
+
+## D14: Regional Manager Override Authority
+
+**Decision:** NO - BRAND ADMIN AUTHORITY IS HIGHER
+
+**Rationale:** Clear hierarchy prevents confusion. Regional Manager is operational, not administrative.
+
+**Implementation:**
+- Regional Manager CANNOT:
+  - Reopen completed campaigns
+  - Override Brand Admin photo rule rejections
+  - Delete campaigns
+  - Modify campaign configuration
+- Regional Manager CAN:
+  - Waive individual photo requirements (within region)
+  - Extend retake deadlines (within region)
+  - Reopen individual store assignments (within region)
+  - Override store-level decisions
+
+**Documents to Update:** SUPP-003
+
+---
+
+## D15: Bulk Operations Permissions
+
+**Decision:** BRAND ADMIN + REGIONAL MANAGER (scoped)
+
+**Rationale:** Enable efficiency while respecting role boundaries.
+
+**Implementation:**
+- **Brand Admin:** All bulk operations, no scope limits
+- **Regional Manager:** Bulk operations within their region only
+
+**Bulk Operations Supported:**
+| Operation | Brand Admin | Regional Manager |
+|-----------|-------------|------------------|
+| Bulk approve photos | Yes (all) | Yes (region) |
+| Bulk reject photos | Yes (all) | Yes (region) |
+| Bulk close issues | Yes (all) | Yes (region) |
+| Bulk waive items | Yes (all) | Yes (region) |
+| Bulk assign stores | Yes (all) | No |
+| Bulk export | Yes (all) | Yes (region) |
+
+**Batch Size Limit:** 100 items per operation (configurable)
+
+**Documents to Update:** SUPP-003, API endpoints
+
+---
+
+## D16: IssueRequest State Machine (Canonical)
+
+**Decision:** SUPP-035 STYLE
+
+**Rationale:** More granular states provide better visibility into issue lifecycle.
+
+**Canonical States:**
+```
+OPEN → TRIAGED → AWAITING_APPROVAL → APPROVED → IN_FULFILLMENT → RESOLVED
+                                   ↘ DENIED → CLOSED
+```
+
+**State Definitions:**
+| State | Description | Next States |
+|-------|-------------|-------------|
+| OPEN | Issue just reported by store | TRIAGED |
+| TRIAGED | PSP reviewed, categorized, assigned | AWAITING_APPROVAL |
+| AWAITING_APPROVAL | Pending approval decision | APPROVED, DENIED |
+| APPROVED | Approved, reorder will be created | IN_FULFILLMENT |
+| DENIED | Rejected with reason | CLOSED |
+| IN_FULFILLMENT | Reorder created and being fulfilled | RESOLVED |
+| RESOLVED | Replacement delivered, issue closed | (terminal) |
+| CLOSED | Denied issue, no action taken | (terminal) |
+
+**Migration:** Update SUPP-002 to align with SUPP-035 naming.
+
+**Documents to Update:** SUPP-002, SUPP-019
+
+---
+
+## D17: Support Agent Role
+
+**Decision:** ADD TO RBAC MATRIX
+
+**Implementation:**
+- Role: Uses `PSP_OPS` enum with `support_scope` flag
+- Permissions: READ-ONLY across all PSP tenant data
+- Capabilities:
+  - View all orders, shipments, issues
+  - View audit logs
+  - Replay failed webhooks (read + retry, not modify)
+  - Access audit explorer
+  - Cannot modify any data
+  - Cannot approve/deny anything
+- Impersonation: Can impersonate Store Users for debugging (read-only session)
+
+**Documents to Update:** SUPP-003, SUPP-031
+
+---
+
+## D18: Quantity Tracking Fields
+
+**Decision:** ADD TO ASSIGNMENT_ITEMS TABLE
+
+**Rationale:** Enable rollup algorithm and fulfillment visibility.
+
+**Schema Addition:**
+```sql
+ALTER TABLE assignment_items ADD COLUMN shipped_qty INT DEFAULT 0;
+ALTER TABLE assignment_items ADD COLUMN delivered_qty INT DEFAULT 0;
+ALTER TABLE assignment_items ADD COLUMN received_good_qty INT DEFAULT 0;
+ALTER TABLE assignment_items ADD COLUMN received_damaged_qty INT DEFAULT 0;
+ALTER TABLE assignment_items ADD COLUMN installed_qty INT DEFAULT 0;
+ALTER TABLE assignment_items ADD COLUMN verified_qty INT DEFAULT 0;
+```
+
+**Derivation Rules:**
+- `shipped_qty`: Sum of shipment_items.quantity where shipment.status != CANCELLED
+- `delivered_qty`: Sum where shipment.status = DELIVERED
+- `received_good_qty`: From receipt survey (store-reported)
+- `received_damaged_qty`: From receipt survey (store-reported)
+- `installed_qty`: From install survey completion
+- `verified_qty`: From photo approval count
+
+**Documents to Update:** SUPP-035, Rollup Algorithm reference
+
+---
+
+## D19: MediaAsset Table
+
+**Decision:** IMPLEMENT FOR RETENTION POLICY
+
+**Rationale:** Enable data retention lifecycle management per SUPP-020.
+
+**Schema:**
+```sql
+CREATE TABLE media_assets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id UUID NOT NULL REFERENCES psp_tenants(id),
+  asset_type TEXT NOT NULL, -- 'PROOF_PHOTO', 'ISSUE_PHOTO', 'REFERENCE_IMAGE'
+  s3_key TEXT NOT NULL,
+  s3_bucket TEXT NOT NULL,
+  file_size_bytes BIGINT,
+  mime_type TEXT,
+  retention_class TEXT NOT NULL, -- 'OPERATIONAL', 'COMPLIANCE', 'ARCHIVE'
+  expires_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  deleted_at TIMESTAMPTZ,
+
+  -- Linkage (polymorphic)
+  linked_entity_type TEXT, -- 'proof_submission', 'issue_request', 'photo_rule'
+  linked_entity_id UUID
+);
+
+CREATE INDEX idx_media_assets_expiry ON media_assets(expires_at) WHERE deleted_at IS NULL;
+CREATE INDEX idx_media_assets_retention ON media_assets(retention_class, expires_at);
+```
+
+**Retention Classes:**
+| Class | Duration | Auto-Delete |
+|-------|----------|-------------|
+| OPERATIONAL | 90 days after campaign end | Yes |
+| COMPLIANCE | 1 year after campaign end | No (manual) |
+| ARCHIVE | 7 years | No (export first) |
+
+**Documents to Update:** SUPP-020, SUPP-035
+
+---
+
 ## Implementation Checklist
 
 | Decision | Documents Updated | Schema Changes | Priority |
@@ -192,6 +452,17 @@ These decisions resolve all open scaffold questions identified during the Produc
 | D6: Generic API | SUPP-006, 016 | None | LOW |
 | D7: Critical Fields | SUPP-013, Campaign | Add critical_field_config | MEDIUM |
 | D8: Configurable Checklist | SUPP-014, 015, 017 | Add checklist_config | MEDIUM |
+| D9: Offline Sync | SUPP-011, 017 | Add conflict_queue table | HIGH |
+| D10: Offline Duration | SUPP-011 | None | LOW |
+| D11: CM Draft Deletion | SUPP-003, 015 | Add deletion_requests | MEDIUM |
+| D12: Retake Priority | SUPP-017, 018 | None (query logic) | MEDIUM |
+| D13: Retake Expiration | SUPP-018, 019 | Add RETAKE_EXPIRED status | HIGH |
+| D14: RM Override | SUPP-003 | None | LOW |
+| D15: Bulk Operations | SUPP-003, API | None | MEDIUM |
+| D16: Issue States | SUPP-002, 019 | Align enum | HIGH |
+| D17: Support Agent | SUPP-003, 031 | Add support_scope flag | MEDIUM |
+| D18: Quantity Fields | SUPP-035 | Add 6 qty columns | HIGH |
+| D19: MediaAsset | SUPP-020, 035 | Add media_assets table | HIGH |
 
 ---
 

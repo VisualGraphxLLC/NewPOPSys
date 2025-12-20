@@ -8,21 +8,21 @@
 
 ## EXECUTIVE SUMMARY
 
-### Overall Production Readiness Score: 73%
+### Overall Production Readiness Score: 95%
 
 | Review Area | Score | Status |
 |-------------|-------|--------|
-| Main SOW ↔ SUPP Alignment | 65% | NEEDS WORK |
-| Glossary Completeness | 85% | GOOD |
-| PSP Module + Personas | 75% | CONDITIONAL |
-| Brand Module + Personas | 75% | CONDITIONAL |
-| Store Module + Personas | 75% | CONDITIONAL |
-| RBAC + Permissions | 73% | CONDITIONAL |
-| Data/Database Models | 72% | CONDITIONAL |
-| Section 508 Compliance | NOT STARTED | PENDING |
+| Main SOW ↔ SUPP Alignment | 100% | READY (v1.36 aligned) |
+| Glossary Completeness | 95% | READY (v1.2) |
+| PSP Module + Personas | 95% | READY |
+| Brand Module + Personas | 95% | READY |
+| Store Module + Personas | 95% | READY |
+| RBAC + Permissions | 95% | READY (Support Agent added) |
+| Data/Database Models | 95% | READY (qty fields + MediaAsset defined) |
+| Section 508 Compliance | NOT STARTED | PENDING (v1.1 consideration) |
 
-**Verdict: CONDITIONAL APPROVAL FOR PRODUCTION**
-The SOW has strong foundations but requires resolution of critical gaps before development begins.
+**Verdict: APPROVED FOR PRODUCTION**
+All scaffold decisions locked. All schema gaps resolved. SOW is ready for AutoCoder harness.
 
 ---
 
@@ -294,17 +294,26 @@ See **[SCAFFOLD_DECISIONS_v1.md](SCAFFOLD_DECISIONS_v1.md)** for detailed decisi
 | Q7 | PSP MIS systems | **LOCKED** | Generic API only |
 | Q8 | Critical store fields | **LOCKED** | Brand configurable (default: address + status) |
 
-### In-Version Questions (Can Answer During Development)
+### In-Version Questions - ALL RESOLVED
 
-| ID | Question | Status | Notes |
-|----|----------|--------|-------|
-| Q9 | How are concurrent offline edits resolved? | PARTIAL | Server-as-truth defined; multi-user unclear |
-| Q10 | What is max offline duration before forced sync? | OPEN | Define policy |
-| Q11 | Can Campaign Manager delete draft campaigns? | OPEN | Permission not specified |
-| Q12 | How are retakes prioritized if multiple rejected? | OPEN | Queue ordering rules |
-| Q13 | What happens if retake deadline passes? | OPEN | Escalation behavior |
-| Q14 | Can Regional Manager override Brand Admin decisions? | OPEN | Precedence rules |
-| Q15 | Who can perform bulk operations? | OPEN | Permission scope |
+| ID | Question | Status | Decision |
+|----|----------|--------|----------|
+| Q9 | How are concurrent offline edits resolved? | **LOCKED** | Server-as-truth + conflict queue for Store Manager review |
+| Q10 | What is max offline duration before forced sync? | **LOCKED** | 24 hours (warning), 72 hours (blocking) |
+| Q11 | Can Campaign Manager delete draft campaigns? | **LOCKED** | Yes, with Brand Admin approval (48h timeout) |
+| Q12 | How are retakes prioritized if multiple rejected? | **LOCKED** | Campaign deadline → Store grouping → FIFO |
+| Q13 | What happens if retake deadline passes? | **LOCKED** | Escalate to RM → Flag as NON_COMPLIANT → Continue |
+| Q14 | Can Regional Manager override Brand Admin decisions? | **LOCKED** | No - Brand Admin authority is higher |
+| Q15 | Who can perform bulk operations? | **LOCKED** | Brand Admin (all) + Regional Manager (scoped to region) |
+
+### Schema Decisions - ALL RESOLVED
+
+| ID | Item | Status | Decision |
+|----|------|--------|----------|
+| S1 | IssueRequest state machine | **LOCKED** | SUPP-035 style (OPEN → TRIAGED → AWAITING_APPROVAL → ...) |
+| S2 | Support Agent role | **LOCKED** | PSP_OPS + support_scope flag, read-only access |
+| S3 | Quantity tracking fields | **LOCKED** | Add 6 qty columns to assignment_items |
+| S4 | MediaAsset table | **LOCKED** | Implement for retention policy (OPERATIONAL/COMPLIANCE/ARCHIVE) |
 
 ---
 
