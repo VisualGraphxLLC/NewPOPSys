@@ -30,6 +30,7 @@ Process flows and data movement between modules.
 | [Campaign Flow](09-campaign-flow.md) | End-to-end campaign flow |
 | [Module Responsibilities](10-module-handoffs.md) | Portal ownership and hand-offs |
 | [Store Selection Flow](15-store-selection-flow.md) | Campaign store targeting UX |
+| [NewPOPSys v1 Flow](16-newpopsys-v1-flow.md) | End-to-end system orchestration |
 
 ---
 
@@ -42,6 +43,7 @@ System structure and relationships.
 | [Personas by Module](12-personas-by-module.md) | Role assignments per module |
 | [Status Interrelation](13-status-interrelation.md) | Status ownership across modules |
 | [Promo Item - Slot](14-promo-item-slot.md) | Item and slot binding |
+| [Core Data Model](17-core-data-model.md) | Entity relationships (ERD) |
 
 ---
 
