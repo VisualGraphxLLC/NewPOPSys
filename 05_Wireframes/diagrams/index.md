@@ -57,4 +57,4 @@ Interaction flows between system components.
 
 ---
 
-*Source: [Complete Mermaid Charts Reference](../../04_Reference/NewPOPSys_v1_Mermaid_Charts.md)*
+*Source: Individual diagram files derived from SUPP-002 and reference documentation.*

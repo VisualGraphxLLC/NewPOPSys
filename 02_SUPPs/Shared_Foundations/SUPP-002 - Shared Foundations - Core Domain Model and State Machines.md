@@ -1,6 +1,6 @@
 # SUPP-002 — Core Domain Model and State Machines
 
-> **Version**: v0.4
+> **Version**: v0.5
 > **Status**: Locked
 > **Updated**: 2025-12-20
 > **Dependencies**: SUPP-001 (Personas)
@@ -199,8 +199,134 @@ OPEN → TRIAGED → AWAITING_APPROVAL → APPROVED → IN_FULFILLMENT → RESOL
 
 ---
 
+## Rollup & Derivation Logic
+
+This section defines the quantity-normalized rollup algorithms used to derive statuses and calculate progress percentages across the system.
+
+### Data Primitives
+
+Track per `(campaignId, storeId, skuId[, slotId])`:
+
+| Field | Source | Description |
+|-------|--------|-------------|
+| `requiredQty` | AssignmentItem | Planned requirement |
+| `shippedQty` | Σ ShipmentLine | Total shipped quantity |
+| `deliveredQty` | Σ ShipmentLine | Total delivered quantity |
+| `receivedGoodQty` | Store input | Store accepted usable qty |
+| `receivedDamagedQty` | Store input | Store marked damaged qty |
+| `installedQty` | Store input | Store marked installed qty |
+| `satisfiedQty` | Verification | Approved/waived qty |
+| `hasCarrierException` | Shipment | Unresolved carrier exception |
+| `hasOpenIssue` | IssueLine | Open issue for sku/qty |
+
+**Execution Policy** (per campaign or kit item):
+- `ALL_ITEMS_REQUIRED_BEFORE_START` — Store cannot start until all items received
+- `ALLOW_PARTIAL_EXECUTION` — Store can execute and complete with partial items
+- `ALLOW_PARTIAL_EXECUTION_BUT_BLOCK_COMPLETION` — Store can start but must satisfy all requirements to complete
+- Optional per item: `isBlocking = true|false`
+
+### Step 1: OrderLine Rollups (PSP Truth)
+
+```text
+OrderLine.shippedQty   = Σ ShipmentLine.shippedQty
+OrderLine.deliveredQty = Σ ShipmentLine.deliveredQty
+OrderLine.hasCarrierException = any(Shipment.status == EXCEPTION and not resolved)
+```
+
+**FulfillmentStatus Derivation:**
+```pseudo
+function fulfillmentStatus(requiredQty, shippedQty, deliveredQty, hasCarrierException, cancelled=false):
+  if cancelled: return CANCELLED
+  if hasCarrierException: return EXCEPTION
+
+  if shippedQty <= 0: return NOT_SHIPPED
+  if shippedQty < requiredQty: return PARTIALLY_SHIPPED
+
+  // shippedQty >= requiredQty
+  if deliveredQty <= 0: return SHIPPED
+  if deliveredQty < requiredQty: return PARTIALLY_DELIVERED
+  return DELIVERED
+```
+
+### Step 2: Receipt Rollups (Store Truth)
+
+```pseudo
+receivedTotalQty = receivedGoodQty + receivedDamagedQty
+missingQty = max(0, deliveredQty - receivedTotalQty)
+hasReceiptDiscrepancy = (missingQty > 0) OR (receivedDamagedQty > 0)
+```
+
+**ReceiptStatus Derivation:**
+```pseudo
+function receiptStatus(deliveredQty, receivedGoodQty, receivedDamagedQty):
+  receivedTotal = receivedGoodQty + receivedDamagedQty
+
+  if deliveredQty <= 0: return NOT_DELIVERED
+  if receivedTotal <= 0: return NOT_RECEIVED
+  if receivedTotal < deliveredQty: return PARTIALLY_RECEIVED
+  if receivedDamagedQty > 0: return RECEIVED_WITH_DAMAGE
+  return RECEIVED
+```
+
+### Step 3: StoreAssignment Rollups (Brand/Store Truth)
+
+```pseudo
+store.requiredQty      = Σ item.requiredQty
+store.deliveredQty     = Σ item.deliveredQty
+store.receivedGoodQty  = Σ item.receivedGoodQty
+store.installedQty     = Σ item.installedQty
+store.satisfiedQty     = Σ item.satisfiedQty
+
+store.fulfillmentPct = clamp(store.deliveredQty / store.requiredQty, 0..1)
+store.receiptPct     = clamp(store.receivedGoodQty / store.requiredQty, 0..1)
+store.installPct     = clamp(store.installedQty / store.requiredQty, 0..1)
+store.verifyPct      = clamp(store.satisfiedQty / store.requiredQty, 0..1)
+
+store.hasBlockingInventory =
+  any(item.isBlocking == true AND item.receivedGoodQty < item.requiredQty AND item.waived == false)
+
+store.hasOpenIssues = any(item.hasOpenIssue)
+```
+
+**Execution Readiness:**
+```pseudo
+function isReady(policy, items):
+  if policy == ALL_ITEMS_REQUIRED_BEFORE_START:
+    return all(items.receivedGoodQty >= items.requiredQty OR items.waived)
+  else:
+    // partial execution allowed
+    return any(items.receivedGoodQty > 0 OR items.waived)
+```
+
+**Completion Allowed:**
+```pseudo
+function canComplete(policy, items):
+  if policy == ALLOW_PARTIAL_EXECUTION:
+    return true
+
+  // default best practice:
+  // allow partial execution but require all requirements satisfied (or waived) to complete
+  return all(items.satisfiedQty >= items.requiredQty OR items.waived)
+```
+
+### Step 4: Campaign Rollups (Portfolio Truth)
+
+```pseudo
+campaign.storesTotal     = count(StoreAssignments)
+campaign.storesDelivered = count(store where store.fulfillmentPct == 1)
+campaign.storesExecuting = count(store where store.installPct > 0 and store.verifyPct < 1)
+campaign.storesInReview  = count(store where store.submitted == true and store.verifyPct < 1)
+campaign.storesComplete  = count(store where store.verifyPct == 1 OR store.waived)
+
+campaign.fulfillmentPct = average(store.fulfillmentPct)
+campaign.verifyPct      = average(store.verifyPct)
+```
+
+---
+
 ## Changelog
 
 | Version | Date | Description |
 |---------|------|-------------|
+| v0.5 | 2025-12-20 | Added Rollup & Derivation Logic section (merged from Reference) |
 | v0.4 | 2025-12-20 | Stable filename adopted; version tracked in file |

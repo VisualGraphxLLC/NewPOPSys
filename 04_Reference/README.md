@@ -1,6 +1,6 @@
 # 04_Reference — Quick Reference Materials
 
-> **Updated**: 2025-12-19
+> **Updated**: 2025-12-20
 
 This folder contains quick-reference materials derived from the main SOW supplements. Use these for rapid lookups during development and QA.
 
@@ -10,21 +10,14 @@ This folder contains quick-reference materials derived from the main SOW supplem
 
 ### Core Reference Documents
 
-| File | Description |
-|------|-------------|
-| [NewPOPSys_v1_ERD.md](NewPOPSys_v1_ERD.md) | Entity Relationship Diagrams (Mermaid) — full data model visualization |
-| [NewPOPSys_v1_Mermaid_Charts.md](NewPOPSys_v1_Mermaid_Charts.md) | All state diagrams, flow charts, and sequence diagrams (14 charts) |
-| [NewPOPSys_v1_Status_Glossary_Concise.md](NewPOPSys_v1_Status_Glossary_Concise.md) | Status enum definitions with state transitions |
-| [NewPOPSys_v1_Status_Tables.md](NewPOPSys_v1_Status_Tables.md) | Status summary tables |
+> **Note:** Many reference documents have been consolidated or relocated:
+> - **Mermaid Charts** → Split into individual files in [05_Wireframes/diagrams/](../05_Wireframes/diagrams/)
+> - **Status Glossary & Tables** → Merged into [GLOSSARY.md](../00_Index/GLOSSARY.md)
+> - **ERD** → Now at [05_Wireframes/diagrams/17-core-data-model.md](../05_Wireframes/diagrams/17-core-data-model.md)
+> - **Rollup Algorithm** → Merged into [SUPP-002 (Domain Model)](../02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md#rollup--derivation-logic)
+> - **StorePhase Derivation** → Now at [05_Wireframes/diagrams/04-storephase-derivation.md](../05_Wireframes/diagrams/04-storephase-derivation.md)
 
-### Algorithm & Logic
-
-| File | Description |
-|------|-------------|
-| [NewPOPSys_v1_Rollup_Algorithm.md](NewPOPSys_v1_Rollup_Algorithm.md) | Quantity rollup calculation logic |
-| [NewPOPSys_v1_StorePhase_Derivation.md](NewPOPSys_v1_StorePhase_Derivation.md) | How StorePhase is computed from statuses |
-
-### Planning & Discovery
+### Planning & Discovery (Historical)
 
 | File | Description |
 |------|-------------|
@@ -48,7 +41,7 @@ The original PNG/SVG diagram exports have been archived to:
 - `../99_Archive/Legacy_Images/PNG/`
 - `../99_Archive/Legacy_Images/SVG/`
 
-These are no longer needed since all diagrams are now maintained as Mermaid code in `NewPOPSys_v1_Mermaid_Charts.md` and `NewPOPSys_v1_ERD.md`.
+These are no longer needed since all diagrams are now maintained as Mermaid code in [05_Wireframes/diagrams/](../05_Wireframes/diagrams/).
 
 ---
 
@@ -57,9 +50,8 @@ These are no longer needed since all diagrams are now maintained as Mermaid code
 | Folder | Purpose |
 |--------|---------|
 | `../00_Index/` | Master index, glossary, QA log |
-| `../01_Core/` | Core SOW documents (SUPP-001 through SUPP-006) |
-| `../02_Data_Model/` | Field-level data model (SUPP-035) |
-| `../03_UI_Wireframes/` | Figma links and UI specifications |
+| `../02_SUPPs/` | All SUPP documents |
+| `../05_Wireframes/diagrams/` | All Mermaid diagrams |
 
 ---
 
