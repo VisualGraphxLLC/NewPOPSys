@@ -1,6 +1,6 @@
 /**
- * Document Modal - Opens SUPP documents in a modal overlay
- * Include this script and call initDocModal() after DOM is ready
+ * Document & Diagram Modal - Opens documents and diagrams in modal overlays
+ * Supports: Markdown files (.md) and SVG diagrams (.svg)
  */
 
 function initDocModal() {
@@ -34,6 +34,7 @@ function initDocModal() {
         .prose h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem; color: #111827; }
         .prose h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: #1f2937; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; }
         .prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #374151; }
+        .prose h4 { font-size: 1.125rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #374151; }
         .prose p { margin-bottom: 1rem; line-height: 1.7; color: #4b5563; }
         .prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
         .prose li { margin-bottom: 0.25rem; color: #4b5563; }
@@ -47,6 +48,8 @@ function initDocModal() {
         .prose a { color: #2563eb; text-decoration: underline; }
         .prose a:hover { color: #1d4ed8; }
         .prose hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+        .diagram-container { display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fafafa; border-radius: 0.5rem; }
+        .diagram-container object, .diagram-container img { max-width: 100%; max-height: 70vh; }
     </style>`;
 
     // Inject modal and styles
@@ -58,18 +61,35 @@ function initDocModal() {
         if (e.key === 'Escape') closeDocModal();
     });
 
-    // Intercept SUPP document links
+    // Intercept markdown and SVG links
     document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href*="SUPP-"]');
-        if (link && link.href.endsWith('.md')) {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        // Handle markdown files
+        if (href.endsWith('.md')) {
             e.preventDefault();
-            const title = link.textContent || link.href.split('/').pop().replace('.md', '');
-            openDocModal(link.href, title);
+            const title = link.textContent?.trim() || href.split('/').pop().replace('.md', '');
+            openDocModal(link.href, title, 'markdown');
+            return;
+        }
+
+        // Handle SVG diagrams
+        if (href.endsWith('.svg')) {
+            e.preventDefault();
+            const title = link.querySelector('h3')?.textContent ||
+                          link.textContent?.trim() ||
+                          href.split('/').pop().replace('.svg', '').replace(/_/g, ' ');
+            openDocModal(link.href, title, 'svg');
+            return;
         }
     });
 }
 
-function openDocModal(url, title) {
+function openDocModal(url, title, type = 'markdown') {
     const modal = document.getElementById('doc-modal');
     const content = document.getElementById('doc-modal-content');
     const titleEl = document.getElementById('doc-modal-title');
@@ -81,31 +101,47 @@ function openDocModal(url, title) {
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 
-    fetch(url)
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to load document');
-            return response.text();
-        })
-        .then(markdown => {
-            content.innerHTML = marked.parse(markdown);
-            // Extract title from first H1 if not provided
-            const h1 = content.querySelector('h1');
-            if (h1) {
-                titleEl.textContent = h1.textContent;
-            }
-        })
-        .catch(err => {
-            content.innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-lg">
-                <p class="font-semibold">Could not load document</p>
-                <p class="text-sm mt-1">${err.message}</p>
-                <a href="${url}" target="_blank" class="text-blue-600 text-sm mt-2 inline-block">Open directly →</a>
+    if (type === 'svg') {
+        // Display SVG diagram
+        content.innerHTML = `
+            <div class="diagram-container">
+                <object data="${url}" type="image/svg+xml" style="width: 100%; height: auto;">
+                    <img src="${url}" alt="${title}" />
+                </object>
             </div>`;
-        });
+        content.classList.remove('prose');
+    } else {
+        // Fetch and render markdown
+        content.classList.add('prose');
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load document');
+                return response.text();
+            })
+            .then(markdown => {
+                content.innerHTML = marked.parse(markdown);
+                // Extract title from first H1
+                const h1 = content.querySelector('h1');
+                if (h1) {
+                    titleEl.textContent = h1.textContent;
+                }
+            })
+            .catch(err => {
+                content.innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-lg">
+                    <p class="font-semibold">Could not load document</p>
+                    <p class="text-sm mt-1">${err.message}</p>
+                    <a href="${url}" target="_blank" class="text-blue-600 text-sm mt-2 inline-block">Open directly →</a>
+                </div>`;
+            });
+    }
 }
 
 function closeDocModal() {
-    document.getElementById('doc-modal').classList.add('hidden');
+    const modal = document.getElementById('doc-modal');
+    const content = document.getElementById('doc-modal-content');
+    modal.classList.add('hidden');
     document.body.style.overflow = '';
+    content.classList.add('prose'); // Reset for next use
 }
 
 // Auto-initialize when DOM is ready
