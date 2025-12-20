@@ -11,8 +11,84 @@
             scroll-behavior: smooth;
         }
 
+        /* Theme CSS Variables */
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f1f33;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --text-on-primary: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        /* Theme: ShelfSync (Teal/Cyan) */
+        [data-theme="shelfsync"] {
+            --primary: #012D3A;
+            --primary-light: #00ABB9;
+            --primary-dark: #011820;
+            --accent: #FCD732;
+            --accent-light: #FDE68A;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: MerchPulse (Purple/Citrus) */
+        [data-theme="merchpulse"] {
+            --primary: #5B21B6;
+            --primary-light: #7C3AED;
+            --primary-dark: #3B0F7A;
+            --accent: #F59E0B;
+            --accent-light: #FBBF24;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: FieldForge (Navy/Emerald) */
+        [data-theme="fieldforge"] {
+            --primary: #1E40AF;
+            --primary-light: #3B82F6;
+            --primary-dark: #1E3A8A;
+            --accent: #10B981;
+            --accent-light: #34D399;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: Nexova (Gradient Modern) */
+        [data-theme="nexova"] {
+            --primary: #0F172A;
+            --primary-light: #334155;
+            --primary-dark: #020617;
+            --accent: #06B6D4;
+            --accent-light: #22D3EE;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: PRISM (Monochrome + Teal) */
+        [data-theme="prism"] {
+            --primary: #18181B;
+            --primary-light: #3F3F46;
+            --primary-dark: #09090B;
+            --accent: #14B8A6;
+            --accent-light: #2DD4BF;
+            --text-on-primary: #ffffff;
+        }
+
         .gradient-hero {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
+            transition: background 0.5s ease;
+        }
+
+        .nav-brand {
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .theme-accent {
+            background-color: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        .theme-accent-text {
+            color: var(--accent);
         }
 
         .persona-card:hover {
@@ -38,6 +114,87 @@
                 display: none;
             }
         }
+
+        /* Theme Switcher Styles */
+        .theme-switcher {
+            position: relative;
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            padding: 1rem;
+            min-width: 280px;
+            z-index: 100;
+            display: none;
+        }
+
+        .theme-dropdown.open {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            background: #f1f5f9;
+        }
+
+        .theme-option.active {
+            border-color: var(--accent);
+            background: #f0fdfa;
+        }
+
+        .theme-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-swatch {
+            display: flex;
+            gap: 4px;
+        }
+
+        .theme-swatch span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Logo in nav */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo svg {
+            width: 32px;
+            height: 32px;
+        }
     </style>
 </head>
 
@@ -46,15 +203,164 @@
     <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="font-bold text-xl text-blue-900">NewPOPSys v1</span>
-            <div class="hidden md:flex space-x-6 text-sm">
-                <a href="#overview" class="hover:text-blue-600">Overview</a>
-                <a href="#personas" class="hover:text-blue-600">Personas</a>
-                <a href="#lifecycle" class="hover:text-blue-600">Lifecycle</a>
-                <a href="#wireframes" class="hover:text-blue-600">Wireframes</a>
-                <a href="#diagrams" class="hover:text-blue-600">Diagrams</a>
-                <a href="#questions" class="hover:text-blue-600">Questions</a>
-                <a href="#feedback" class="hover:text-blue-600">Feedback</a>
+            <!-- Dynamic Brand Logo -->
+            <div class="brand-logo font-bold text-xl nav-brand" id="nav-brand">
+                <svg id="nav-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Default: NewPOPSys -->
+                    <rect width="32" height="32" rx="6" fill="currentColor"/>
+                    <text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold">N</text>
+                </svg>
+                <span id="brand-name">NewPOPSys v1</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex space-x-6 text-sm">
+                    <a href="#overview" class="hover:text-blue-600">Overview</a>
+                    <a href="#personas" class="hover:text-blue-600">Personas</a>
+                    <a href="#lifecycle" class="hover:text-blue-600">Lifecycle</a>
+                    <a href="#wireframes" class="hover:text-blue-600">Wireframes</a>
+                    <a href="#diagrams" class="hover:text-blue-600">Diagrams</a>
+                    <a href="#questions" class="hover:text-blue-600">Questions</a>
+                    <a href="#feedback" class="hover:text-blue-600">Feedback</a>
+                </div>
+
+                <!-- Theme Switcher -->
+                <div class="theme-switcher">
+                    <button id="theme-toggle" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition text-sm font-medium">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        Brand
+                    </button>
+
+                    <div id="theme-dropdown" class="theme-dropdown">
+                        <div class="text-xs font-semibold text-gray-500 uppercase mb-3">Choose Brand Theme</div>
+
+                        <!-- Default -->
+                        <div class="theme-option active" data-theme="default" onclick="setTheme('default')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #1e3a5f, #2d5a87);">
+                                <svg viewBox="0 0 24 24" fill="white" width="20" height="20">
+                                    <rect x="3" y="3" width="18" height="18" rx="3"/>
+                                    <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="#1e3a5f">N</text>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">NewPOPSys</div>
+                                <div class="text-xs text-gray-500">Current codename</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#1e3a5f"></span>
+                                <span style="background:#2d5a87"></span>
+                                <span style="background:#3b82f6"></span>
+                            </div>
+                        </div>
+
+                        <!-- ShelfSync -->
+                        <div class="theme-option" data-theme="shelfsync" onclick="setTheme('shelfsync')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #012D3A, #00ABB9);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <rect x="2" y="6" width="20" height="3" rx="1" fill="#FCD732"/>
+                                    <rect x="2" y="11" width="20" height="3" rx="1" fill="white"/>
+                                    <rect x="2" y="16" width="20" height="3" rx="1" fill="#FCD732"/>
+                                    <circle cx="19" cy="12" r="4" fill="white" stroke="#00ABB9" stroke-width="2"/>
+                                    <path d="M17 12h4M19 10v4" stroke="#00ABB9" stroke-width="1.5"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">ShelfSync</div>
+                                <div class="text-xs text-gray-500">Teal + Yellow energy</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#012D3A"></span>
+                                <span style="background:#00ABB9"></span>
+                                <span style="background:#FCD732"></span>
+                            </div>
+                        </div>
+
+                        <!-- MerchPulse -->
+                        <div class="theme-option" data-theme="merchpulse" onclick="setTheme('merchpulse')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #5B21B6, #7C3AED);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <circle cx="12" cy="12" r="8" stroke="#F59E0B" stroke-width="2" fill="none"/>
+                                    <circle cx="12" cy="12" r="4" fill="#F59E0B"/>
+                                    <path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">MerchPulse</div>
+                                <div class="text-xs text-gray-500">Purple + Citrus vibrant</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#5B21B6"></span>
+                                <span style="background:#7C3AED"></span>
+                                <span style="background:#F59E0B"></span>
+                            </div>
+                        </div>
+
+                        <!-- FieldForge -->
+                        <div class="theme-option" data-theme="fieldforge" onclick="setTheme('fieldforge')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #1E40AF, #3B82F6);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="#10B981"/>
+                                    <path d="M12 2v20M2 7l10 5 10-5" stroke="white" stroke-width="1.5"/>
+                                    <circle cx="12" cy="12" r="3" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">FieldForge</div>
+                                <div class="text-xs text-gray-500">Navy + Emerald power</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#1E40AF"></span>
+                                <span style="background:#3B82F6"></span>
+                                <span style="background:#10B981"></span>
+                            </div>
+                        </div>
+
+                        <!-- Nexova -->
+                        <div class="theme-option" data-theme="nexova" onclick="setTheme('nexova')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z" fill="#06B6D4"/>
+                                    <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Nexova</div>
+                                <div class="text-xs text-gray-500">Dark + Cyan modern</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#0F172A"></span>
+                                <span style="background:#334155"></span>
+                                <span style="background:#06B6D4"></span>
+                            </div>
+                        </div>
+
+                        <!-- PRISM -->
+                        <div class="theme-option" data-theme="prism" onclick="setTheme('prism')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #18181B, #3F3F46);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <polygon points="12,2 22,20 2,20" fill="none" stroke="#14B8A6" stroke-width="2"/>
+                                    <polygon points="12,8 17,16 7,16" fill="#14B8A6"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">PRISM</div>
+                                <div class="text-xs text-gray-500">Monochrome + Teal clarity</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#18181B"></span>
+                                <span style="background:#3F3F46"></span>
+                                <span style="background:#14B8A6"></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 pt-3 border-t text-xs text-gray-400 text-center">
+                            Click to preview brand identity
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -904,6 +1210,132 @@
                 console.warn('Could not load VERSION.json:', err);
                 document.getElementById('sow-version').textContent = 'SOW Version: 1.36';
             });
+
+        // Theme Switcher Logic
+        const themes = {
+            default: {
+                name: 'NewPOPSys v1',
+                logo: `<svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="6" fill="#1e3a5f"/><text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold">N</text></svg>`
+            },
+            shelfsync: {
+                name: 'ShelfSync',
+                logo: `<svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="url(#ss-grad)"/>
+                    <defs><linearGradient id="ss-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#012D3A"/><stop offset="1" stop-color="#00ABB9"/></linearGradient></defs>
+                    <rect x="4" y="8" width="24" height="4" rx="1" fill="#FCD732"/>
+                    <rect x="4" y="14" width="24" height="4" rx="1" fill="white"/>
+                    <rect x="4" y="20" width="24" height="4" rx="1" fill="#FCD732"/>
+                    <circle cx="24" cy="16" r="5" fill="white" stroke="#00ABB9" stroke-width="2"/>
+                    <path d="M22 16h4M24 14v4" stroke="#00ABB9" stroke-width="1.5"/>
+                </svg>`
+            },
+            merchpulse: {
+                name: 'MerchPulse',
+                logo: `<svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="url(#mp-grad)"/>
+                    <defs><linearGradient id="mp-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#5B21B6"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+                    <circle cx="16" cy="16" r="10" stroke="#F59E0B" stroke-width="2" fill="none"/>
+                    <circle cx="16" cy="16" r="5" fill="#F59E0B"/>
+                    <path d="M16 6v3M16 23v3M6 16h3M23 16h3" stroke="white" stroke-width="2"/>
+                </svg>`
+            },
+            fieldforge: {
+                name: 'FieldForge',
+                logo: `<svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="url(#ff-grad)"/>
+                    <defs><linearGradient id="ff-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#1E40AF"/><stop offset="1" stop-color="#3B82F6"/></linearGradient></defs>
+                    <path d="M16 4L4 10v12l12 6 12-6V10L16 4z" fill="#10B981"/>
+                    <path d="M16 4v24M4 10l12 6 12-6" stroke="white" stroke-width="1.5"/>
+                    <circle cx="16" cy="16" r="4" fill="white"/>
+                </svg>`
+            },
+            nexova: {
+                name: 'Nexova',
+                logo: `<svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="url(#nx-grad)"/>
+                    <defs><linearGradient id="nx-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#0F172A"/><stop offset="1" stop-color="#334155"/></linearGradient></defs>
+                    <path d="M16 4L6 9v9c0 6.5 4.5 12.5 10 14 5.5-1.5 10-7.5 10-14V9l-10-5z" fill="#06B6D4"/>
+                    <path d="M11 16l4 4 6-7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`
+            },
+            prism: {
+                name: 'PRISM',
+                logo: `<svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="url(#pr-grad)"/>
+                    <defs><linearGradient id="pr-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#18181B"/><stop offset="1" stop-color="#3F3F46"/></linearGradient></defs>
+                    <polygon points="16,4 28,26 4,26" fill="none" stroke="#14B8A6" stroke-width="2"/>
+                    <polygon points="16,12 22,22 10,22" fill="#14B8A6"/>
+                </svg>`
+            }
+        };
+
+        // Toggle dropdown
+        document.getElementById('theme-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('theme-dropdown').classList.toggle('open');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            document.getElementById('theme-dropdown').classList.remove('open');
+        });
+
+        // Prevent dropdown from closing when clicking inside
+        document.getElementById('theme-dropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Set theme function
+        function setTheme(themeName) {
+            // Update document theme
+            if (themeName === 'default') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', themeName);
+            }
+
+            // Update active state in dropdown
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.dataset.theme === themeName) {
+                    opt.classList.add('active');
+                }
+            });
+
+            // Update nav brand
+            const theme = themes[themeName];
+            document.getElementById('brand-name').textContent = theme.name;
+            document.getElementById('nav-logo').outerHTML = theme.logo.replace('viewBox="0 0 32 32"', 'id="nav-logo" viewBox="0 0 32 32"');
+
+            // Update page title
+            document.title = `${theme.name} — Stakeholder Review`;
+
+            // Update hero title
+            const heroTitle = document.querySelector('#overview h1');
+            if (heroTitle) {
+                heroTitle.textContent = theme.name;
+            }
+
+            // Save to localStorage
+            localStorage.setItem('selectedTheme', themeName);
+
+            // Close dropdown
+            document.getElementById('theme-dropdown').classList.remove('open');
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+            setTheme(savedTheme);
+        });
+
+        // Auto-cycle themes every 5 seconds (optional, commented out)
+        // let themeIndex = 0;
+        // const themeKeys = Object.keys(themes);
+        // setInterval(() => {
+        //     themeIndex = (themeIndex + 1) % themeKeys.length;
+        //     setTheme(themeKeys[themeIndex]);
+        // }, 5000);
     </script>
 
 </body>
