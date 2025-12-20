@@ -324,28 +324,14 @@
 
 <body>
 
-    <!-- Tooltip Help Banner -->
-    <div class="tooltip-help-banner" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
-        <a href="index.html" style="display: flex; align-items: center; gap: 4px; color: white; text-decoration: none; padding: 4px 12px; background: rgba(255,255,255,0.2); border-radius: 4px; font-size: 12px;" data-tooltip="🏠 WIREFRAME INDEX
-━━━━━━━━━━━━━━━
-Action: Return to wireframe index
-Links to: All wireframe screens
-Purpose: Navigation hub
-File: index.html">
-            <span>🏠</span> <span>Index</span>
+    <!-- Tooltip Help Banner - Compact for mobile -->
+    <div class="tooltip-help-banner" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; padding: 8px 12px;">
+        <a href="index.html" style="display: flex; align-items: center; gap: 4px; color: white; text-decoration: none; padding: 4px 8px; background: rgba(255,255,255,0.2); border-radius: 4px; font-size: 11px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Index
         </a>
-        <span data-tooltip="💡 TOOLTIP MODE
-━━━━━━━━━━━━━━━
-Feature: Interactive documentation
-Toggle: ON/OFF to show tooltips
-Hover: Over blue-outlined elements
-Shows: Feature details, data sources">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
-        <button id="tooltip-toggle" class="tooltip-toggle" data-tooltip="🔘 TOOLTIP TOGGLE
-━━━━━━━━━━━━━━━
-Action: Enable/disable tooltips
-State: Click to toggle ON/OFF
-Effect: Shows blue outlines + info
-Purpose: Documentation mode">OFF</button>
+        <span style="font-size: 11px;">💡 <strong>Tooltips:</strong></span>
+        <button id="tooltip-toggle" class="tooltip-toggle" style="font-size: 10px; padding: 2px 8px;">OFF</button>
     </div>
 
     <div id="phone" data-tooltip="📱 MOBILE SIMULATOR

@@ -142,7 +142,13 @@
             body.dark-mode .theme-dropdown,
             body.dark-mode .appearance-dropdown {
                 background: #1e293b !important;
-                border: 1px solid #334155;
+                border: 1px solid #334155 !important;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+            }
+
+            body.dark-mode .theme-option,
+            body.dark-mode .appearance-option {
+                color: #f1f5f9 !important;
             }
 
             body.dark-mode .theme-option:hover,
@@ -150,14 +156,41 @@
                 background: #334155 !important;
             }
 
+            body.dark-mode .theme-option.active {
+                background: #334155 !important;
+                border-color: var(--accent) !important;
+            }
+
+            body.dark-mode .appearance-option.active {
+                background: var(--accent) !important;
+                color: white !important;
+            }
+
             body.dark-mode .theme-option .text-gray-900,
-            body.dark-mode .theme-option .font-medium {
+            body.dark-mode .theme-option .font-medium,
+            body.dark-mode .theme-dropdown .text-gray-900,
+            body.dark-mode .theme-dropdown .font-medium {
                 color: #f1f5f9 !important;
             }
 
             body.dark-mode .theme-option .text-gray-500,
-            body.dark-mode .theme-option .text-xs {
+            body.dark-mode .theme-option .text-xs,
+            body.dark-mode .theme-dropdown .text-gray-500,
+            body.dark-mode .theme-dropdown .text-xs,
+            body.dark-mode .theme-dropdown .text-gray-400 {
                 color: #94a3b8 !important;
+            }
+
+            /* Nav buttons in dark mode */
+            body.dark-mode .theme-switcher button,
+            body.dark-mode .appearance-switcher button {
+                background: #334155 !important;
+                color: #f1f5f9 !important;
+            }
+
+            body.dark-mode .theme-switcher button:hover,
+            body.dark-mode .appearance-switcher button:hover {
+                background: #475569 !important;
             }
 
             /* High Contrast Mode */
@@ -229,6 +262,64 @@
             body.high-contrast .bg-teal-100 {
                 background-color: #000000 !important;
                 border: 2px solid #ffffff !important;
+            }
+
+            /* High contrast dropdown styles */
+            body.high-contrast .theme-dropdown,
+            body.high-contrast .appearance-dropdown {
+                background: #000000 !important;
+                border: 2px solid #ffffff !important;
+                box-shadow: 0 10px 40px rgba(255,255,255,0.2) !important;
+            }
+
+            body.high-contrast .theme-option,
+            body.high-contrast .appearance-option {
+                color: #ffffff !important;
+                border: 1px solid transparent !important;
+            }
+
+            body.high-contrast .theme-option:hover,
+            body.high-contrast .appearance-option:hover {
+                background: #333333 !important;
+                border-color: #ffffff !important;
+            }
+
+            body.high-contrast .theme-option.active {
+                background: #333333 !important;
+                border-color: var(--accent) !important;
+            }
+
+            body.high-contrast .appearance-option.active {
+                background: var(--accent) !important;
+                color: #000000 !important;
+            }
+
+            body.high-contrast .theme-option .text-gray-900,
+            body.high-contrast .theme-option .font-medium,
+            body.high-contrast .theme-dropdown .text-gray-900,
+            body.high-contrast .theme-dropdown .font-medium {
+                color: #ffffff !important;
+            }
+
+            body.high-contrast .theme-option .text-gray-500,
+            body.high-contrast .theme-option .text-xs,
+            body.high-contrast .theme-dropdown .text-gray-500,
+            body.high-contrast .theme-dropdown .text-xs,
+            body.high-contrast .theme-dropdown .text-gray-400 {
+                color: #cccccc !important;
+            }
+
+            /* Nav buttons in high contrast mode */
+            body.high-contrast .theme-switcher button,
+            body.high-contrast .appearance-switcher button {
+                background: #000000 !important;
+                color: #ffffff !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast .theme-switcher button:hover,
+            body.high-contrast .appearance-switcher button:hover {
+                background: #333333 !important;
             }
         `;
 
@@ -362,6 +453,13 @@
         const banner = document.querySelector('.tooltip-help-banner');
         if (!banner || document.getElementById('theme-select')) return;
 
+        // Check if this is the mobile app page (has #phone element) - use compact controls
+        const isMobilePage = document.getElementById('phone') !== null;
+        if (isMobilePage) {
+            addMobileControls(banner);
+            return;
+        }
+
         const config = getConfig();
         const savedTheme = localStorage.getItem('selectedTheme') || 'default';
         const savedAppearance = localStorage.getItem('appearanceMode') || 'light';
@@ -428,6 +526,173 @@
         document.getElementById('appearance-select').addEventListener('change', function() {
             applyAppearance(this.value);
         });
+    }
+
+    // Compact controls for mobile app page
+    function addMobileControls(banner) {
+        const config = getConfig();
+        const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+        const savedAppearance = localStorage.getItem('appearanceMode') || 'light';
+
+        // Build compact brand options
+        let brandOptions = '';
+        Object.keys(config.brands).forEach(key => {
+            const brand = config.brands[key];
+            const selected = key === savedTheme ? 'selected' : '';
+            brandOptions += `<option value="${key}" ${selected} style="color: #333;">${brand.shortName || brand.name}</option>`;
+        });
+
+        // Create compact controls - just dropdowns without labels
+        const container = document.createElement('div');
+        container.style.cssText = 'display: flex; align-items: center; gap: 6px;';
+
+        container.innerHTML = `
+            <select id="theme-select" style="
+                background: rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.4);
+                color: white;
+                padding: 2px 4px;
+                border-radius: 4px;
+                font-size: 10px;
+                cursor: pointer;
+            ">${brandOptions}</select>
+            <select id="appearance-select" style="
+                background: rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.4);
+                color: white;
+                padding: 2px 4px;
+                border-radius: 4px;
+                font-size: 10px;
+                cursor: pointer;
+            ">
+                <option value="light" ${savedAppearance === 'light' ? 'selected' : ''} style="color: #333;">Light</option>
+                <option value="dark" ${savedAppearance === 'dark' ? 'selected' : ''} style="color: #333;">Dark</option>
+                <option value="high-contrast" ${savedAppearance === 'high-contrast' ? 'selected' : ''} style="color: #333;">High Contrast</option>
+            </select>
+        `;
+
+        banner.appendChild(container);
+
+        // Add event listeners
+        document.getElementById('theme-select').addEventListener('change', function() {
+            applyTheme(this.value);
+            updateMobilePhoneTheme();
+        });
+
+        document.getElementById('appearance-select').addEventListener('change', function() {
+            applyAppearance(this.value);
+            updateMobilePhoneTheme();
+        });
+
+        // Apply initial theme to phone content
+        updateMobilePhoneTheme();
+    }
+
+    // Update mobile phone simulator content based on theme
+    function updateMobilePhoneTheme() {
+        const phone = document.getElementById('phone');
+        if (!phone) return;
+
+        const appearanceMode = localStorage.getItem('appearanceMode') || 'light';
+
+        // Apply dark/light styles to phone content
+        if (appearanceMode === 'dark') {
+            phone.style.background = '#1e293b';
+            phone.querySelectorAll('.screen').forEach(s => s.style.background = '#0f172a');
+            phone.querySelectorAll('.screen.bg-white').forEach(s => s.style.background = '#1e293b');
+            phone.querySelectorAll('.safe-area-top').forEach(s => {
+                s.style.background = '#1e293b';
+                s.style.color = '#f1f5f9';
+            });
+            phone.querySelectorAll('.bottom-nav').forEach(s => {
+                s.style.background = '#1e293b';
+                s.style.borderColor = '#334155';
+            });
+            // Cards and content areas
+            phone.querySelectorAll('.card').forEach(s => {
+                s.style.background = '#334155';
+                s.style.color = '#f1f5f9';
+            });
+            phone.querySelectorAll('.text-gray-900, .text-gray-800, .text-gray-700').forEach(s => {
+                s.style.color = '#f1f5f9';
+            });
+            phone.querySelectorAll('.text-gray-600, .text-gray-500').forEach(s => {
+                s.style.color = '#94a3b8';
+            });
+            phone.querySelectorAll('.bg-white').forEach(s => {
+                if (!s.classList.contains('screen')) {
+                    s.style.background = '#334155';
+                }
+            });
+            // Nav items
+            phone.querySelectorAll('.nav-item').forEach(s => {
+                s.style.color = '#94a3b8';
+            });
+            phone.querySelectorAll('.nav-item.active').forEach(s => {
+                s.style.color = 'var(--primary-light)';
+            });
+        } else if (appearanceMode === 'high-contrast') {
+            phone.style.background = '#000';
+            phone.querySelectorAll('.screen').forEach(s => s.style.background = '#000');
+            phone.querySelectorAll('.safe-area-top').forEach(s => {
+                s.style.background = '#000';
+                s.style.color = '#fff';
+            });
+            phone.querySelectorAll('.bottom-nav').forEach(s => {
+                s.style.background = '#000';
+                s.style.borderColor = '#fff';
+            });
+            // Cards and content areas
+            phone.querySelectorAll('.card').forEach(s => {
+                s.style.background = '#000';
+                s.style.color = '#fff';
+                s.style.border = '2px solid #fff';
+            });
+            phone.querySelectorAll('.text-gray-900, .text-gray-800, .text-gray-700, .text-gray-600, .text-gray-500').forEach(s => {
+                s.style.color = '#fff';
+            });
+            phone.querySelectorAll('.bg-white').forEach(s => {
+                if (!s.classList.contains('screen')) {
+                    s.style.background = '#000';
+                }
+            });
+            // Nav items
+            phone.querySelectorAll('.nav-item').forEach(s => {
+                s.style.color = '#fff';
+            });
+        } else {
+            // Light mode - reset to defaults
+            phone.style.background = 'white';
+            phone.querySelectorAll('.screen').forEach(s => s.style.background = '#f3f4f6');
+            phone.querySelectorAll('.screen.bg-white').forEach(s => s.style.background = 'white');
+            phone.querySelectorAll('.safe-area-top').forEach(s => {
+                s.style.background = 'white';
+                s.style.color = '';
+            });
+            phone.querySelectorAll('.bottom-nav').forEach(s => {
+                s.style.background = 'white';
+                s.style.borderColor = '#e5e7eb';
+            });
+            // Reset cards and content
+            phone.querySelectorAll('.card').forEach(s => {
+                s.style.background = 'white';
+                s.style.color = '';
+                s.style.border = '';
+            });
+            phone.querySelectorAll('.text-gray-900, .text-gray-800, .text-gray-700').forEach(s => {
+                s.style.color = '';
+            });
+            phone.querySelectorAll('.text-gray-600, .text-gray-500').forEach(s => {
+                s.style.color = '';
+            });
+            phone.querySelectorAll('.bg-white').forEach(s => {
+                s.style.background = '';
+            });
+            // Nav items
+            phone.querySelectorAll('.nav-item').forEach(s => {
+                s.style.color = '';
+            });
+        }
     }
 
     // Initialize on load
