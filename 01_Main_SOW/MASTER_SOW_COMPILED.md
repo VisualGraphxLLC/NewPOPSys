@@ -1,4 +1,6 @@
-# MASTER SOW v1.36 (Compiled)\n\nDate: 2025-12-20
+# MASTER SOW v1.37 (Compiled)
+
+**Date**: 2025-12-20
 
 This is the single master document for v1 scope, technical direction, delivery approach, and acceptance. Module-level implementation details are defined in the attached Supplemental Specifications (SUPPs).
 
@@ -8,9 +10,9 @@ This master SOW is a compiled build artifact. It contains the full text of all a
 
 Editing rule: Update the relevant SUPP(s) first (as a full replacement with a version bump). Then regenerate this master SOW so the compiled Appendices stay in sync.
 
-Non‑negotiable document rules:
+Non-negotiable document rules:
 
-- No placeholder sections: headings must contain real content (not single-line \'see file\' references).
+- No placeholder sections: headings must contain real content (not single-line 'see file' references).
 
 - No addendums: changes are full replacements (vX → vX+1) for any impacted SUPP.
 
@@ -19,13 +21,13 @@ Non‑negotiable document rules:
 - Single release package: every delivery includes (1) compiled master SOW, (2) separate SUPPs, (3) archive of superseded files.
 
   ------------------------------------------------------------------------------------------------------------------------------------
-  Document Set Release                v1.36
+  Document Set Release                v1.37
   ----------------------------------- ------------------------------------------------------------------------------------------------
   Master Document                     Compiled (includes SUPPs as Appendices)
 
   Canonical Build Specs               SUPP files under /02_SUPPs (each has its own version)
 
-  Scope Guardrails                    See Section 2.3 + \'What This Platform Will Never Be\'
+  Scope Guardrails                    See Section 2.3 + 'What This Platform Will Never Be'
 
   Core Loop                           Campaign → Store Assignment → PSP Fulfillment → Store Execution → Verification → Visibility
 
@@ -44,9 +46,11 @@ Revision History (master document):
   v1.35                   2025-12-18              Maintenance release; index updates.
 
   v1.36                   2025-12-20              Production readiness review; SUPP versions aligned to current; file references updated to Markdown format.
+
+  v1.37                   2025-12-20              Fixed encoding issues; updated SUPP versions to current; replaced empty embeddings with file links; added missing SUPPs (038, 039).
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Revision History (master document):
+Document Metadata:
 
   ----------------------------------------------------------------------------------------------------
   Field                               Value
@@ -57,7 +61,7 @@ Revision History (master document):
 
   Prepared By                         Delivery Team / AI Agent Swarm
 
-  Version                             v1.0 (Master)
+  Version                             v1.37 (Master)
 
   Update Cadence                      Bi-weekly written update; decision log maintained continuously
 
@@ -213,11 +217,11 @@ The following pilot parameters must be confirmed and then treated as input const
   ----------------------------------- ------------------------------------------------------------------------
   Pilot PSPs                          2 (Visual Graphx; Speedy CPS / Alpha Graphics)
 
-  Pilot Brands                        2--3 (Good2Go is confirmed for Speedy/AG pilot)
+  Pilot Brands                        2-3 (Good2Go is confirmed for Speedy/AG pilot)
 
   Stores per Brand                    Up to 1,000
 
-  Media Volume                        \>= 1 photo per item per location per campaign
+  Media Volume                        >= 1 photo per item per location per campaign
 
   Execution                           Web app first; PWA scaffold; best-effort offline drafts + sync-on-open
   ------------------------------------------------------------------------------------------------------------
@@ -299,13 +303,13 @@ Each module below is implemented per its SUPP. This master document provides the
   ----------------------------------------------------------------------------------------------------
   Module                                              Status                  Authoritative Spec
   --------------------------------------------------- ----------------------- ------------------------
-  Module 1 --- Identity/RBAC                          Locked                  SUPP-003 v0.6
+  Module 1 --- Identity/RBAC                          Locked                  SUPP-003 v0.7
 
   Module 2 --- Stores/Regions/Groups                  Locked                  SUPP-013 v0.2
 
   Module 3 --- Survey Builder/Layout/Photo Rules      Locked                  SUPP-014 v0.4
 
-  Module 4 --- Campaigns/Kits/Assignment              Locked                  SUPP-015 v0.4
+  Module 4 --- Campaigns/Kits/Assignment              Locked                  SUPP-015 v0.5
 
   Module 5 --- Orders/Shipments/Batches/PSP Ops       Locked                  SUPP-016 v0.4
 
@@ -352,83 +356,87 @@ Each module below is implemented per its SUPP. This master document provides the
 
 # 12. Supplement Index + Compiled Appendices (SUPPs remain authoritative)
 
-This index is authoritative for what constitutes the build spec. The master SOW includes the full text of each active SUPP below as compiled Appendices (so nothing is \'missing\' when reading the master), but the SUPP files remain the developer/AI-agent working documents.
+This index is authoritative for what constitutes the build spec. The master SOW includes the full text of each active SUPP below as compiled Appendices (so nothing is 'missing' when reading the master), but the SUPP files remain the developer/AI-agent working documents.
 
 Update workflow: edit the relevant SUPP(s) → bump version → regenerate this compiled master → deliver as one zip (master + SUPPs + archive).
 
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   Appendix    SUPP        Version     Module                       Title                                                                                          File (relative)
   ----------- ----------- ----------- ---------------------------- ---------------------------------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------
-  App A.01    SUPP-001    v0.2        Shared Foundations           Shared Foundations - Persona Workflows JTBD Screens                                            02_SUPPs/Shared_Foundations/SUPP-001 - Shared Foundations - Persona Workflows JTBD Screens - v0.2.docx
+  App A.01    SUPP-001    v0.2        Shared Foundations           Shared Foundations - Persona Workflows JTBD Screens                                            [SUPP-001](02_SUPPs/Shared_Foundations/SUPP-001%20-%20Shared%20Foundations%20-%20Persona%20Workflows%20JTBD%20Screens.md)
 
-  App A.02    SUPP-002    v0.4        Shared Foundations           Shared Foundations - Core Domain Model and State Machines                                      02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.4.md
+  App A.02    SUPP-002    v0.5        Shared Foundations           Shared Foundations - Core Domain Model and State Machines                                      [SUPP-002](02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md)
 
-  App A.03    SUPP-003    v0.6        Shared Foundations           Shared Foundations - RBAC and Permissions Matrix                                               02_SUPPs/Shared_Foundations/SUPP-003 - Shared Foundations - RBAC and Permissions Matrix - v0.6.md
+  App A.03    SUPP-003    v0.7        Shared Foundations           Shared Foundations - RBAC and Permissions Matrix                                               [SUPP-003](02_SUPPs/Shared_Foundations/SUPP-003%20-%20Shared%20Foundations%20-%20RBAC%20and%20Permissions%20Matrix.md)
 
-  App A.04    SUPP-004    v0.4        Shared Foundations           Shared Foundations - Notifications and Escalation Matrix                                       02_SUPPs/Shared_Foundations/SUPP-004 - Shared Foundations - Notifications and Escalation Matrix - v0.4.md
+  App A.04    SUPP-004    v0.5        Shared Foundations           Shared Foundations - Notifications and Escalation Matrix                                       [SUPP-004](02_SUPPs/Shared_Foundations/SUPP-004%20-%20Shared%20Foundations%20-%20Notifications%20and%20Escalation%20Matrix.md)
 
-  App A.05    SUPP-005    v0.3        Shared Foundations           Shared Foundations - Exports Reports Output Contracts                                          02_SUPPs/Shared_Foundations/SUPP-005 - Shared Foundations - Exports Reports Output Contracts - v0.3.docx
+  App A.05    SUPP-005    v0.3        Shared Foundations           Shared Foundations - Exports Reports Output Contracts                                          [SUPP-005](02_SUPPs/Shared_Foundations/SUPP-005%20-%20Shared%20Foundations%20-%20Exports%20Reports%20Output%20Contracts.md)
 
-  App A.06    SUPP-006    v0.5        Shared Foundations           Shared Foundations - Webhooks and Inbound API Event Contract                                   02_SUPPs/Shared_Foundations/SUPP-006 - Shared Foundations - Webhooks and Inbound API Event Contract - v0.5.md
+  App A.06    SUPP-006    v0.6        Shared Foundations           Shared Foundations - Webhooks and Inbound API Event Contract                                   [SUPP-006](02_SUPPs/Shared_Foundations/SUPP-006%20-%20Shared%20Foundations%20-%20Webhooks%20and%20Inbound%20API%20Event%20Contract.md)
 
-  App A.07    SUPP-007    v0.4        Shared Foundations           Shared Foundations - Completion Expiration Overrides                                           02_SUPPs/Shared_Foundations/SUPP-007 - Shared Foundations - Completion Expiration Overrides - v0.4.docx
+  App A.07    SUPP-007    v0.4        Shared Foundations           Shared Foundations - Completion Expiration Overrides                                           [SUPP-007](02_SUPPs/Shared_Foundations/SUPP-007%20-%20Shared%20Foundations%20-%20Completion%20Expiration%20Overrides.md)
 
-  App A.08    SUPP-008    v0.4        Shared Foundations           Shared Foundations - Data Retention Classification Policy Option A                             02_SUPPs/Shared_Foundations/SUPP-008 - Shared Foundations - Data Retention Classification Policy Option A - v0.4.docx
+  App A.08    SUPP-008    v0.4        Shared Foundations           Shared Foundations - Data Retention Classification Policy Option A                             [SUPP-008](02_SUPPs/Shared_Foundations/SUPP-008%20-%20Shared%20Foundations%20-%20Data%20Retention%20Classification%20Policy%20Option%20A.md)
 
-  App B.01    SUPP-013    v0.2        Brand Admin Module           Brand Admin Module - Stores Regions Groups                                                     02_SUPPs/Brand_Admin_Module/SUPP-013 - Brand Admin Module - Stores Regions Groups - v0.2.docx
+  App B.01    SUPP-013    v0.2        Brand Admin Module           Brand Admin Module - Stores Regions Groups                                                     [SUPP-013](02_SUPPs/Brand_Admin_Module/SUPP-013%20-%20Brand%20Admin%20Module%20-%20Stores%20Regions%20Groups.md)
 
-  App B.02    SUPP-014    v0.4        Brand Admin Module           Brand Admin Module - Survey Builder Layout Photo Rules                                         02_SUPPs/Brand_Admin_Module/SUPP-014 - Brand Admin Module - Survey Builder Layout Photo Rules - v0.4.docx
+  App B.02    SUPP-014    v0.4        Brand Admin Module           Brand Admin Module - Survey Builder Layout Photo Rules                                         [SUPP-014](02_SUPPs/Brand_Admin_Module/SUPP-014%20-%20Brand%20Admin%20Module%20-%20Survey%20Builder%20Layout%20Photo%20Rules.md)
 
-  App B.03    SUPP-015    v0.4        Brand Admin Module           Brand Admin Module - Campaigns Kits Assignment                                                 02_SUPPs/Brand_Admin_Module/SUPP-015 - Brand Admin Module - Campaigns Kits Assignment - v0.4.md
+  App B.03    SUPP-015    v0.5        Brand Admin Module           Brand Admin Module - Campaigns Kits Assignment                                                 [SUPP-015](02_SUPPs/Brand_Admin_Module/SUPP-015%20-%20Brand%20Admin%20Module%20-%20Campaigns%20Kits%20Assignment.md)
 
-  App B.04    SUPP-033    v0.1        Brand Admin Module           Brand Admin Module - Brand Takeout Export Package Scaffold                                     02_SUPPs/Brand_Admin_Module/SUPP-033 - Brand Admin Module - Brand Takeout Export Package Scaffold - v0.1.docx
+  App B.04    SUPP-033    v0.1        Brand Admin Module           Brand Admin Module - Brand Takeout Export Package Scaffold                                     [SUPP-033](02_SUPPs/Brand_Admin_Module/SUPP-033%20-%20Brand%20Admin%20Module%20-%20Brand%20Takeout%20Export%20Package%20Scaffold.md)
 
-  App C.01    SUPP-016    v0.4        PSP Operations Module        PSP Operations Module - Orders Shipments Batches PSP Ops                                       02_SUPPs/PSP_Operations_Module/SUPP-016 - PSP Operations Module - Orders Shipments Batches PSP Ops - v0.4.md
+  App C.01    SUPP-016    v0.4        PSP Operations Module        PSP Operations Module - Orders Shipments Batches PSP Ops                                       [SUPP-016](02_SUPPs/PSP_Operations_Module/SUPP-016%20-%20PSP%20Operations%20Module%20-%20Orders%20Shipments%20Batches%20PSP%20Ops.md)
 
-  App C.02    SUPP-018    v0.3        PSP Operations Module        PSP Operations Module - Verification Photo Review Retake                                       02_SUPPs/PSP_Operations_Module/SUPP-018 - PSP Operations Module - Verification Photo Review Retake - v0.3.md
+  App C.02    SUPP-018    v0.3        PSP Operations Module        PSP Operations Module - Verification Photo Review Retake                                       [SUPP-018](02_SUPPs/PSP_Operations_Module/SUPP-018%20-%20PSP%20Operations%20Module%20-%20Verification%20Photo%20Review%20Retake.md)
 
-  App C.03    SUPP-019    v0.3        PSP Operations Module        PSP Operations Module - Issues Reorders Expiration Deinstall                                   02_SUPPs/PSP_Operations_Module/SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall - v0.3.md
+  App C.03    SUPP-019    v0.3        PSP Operations Module        PSP Operations Module - Issues Reorders Expiration Deinstall                                   [SUPP-019](02_SUPPs/PSP_Operations_Module/SUPP-019%20-%20PSP%20Operations%20Module%20-%20Issues%20Reorders%20Expiration%20Deinstall.md)
 
-  App D.01    SUPP-011    v0.3        Store Execution Module       Store Execution Module - Offline and Sync Strategy                                             02_SUPPs/Store_Execution_Module/SUPP-011 - Store Execution Module - Offline and Sync Strategy - v0.3.docx
+  App D.01    SUPP-011    v0.3        Store Execution Module       Store Execution Module - Offline and Sync Strategy                                             [SUPP-011](02_SUPPs/Store_Execution_Module/SUPP-011%20-%20Store%20Execution%20Module%20-%20Offline%20and%20Sync%20Strategy.md)
 
-  App D.02    SUPP-017    v0.3        Store Execution Module       Store Execution Module - Store Execution Proof Capture                                         02_SUPPs/Store_Execution_Module/SUPP-017 - Store Execution Module - Store Execution Proof Capture - v0.3.md
+  App D.02    SUPP-017    v0.3        Store Execution Module       Store Execution Module - Store Execution Proof Capture                                         [SUPP-017](02_SUPPs/Store_Execution_Module/SUPP-017%20-%20Store%20Execution%20Module%20-%20Store%20Execution%20Proof%20Capture.md)
 
-  App E.01    SUPP-012    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Technology Selections ADR                                       02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012 - Platform Ops - Agent Harness - Technology Selections ADR - v0.2.docx
+  App E.01    SUPP-012    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Technology Selections ADR                                       [SUPP-012](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Technology%20Selections%20ADR.md)
 
-  App E.02    SUPP-020    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Build Contracts and Physical Schema                             02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020 - Platform Ops - Agent Harness - Build Contracts and Physical Schema - v0.2.docx
+  App E.02    SUPP-020    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Build Contracts and Physical Schema                             [SUPP-020](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Build%20Contracts%20and%20Physical%20Schema.md)
 
-  App E.03    SUPP-021    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan                                 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021 - Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan - v0.1.docx
+  App E.03    SUPP-021    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan                                 [SUPP-021](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Repo%20CI%20and%20Vertical%20Slice%20Plan.md)
 
-  App E.04    SUPP-022    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Branching FeatureFlags Release Workers                          02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022 - Platform Ops - Agent Harness - Branching FeatureFlags Release Workers - v0.1.docx
+  App E.04    SUPP-022    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Branching FeatureFlags Release Workers                          [SUPP-022](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Branching%20FeatureFlags%20Release%20Workers.md)
 
-  App E.05    SUPP-023    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX                           02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023 - Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX - v0.1.docx
+  App E.05    SUPP-023    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX                           [SUPP-023](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Feature%20Flags%20Data%20Model%20and%20Admin%20UX.md)
 
-  App E.06    SUPP-024    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding                     02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024 - Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding - v0.1.docx
+  App E.06    SUPP-024    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding                     [SUPP-024](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Env%20Config%20Secrets%20Tenant%20Bootstrap%20Seeding.md)
 
-  App E.07    SUPP-025    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets                     02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025 - Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets - v0.1.docx
+  App E.07    SUPP-025    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets                     [SUPP-025](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Staging%20Seed%20Scale%20Plan%20and%20Testing%20Targets.md)
 
-  App E.08    SUPP-026    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain                          02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026 - Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain - v0.1.docx
+  App E.08    SUPP-026    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain                          [SUPP-026](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Local%20Dev%20Staging%20Parity%20and%20Toolchain.md)
 
-  App E.09    SUPP-027    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay          02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027 - Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay - v0.1.docx
+  App E.09    SUPP-027    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay          [SUPP-027](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Notifications%20Webhooks%20Deliverability%20Retry%20and%20Replay.md)
 
-  App E.10    SUPP-029    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation             02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029 - Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation - v0.1.docx
+  App E.10    SUPP-029    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation             [SUPP-029](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Observability%20Tracing%20Logging%20and%20Audit%20Correlation.md)
 
-  App E.11    SUPP-030    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Admin Ops Console Minimum Screens                               02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030 - Platform Ops - Agent Harness - Admin Ops Console Minimum Screens - v0.2.docx
+  App E.11    SUPP-030    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Admin Ops Console Minimum Screens                               [SUPP-030](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Admin%20Ops%20Console%20Minimum%20Screens.md)
 
-  App E.12    SUPP-031    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process      02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031 - Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process - v0.1.docx
+  App E.12    SUPP-031    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process      [SUPP-031](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Supportability%20Policies%20Impersonation%20and%20Incident%20Process.md)
 
-  App E.13    SUPP-032    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests                   02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032 - Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests - v0.1.docx
+  App E.13    SUPP-032    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests                   [SUPP-032](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20BreakGlass%20Retention%20Safety%20and%20Data%20Requests.md)
 
-  App E.14    SUPP-034    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency   02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034 - Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency - v0.1.docx
+  App E.14    SUPP-034    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency   [SUPP-034](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Rate%20Limits%20Upload%20Guards%20Export%20Throttle%20Webhook%20Concurrency.md)
 
-  App E.15    SUPP-035    v1.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums                      02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035 - Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums - v1.1.md
+  App E.15    SUPP-035    v1.3        Platform Ops Agent Harness   Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums                      [SUPP-035](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Field%20Level%20Data%20Model%20Tables%20Fields%20Enums.md)
 
-  App F.01    SUPP-036    v0.6        Screens Interfaces           Screens - Interfaces - Screens Onboarding and Store Foundation                                 02_SUPPs/Screens_Interfaces/SUPP-036 - Screens - Interfaces - Screens Onboarding and Store Foundation - v0.6.md
+  App E.16    SUPP-038    v0.1        Platform Ops Agent Harness   Platform Ops - Section 508 Accessibility Scaffold                                              [SUPP-038](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-038%20-%20Platform%20Ops%20-%20Section%20508%20Accessibility%20Scaffold.md)
 
-  App F.02    SUPP-037    v1.0        Screens Interfaces           Screens - Interfaces - Screens SurveyBuilder and StoreSurveys                                  02_SUPPs/Screens_Interfaces/SUPP-037 - Screens - Interfaces - Screens SurveyBuilder and StoreSurveys - v1.0.md
+  App E.17    SUPP-039    v0.1        Platform Ops Agent Harness   Platform Ops - Infrastructure Performance Security Requirements                                [SUPP-039](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-039%20-%20Platform%20Ops%20-%20Infrastructure%20Performance%20Security%20Requirements.md)
+
+  App F.01    SUPP-036    v0.6        Screens Interfaces           Screens - Interfaces - Screens Onboarding and Store Foundation                                 [SUPP-036](02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md)
+
+  App F.02    SUPP-037    v1.0        Screens Interfaces           Screens - Interfaces - Screens SurveyBuilder and StoreSurveys                                  [SUPP-037](02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md)
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# 13. Status & Roadmap (Current as of 2025-12-18)
+# 13. Status & Roadmap (Current as of 2025-12-20)
 
 This section is the current editorial status of the document set. It is not new scope; it is a gate checklist for what can be built now vs what must be validated first.
 
@@ -492,293 +500,165 @@ This section is the current editorial status of the document set. It is not new 
 
 PSP Operations Module (SUPP-016). It forces early clarity on fulfillment throughput, exception handling, and export/integration realities without expanding scope.
 
-# APPENDICES --- Compiled SUPPs (SUPP files remain authoritative)
+# APPENDICES --- SUPP References (SUPP files remain authoritative)
 
-Each appendix below embeds the full text of the corresponding SUPP so the master SOW can be read standalone. For implementation work, use the separate SUPP file listed in Section 12 (same content, easier to reference).
+Each appendix below links to the corresponding SUPP. For implementation work, use the separate SUPP files listed in Section 12.
 
 ## Appendix A --- Shared Foundations
 
 ### App A.01 --- SUPP-001: Shared Foundations - Persona Workflows JTBD Screens (v0.2)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-001 - Shared Foundations - Persona Workflows JTBD Screens - v0.2.docx
+**Full specification**: [SUPP-001 - Shared Foundations - Persona Workflows JTBD Screens](02_SUPPs/Shared_Foundations/SUPP-001%20-%20Shared%20Foundations%20-%20Persona%20Workflows%20JTBD%20Screens.md)
 
---- Begin embedded SUPP ---
+### App A.02 --- SUPP-002: Shared Foundations - Core Domain Model and State Machines (v0.5)
 
---- End embedded SUPP ---
+**Full specification**: [SUPP-002 - Shared Foundations - Core Domain Model and State Machines](02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md)
 
-### App A.02 --- SUPP-002: Shared Foundations - Core Domain Model and State Machines (v0.4)
+### App A.03 --- SUPP-003: Shared Foundations - RBAC and Permissions Matrix (v0.7)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines - v0.4.md
+**Full specification**: [SUPP-003 - Shared Foundations - RBAC and Permissions Matrix](02_SUPPs/Shared_Foundations/SUPP-003%20-%20Shared%20Foundations%20-%20RBAC%20and%20Permissions%20Matrix.md)
 
---- Begin embedded SUPP ---
+### App A.04 --- SUPP-004: Shared Foundations - Notifications and Escalation Matrix (v0.5)
 
---- End embedded SUPP ---
-
-### App A.03 --- SUPP-003: Shared Foundations - RBAC and Permissions Matrix (v0.6)
-
-Source file: 02_SUPPs/Shared_Foundations/SUPP-003 - Shared Foundations - RBAC and Permissions Matrix - v0.6.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
-
-### App A.04 --- SUPP-004: Shared Foundations - Notifications and Escalation Matrix (v0.4)
-
-Source file: 02_SUPPs/Shared_Foundations/SUPP-004 - Shared Foundations - Notifications and Escalation Matrix - v0.4.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-004 - Shared Foundations - Notifications and Escalation Matrix](02_SUPPs/Shared_Foundations/SUPP-004%20-%20Shared%20Foundations%20-%20Notifications%20and%20Escalation%20Matrix.md)
 
 ### App A.05 --- SUPP-005: Shared Foundations - Exports Reports Output Contracts (v0.3)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-005 - Shared Foundations - Exports Reports Output Contracts - v0.3.docx
+**Full specification**: [SUPP-005 - Shared Foundations - Exports Reports Output Contracts](02_SUPPs/Shared_Foundations/SUPP-005%20-%20Shared%20Foundations%20-%20Exports%20Reports%20Output%20Contracts.md)
 
---- Begin embedded SUPP ---
+### App A.06 --- SUPP-006: Shared Foundations - Webhooks and Inbound API Event Contract (v0.6)
 
---- End embedded SUPP ---
-
-### App A.06 --- SUPP-006: Shared Foundations - Webhooks and Inbound API Event Contract (v0.5)
-
-Source file: 02_SUPPs/Shared_Foundations/SUPP-006 - Shared Foundations - Webhooks and Inbound API Event Contract - v0.5.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-006 - Shared Foundations - Webhooks and Inbound API Event Contract](02_SUPPs/Shared_Foundations/SUPP-006%20-%20Shared%20Foundations%20-%20Webhooks%20and%20Inbound%20API%20Event%20Contract.md)
 
 ### App A.07 --- SUPP-007: Shared Foundations - Completion Expiration Overrides (v0.4)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-007 - Shared Foundations - Completion Expiration Overrides - v0.4.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-007 - Shared Foundations - Completion Expiration Overrides](02_SUPPs/Shared_Foundations/SUPP-007%20-%20Shared%20Foundations%20-%20Completion%20Expiration%20Overrides.md)
 
 ### App A.08 --- SUPP-008: Shared Foundations - Data Retention Classification Policy Option A (v0.4)
 
-Source file: 02_SUPPs/Shared_Foundations/SUPP-008 - Shared Foundations - Data Retention Classification Policy Option A - v0.4.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-008 - Shared Foundations - Data Retention Classification Policy Option A](02_SUPPs/Shared_Foundations/SUPP-008%20-%20Shared%20Foundations%20-%20Data%20Retention%20Classification%20Policy%20Option%20A.md)
 
 ## Appendix B --- Brand Admin Module
 
 ### App B.01 --- SUPP-013: Brand Admin Module - Stores Regions Groups (v0.2)
 
-Source file: 02_SUPPs/Brand_Admin_Module/SUPP-013 - Brand Admin Module - Stores Regions Groups - v0.2.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-013 - Brand Admin Module - Stores Regions Groups](02_SUPPs/Brand_Admin_Module/SUPP-013%20-%20Brand%20Admin%20Module%20-%20Stores%20Regions%20Groups.md)
 
 ### App B.02 --- SUPP-014: Brand Admin Module - Survey Builder Layout Photo Rules (v0.4)
 
-Source file: 02_SUPPs/Brand_Admin_Module/SUPP-014 - Brand Admin Module - Survey Builder Layout Photo Rules - v0.4.docx
+**Full specification**: [SUPP-014 - Brand Admin Module - Survey Builder Layout Photo Rules](02_SUPPs/Brand_Admin_Module/SUPP-014%20-%20Brand%20Admin%20Module%20-%20Survey%20Builder%20Layout%20Photo%20Rules.md)
 
---- Begin embedded SUPP ---
+### App B.03 --- SUPP-015: Brand Admin Module - Campaigns Kits Assignment (v0.5)
 
---- End embedded SUPP ---
-
-### App B.03 --- SUPP-015: Brand Admin Module - Campaigns Kits Assignment (v0.4)
-
-Source file: 02_SUPPs/Brand_Admin_Module/SUPP-015 - Brand Admin Module - Campaigns Kits Assignment - v0.4.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-015 - Brand Admin Module - Campaigns Kits Assignment](02_SUPPs/Brand_Admin_Module/SUPP-015%20-%20Brand%20Admin%20Module%20-%20Campaigns%20Kits%20Assignment.md)
 
 ### App B.04 --- SUPP-033: Brand Admin Module - Brand Takeout Export Package Scaffold (v0.1)
 
-Source file: 02_SUPPs/Brand_Admin_Module/SUPP-033 - Brand Admin Module - Brand Takeout Export Package Scaffold - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-033 - Brand Admin Module - Brand Takeout Export Package Scaffold](02_SUPPs/Brand_Admin_Module/SUPP-033%20-%20Brand%20Admin%20Module%20-%20Brand%20Takeout%20Export%20Package%20Scaffold.md)
 
 ## Appendix C --- PSP Operations Module
 
 ### App C.01 --- SUPP-016: PSP Operations Module - Orders Shipments Batches PSP Ops (v0.4)
 
-Source file: 02_SUPPs/PSP_Operations_Module/SUPP-016 - PSP Operations Module - Orders Shipments Batches PSP Ops - v0.4.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-016 - PSP Operations Module - Orders Shipments Batches PSP Ops](02_SUPPs/PSP_Operations_Module/SUPP-016%20-%20PSP%20Operations%20Module%20-%20Orders%20Shipments%20Batches%20PSP%20Ops.md)
 
 ### App C.02 --- SUPP-018: PSP Operations Module - Verification Photo Review Retake (v0.3)
 
-Source file: 02_SUPPs/PSP_Operations_Module/SUPP-018 - PSP Operations Module - Verification Photo Review Retake - v0.3.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-018 - PSP Operations Module - Verification Photo Review Retake](02_SUPPs/PSP_Operations_Module/SUPP-018%20-%20PSP%20Operations%20Module%20-%20Verification%20Photo%20Review%20Retake.md)
 
 ### App C.03 --- SUPP-019: PSP Operations Module - Issues Reorders Expiration Deinstall (v0.3)
 
-Source file: 02_SUPPs/PSP_Operations_Module/SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall - v0.3.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall](02_SUPPs/PSP_Operations_Module/SUPP-019%20-%20PSP%20Operations%20Module%20-%20Issues%20Reorders%20Expiration%20Deinstall.md)
 
 ## Appendix D --- Store Execution Module
 
 ### App D.01 --- SUPP-011: Store Execution Module - Offline and Sync Strategy (v0.3)
 
-Source file: 02_SUPPs/Store_Execution_Module/SUPP-011 - Store Execution Module - Offline and Sync Strategy - v0.3.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-011 - Store Execution Module - Offline and Sync Strategy](02_SUPPs/Store_Execution_Module/SUPP-011%20-%20Store%20Execution%20Module%20-%20Offline%20and%20Sync%20Strategy.md)
 
 ### App D.02 --- SUPP-017: Store Execution Module - Store Execution Proof Capture (v0.3)
 
-Source file: 02_SUPPs/Store_Execution_Module/SUPP-017 - Store Execution Module - Store Execution Proof Capture - v0.3.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-017 - Store Execution Module - Store Execution Proof Capture](02_SUPPs/Store_Execution_Module/SUPP-017%20-%20Store%20Execution%20Module%20-%20Store%20Execution%20Proof%20Capture.md)
 
 ## Appendix E --- Platform Ops Agent Harness
 
 ### App E.01 --- SUPP-012: Platform Ops - Agent Harness - Technology Selections ADR (v0.2)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012 - Platform Ops - Agent Harness - Technology Selections ADR - v0.2.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-012 - Platform Ops - Agent Harness - Technology Selections ADR](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Technology%20Selections%20ADR.md)
 
 ### App E.02 --- SUPP-020: Platform Ops - Agent Harness - Build Contracts and Physical Schema (v0.2)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020 - Platform Ops - Agent Harness - Build Contracts and Physical Schema - v0.2.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-020 - Platform Ops - Agent Harness - Build Contracts and Physical Schema](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Build%20Contracts%20and%20Physical%20Schema.md)
 
 ### App E.03 --- SUPP-021: Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021 - Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-021 - Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Repo%20CI%20and%20Vertical%20Slice%20Plan.md)
 
 ### App E.04 --- SUPP-022: Platform Ops - Agent Harness - Branching FeatureFlags Release Workers (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022 - Platform Ops - Agent Harness - Branching FeatureFlags Release Workers - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-022 - Platform Ops - Agent Harness - Branching FeatureFlags Release Workers](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Branching%20FeatureFlags%20Release%20Workers.md)
 
 ### App E.05 --- SUPP-023: Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023 - Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-023 - Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Feature%20Flags%20Data%20Model%20and%20Admin%20UX.md)
 
 ### App E.06 --- SUPP-024: Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024 - Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-024 - Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Env%20Config%20Secrets%20Tenant%20Bootstrap%20Seeding.md)
 
 ### App E.07 --- SUPP-025: Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025 - Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-025 - Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Staging%20Seed%20Scale%20Plan%20and%20Testing%20Targets.md)
 
 ### App E.08 --- SUPP-026: Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026 - Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-026 - Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Local%20Dev%20Staging%20Parity%20and%20Toolchain.md)
 
 ### App E.09 --- SUPP-027: Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027 - Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-027 - Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Notifications%20Webhooks%20Deliverability%20Retry%20and%20Replay.md)
 
 ### App E.10 --- SUPP-029: Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029 - Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-029 - Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Observability%20Tracing%20Logging%20and%20Audit%20Correlation.md)
 
 ### App E.11 --- SUPP-030: Platform Ops - Agent Harness - Admin Ops Console Minimum Screens (v0.2)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030 - Platform Ops - Agent Harness - Admin Ops Console Minimum Screens - v0.2.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-030 - Platform Ops - Agent Harness - Admin Ops Console Minimum Screens](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Admin%20Ops%20Console%20Minimum%20Screens.md)
 
 ### App E.12 --- SUPP-031: Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031 - Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-031 - Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Supportability%20Policies%20Impersonation%20and%20Incident%20Process.md)
 
 ### App E.13 --- SUPP-032: Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032 - Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests - v0.1.docx
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-032 - Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20BreakGlass%20Retention%20Safety%20and%20Data%20Requests.md)
 
 ### App E.14 --- SUPP-034: Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034 - Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency - v0.1.docx
+**Full specification**: [SUPP-034 - Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Rate%20Limits%20Upload%20Guards%20Export%20Throttle%20Webhook%20Concurrency.md)
 
---- Begin embedded SUPP ---
+### App E.15 --- SUPP-035: Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums (v1.3)
 
---- End embedded SUPP ---
+**Full specification**: [SUPP-035 - Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Field%20Level%20Data%20Model%20Tables%20Fields%20Enums.md)
 
-### App E.15 --- SUPP-035: Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums (v1.1)
+### App E.16 --- SUPP-038: Platform Ops - Section 508 Accessibility Scaffold (v0.1)
 
-Source file: 02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035 - Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums - v1.1.md
+**Full specification**: [SUPP-038 - Platform Ops - Section 508 Accessibility Scaffold](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-038%20-%20Platform%20Ops%20-%20Section%20508%20Accessibility%20Scaffold.md)
 
---- Begin embedded SUPP ---
+### App E.17 --- SUPP-039: Platform Ops - Infrastructure Performance Security Requirements (v0.1)
 
---- End embedded SUPP ---
+**Full specification**: [SUPP-039 - Platform Ops - Infrastructure Performance Security Requirements](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-039%20-%20Platform%20Ops%20-%20Infrastructure%20Performance%20Security%20Requirements.md)
 
 ## Appendix F --- Screens Interfaces
 
 ### App F.01 --- SUPP-036: Screens - Interfaces - Screens Onboarding and Store Foundation (v0.6)
 
-Source file: 02_SUPPs/Screens_Interfaces/SUPP-036 - Screens - Interfaces - Screens Onboarding and Store Foundation - v0.6.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-036 - Screens - Interfaces - Screens Onboarding and Store Foundation](02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md)
 
 ### App F.02 --- SUPP-037: Screens - Interfaces - Screens SurveyBuilder and StoreSurveys (v1.0)
 
-Source file: 02_SUPPs/Screens_Interfaces/SUPP-037 - Screens - Interfaces - Screens SurveyBuilder and StoreSurveys - v1.0.md
-
---- Begin embedded SUPP ---
-
---- End embedded SUPP ---
+**Full specification**: [SUPP-037 - Screens - Interfaces - Screens SurveyBuilder and StoreSurveys](02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md)
 
 NewPOPSys v1 --- Technology & Architecture Recommendation (v0.1)
 
@@ -803,7 +683,7 @@ Purpose: Provide a pragmatic, v1-appropriate technology stack and architecture b
   ----------------------- ------------------------------------------------------ ------------------------------------------------------------------
   Pilot PSPs              2 (Visual Graphx; Speedy CPS/Alpha Graphics)           Multi-facilitator teams
 
-  Pilot Brands            2--3                                                   Each up to 1,000 stores
+  Pilot Brands            2-3                                                   Each up to 1,000 stores
 
   Photos                  ≥1 photo per item per location                         Design for large media volumes; direct-to-object-storage uploads
 
@@ -1014,39 +894,39 @@ Purpose: Provide implementation-ready workflow diagrams as Mermaid code blocks (
 
 Mermaid:\
 flowchart LR\
-A\[Brand Campaign Manager\] \--\> B\[Create Campaign\]\
-B \--\> C\[Select Stores\]\
-C \--\> C1\[By Individual Store\]\
-C \--\> C2\[By Region\]\
-C \--\> C3\[By Custom Group\]\
-C \--\> C4\[All Stores\]\
-C \--\> D\[Generate Store Assignments\]\
-D \--\> E\[Generate Orders for PSP\]\
-E \--\> F\[Notify PSP (Email/Webhook)\]
+A[Brand Campaign Manager] -->B[Create Campaign]\
+B -->C[Select Stores]\
+C -->C1[By Individual Store]\
+C -->C2[By Region]\
+C -->C3[By Custom Group]\
+C -->C4[All Stores]\
+C -->D[Generate Store Assignments]\
+D -->E[Generate Orders for PSP]\
+E -->F[Notify PSP (Email/Webhook)]
 
 # 2) PSP Fulfillment & Shipment Tracking
 
 Mermaid:\
 flowchart LR\
-A\[PSP Ops\] \--\> B\[View Campaign Orders\]\
-B \--\> C\[Update Production / Kitting\]\
-C \--\> D\[Create Shipment(s)\]\
-D \--\> D1\[Partial shipments allowed\]\
-D \--\> E\[Add Tracking Numbers\]\
-E \--\> F\[Shipment Status Updates\]\
-F \--\> G\[Notify Brand + Stores\]
+A[PSP Ops] -->B[View Campaign Orders]\
+B -->C[Update Production / Kitting]\
+C -->D[Create Shipment(s)]\
+D -->D1[Partial shipments allowed]\
+D -->E[Add Tracking Numbers]\
+E -->F[Shipment Status Updates]\
+F -->G[Notify Brand + Stores]
 
 # 3) Store Execution (Receive → Install → Confirm)
 
 Mermaid:\
 flowchart TD\
-N\[Notification: Upcoming Campaign\] \--\> R\[Receive Kit\]\
-R \--\> V\[Verify Contents\]\
-V \--\>\|Damaged/Missing\| I\[Issue + Reorder Request\]\
-V \--\>\|OK\| IN\[Install Items\]\
-IN \--\> P\[Capture Photos (guided)\]\
-P \--\> S\[Completion Survey + Signature\]\
-S \--\> C\[Mark Store Complete\]
+N[Notification: Upcoming Campaign] -->R[Receive Kit]\
+R -->V[Verify Contents]\
+V \--\>|Damaged/Missing| I[Issue + Reorder Request]\
+V \--\>|OK| IN[Install Items]\
+IN -->P[Capture Photos (guided)]\
+P -->S[Completion Survey + Signature]\
+S -->C[Mark Store Complete]
 
 # 4) Photo Review & Rework Loop
 
@@ -1055,24 +935,24 @@ sequenceDiagram\
 participant Store as Store User\
 participant Sys as NewPOPSys\
 participant Brand as Brand Admin\
-Store-\>\>Sys: Upload photos (per item/location slot)\
-Sys-\>\>Brand: Notify \"Submission ready\"\
-Brand-\>\>Sys: Approve OR Reject with comments\
+Store->>Sys: Upload photos (per item/location slot)\
+Sys->>Brand: Notify \"Submission ready\"\
+Brand->>Sys: Approve OR Reject with comments\
 alt Approved\
-Sys-\>\>Store: Mark item/location verified\
+Sys->>Store: Mark item/location verified\
 else Rejected\
-Sys-\>\>Store: Request retake (reason + required angles)\
-Store-\>\>Sys: Upload replacement photos\
+Sys->>Store: Request retake (reason + required angles)\
+Store->>Sys: Upload replacement photos\
 end
 
 # 5) Campaign Expiration & Deinstall
 
 Mermaid:\
 flowchart TD\
-A\[Campaign reaches end date\] \--\> B\[Notify Stores: Deinstall Required\]\
-B \--\> C\[Deinstall Survey + Signature\]\
-C \--\> D\[Photo Proof (optional/required)\]\
-D \--\> E\[Mark Campaign Completed for Store\]
+A[Campaign reaches end date] -->B[Notify Stores: Deinstall Required]\
+B -->C[Deinstall Survey + Signature]\
+C -->D[Photo Proof (optional/required)]\
+D -->E[Mark Campaign Completed for Store]
 
 **Agentic Development Harness Specification**
 
@@ -1096,129 +976,129 @@ This document defines how AI agents will be used to accelerate NewPOPSys develop
 
 # 4. Non-Negotiable Principles
 
-\- One source of truth: the SOW + Decision Log define scope. Agents must not invent new scope.
+-One source of truth: the SOW + Decision Log define scope. Agents must not invent new scope.
 
-\- Small, reviewable changes: agents ship work in small PRs with tests and clear descriptions.
+-Small, reviewable changes: agents ship work in small PRs with tests and clear descriptions.
 
-\- Gated autonomy: agents can propose/implement, but merges/releases are gated by automated checks and human approval.
+-Gated autonomy: agents can propose/implement, but merges/releases are gated by automated checks and human approval.
 
-\- Security first: no secrets in prompts; no production data in development; least-privilege credentials.
+-Security first: no secrets in prompts; no production data in development; least-privilege credentials.
 
-\- Observable work: every agent action leaves an audit trail (tickets, PRs, logs).
+-Observable work: every agent action leaves an audit trail (tickets, PRs, logs).
 
 # 5. Agent Roster (Recommended)
 
 Define these as explicit personas with clear responsibilities and constraints:
 
-\- Product Agent: Maintains user stories, acceptance criteria, and scope alignment per persona.
+-Product Agent: Maintains user stories, acceptance criteria, and scope alignment per persona.
 
-\- Architect Agent: Maintains domain model, state machine, API contracts, and architecture decision records (ADRs).
+-Architect Agent: Maintains domain model, state machine, API contracts, and architecture decision records (ADRs).
 
-\- Backend Agent: Implements API endpoints, services, data models, and migrations; writes tests.
+-Backend Agent: Implements API endpoints, services, data models, and migrations; writes tests.
 
-\- Frontend Agent: Implements UI flows; prioritizes mobile-first store execution; writes UI tests where feasible.
+-Frontend Agent: Implements UI flows; prioritizes mobile-first store execution; writes UI tests where feasible.
 
-\- QA Agent: Creates test plans, adds automated tests, validates acceptance criteria, manages regression suite.
+-QA Agent: Creates test plans, adds automated tests, validates acceptance criteria, manages regression suite.
 
-\- DevOps Agent: Builds CI/CD, environments, logging/monitoring, and deployment scripts.
+-DevOps Agent: Builds CI/CD, environments, logging/monitoring, and deployment scripts.
 
-\- Documentation Agent: Keeps docs current (README, runbooks, API docs, onboarding).
+-Documentation Agent: Keeps docs current (README, runbooks, API docs, onboarding).
 
-\- Research Agent: Validates domain assumptions and technology choices; produces short briefs with sources.
+-Research Agent: Validates domain assumptions and technology choices; produces short briefs with sources.
 
 # 6. Standard Workflow (Ticket → Release)
 
-\- 1) Intake: A human creates or approves a ticket with scope, persona, and acceptance criteria.
+-1) Intake: A human creates or approves a ticket with scope, persona, and acceptance criteria.
 
-\- 2) Plan: Agent produces an implementation plan and identifies impacted files, risks, and test strategy.
+-2) Plan: Agent produces an implementation plan and identifies impacted files, risks, and test strategy.
 
-\- 3) Implement: Agent creates a branch and commits changes in small increments.
+-3) Implement: Agent creates a branch and commits changes in small increments.
 
-\- 4) Verify: Agent runs lint/tests locally and in CI; fixes failures.
+-4) Verify: Agent runs lint/tests locally and in CI; fixes failures.
 
-\- 4a) Report: Agent generates PR description, change summary, and screenshots/GIFs for key UI changes.
+-4a) Report: Agent generates PR description, change summary, and screenshots/GIFs for key UI changes.
 
-\- 4b) Log: Agent records bugs, tech debt, and follow-ups in a structured log (linked to ticket/PR).
+-4b) Log: Agent records bugs, tech debt, and follow-ups in a structured log (linked to ticket/PR).
 
-\- 4c) Enable: Agent updates user guides, in-product tooltips, and i18n strings/translation scaffolding.
+-4c) Enable: Agent updates user guides, in-product tooltips, and i18n strings/translation scaffolding.
 
-\- 5) Review: Human reviewer checks diff against acceptance criteria; approves or requests changes.
+-5) Review: Human reviewer checks diff against acceptance criteria; approves or requests changes.
 
-\- 6) Merge: Only after CI passes and human approval is recorded.
+-6) Merge: Only after CI passes and human approval is recorded.
 
-\- 7) Release: DevOps agent or human triggers deployment; runbook steps followed; rollback path documented.
+-7) Release: DevOps agent or human triggers deployment; runbook steps followed; rollback path documented.
 
 # 7. Skill Library (Reusable Agent Actions)
 
 A skill is a deterministic, repeatable action an agent can perform. Skills should be testable and composable.
 
-\- SKILL-REQ-READ: Read PRD/SOW section and output a structured summary + open questions.
+-SKILL-REQ-READ: Read PRD/SOW section and output a structured summary + open questions.
 
-\- SKILL-DOMAIN-MODEL: Propose or update the domain model and state machine; output as ADR + diagrams (text-based if needed).
+-SKILL-DOMAIN-MODEL: Propose or update the domain model and state machine; output as ADR + diagrams (text-based if needed).
 
-\- SKILL-API-CONTRACT: Define API endpoints and payload schemas; update OpenAPI spec.
+-SKILL-API-CONTRACT: Define API endpoints and payload schemas; update OpenAPI spec.
 
-\- SKILL-DB-MIGRATION: Create a migration plan and implement migrations with rollback notes.
+-SKILL-DB-MIGRATION: Create a migration plan and implement migrations with rollback notes.
 
-\- SKILL-UI-FLOW: Implement a persona workflow screen-by-screen with mobile-first constraints.
+-SKILL-UI-FLOW: Implement a persona workflow screen-by-screen with mobile-first constraints.
 
-\- SKILL-TEST-ADD: Add unit/integration tests tied to acceptance criteria.
+-SKILL-TEST-ADD: Add unit/integration tests tied to acceptance criteria.
 
-\- SKILL-QA-CHECKLIST: Run a regression checklist and report results.
+-SKILL-QA-CHECKLIST: Run a regression checklist and report results.
 
-\- SKILL-SECURITY-SCAN: Run dependency and static analysis scans; summarize findings.
+-SKILL-SECURITY-SCAN: Run dependency and static analysis scans; summarize findings.
 
-\- SKILL-DOC-UPDATE: Update documentation to match new behavior; include examples.
+-SKILL-DOC-UPDATE: Update documentation to match new behavior; include examples.
 
-\- SKILL-PR-DESCRIBE: Generate a complete PR description (scope, screenshots, test evidence, rollout notes).
+-SKILL-PR-DESCRIBE: Generate a complete PR description (scope, screenshots, test evidence, rollout notes).
 
-\- SKILL-LOG-TECHDEBT: Append structured entries to BUG and TECH-DEBT logs with severity and owner.
+-SKILL-LOG-TECHDEBT: Append structured entries to BUG and TECH-DEBT logs with severity and owner.
 
-\- SKILL-SCREENSHOT-REPORT: Capture annotated screenshots and include them in PR/release notes.
+-SKILL-SCREENSHOT-REPORT: Capture annotated screenshots and include them in PR/release notes.
 
-\- SKILL-I18N-SCAFFOLD: Extract UI strings, add translation keys, and generate placeholder translations.
+-SKILL-I18N-SCAFFOLD: Extract UI strings, add translation keys, and generate placeholder translations.
 
-\- SKILL-TOOLTIPS-GUIDES: Create/update in-product tooltips and a concise user guide for the feature.
+-SKILL-TOOLTIPS-GUIDES: Create/update in-product tooltips and a concise user guide for the feature.
 
-\- SKILL-RELEASE-RUNBOOK: Draft and update release steps and rollback procedures.
+-SKILL-RELEASE-RUNBOOK: Draft and update release steps and rollback procedures.
 
 # 8. Prompt Pack Structure (Recommended)
 
 Maintain a versioned prompt/context pack that agents load at the start of every task:
 
-\- Context: mission, v1 guardrails, core loop, personas
+-Context: mission, v1 guardrails, core loop, personas
 
-\- References: SOW, Decision Log, Domain Model spec, UX principles
+-References: SOW, Decision Log, Domain Model spec, UX principles
 
-\- Engineering standards: code style, lint rules, testing requirements, commit/PR conventions
+-Engineering standards: code style, lint rules, testing requirements, commit/PR conventions
 
-\- Security rules: secret handling, data handling, environment separation
+-Security rules: secret handling, data handling, environment separation
 
-\- Definition of Done: tests pass, docs updated, acceptance criteria met, no new scope
+-Definition of Done: tests pass, docs updated, acceptance criteria met, no new scope
 
-\- Escalation rules: when to stop and ask for a decision
+-Escalation rules: when to stop and ask for a decision
 
 # 9. Quality Gates (Minimum)
 
-\- Automated: lint + type checks, unit tests, basic security/dependency scanning.
+-Automated: lint + type checks, unit tests, basic security/dependency scanning.
 
-\- Automated (required): smoke test script on staging (critical flows: login, campaign list, store execution, photo upload).
+-Automated (required): smoke test script on staging (critical flows: login, campaign list, store execution, photo upload).
 
-\- Manual: PR review checklist (scope alignment, UX acceptance, data model impacts).
+-Manual: PR review checklist (scope alignment, UX acceptance, data model impacts).
 
-\- Release: smoke test checklist on staging before production.
+-Release: smoke test checklist on staging before production.
 
 # 10. Human Approvals (Minimum)
 
-\- Schema migrations and destructive changes
+-Schema migrations and destructive changes
 
-\- Permission model / RBAC changes
+-Permission model / RBAC changes
 
-\- Anything that changes retention, privacy, or PII handling
+-Anything that changes retention, privacy, or PII handling
 
-\- Any work that adds new v1 scope or alters guardrails
+-Any work that adds new v1 scope or alters guardrails
 
-\- Production releases
+-Production releases
 
 NewPOPSys v1 --- Persona Seeding Pack (v0.1)
 
@@ -1342,7 +1222,7 @@ Purpose: Seed personas with goals, responsibilities, and decision points. Used f
 
 - Keep data flowing
 
-- Reduce manual work to \~0
+- Reduce manual work to ~0
 
 ## Key Workflows
 
@@ -1401,7 +1281,7 @@ The core platform loop is: Campaign → Store Assignment → PSP Fulfillment →
 
 v1 is a feature-matched modernization of the legacy PrecisionPOP workflows, with a mobile-first execution experience for stores and clear operational tooling for PSP fulfillment.
 
-# v1 Guardrails (Hard No\'s)
+# v1 Guardrails (Hard No's)
 
 v1 is not a Print MIS/ERP replacement (no accounting, scheduling, job costing).
 
@@ -1413,7 +1293,7 @@ v1 uses a fixed retention rule (operational data retained for a limited window a
 
 # Persona QnA
 
-Complete this section one persona at a time. The goal is to define: (1) their jobs-to-be-done, (2) the minimal v1 workflows, and (3) what \'done\' means for them.
+Complete this section one persona at a time. The goal is to define: (1) their jobs-to-be-done, (2) the minimal v1 workflows, and (3) what 'done' means for them.
 
 ## PSP Admin / PSP Operations
 
@@ -1423,10 +1303,10 @@ Primary goals: configure the environment, intake campaign requirements, generate
   ID             Question                                                                                   Why it matters                                                      Priority       Answer / Notes
   -------------- ------------------------------------------------------------------------------------------ ------------------------------------------------------------------- -------------- -------------------------------------------------------------------------------------------------
   PSP-01         Who is the first pilot PSP (name, team size, locations/warehouses)?                        Defines operational workflows, permissions, and onboarding needs.   P0             Two pilot PSPs:\
-                                                                                                                                                                                               - Visual Graphx (team size \~7; multiple facilitators)\
-                                                                                                                                                                                               - Speedy CPS (Alpha Graphics) (team size \~20; multiple facilitators)
+                                                                                                                                                                                               - Visual Graphx (team size ~7; multiple facilitators)\
+                                                                                                                                                                                               - Speedy CPS (Alpha Graphics) (team size ~20; multiple facilitators)
 
-  PSP-02         What does a \'fulfillment job\' look like today (systems used, steps, handoffs)?           We need to match the real intake-to-ship flow.                      P0             Current competitor PSP workflow unknown.\
+  PSP-02         What does a 'fulfillment job' look like today (systems used, steps, handoffs)?           We need to match the real intake-to-ship flow.                      P0             Current competitor PSP workflow unknown.\
                                                                                                                                                                                                Required v1 behavior:\
                                                                                                                                                                                                - Campaign list with totals + individual orders per store\
                                                                                                                                                                                                - New/updated orders alert PSP via email and webhook\
@@ -1444,7 +1324,7 @@ Primary goals: configure the environment, intake campaign requirements, generate
 
   PSP-04         What shipping/carrier tools are used (ShipStation, UPS/FedEx portals, ERP, etc.)?          Determines integration vs. manual entry and required data fields.   P1             
 
-  PSP-05         What exception types matter most (address issues, missing items, damage, late installs)?   Shapes the \'intervene by exception\' operational screens.          P0             Primary exceptions to surface:\
+  PSP-05         What exception types matter most (address issues, missing items, damage, late installs)?   Shapes the 'intervene by exception' operational screens.          P0             Primary exceptions to surface:\
                                                                                                                                                                                                - Delivery/production delays\
                                                                                                                                                                                                - Damaged items (transport)\
                                                                                                                                                                                                - Improper facilitation (not installed, wrong location, wrong count, old materials not removed)
@@ -1476,8 +1356,8 @@ Primary goals: create campaigns, target stores, provide instructions/assets, and
 
   BR-04          What deadlines matter (ship date, install-by date, verification-by date)?                     Drives scheduling and state transitions.             P0             
 
-  BR-05          What is a \'successful\' campaign (minimum install %, photo proof required, sign-off)?        Defines acceptance and reporting.                    P0             Success = 100% facilitation and store involvement.\
-                                                                                                                                                                                   (Needs definition of what \'complete\' means per store: required steps + surveys + photos.)
+  BR-05          What is a 'successful' campaign (minimum install %, photo proof required, sign-off)?        Defines acceptance and reporting.                    P0             Success = 100% facilitation and store involvement.\
+                                                                                                                                                                                   (Needs definition of what 'complete' means per store: required steps + surveys + photos.)
 
   BR-06          What dashboards are required (summary + drilldown) for v1?                                    Determines reporting scope and UI.                   P1             
 
@@ -1491,7 +1371,7 @@ Primary goals: monitor progress, identify non-compliant locations, intervene by 
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   ID             Question                                                                                    Why it matters                               Priority       Answer / Notes
   -------------- ------------------------------------------------------------------------------------------- -------------------------------------------- -------------- ----------------
-  RM-01          What triggers an \'exception\' for regional (late, missing photos, store not responding)?   Defines exception-first views and alerts.    P0             
+  RM-01          What triggers an 'exception' for regional (late, missing photos, store not responding)?   Defines exception-first views and alerts.    P0             
 
   RM-02          What actions can regional take (message store, escalate to PSP, reassign)?                  Determines action buttons and permissions.   P0             
 
@@ -1541,7 +1421,7 @@ Primary goals: receive kits, complete tasks quickly, upload proof, report issues
   -------------- ------------------------------------------------------------------------------------- --------------------------------------- -------------- ------------------------------------------------------------------------------------------------------------------------------------
   SYS-01         What is the initial scope of scale (brands, stores, campaigns/month, photos/day)?     Sizing affects architecture and cost.   P0             Pilot scale target:\
                                                                                                                                                               - 2 pilot PSPs (Visual Graphx, Speedy CPS)\
-                                                                                                                                                              - 2--3 pilot brands\
+                                                                                                                                                              - 2-3 pilot brands\
                                                                                                                                                               - Up to 1,000 stores per brand\
                                                                                                                                                               - Variable kits + variable store/location survey answers\
                                                                                                                                                               - Photo volume: ≥1 photo per item per location per campaign (potentially high).
@@ -1573,7 +1453,7 @@ Use this section to define how autonomous development will be organized and cont
   -------------- ------------------------------------------------------------------------------------------------- ------------------------------------------------ -------------- ----------------------------------------
   AI-01          Which codebase will agents work in first (frontend, backend, infra)?                              Determines repo structure + agent permissions.   P1             
 
-  AI-02          What is the required \'definition of done\' for agent-generated work (tests, lint, docs, demo)?   Prevents churn and regressions.                  P0             Harness must support autonomous loop:\
+  AI-02          What is the required 'definition of done' for agent-generated work (tests, lint, docs, demo)?   Prevents churn and regressions.                  P0             Harness must support autonomous loop:\
                                                                                                                                                                                    - scaffold/build\
                                                                                                                                                                                    - test + refactor\
                                                                                                                                                                                    - validate + smoke test\
@@ -1593,7 +1473,7 @@ Use this section to define how autonomous development will be organized and cont
 
   AI-04          How will we evaluate output quality (unit tests, E2E tests, review checklist, scorecards)?        Needed for autonomous loops.                     P0             
 
-  AI-05          Who is the human \'final approver\' (product + engineering) for merges/releases?                  Clarifies accountability.                        P0             
+  AI-05          Who is the human 'final approver' (product + engineering) for merges/releases?                  Clarifies accountability.                        P0             
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **NewPOPSys Open Questions & Decisions Log**
@@ -1634,19 +1514,19 @@ Whenever a requirement needs clarification or a product/technical decision must 
 
   DEC-006   AI Harness           Define autonomous dev guardrails and merge policy.                                            Harness should scaffold/build/test/refactor/validate/smoke test; run lint/typecheck; create PR descriptions; log bugs/tech debt; capture screenshots; manage git; generate user guides/tooltips and translation scaffolding. Need merge policy + human approval gates.                                                                                   Partially Answered   Quality + security risk
 
-  DEC-007   Pilot                Confirm pilot PSP/brand/store scale assumptions as sizing baseline.                           2 pilot PSPs: Visual Graphx (\~7) and Speedy CPS/Alpha Graphics (\~20).\                                                                                                                                                                                                                                                                                 Captured             Architecture + cost risk
-                                                                                                                               2--3 brands; up to 1,000 stores/brand.\                                                                                                                                                                                                                                                                                                                                       
+  DEC-007   Pilot                Confirm pilot PSP/brand/store scale assumptions as sizing baseline.                           2 pilot PSPs: Visual Graphx (~7) and Speedy CPS/Alpha Graphics (~20).\                                                                                                                                                                                                                                                                                 Captured             Architecture + cost risk
+                                                                                                                               2-3 brands; up to 1,000 stores/brand.\                                                                                                                                                                                                                                                                                                                                       
                                                                                                                                Photo volume potentially very high.                                                                                                                                                                                                                                                                                                                                           
 
   DEC-008   Store Assignment     Define store grouping/region model and how inclusion/exclusion works.                         Store belongs to one Region hierarchy; may belong to multiple custom Groups. Store selection modes: individual stores, by region, all stores, or custom groupings with inclusion/exclusion (brand campaign manager controlled). Audit changes.                                                                                                           Resolved             Core workflow
 
   DEC-009   Fulfillment          Define PSP order model and statuses (campaign totals + store orders + shipment tracking).     Need campaign list totals + per-store orders. PSP alerted via email/webhook; PSP reviews/updates in portal. Orders exportable/downloadable; pushable via webhook/API. PSP can update status/shipment via UI or API. Kit tracking required by campaign, store/order, item, batch, and custom (statuses/transitions TBD).                                  Partially Answered   PSP adoption risk
 
-  DEC-010   Data Model           Define \'batch\' and \'custom\' tracking dimensions for kits/items.                           Tracking required at campaign, store/order, item, batch, and custom levels. Need definitions for: batch (production lot? shipment batch?), custom (brand-defined tags?) + reporting/export columns.                                                                                                                                                      Partially Answered   Schema + reporting risk
+  DEC-010   Data Model           Define 'batch' and 'custom' tracking dimensions for kits/items.                           Tracking required at campaign, store/order, item, batch, and custom levels. Need definitions for: batch (production lot? shipment batch?), custom (brand-defined tags?) + reporting/export columns.                                                                                                                                                      Partially Answered   Schema + reporting risk
 
   DEC-011   Store Execution      Decide offline/online approach for store execution (web now; scaffold mobile offline sync).   v1 store facilitation via web app. Scaffold native iOS/Android apps with optional offline usage + background sync (implementation TBD; prioritize web-first).                                                                                                                                                                                            Resolved             Engineering complexity
 
-  DEC-012   Reorders             Define reorder request \'signature\' and required proof fields.                               Missing/damaged reorder survey per item: reason, qty, description, photos, and signature/attestation checkbox capturing user identity + timestamp.                                                                                                                                                                                                       Resolved             Operations + dispute risk
+  DEC-012   Reorders             Define reorder request 'signature' and required proof fields.                               Missing/damaged reorder survey per item: reason, qty, description, photos, and signature/attestation checkbox capturing user identity + timestamp.                                                                                                                                                                                                       Resolved             Operations + dispute risk
 
   DEC-013   Campaign Lifecycle   Define expiration / deinstall workflow and end-of-campaign survey rules.                      Campaigns often expire; core branding rollouts may not. If campaign has expiration, end survey should alert stores to deinstall and confirm completion (see SUPP-007).                                                                                                                                                                                   Resolved             Lifecycle completeness
 
@@ -1828,7 +1708,7 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
 
   Shipment                            CREATED → IN_TRANSIT → DELIVERED → CONFIRMED_RECEIVED
 
-  Execution (Kit/Item)                PENDING → RECEIVED → INSTALLED → SUBMITTED_FOR_REVIEW → VERIFIED \| REWORK_REQUESTED → COMPLETE
+  Execution (Kit/Item)                PENDING → RECEIVED → INSTALLED → SUBMITTED_FOR_REVIEW → VERIFIED | REWORK_REQUESTED → COMPLETE
 
   Issue/Reorder                       REPORTED → SUBMITTED → APPROVED/QUEUED → SHIPPED → RECEIVED → RESOLVED
   -------------------------------------------------------------------------------------------------------------------------------------
@@ -1944,11 +1824,11 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   Entity                              Key Fields / Notes
   ----------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  PhotoRule                           ruleId, scopeType(campaignDefault\|itemOverride\|slotOverride\|item+slot), campaignId, itemId?, slotId?, minCount, requiredAngles\[\], suggestedAngles\[\], notes
+  PhotoRule                           ruleId, scopeType(campaignDefault|itemOverride|slotOverride|item+slot), campaignId, itemId?, slotId?, minCount, requiredAngles[], suggestedAngles[], notes
 
   PhotoLink                           linkId, campaignId, storeId, itemId, slotId, ruleId, mediaAssetId, createdAt, createdBy
 
-  PhotoReview                         reviewId, photoLinkId, status(approved\|rejected), reviewerId, comments, rejectedReasonCode, createdAt
+  PhotoReview                         reviewId, photoLinkId, status(approved|rejected), reviewerId, comments, rejectedReasonCode, createdAt
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------------------------------------------------------------
@@ -1968,13 +1848,13 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   ----------------------------------- --------------------------------------------------------------------------------------------
   Campaign assignment versioning      Pin SurveyVersion + LayoutVersion at assignment time (default)
 
-  Version flexibility                 Allow controlled \'Rebase to Latest\' with admin approval + audit + verification tasks
+  Version flexibility                 Allow controlled 'Rebase to Latest' with admin approval + audit + verification tasks
 
   Kit modeling                        Kit includes items + required location slot mappings (per store layout slots)
 
-  Order generation trigger            Generate orders on campaign publish (default); manual \'Generate Orders\' backup if needed
+  Order generation trigger            Generate orders on campaign publish (default); manual 'Generate Orders' backup if needed
 
-  Store selection precedence          Start with \'All\' → subtract exclusions; inclusions add to base selection as needed
+  Store selection precedence          Start with 'All' → subtract exclusions; inclusions add to base selection as needed
 
   Install instructions/assets         Both campaign-level and item-level instructions
 
@@ -2012,7 +1892,7 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
 
   Partial shipments                   YES --- multiple shipments can fulfill a single store order (partial allowed)
 
-  Batch types                         Enum list (fixed) + optional \'CUSTOM\' type with label
+  Batch types                         Enum list (fixed) + optional 'CUSTOM' type with label
 
   Late shipping                       Configurable per campaign (rule-based thresholds)
 
@@ -2056,7 +1936,7 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
 
   Receiving verification              Hybrid: order-level confirm + item-level anomaly classification (missing/damaged/incorrect)
 
-  Replacement request model           Hybrid: per-item issue lines by default; allow \'major packaging damage\' single request that can fan-out into item lines by PSP
+  Replacement request model           Hybrid: per-item issue lines by default; allow 'major packaging damage' single request that can fan-out into item lines by PSP
 
   Install confirmation                Item-level per location slot; rolls up to order/store completion
 
@@ -2068,19 +1948,19 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------
   Entity                              Key Fields / Notes
   ----------------------------------- ---------------------------------------------------------------------------------------------------------------------------
-  StoreTask                           taskId, storeId, campaignId, type(receive\|install\|complete\|deinstall), status, dueAt
+  StoreTask                           taskId, storeId, campaignId, type(receive|install|complete|deinstall), status, dueAt
 
   ReceiveVerification                 verificationId, orderId, receivedStatus(yes/no/partial), notes, createdAt
 
-  IssueRequest                        issueRequestId, orderId, storeId, campaignId, type(itemIssues\|packagingDamage), status
+  IssueRequest                        issueRequestId, orderId, storeId, campaignId, type(itemIssues|packagingDamage), status
 
-  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds\[\], attestationUserId, attestationAt
+  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds[], attestationUserId, attestationAt
 
   InstallRecord                       installId, assignmentItemId, slotId, installedAt, installedBy, status
 
   ProofCapture                        proofId, installId (or assignmentItemId+slotId), mediaAssetId, ruleId, createdAt
 
-  CompletionSubmission                submissionId, storeId, campaignId, status(submitted\|verified\|rework), attestationUserId, attestationAt
+  CompletionSubmission                submissionId, storeId, campaignId, status(submitted|verified|rework), attestationUserId, attestationAt
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   -------------------------------------------------------------------------------------------------------------------------------
@@ -2116,7 +1996,7 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   ----------------------------------------------------------------------------------------
   Field                               Values
   ----------------------------------- ----------------------------------------------------
-  verificationMode                    STRICT \| FAST
+  verificationMode                    STRICT | FAST
 
   autoReopenOnRejection               true (required when FAST)
 
@@ -2152,7 +2032,7 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   --------------------------------------------------------------------------------------------------
   Field                               Notes
   ----------------------------------- --------------------------------------------------------------
-  approvalMode                        AUTO_APPROVE \| BRAND_APPROVAL_REQUIRED \| PSP_APPROVAL_ONLY
+  approvalMode                        AUTO_APPROVE | BRAND_APPROVAL_REQUIRED | PSP_APPROVAL_ONLY
 
   defaultMode                         campaign-level default
 
@@ -2166,9 +2046,9 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   ----------------------------------- ---------------------------------------------------------------------------------------------------------------------------
   IssueRequest                        issueRequestId, orderId, storeId, campaignId, type, status, createdAt
 
-  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds\[\], attestationUserId, attestationAt
+  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds[], attestationUserId, attestationAt
 
-  ApprovalDecision                    decisionId, issueLineId (or requestId), status(approved\|rejected), actorId, reasonCode?, comment?, decidedAt
+  ApprovalDecision                    decisionId, issueLineId (or requestId), status(approved|rejected), actorId, reasonCode?, comment?, decidedAt
 
   Reorder                             reorderId, issueRequestId, status, createdAt; may produce 1..N replacement shipments
 
@@ -2246,7 +2126,7 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
 
   Review                              GET /api/v1/reviewQueue, POST /api/v1/photoReviews/{photoLinkId}/approve, POST /api/v1/photoReviews/{photoLinkId}/reject
 
-  Issues/Reorders                     POST /api/v1/issues, POST /api/v1/issues/{lineId}/approve\|reject, POST /api/v1/issues/{requestId}/createReorder
+  Issues/Reorders                     POST /api/v1/issues, POST /api/v1/issues/{lineId}/approve|reject, POST /api/v1/issues/{requestId}/createReorder
 
   Exports                             POST /api/v1/exports, GET /api/v1/exports/{jobId}, GET /api/v1/exports/{jobId}/download
 
@@ -2466,11 +2346,11 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   ----------------------------------- -----------------------------------------
   timestamp                           ISO8601
 
-  level                               debug\|info\|warn\|error
+  level                               debug|info|warn|error
 
-  service                             web\|api\|worker
+  service                             web|api|worker
 
-  env                                 dev\|staging\|prod
+  env                                 dev|staging|prod
 
   requestId                           generated if missing
 
@@ -2586,19 +2466,19 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   --------------------------------------------------------------------------------------------------------
   Field Path                    Type                    Notes
   ----------------------------- ----------------------- --------------------------------------------------
-  fields\[\].is_computed        bool                    If true, value is derived by COMPUTE action/expr
+  fields[].is_computed        bool                    If true, value is derived by COMPUTE action/expr
 
-  fields\[\].compute_expr       json                    Whitelisted expression AST (fn + args)
+  fields[].compute_expr       json                    Whitelisted expression AST (fn + args)
 
-  fields\[\].read_only          bool                    Default true when computed
+  fields[].read_only          bool                    Default true when computed
 
-  fields\[\].allow_override     bool                    Enables safe override UI
+  fields[].allow_override     bool                    Enables safe override UI
 
-  fields\[\].hidden_default     bool                    If true, field not shown but still stored
+  fields[].hidden_default     bool                    If true, field not shown but still stored
 
-  fields\[\].on_hide_behavior   enum                    KEEP \| CLEAR (per-field)
+  fields[].on_hide_behavior   enum                    KEEP | CLEAR (per-field)
 
-  fields\[\].display_key        string?                 Export column label (optional)
+  fields[].display_key        string?                 Export column label (optional)
   --------------------------------------------------------------------------------------------------------
 
   ----------------------------------------------------------------------------------------------------------
@@ -2626,9 +2506,9 @@ If a decision requires deeper work, create a supplemental doc (SUPP-###) and lin
   ------------------------------------------------------------------------------------------------------------------
   Key                     Type                    Example
   ----------------------- ----------------------- ------------------------------------------------------------------
-  overrides\[\]           array                   {field_id, value, overridden_by_user_id, overridden_at, reason?}
+  overrides[]           array                   {field_id, value, overridden_by_user_id, overridden_at, reason?}
 
-  computed\[\]            array                   {field_id, computed_at, expr_version}
+  computed[]            array                   {field_id, computed_at, expr_version}
   ------------------------------------------------------------------------------------------------------------------
 
   ---------------------------------------------------------------------------------------------------------------------
@@ -2861,50 +2741,50 @@ Store Assignment Execution (assignment-level):
 
 \`\`\`mermaid\
 stateDiagram-v2\
-\[\*\] \--\> IN_PROGRESS\
-IN_PROGRESS \--\> SUBMITTED_FOR_REVIEW : store submits completion\
-SUBMITTED_FOR_REVIEW \--\> COMPLETE : all proofs satisfied OR waiver\
-SUBMITTED_FOR_REVIEW \--\> REWORK_REQUESTED : photo rejected (STRICT mode)\
-COMPLETE \--\> REWORK_REQUESTED : photo rejected (FAST mode auto-reopen)\
-REWORK_REQUESTED \--\> SUBMITTED_FOR_REVIEW : store resubmits retake\
-COMPLETE \--\> IN_PROGRESS : admin reopens\
+[\*] -->IN_PROGRESS\
+IN_PROGRESS -->SUBMITTED_FOR_REVIEW : store submits completion\
+SUBMITTED_FOR_REVIEW -->COMPLETE : all proofs satisfied OR waiver\
+SUBMITTED_FOR_REVIEW -->REWORK_REQUESTED : photo rejected (STRICT mode)\
+COMPLETE -->REWORK_REQUESTED : photo rejected (FAST mode auto-reopen)\
+REWORK_REQUESTED -->SUBMITTED_FOR_REVIEW : store resubmits retake\
+COMPLETE -->IN_PROGRESS : admin reopens\
 \`\`\`
 
 Photo Review (photo-level):
 
 \`\`\`mermaid\
 stateDiagram-v2\
-\[\*\] \--\> PENDING\
-PENDING \--\> APPROVED\
-PENDING \--\> REJECTED\
-REJECTED \--\> PENDING : retake uploaded\
-APPROVED \--\> SUPERSEDED : replaced\
-PENDING \--\> SUPERSEDED : replaced before review\
+[\*] -->PENDING\
+PENDING -->APPROVED\
+PENDING -->REJECTED\
+REJECTED -->PENDING : retake uploaded\
+APPROVED -->SUPERSEDED : replaced\
+PENDING -->SUPERSEDED : replaced before review\
 \`\`\`
 
 Fulfillment Order (store order):
 
 \`\`\`mermaid\
 stateDiagram-v2\
-\[\*\] \--\> GENERATED\
-GENERATED \--\> ACKNOWLEDGED\
-ACKNOWLEDGED \--\> IN_PRODUCTION\
-IN_PRODUCTION \--\> KITTING\
-KITTING \--\> READY_TO_SHIP\
-READY_TO_SHIP \--\> PARTIALLY_SHIPPED\
-READY_TO_SHIP \--\> SHIPPED\
-PARTIALLY_SHIPPED \--\> SHIPPED\
-SHIPPED \--\> DELIVERED\
-DELIVERED \--\> CLOSED\
-GENERATED \--\> CANCELLED\
-ACKNOWLEDGED \--\> CANCELLED\
+[\*] -->GENERATED\
+GENERATED -->ACKNOWLEDGED\
+ACKNOWLEDGED -->IN_PRODUCTION\
+IN_PRODUCTION -->KITTING\
+KITTING -->READY_TO_SHIP\
+READY_TO_SHIP -->PARTIALLY_SHIPPED\
+READY_TO_SHIP -->SHIPPED\
+PARTIALLY_SHIPPED -->SHIPPED\
+SHIPPED -->DELIVERED\
+DELIVERED -->CLOSED\
+GENERATED -->CANCELLED\
+ACKNOWLEDGED -->CANCELLED\
 \`\`\`
 
 # Reporting & Export Dimensions
 
 - Required query chain: campaign → store → item → locationSlot → proofs → review outcomes.
 
-- All status transitions must emit immutable AuditEvents (actorType human\|integration).
+- All status transitions must emit immutable AuditEvents (actorType human|integration).
 
 - Exports must include stable identifiers + human-readable keys (storeNumber + GUID alias).
 
@@ -3301,11 +3181,11 @@ Purpose: Define webhook security and delivery contracts: signing, replay protect
 
 # 1) Webhook Signature (HMAC SHA-256)
 
-- Header: X-NewPOPSys-Signature: sha256=\<hex\>
+- Header: X-NewPOPSys-Signature: sha256=<hex\>
 
-- Header: X-NewPOPSys-Timestamp: \<unix_ms\>
+- Header: X-NewPOPSys-Timestamp: <unix_ms\>
 
-- String to sign: \<timestamp\>.\<raw_body_bytes\>
+- String to sign: <timestamp\>.<raw_body_bytes\>
 
 - Signature: HMAC_SHA256(secret, string_to_sign)
 
@@ -3317,7 +3197,7 @@ Purpose: Define webhook security and delivery contracts: signing, replay protect
 
 - Receiver validates nonce/eventId not seen before within window (store nonce/eventId hash).
 
-- If timestamp outside window: reject with 401/403 and log as \'replay_window_violation\'.
+- If timestamp outside window: reject with 401/403 and log as 'replay_window_violation'.
 
 # 3) Event Envelope (3A)
 
@@ -3332,7 +3212,7 @@ All webhook deliveries use this envelope (payload varies by type/version):
 \"tenantId\": \"uuidv7\",\
 \"brandId\": \"uuidv7\",\
 \"correlationId\": \"uuidv7\",\
-\"actor\": { \"type\": \"system\|human\|integration\", \"id\": \"uuidv7\" },\
+\"actor\": { \"type\": \"system|human|integration\", \"id\": \"uuidv7\" },\
 \"payload\": { }\
 }\
 \`\`\`
@@ -3480,7 +3360,7 @@ Purpose: Definitive rules for store completion, campaign completion, expiring vs
   -------------------------------------------------------------------------------------
   Field                               Meaning
   ----------------------------------- -------------------------------------------------
-  verificationMode                    STRICT \| FAST
+  verificationMode                    STRICT | FAST
 
   verificationSlaHours                hours until review overdue triggers escalations
 
@@ -3545,9 +3425,9 @@ Purpose: Enforce v1 90-day retention for heavy campaign artifacts while retainin
 
 - Pointer targets may be tenant-configured:
 
-- \- PSP-managed S3 object (tenant bucket), OR
+- -PSP-managed S3 object (tenant bucket), OR
 
-- \- Brand-provided external link (validated allowlist).
+- -Brand-provided external link (validated allowlist).
 
 - v1 may cache thumbnails/previews for UX but does not guarantee long-term binary hosting.
 
@@ -3603,19 +3483,19 @@ Purpose: Define store master data, hierarchical geography, custom groupings, imp
 
 - Store identifiers:
 
-- \- storeId (ULID/UUID PK)
+- -storeId (ULID/UUID PK)
 
-- \- storeNumber (brand-facing unique identifier; required)
+- -storeNumber (brand-facing unique identifier; required)
 
-- \- externalStoreGuid (optional; for brand/PSP system mapping)
+- -externalStoreGuid (optional; for brand/PSP system mapping)
 
 - Geography:
 
-- \- Region (required)
+- -Region (required)
 
-- \- District (optional; belongs to Region)
+- -District (optional; belongs to Region)
 
-- \- Territory (optional; belongs to District or Region depending on model)
+- -Territory (optional; belongs to District or Region depending on model)
 
 - Store belongs to exactly one Region. District/Territory are nullable references to support optional layers.
 
@@ -3651,9 +3531,9 @@ Purpose: Define store master data, hierarchical geography, custom groupings, imp
 
 - Fulfillment safety: if a critical shipping field changes (address fields, storeNumber, region), and the store is assigned to an active campaign before orders are shipped:
 
-- \- System creates a \'Store Change Verification\' task for Brand Admin + PSP Ops to acknowledge/approve.
+- -System creates a 'Store Change Verification' task for Brand Admin + PSP Ops to acknowledge/approve.
 
-- \- Until verified, fulfillment for that store may be paused (configurable).
+- -Until verified, fulfillment for that store may be paused (configurable).
 
 - Shipping snapshot: once an Order/Shipment is created, the order record stores a snapshot of shipping fields used for that fulfillment run (immutable for audit).
 
@@ -3699,7 +3579,7 @@ Purpose: Define store master data, hierarchical geography, custom groupings, imp
 
 # Open Decisions
 
-43. Define which fields are \'critical\' to trigger verification (address, storeNumber, region, contacts?).
+43. Define which fields are 'critical' to trigger verification (address, storeNumber, region, contacts?).
 
 44. Decide whether verification blocks fulfillment automatically or only warns (default: blocks for address changes).
 
@@ -3785,13 +3665,13 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
 
 - Logic types:
 
-- \- show/hide field based on answer
+- -show/hide field based on answer
 
-- \- required-if based on answer
+- -required-if based on answer
 
-- \- enable/disable based on answer
+- -enable/disable based on answer
 
-- Rule storage: logicRules\[\] inside schemaJson with predicate + effect.
+- Rule storage: logicRules[] inside schemaJson with predicate + effect.
 
 - At minimum, logic must be evaluated client-side for UX and server-side for validation.
 
@@ -3809,9 +3689,9 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
 
 - Photo rules exist at two levels:
 
-- \- Campaign-wide defaults (e.g., 1 photo per item/location, suggested angles)
+- -Campaign-wide defaults (e.g., 1 photo per item/location, suggested angles)
 
-- \- Overrides per KitItemDefinition and per LocationSlot (e.g., 3 angles required for Front Door decal)
+- -Overrides per KitItemDefinition and per LocationSlot (e.g., 3 angles required for Front Door decal)
 
 - Photos are stored as MediaAsset records; PhotoLink binds asset → campaign/store/item/locationSlot requirement.
 
@@ -3820,11 +3700,11 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   Entity                              Key Fields / Notes
   ----------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  PhotoRule                           ruleId, scopeType(campaignDefault\|itemOverride\|slotOverride\|item+slot), campaignId, itemId?, slotId?, minCount, requiredAngles\[\], suggestedAngles\[\], notes
+  PhotoRule                           ruleId, scopeType(campaignDefault|itemOverride|slotOverride|item+slot), campaignId, itemId?, slotId?, minCount, requiredAngles[], suggestedAngles[], notes
 
   PhotoLink                           linkId, campaignId, storeId, itemId, slotId, ruleId, mediaAssetId, createdAt, createdBy
 
-  PhotoReview                         reviewId, photoLinkId, status(approved\|rejected), reviewerId, comments, rejectedReasonCode, createdAt
+  PhotoReview                         reviewId, photoLinkId, status(approved|rejected), reviewerId, comments, rejectedReasonCode, createdAt
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # 7) Inputs → Outputs (Build Guide)
@@ -3927,7 +3807,7 @@ Purpose: Implement a deterministic, brand-configurable survey + location-slot mo
 
 - SurveyTemplate → immutable SurveyVersion (published) → StoreSurveyResponse (answers).
 
-- Campaigns pin SurveyVersion by default at assignment time; controlled \'Rebase to Latest\' creates verification tasks when fulfillment started.
+- Campaigns pin SurveyVersion by default at assignment time; controlled 'Rebase to Latest' creates verification tasks when fulfillment started.
 
 - Optional snapshot at campaign publish for audit/reporting (recommended).
 
@@ -3998,13 +3878,13 @@ Purpose: Define campaign creation, store selection/inclusion-exclusion, kit mode
   ----------------------------------- --------------------------------------------------------------------------------------------
   Campaign assignment versioning      Pin SurveyVersion + LayoutVersion at assignment time (default)
 
-  Version flexibility                 Allow controlled \'Rebase to Latest\' with admin approval + audit + verification tasks
+  Version flexibility                 Allow controlled 'Rebase to Latest' with admin approval + audit + verification tasks
 
   Kit modeling                        Kit includes items + required location slot mappings (per store layout slots)
 
-  Order generation trigger            Generate orders on campaign publish (default); manual \'Generate Orders\' backup if needed
+  Order generation trigger            Generate orders on campaign publish (default); manual 'Generate Orders' backup if needed
 
-  Store selection precedence          Start with \'All\' → subtract exclusions; inclusions add to base selection as needed
+  Store selection precedence          Start with 'All' → subtract exclusions; inclusions add to base selection as needed
 
   Install instructions/assets         Both campaign-level and item-level instructions
 
@@ -4033,40 +3913,40 @@ Purpose: Define campaign creation, store selection/inclusion-exclusion, kit mode
 
 - 3\) Apply exclusions (subtract stores): specific stores, groups, regions.
 
-- All selection operations must be deterministic and stored as a selection \'recipe\' for reproducibility (exportable JSON).
+- All selection operations must be deterministic and stored as a selection 'recipe' for reproducibility (exportable JSON).
 
 ## Selection Recipe (Draft Schema)
 
 Example JSON (draft):\
 {\
 \"mode\": \"ALL\",\
-\"include\": \[{\"type\":\"group\",\"id\":\"grp\_\...\"},{\"type\":\"store\",\"id\":\"sto\_\...\"}\],\
-\"exclude\": \[{\"type\":\"region\",\"id\":\"reg\_\...\"}\]\
+\"include\": [{\"type\":\"group\",\"id\":\"grp\_\...\"},{\"type\":\"store\",\"id\":\"sto\_\...\"}],\
+\"exclude\": [{\"type\":\"region\",\"id\":\"reg\_\...\"}]\
 }
 
 # 3) Version Pinning Strategy (Survey + Layout)
 
 - Default: when a store is assigned to a campaign, the system pins:
 
-- \- surveyVersionId (immutable schema/UI for that campaign)
+- -surveyVersionId (immutable schema/UI for that campaign)
 
-- \- layoutVersionId (store layout/location slots as of assignment)
+- -layoutVersionId (store layout/location slots as of assignment)
 
 - Rationale: prevents moving targets during execution and ensures proofs map to stable location slots.
 
 - 
 
-- Flexibility (\'Reality happens\'): allow controlled \'Rebase to Latest\' when store survey/layout updates are unavoidable.
+- Flexibility ('Reality happens'): allow controlled 'Rebase to Latest' when store survey/layout updates are unavoidable.
 
 - Rebase rules (v1):
 
-- \- Only BRAND_ADMIN or REGIONAL_ADMIN may initiate.
+- -Only BRAND_ADMIN or REGIONAL_ADMIN may initiate.
 
-- \- System creates verification tasks for BRAND_ADMIN + PSP_OPS if fulfillment already started.
+- -System creates verification tasks for BRAND_ADMIN + PSP_OPS if fulfillment already started.
 
-- \- System records a diff summary + emits audit event campaign.assignment_rebased.
+- -System records a diff summary + emits audit event campaign.assignment_rebased.
 
-- \- Execution tasks and photo requirements must be recalculated after rebase.
+- -Execution tasks and photo requirements must be recalculated after rebase.
 
 # 4) Kit Model (Items + Location Slot Mappings)
 
@@ -4076,7 +3956,7 @@ Example JSON (draft):\
 
 - Location mapping: items may specify required location slots (by slot type/tag) OR specific slots per store (resolved at assignment time).
 
-- Because stores vary, final item→slot mapping is resolved per StoreAssignment using that store\'s pinned layout.
+- Because stores vary, final item→slot mapping is resolved per StoreAssignment using that store's pinned layout.
 
 ## Entities (Draft)
 
@@ -4100,13 +3980,13 @@ Example JSON (draft):\
 
 - Default: when campaign is published, system generates:
 
-- \- campaign order totals
+- -campaign order totals
 
-- \- per-store orders (one per store assignment unless overridden)
+- -per-store orders (one per store assignment unless overridden)
 
-- \- line items mapped from assignment items
+- -line items mapped from assignment items
 
-- Backup: manual \'Generate Orders\' action exists to recover from integration/API failure or to gate generation in edge cases.
+- Backup: manual 'Generate Orders' action exists to recover from integration/API failure or to gate generation in edge cases.
 
 - Every generation run emits audit event order.generation_run and is idempotent (does not duplicate).
 
@@ -4152,7 +4032,7 @@ Example JSON (draft):\
 
 # Open Decisions
 
-66. Define what constitutes \'fulfillment has started\' (order generated vs shipment created) for rebase verification gating.
+66. Define what constitutes 'fulfillment has started' (order generated vs shipment created) for rebase verification gating.
 
 67. Define default behavior when a pinned slot no longer exists after rebase (map by tag/type? require manual remap?).
 
@@ -4267,7 +4147,7 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
 
   Partial shipments                   YES --- multiple shipments can fulfill a single store order (partial allowed)
 
-  Batch types                         Enum list (fixed) + optional \'CUSTOM\' type with label
+  Batch types                         Enum list (fixed) + optional 'CUSTOM' type with label
 
   Late shipping                       Configurable per campaign (rule-based thresholds)
 
@@ -4344,7 +4224,7 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
 
 - Default rule suggestion (if not set): late if order has no shipment created by shipByDate end-of-day in campaign timezone.
 
-- Config fields (draft): lateRuleType (no_shipment_by_date \| not_delivered_by_date \| custom), thresholdDateField(shipByDate), graceHours, escalationSchedule.
+- Config fields (draft): lateRuleType (no_shipment_by_date | not_delivered_by_date | custom), thresholdDateField(shipByDate), graceHours, escalationSchedule.
 
 - Late shipping event triggers notifications to PSP + Brand Campaign Admin/Manager (per SUPP-004) and emits webhook alert.late_shipping (SUPP-006).
 
@@ -4360,11 +4240,11 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
 
 - Inbound API supports idempotent writes for:
 
-- \- order status updates (and notes)
+- -order status updates (and notes)
 
-- \- create/update shipments + tracking numbers
+- -create/update shipments + tracking numbers
 
-- \- create/update batches and membership assignments
+- -create/update batches and membership assignments
 
 - All endpoints require Idempotency-Key and emit AuditEvents with actorType=integration.
 
@@ -4526,9 +4406,9 @@ Purpose: Define the admin verification system (brand/regional), approval/rejecti
 
 - Admins review:
 
-- \- individual photos (photo-level) AND/OR
+- -individual photos (photo-level) AND/OR
 
-- \- the full proof packet for a location slot (slot-level)
+- -the full proof packet for a location slot (slot-level)
 
 - Slot-level review is useful when a slot requires multiple angles; photo-level review is used for targeted rejections.
 
@@ -4565,7 +4445,7 @@ Purpose: Define the admin verification system (brand/regional), approval/rejecti
   ----------------------------------------------------------------------------------------
   Field                               Values
   ----------------------------------- ----------------------------------------------------
-  verificationMode                    STRICT \| FAST
+  verificationMode                    STRICT | FAST
 
   autoReopenOnRejection               true (required when FAST)
 
@@ -4690,11 +4570,11 @@ Purpose: Define issue reporting, reorder approvals, reorder constraints, expirin
 
 - Modes:
 
-- \- AUTO_APPROVE: issue lines automatically become reorder-ready for PSP.
+- -AUTO_APPROVE: issue lines automatically become reorder-ready for PSP.
 
-- \- BRAND_APPROVAL_REQUIRED: brand/regional must approve before PSP produces/ships.
+- -BRAND_APPROVAL_REQUIRED: brand/regional must approve before PSP produces/ships.
 
-- \- PSP_APPROVAL_ONLY: PSP decides (useful when brand wants speed or trusts PSP).
+- -PSP_APPROVAL_ONLY: PSP decides (useful when brand wants speed or trusts PSP).
 
 - All approvals/rejections require actor + timestamp; rejections require reason code + comment.
 
@@ -4703,7 +4583,7 @@ Purpose: Define issue reporting, reorder approvals, reorder constraints, expirin
   --------------------------------------------------------------------------------------------------
   Field                               Notes
   ----------------------------------- --------------------------------------------------------------
-  approvalMode                        AUTO_APPROVE \| BRAND_APPROVAL_REQUIRED \| PSP_APPROVAL_ONLY
+  approvalMode                        AUTO_APPROVE | BRAND_APPROVAL_REQUIRED | PSP_APPROVAL_ONLY
 
   defaultMode                         campaign-level default
 
@@ -4726,9 +4606,9 @@ Purpose: Define issue reporting, reorder approvals, reorder constraints, expirin
 
 - Deinstall proof requirements are brand-configurable per campaign:
 
-- \- Optional by default
+- -Optional by default
 
-- \- Brand can require min photo count and/or specific angles per location slot
+- -Brand can require min photo count and/or specific angles per location slot
 
 - Deinstall completion can be reviewed with the same verification/retake mechanism (SUPP-018) if enabled.
 
@@ -4747,9 +4627,9 @@ Purpose: Define issue reporting, reorder approvals, reorder constraints, expirin
   ----------------------------------- ---------------------------------------------------------------------------------------------------------------------------
   IssueRequest                        issueRequestId, orderId, storeId, campaignId, type, status, createdAt
 
-  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds\[\], attestationUserId, attestationAt
+  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds[], attestationUserId, attestationAt
 
-  ApprovalDecision                    decisionId, issueLineId (or requestId), status(approved\|rejected), actorId, reasonCode?, comment?, decidedAt
+  ApprovalDecision                    decisionId, issueLineId (or requestId), status(approved|rejected), actorId, reasonCode?, comment?, decidedAt
 
   Reorder                             reorderId, issueRequestId, status, createdAt; may produce 1..N replacement shipments
 
@@ -4766,13 +4646,13 @@ Purpose: Define issue reporting, reorder approvals, reorder constraints, expirin
 
 - Substitution must:
 
-- \- record who/when/why
+- -record who/when/why
 
-- \- preserve original reference
+- -preserve original reference
 
-- \- update downstream reorder shipment docs/exports
+- -update downstream reorder shipment docs/exports
 
-- \- emit webhook event asset.substituted (future-ready; optional v1)
+- -emit webhook event asset.substituted (future-ready; optional v1)
 
 # 7) Notifications & Webhooks
 
@@ -4788,7 +4668,7 @@ Purpose: Define issue reporting, reorder approvals, reorder constraints, expirin
 
 - GET /issues (filters: campaign, store, status, overdue)
 
-- POST /issues/{issueLineId}/approve \| /reject (reasonCode + comment)
+- POST /issues/{issueLineId}/approve | /reject (reasonCode + comment)
 
 - POST /issues/{issueRequestId}/createReorder (PSP)
 
@@ -4893,7 +4773,7 @@ Purpose: Define the store-facing execution workflow (mobile-first web), receivin
 
   Receiving verification              Hybrid: order-level confirm + item-level anomaly classification (missing/damaged/incorrect)
 
-  Replacement request model           Hybrid: per-item issue lines by default; allow \'major packaging damage\' single request that can fan-out into item lines by PSP
+  Replacement request model           Hybrid: per-item issue lines by default; allow 'major packaging damage' single request that can fan-out into item lines by PSP
 
   Install confirmation                Item-level per location slot; rolls up to order/store completion
 
@@ -4918,21 +4798,21 @@ Purpose: Define the store-facing execution workflow (mobile-first web), receivin
 
 # 2) Receive/Verify Model (Hybrid)
 
-- Order-level confirmation: store answers \'Did you receive the kit/order?\' (Yes/No/Partial).
+- Order-level confirmation: store answers 'Did you receive the kit/order?' (Yes/No/Partial).
 
 - Item-level anomaly capture: for each item (and optionally per shipment) store can report:
 
-- \- reasonCode: MISSING, DAMAGED, INCORRECT_ITEM, INCORRECT_QTY, OTHER
+- -reasonCode: MISSING, DAMAGED, INCORRECT_ITEM, INCORRECT_QTY, OTHER
 
-- \- qtyAffected
+- -qtyAffected
 
-- \- description
+- -description
 
-- \- evidence photos (optional/required per policy)
+- -evidence photos (optional/required per policy)
 
-- \- attestation checkbox + timestamp (required for reorder submission)
+- -attestation checkbox + timestamp (required for reorder submission)
 
-- If \'major packaging damage\' is selected, store can submit a single request referencing the order; PSP may expand into item lines later.
+- If 'major packaging damage' is selected, store can submit a single request referencing the order; PSP may expand into item lines later.
 
 # 3) Replacement Requests (Issues/Reorders)
 
@@ -4947,19 +4827,19 @@ Purpose: Define the store-facing execution workflow (mobile-first web), receivin
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------
   Entity                              Key Fields / Notes
   ----------------------------------- ---------------------------------------------------------------------------------------------------------------------------
-  StoreTask                           taskId, storeId, campaignId, type(receive\|install\|complete\|deinstall), status, dueAt
+  StoreTask                           taskId, storeId, campaignId, type(receive|install|complete|deinstall), status, dueAt
 
   ReceiveVerification                 verificationId, orderId, receivedStatus(yes/no/partial), notes, createdAt
 
-  IssueRequest                        issueRequestId, orderId, storeId, campaignId, type(itemIssues\|packagingDamage), status
+  IssueRequest                        issueRequestId, orderId, storeId, campaignId, type(itemIssues|packagingDamage), status
 
-  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds\[\], attestationUserId, attestationAt
+  IssueLine                           issueLineId, issueRequestId, itemId, qty, reasonCode, description, evidenceAssetIds[], attestationUserId, attestationAt
 
   InstallRecord                       installId, assignmentItemId, slotId, installedAt, installedBy, status
 
   ProofCapture                        proofId, installId (or assignmentItemId+slotId), mediaAssetId, ruleId, createdAt
 
-  CompletionSubmission                submissionId, storeId, campaignId, status(submitted\|verified\|rework), attestationUserId, attestationAt
+  CompletionSubmission                submissionId, storeId, campaignId, status(submitted|verified|rework), attestationUserId, attestationAt
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # 4) Install + Proof Capture (Upload-as-you-go)
@@ -4978,9 +4858,9 @@ Purpose: Define the store-facing execution workflow (mobile-first web), receivin
 
 - Item/location completion rolls up to StoreAssignment completion.
 
-- Store completion transitions: IN_PROGRESS → SUBMITTED_FOR_REVIEW → (REWORK_REQUESTED \| COMPLETE).
+- Store completion transitions: IN_PROGRESS → SUBMITTED_FOR_REVIEW → (REWORK_REQUESTED | COMPLETE).
 
-- Order rollup: order is \'execution complete\' when all required assignment items are complete (or waived).
+- Order rollup: order is 'execution complete' when all required assignment items are complete (or waived).
 
 - Campaign rollup is defined in SUPP-007 (all stores complete or force-complete).
 
@@ -5250,9 +5130,9 @@ All tenant-scoped tables include tenant_id (pspId). Brand is a secondary scope d
 
 - Schema must support future RLS: every tenant-scoped table has tenant_id and (optionally) brand_id.
 
-- Policy pattern (scaffold now): USING (tenant_id = current_setting(\'app.tenant_id\')::uuid).
+- Policy pattern (scaffold now): USING (tenant_id = current_setting('app.tenant_id')::uuid).
 
-- App sets \'app.tenant_id\' at connection/session scope when/if RLS is enabled later.
+- App sets 'app.tenant_id' at connection/session scope when/if RLS is enabled later.
 
 - v1 runtime: enforce tenant checks in the service layer; still keep policy SQL checked in repo for later enablement.
 
@@ -5262,7 +5142,7 @@ Example policy snippet (for later enablement):
 \-- Scaffold: keep in /db/rls/ as future-ready artifacts\
 ALTER TABLE store ENABLE ROW LEVEL SECURITY;\
 CREATE POLICY store_tenant_isolation ON store\
-USING (tenant_id = current_setting(\'app.tenant_id\')::uuid);\
+USING (tenant_id = current_setting('app.tenant_id')::uuid);\
 \`\`\`
 
 # 3) Media Asset Model (9A)
@@ -5322,7 +5202,7 @@ USING (tenant_id = current_setting(\'app.tenant_id\')::uuid);\
 
   Review                              GET /api/v1/reviewQueue, POST /api/v1/photoReviews/{photoLinkId}/approve, POST /api/v1/photoReviews/{photoLinkId}/reject
 
-  Issues/Reorders                     POST /api/v1/issues, POST /api/v1/issues/{lineId}/approve\|reject, POST /api/v1/issues/{requestId}/createReorder
+  Issues/Reorders                     POST /api/v1/issues, POST /api/v1/issues/{lineId}/approve|reject, POST /api/v1/issues/{requestId}/createReorder
 
   Exports                             POST /api/v1/exports, GET /api/v1/exports/{jobId}, GET /api/v1/exports/{jobId}/download
 
@@ -5715,7 +5595,7 @@ Config items (examples): feature flag defaults, retention defaults, webhook retr
 
 ## Bootstrap Acceptance Criteria
 
-141. A PSP Admin can create a tenant and first brand in \<5 minutes.
+141. A PSP Admin can create a tenant and first brand in <5 minutes.
 
 142. Brand Admin receives invite, can log in, and sees guided next steps (import stores, build survey, create campaign).
 
@@ -5743,7 +5623,7 @@ Config items (examples): feature flag defaults, retention defaults, webhook retr
 
 - Uploads in staging can use a separate bucket with lifecycle rules to auto-clean media.
 
-- Audit logging in staging is on; sample data volumes should reflect pilot scale (\~1000 stores/brand).
+- Audit logging in staging is on; sample data volumes should reflect pilot scale (~1000 stores/brand).
 
 # Definition of Done (Module 24)
 
@@ -5825,7 +5705,7 @@ Note: Increase targets after P2 stabilization; do not optimize prematurely.
 
 - Provide seed presets via CLI: seed:p0, seed:p1, seed:p2, seed:p3.
 
-- Keep P0 quick (\<2 minutes) so AI-driven iteration remains fast.
+- Keep P0 quick (<2 minutes) so AI-driven iteration remains fast.
 
 # Definition of Done (Module 25)
 
@@ -5934,7 +5814,7 @@ pnpm test:smoke\
 
 155. Worker runs locally and processes exports/webhooks/retention dry-run without manual hacks.
 
-156. A new dev can onboard using README steps in \<30 minutes.
+156. A new dev can onboard using README steps in <30 minutes.
 
 SUPP-027 --- Notifications, Webhooks, Deliverability Safety, Retry & Replay (v0.1)
 
@@ -5978,7 +5858,7 @@ Purpose: Define safe notification behavior across dev/staging/prod, including em
 
 - Staging only dispatches webhooks to allowlisted hosts/URLs.
 
-- Requests to non-allowlisted endpoints are blocked and recorded as \'blocked_by_policy\' (no retries).
+- Requests to non-allowlisted endpoints are blocked and recorded as 'blocked_by_policy' (no retries).
 
 - Production allowlist is optional; recommended for higher security tenants.
 
@@ -6083,11 +5963,11 @@ All services (web/api/worker) emit JSON logs with consistent fields.
   ----------------------------------- -----------------------------------------
   timestamp                           ISO8601
 
-  level                               debug\|info\|warn\|error
+  level                               debug|info|warn|error
 
-  service                             web\|api\|worker
+  service                             web|api|worker
 
-  env                                 dev\|staging\|prod
+  env                                 dev|staging|prod
 
   requestId                           generated if missing
 
@@ -6154,7 +6034,7 @@ v0.2 adds a support-only note for computed field overrides (no dedicated review 
 
 - Support can still access overrides via: exports (responses include response_json_meta) and audit_event logs.
 
-- Scaffold: add an \'Overrides\' filter in Post-v1 Admin Ops Console.
+- Scaffold: add an 'Overrides' filter in Post-v1 Admin Ops Console.
 
 SUPP-031 --- Supportability Policies: Roles, Impersonation, DB Edits & Incidents (v0.1)
 
@@ -6208,7 +6088,7 @@ RBAC note: Support Agent permissions must be explicitly enumerated in SUPP-003 R
 
 ## 2.2 Recommended Guardrail (Even though DB edits are allowed)
 
-- Create a small internal \'Admin Repair Tools\' set over time to reduce DB edits.
+- Create a small internal 'Admin Repair Tools' set over time to reduce DB edits.
 
 - When a DB edit happens, log a tech debt issue with a recommended admin tool feature to prevent future repeats.
 
@@ -6242,7 +6122,7 @@ RBAC note: Support Agent permissions must be explicitly enumerated in SUPP-003 R
 
 - PSP Admin and Support Agent can impersonate users to reproduce issues (including in production).
 
-- Impersonation must be obvious: persistent banner + different color theme + \'Stop impersonating\' control.
+- Impersonation must be obvious: persistent banner + different color theme + 'Stop impersonating' control.
 
 - All actions during impersonation are audited with both: acting_support_user_id AND impersonated_user_id.
 
@@ -6481,19 +6361,19 @@ v0.8 adds computed/override metadata and hidden-field keep/clear semantics to sc
   --------------------------------------------------------------------------------------------------------
   Field Path                    Type                    Notes
   ----------------------------- ----------------------- --------------------------------------------------
-  fields\[\].is_computed        bool                    If true, value is derived by COMPUTE action/expr
+  fields[].is_computed        bool                    If true, value is derived by COMPUTE action/expr
 
-  fields\[\].compute_expr       json                    Whitelisted expression AST (fn + args)
+  fields[].compute_expr       json                    Whitelisted expression AST (fn + args)
 
-  fields\[\].read_only          bool                    Default true when computed
+  fields[].read_only          bool                    Default true when computed
 
-  fields\[\].allow_override     bool                    Enables safe override UI
+  fields[].allow_override     bool                    Enables safe override UI
 
-  fields\[\].hidden_default     bool                    If true, field not shown but still stored
+  fields[].hidden_default     bool                    If true, field not shown but still stored
 
-  fields\[\].on_hide_behavior   enum                    KEEP \| CLEAR (per-field)
+  fields[].on_hide_behavior   enum                    KEEP | CLEAR (per-field)
 
-  fields\[\].display_key        string?                 Export column label (optional)
+  fields[].display_key        string?                 Export column label (optional)
   --------------------------------------------------------------------------------------------------------
 
 # rules_json action parameter additions
@@ -6529,9 +6409,9 @@ If input_json/response_json_meta columns are not desired in v1 schema, they can 
   ------------------------------------------------------------------------------------------------------------------
   Key                     Type                    Example
   ----------------------- ----------------------- ------------------------------------------------------------------
-  overrides\[\]           array                   {field_id, value, overridden_by_user_id, overridden_at, reason?}
+  overrides[]           array                   {field_id, value, overridden_by_user_id, overridden_at, reason?}
 
-  computed\[\]            array                   {field_id, computed_at, expr_version}
+  computed[]            array                   {field_id, computed_at, expr_version}
   ------------------------------------------------------------------------------------------------------------------
 
 SUPP-036 --- Screens: Onboarding & Store Foundation (v0.4)
