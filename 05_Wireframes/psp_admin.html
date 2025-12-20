@@ -7,6 +7,7 @@
     <title>PSP Admin Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="theme-config.js"></script>
     <script src="theme-loader.js"></script>
     <style>
         /* Theme CSS Variables */
@@ -53,8 +54,11 @@
         .hover\:bg-yellow-900:hover, .hover\:bg-yellow-700:hover {
             background-color: var(--primary) !important;
         }
-        .text-yellow-500, .text-yellow-400 { color: var(--primary-light) !important; }
-        .border-yellow-500, .border-yellow-400 { border-color: var(--primary-light) !important; }
+        .text-yellow-500, .text-yellow-400, .text-yellow-100 { color: var(--primary-light) !important; }
+        .hover\:text-yellow-100:hover { color: var(--accent) !important; }
+        .border-yellow-700, .border-yellow-600, .border-yellow-500, .border-yellow-400 {
+            border-color: var(--primary) !important;
+        }
 
         /* Apply theme colors - Accent (buttons) */
         .bg-purple-600, .bg-indigo-600 { background-color: var(--accent) !important; }

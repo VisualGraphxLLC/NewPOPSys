@@ -7,6 +7,7 @@
     <title>PSP Ops / Admin Mockup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="theme-config.js"></script>
     <script src="theme-loader.js"></script>
     <style>
         /* Theme CSS Variables */
@@ -52,10 +53,20 @@
         .bg-yellow-800, .bg-yellow-700, .bg-yellow-600, .bg-yellow-500 {
             background-color: var(--primary-dark) !important;
         }
+        .bg-indigo-900, .bg-indigo-800, .bg-indigo-700 {
+            background-color: var(--primary-dark) !important;
+        }
+        .border-indigo-800, .border-indigo-700 {
+            border-color: var(--primary) !important;
+        }
+        .bg-indigo-700.rounded-full {
+            background-color: var(--primary) !important;
+        }
         .hover\:bg-yellow-900:hover, .hover\:bg-yellow-700:hover {
             background-color: var(--primary) !important;
         }
         .text-yellow-500, .text-yellow-400 { color: var(--primary-light) !important; }
+        .hover\:text-yellow-400:hover { color: var(--accent) !important; }
         .border-yellow-500, .border-yellow-400 { border-color: var(--primary-light) !important; }
         /* Accent colors */
         .bg-indigo-600, .bg-purple-600 { background-color: var(--accent) !important; }
