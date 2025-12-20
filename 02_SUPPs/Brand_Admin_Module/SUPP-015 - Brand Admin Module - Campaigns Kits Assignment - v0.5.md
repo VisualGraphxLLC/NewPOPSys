@@ -1,8 +1,8 @@
 # SUPP-015 — Brand Admin Module — Campaigns Kits Assignment
 
-> **Version**: v0.4
+> **Version**: v0.5
 > **Status**: Locked
-> **Updated**: 2025-12-19  
+> **Updated**: 2025-12-20
 > **Dependencies**: SUPP-013 (Stores), SUPP-014 (Survey Builder)
 
 ---
@@ -236,7 +236,82 @@ The system automatically generates two distinct task sets for the store based on
 
 ---
 
-## 6. Acceptance Criteria
+## 6. Campaign Lifecycle Edge Cases
+
+### 6.1 Campaign Cancellation
+
+**Who:** Brand Admin only
+**When:** Campaign in DRAFT, SCHEDULED, or PUBLISHED status (not COMPLETED)
+
+| Scenario | Behavior |
+|----------|----------|
+| **DRAFT** | Immediate delete (soft-delete with 30-day recovery) |
+| **SCHEDULED** (not started) | Cancel, no orders generated, notify PSP |
+| **PUBLISHED** (orders generated, not shipped) | Cancel orders, notify PSP, update store assignments to CANCELLED |
+| **PUBLISHED** (some shipped) | Partial cancel: in-flight shipments continue, remaining orders cancelled |
+| **PUBLISHED** (stores executing) | Stop execution, flag as CANCELLED, allow photo review completion |
+
+**Audit:** `campaign.cancelled` event with reason, user, timestamp.
+
+### 6.2 Campaign Pause
+
+**Who:** Brand Admin only
+**When:** Campaign in PUBLISHED status
+
+| Action | Effect |
+|--------|--------|
+| **Pause** | Stores cannot submit new proofs; in-progress submissions can complete; PSP fulfillment continues |
+| **Resume** | Execution resumes; deadlines extended by pause duration (optional) |
+
+**Use Case:** Holiday freeze, supply issue, brand decision.
+
+**Status:** Campaign remains PUBLISHED but `is_paused = true` flag set.
+
+**Audit:** `campaign.paused` / `campaign.resumed` events.
+
+### 6.3 Campaign Extension
+
+**Who:** Brand Admin only
+**When:** Campaign in PUBLISHED or SCHEDULED status
+
+| Field | Extendable? | Constraints |
+|-------|-------------|-------------|
+| **End Date** | Yes | Must be future date; retake deadlines auto-extend proportionally |
+| **Start Date** | Only if SCHEDULED | Cannot move to past |
+| **Retake SLA** | Yes | Applies to new rejections only |
+
+**Effect on Stores:**
+- Incomplete stores get more time
+- Already COMPLETE stores unaffected
+- Deinstall date (if set) extends with end date
+
+**Audit:** `campaign.extended` event with old/new values.
+
+### 6.4 Force-Complete
+
+**Who:** Brand Admin only
+**When:** Campaign deadline approaching, not all stores complete
+
+| Action | Effect |
+|--------|--------|
+| **Force-Complete** | Campaign moves to COMPLETED; incomplete stores flagged as NON_COMPLIANT |
+| **Incomplete Stores** | Status = INCOMPLETE_AT_CLOSE; visible in reports |
+| **Retention** | 90-day clock starts from force-complete date |
+
+**Required:** Reason text (mandatory).
+**Audit:** `campaign.force_completed` event with incomplete store list.
+
+### 6.5 Campaign Deletion Requests
+
+Per decision D11:
+- **Campaign Manager** can request deletion of DRAFT campaigns they're assigned to
+- **Brand Admin** must approve within 48 hours
+- If no response: auto-deny with "timeout" reason
+- Approved: soft-delete with 30-day recovery
+
+---
+
+## 7. Acceptance Criteria
 1.  **Selection**: Can select stores by Region/Group/List and save recipe.
 2.  **Pinning**: Assignments lock the store's layout version.
 3.  **Receipt Survey**: Automatically generated list of items to check off.

@@ -1,6 +1,6 @@
 # SUPP-003 — RBAC and Permissions Matrix
 
-> **Version**: v0.6
+> **Version**: v0.7
 > **Status**: Locked
 > **Updated**: 2025-12-20
 > **Dependencies**: SUPP-001 (Personas), SUPP-031 (Supportability)
@@ -172,8 +172,32 @@ Deterministic roles, permissions, and completion/override authority for v1. Auth
 
 # Security Requirements (v1)
 
+## Authentication
+
+- **MFA Required:** Platform Admin, PSP Admin, Brand Admin roles MUST use MFA (TOTP or WebAuthn).
+- **MFA Recommended:** Regional Manager, Production Operator roles SHOULD use MFA (enforced per tenant policy).
+- **Store Users:** MFA optional (configurable per brand).
+- Password policy: 12+ characters, complexity requirements, 90-day rotation for admin roles.
+
+## Impersonation Controls
+
+- **Session Limits:** Impersonation sessions expire after 30 minutes (hard limit: 2 hours max).
+- **Audit Trail:** All impersonation sessions create start/end audit events with reason field.
+- **Scope Restrictions:**
+  - Platform Admin: Can impersonate any user except other Platform Admins
+  - Support Agent: Can impersonate Store Users only, read-only session
+  - All others: Cannot impersonate
+- **Active Session Warning:** Original user sees banner when being impersonated.
+
+## API Security
+
 - API keys stored hashed; shown only at creation; rotation + revoke supported; per-key audit trail.
-
 - Idempotency required for integration writes; rate limits per key; anomaly detection for excessive failures.
-
 - All permissioned writes emit immutable AuditEvents; integration writes include idempotency key reference.
+- Per-brand API key scoping available (v1.1 consideration for multi-brand PSPs).
+
+## Audit & Compliance
+
+- Audit log access scoped by role (Platform Admin: all, PSP Admin: tenant, Brand Admin: brand, Regional Manager: region).
+- Audit logs retained for 7 years per COMPLIANCE retention class.
+- Failed authentication attempts trigger lockout after 5 failures (15-minute cooldown).

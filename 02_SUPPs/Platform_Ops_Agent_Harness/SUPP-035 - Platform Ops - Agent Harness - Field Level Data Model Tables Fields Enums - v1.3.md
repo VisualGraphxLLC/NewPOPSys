@@ -1,6 +1,6 @@
 # SUPP-035 — Field-Level Data Model Tables Fields Enums
 
-> **Version**: v1.2
+> **Version**: v1.3
 > **Status**: Locked
 > **Updated**: 2025-12-20
 > **Dependencies**: SUPP-002 (Domain Model), SUPP-013 (Stores), SUPP-015 (Campaigns)
@@ -814,6 +814,111 @@ enum RetentionClass {
 
 ---
 
+## 12. Infrastructure Tables
+
+### `outbox_events`
+Transactional outbox for reliable webhook/event delivery.
+
+| Field | Type | Constraints | Notes |
+|-------|------|-------------|-------|
+| `tenant_id` | UUID | FK psp_tenants.id, NOT NULL | |
+| `event_type` | TEXT | NOT NULL | 'campaign.published', 'order.created', etc. |
+| `aggregate_type` | TEXT | NOT NULL | 'Campaign', 'StoreOrder', 'IssueRequest' |
+| `aggregate_id` | UUID | NOT NULL | ID of the entity that triggered event |
+| `payload` | JSONB | NOT NULL | Event payload |
+| `correlation_id` | UUID | | For request tracing |
+| `status` | OutboxStatus | DEFAULT 'PENDING' | See enum |
+| `attempts` | INT | DEFAULT 0 | Delivery attempts |
+| `last_attempt_at` | TIMESTAMPTZ | | |
+| `next_retry_at` | TIMESTAMPTZ | | Exponential backoff |
+| `delivered_at` | TIMESTAMPTZ | | When successfully delivered |
+| `error_message` | TEXT | | Last error if failed |
+
+```typescript
+enum OutboxStatus {
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  DELIVERED = 'DELIVERED',
+  FAILED = 'FAILED',       // Max retries exceeded
+  DEAD_LETTER = 'DEAD_LETTER',
+}
+```
+
+### `idempotency_keys`
+Prevents duplicate processing of API requests.
+
+| Field | Type | Constraints | Notes |
+|-------|------|-------------|-------|
+| `key` | TEXT | PK, NOT NULL | Client-provided idempotency key |
+| `tenant_id` | UUID | FK psp_tenants.id, NOT NULL | |
+| `user_id` | UUID | FK users.id | Who made the request |
+| `request_hash` | TEXT | NOT NULL | Hash of request body |
+| `response_status` | INT | | HTTP status code |
+| `response_body` | JSONB | | Cached response |
+| `expires_at` | TIMESTAMPTZ | NOT NULL | Auto-cleanup after 24h |
+
+**Index:** `CREATE INDEX idx_idempotency_expires ON idempotency_keys(expires_at);`
+
+### `retention_jobs`
+Scheduled retention/cleanup jobs.
+
+| Field | Type | Constraints | Notes |
+|-------|------|-------------|-------|
+| `tenant_id` | UUID | FK psp_tenants.id, NOT NULL | |
+| `job_type` | TEXT | NOT NULL | 'MEDIA_CLEANUP', 'AUDIT_ARCHIVE', 'EXPORT_CLEANUP' |
+| `target_entity_type` | TEXT | | 'Campaign', 'MediaAsset' |
+| `target_entity_id` | UUID | | |
+| `scheduled_for` | TIMESTAMPTZ | NOT NULL | When to run |
+| `status` | RetentionJobStatus | DEFAULT 'SCHEDULED' | |
+| `started_at` | TIMESTAMPTZ | | |
+| `completed_at` | TIMESTAMPTZ | | |
+| `items_processed` | INT | DEFAULT 0 | |
+| `items_failed` | INT | DEFAULT 0 | |
+| `error_log` | TEXT[] | | Array of error messages |
+
+```typescript
+enum RetentionJobStatus {
+  SCHEDULED = 'SCHEDULED',
+  RUNNING = 'RUNNING',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+}
+```
+
+### `conflict_queue`
+Offline sync conflict records for Store Manager review (per D9).
+
+| Field | Type | Constraints | Notes |
+|-------|------|-------------|-------|
+| `tenant_id` | UUID | FK psp_tenants.id, NOT NULL | |
+| `store_id` | UUID | FK stores.id, NOT NULL | |
+| `entity_type` | TEXT | NOT NULL | 'proof_submission', 'survey_response' |
+| `entity_id` | UUID | NOT NULL | |
+| `local_value` | JSONB | NOT NULL | What device tried to submit |
+| `server_value` | JSONB | NOT NULL | What server had |
+| `local_timestamp` | TIMESTAMPTZ | NOT NULL | Device timestamp |
+| `server_timestamp` | TIMESTAMPTZ | NOT NULL | Server timestamp |
+| `local_user_id` | UUID | FK users.id | Who made local change |
+| `server_user_id` | UUID | FK users.id | Who made server change |
+| `status` | ConflictStatus | DEFAULT 'PENDING' | |
+| `resolved_by` | UUID | FK users.id | |
+| `resolved_at` | TIMESTAMPTZ | | |
+| `resolution_action` | TEXT | | 'ACKNOWLEDGED', 'ESCALATED', 'OVERWRITTEN' |
+
+```typescript
+enum ConflictStatus {
+  PENDING = 'PENDING',
+  ACKNOWLEDGED = 'ACKNOWLEDGED',
+  ESCALATED = 'ESCALATED',
+  RESOLVED = 'RESOLVED',
+}
+```
+
+**Note:** Conflict records retained for 30 days per D9.
+
+---
+
 ## Changelog
 
 | Version | Date | Changes |
@@ -822,6 +927,7 @@ enum RetentionClass {
 | v1.0 | 2025-12-18 | Added missing tables (kit_definitions, kit_items, location_slots, store_groups, audit_events, webhook_endpoints, export_jobs, notification_preferences). Defined all enums. Changed status to Locked. |
 | v1.1 | 2025-12-19 | Aligned enums with Glossary: Updated CampaignStatus (added PUBLISHED, CANCELLED), StoreAssignmentStatus (added ASSIGNED, READY, REOPENED, WAIVED), IssueRequestStatus (renamed to match Glossary states). Added missing enums: AssignmentItemStatus, SlotVerificationStatus. Added derived status section: FulfillmentStatus, ReceiptStatus, ExecutionStatus, VerificationStatus, StorePhase. |
 | v1.2 | 2025-12-20 | Added quantity tracking fields to assignment_items (shipped_qty, delivered_qty, received_good_qty, received_damaged_qty, installed_qty, verified_qty). Added media_assets table with RetentionClass enum for data retention policy enforcement. |
+| v1.3 | 2025-12-20 | Added infrastructure tables: outbox_events (transactional outbox), idempotency_keys (API idempotency), retention_jobs (scheduled cleanup), conflict_queue (offline sync conflicts per D9). Added enums: OutboxStatus, RetentionJobStatus, ConflictStatus. |
 
 ---
 
