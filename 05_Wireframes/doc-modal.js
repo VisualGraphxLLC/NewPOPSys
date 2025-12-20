@@ -1,14 +1,39 @@
 /**
  * Document & Diagram Modal - Opens documents and diagrams in modal overlays
- * Supports: Markdown files (.md) and SVG diagrams (.svg)
+ * Supports: Markdown files (.md) with Mermaid diagrams, and SVG files (.svg)
  */
+
+// Track if Mermaid is loaded
+let mermaidLoaded = false;
+
+function loadMermaid() {
+    return new Promise((resolve) => {
+        if (mermaidLoaded) {
+            resolve();
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+        script.onload = () => {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'default',
+                securityLevel: 'loose',
+                flowchart: { useMaxWidth: true, htmlLabels: true }
+            });
+            mermaidLoaded = true;
+            resolve();
+        };
+        document.head.appendChild(script);
+    });
+}
 
 function initDocModal() {
     // Create modal HTML
     const modalHTML = `
     <div id="doc-modal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeDocModal()"></div>
-        <div class="absolute inset-4 md:inset-8 lg:inset-16 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
+        <div class="absolute inset-4 md:inset-8 lg:inset-12 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
             <div class="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
                 <h3 id="doc-modal-title" class="font-semibold text-gray-900 truncate">Loading...</h3>
                 <div class="flex items-center gap-3">
@@ -50,6 +75,8 @@ function initDocModal() {
         .prose hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
         .diagram-container { display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fafafa; border-radius: 0.5rem; }
         .diagram-container object, .diagram-container img { max-width: 100%; max-height: 70vh; }
+        .mermaid-diagram { background: #fafafa; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; overflow-x: auto; }
+        .mermaid-diagram svg { max-width: 100%; height: auto; }
     </style>`;
 
     // Inject modal and styles
@@ -89,6 +116,34 @@ function initDocModal() {
     });
 }
 
+async function renderMermaidDiagrams(container) {
+    // Find all code blocks with class 'language-mermaid' (marked.js format)
+    const mermaidBlocks = container.querySelectorAll('code.language-mermaid');
+
+    if (mermaidBlocks.length === 0) return;
+
+    // Load Mermaid if not already loaded
+    await loadMermaid();
+
+    // Process each mermaid block
+    for (let i = 0; i < mermaidBlocks.length; i++) {
+        const codeBlock = mermaidBlocks[i];
+        const preBlock = codeBlock.parentElement;
+        const mermaidCode = codeBlock.textContent;
+
+        try {
+            const { svg } = await mermaid.render(`mermaid-${Date.now()}-${i}`, mermaidCode);
+            const wrapper = document.createElement('div');
+            wrapper.className = 'mermaid-diagram';
+            wrapper.innerHTML = svg;
+            preBlock.replaceWith(wrapper);
+        } catch (err) {
+            console.warn('Mermaid render error:', err);
+            // Leave original code block on error
+        }
+    }
+}
+
 function openDocModal(url, title, type = 'markdown') {
     const modal = document.getElementById('doc-modal');
     const content = document.getElementById('doc-modal-content');
@@ -118,13 +173,15 @@ function openDocModal(url, title, type = 'markdown') {
                 if (!response.ok) throw new Error('Failed to load document');
                 return response.text();
             })
-            .then(markdown => {
+            .then(async markdown => {
                 content.innerHTML = marked.parse(markdown);
                 // Extract title from first H1
                 const h1 = content.querySelector('h1');
                 if (h1) {
                     titleEl.textContent = h1.textContent;
                 }
+                // Render any Mermaid diagrams
+                await renderMermaidDiagrams(content);
             })
             .catch(err => {
                 content.innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-lg">

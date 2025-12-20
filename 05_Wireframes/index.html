@@ -516,69 +516,75 @@
     <section id="diagrams" class="py-16 bg-gray-100">
         <div class="max-w-6xl mx-auto px-6">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">Architecture Diagrams</h2>
-            <p class="text-gray-600 mb-10">Click any diagram to view full size. These illustrate the system's data flow
-                and module responsibilities.</p>
+            <p class="text-gray-600 mb-10">Interactive Mermaid diagrams illustrating system architecture, state machines, and data flows. Click to view all diagrams in an interactive viewer.</p>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Campaign Lifecycle -->
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                    <a href="diagrams/campaign_lifecycle.svg" class="block cursor-pointer">
-                        <div class="p-4 border-b bg-gray-50">
-                            <h3 class="font-semibold text-gray-800">Campaign Lifecycle</h3>
-                            <p class="text-sm text-gray-500">End-to-end flow from creation to completion</p>
+            <!-- Main Diagrams Link -->
+            <a href="../04_Reference/NewPOPSys_v1_Mermaid_Charts.md" class="block bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all group">
+                <div class="p-6 border-b bg-gradient-to-r from-blue-50 to-purple-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-xl text-gray-900 group-hover:text-blue-700 transition-colors">Complete Diagram Collection</h3>
+                            <p class="text-gray-600 mt-1">15 interactive Mermaid diagrams covering all system aspects</p>
                         </div>
-                        <div class="p-4 bg-white flex items-center justify-center min-h-[200px]">
-                            <object data="diagrams/campaign_lifecycle.svg" type="image/svg+xml" class="max-h-[180px] w-full pointer-events-none">
-                                <p class="text-gray-400 text-sm">Campaign Lifecycle Diagram</p>
-                            </object>
-                        </div>
-                    </a>
+                        <div class="text-4xl opacity-50 group-hover:opacity-100 transition-opacity">→</div>
+                    </div>
                 </div>
+                <div class="p-6 grid md:grid-cols-3 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-blue-800 mb-2">State Machines</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Campaign State Machine</li>
+                            <li>• Order State Machine</li>
+                            <li>• Store Assignment States</li>
+                            <li>• Photo Verification States</li>
+                            <li>• Issue/Reorder States</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-800 mb-2">Flow Charts</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Campaign Lifecycle Flow</li>
+                            <li>• Store Execution Flow</li>
+                            <li>• Photo Capture Flow</li>
+                            <li>• Verification Workflow</li>
+                            <li>• Issue Resolution Flow</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-teal-800 mb-2">Architecture</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Module Responsibilities</li>
+                            <li>• Data Flow Between Modules</li>
+                            <li>• Permission Hierarchy</li>
+                            <li>• Notification Channels</li>
+                            <li>• Entity Relationships</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
 
-                <!-- Personas by Module -->
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                    <a href="diagrams/personas_by_module.svg" class="block cursor-pointer">
-                        <div class="p-4 border-b bg-gray-50">
-                            <h3 class="font-semibold text-gray-800">Personas by Module</h3>
-                            <p class="text-sm text-gray-500">Which roles interact with which modules</p>
-                        </div>
-                        <div class="p-4 bg-white flex items-center justify-center min-h-[200px]">
-                            <object data="diagrams/personas_by_module.svg" type="image/svg+xml" class="max-h-[180px] w-full pointer-events-none">
-                                <p class="text-gray-400 text-sm">Personas by Module Diagram</p>
-                            </object>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Module Hand-offs -->
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                    <a href="diagrams/module_handoffs.svg" class="block cursor-pointer">
-                        <div class="p-4 border-b bg-gray-50">
-                            <h3 class="font-semibold text-gray-800">Module Responsibilities & Hand-offs</h3>
-                            <p class="text-sm text-gray-500">How data flows between system modules</p>
-                        </div>
-                        <div class="p-4 bg-white flex items-center justify-center min-h-[200px]">
-                            <object data="diagrams/module_handoffs.svg" type="image/svg+xml" class="max-h-[180px] w-full pointer-events-none">
-                                <p class="text-gray-400 text-sm">Module Hand-offs Diagram</p>
-                            </object>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Status Interrelation -->
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                    <a href="diagrams/status_interrelation.svg" class="block cursor-pointer">
-                        <div class="p-4 border-b bg-gray-50">
-                            <h3 class="font-semibold text-gray-800">Status Interrelation</h3>
-                            <p class="text-sm text-gray-500">How statuses relate across modules</p>
-                        </div>
-                        <div class="p-4 bg-white flex items-center justify-center min-h-[200px]">
-                            <object data="diagrams/status_interrelation.svg" type="image/svg+xml" class="max-h-[180px] w-full pointer-events-none">
-                                <p class="text-gray-400 text-sm">Status Interrelation Diagram</p>
-                            </object>
-                        </div>
-                    </a>
-                </div>
+            <!-- Quick Access Cards -->
+            <div class="mt-8 grid md:grid-cols-4 gap-4">
+                <a href="diagrams/campaign_lifecycle.svg" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-2xl mb-2">🔄</div>
+                    <h4 class="font-medium text-gray-800 text-sm">Campaign Lifecycle</h4>
+                    <p class="text-xs text-gray-500">SVG Overview</p>
+                </a>
+                <a href="diagrams/personas_by_module.svg" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-2xl mb-2">👥</div>
+                    <h4 class="font-medium text-gray-800 text-sm">Personas by Module</h4>
+                    <p class="text-xs text-gray-500">SVG Overview</p>
+                </a>
+                <a href="diagrams/module_handoffs.svg" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-2xl mb-2">🔗</div>
+                    <h4 class="font-medium text-gray-800 text-sm">Module Hand-offs</h4>
+                    <p class="text-xs text-gray-500">SVG Overview</p>
+                </a>
+                <a href="diagrams/status_interrelation.svg" class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow text-center">
+                    <div class="text-2xl mb-2">📊</div>
+                    <h4 class="font-medium text-gray-800 text-sm">Status Relations</h4>
+                    <p class="text-xs text-gray-500">SVG Overview</p>
+                </a>
             </div>
         </div>
     </section>
