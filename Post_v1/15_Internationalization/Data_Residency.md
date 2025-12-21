@@ -142,31 +142,37 @@ This document outlines PopSystem's data residency and sovereignty strategy to su
 
 ### Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    GLOBAL ARCHITECTURE                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐      │
-│   │ North America│   │   Europe     │   │  APAC        │      │
-│   │ (US/CA/MX)   │   │  (EU/UK)     │   │  (AU/NZ)     │      │
-│   ├──────────────┤   ├──────────────┤   ├──────────────┤      │
-│   │ Primary DB   │   │ Primary DB   │   │ Primary DB   │      │
-│   │ US-East      │   │ Frankfurt    │   │ Sydney       │      │
-│   │              │   │ London       │   │              │      │
-│   ├──────────────┤   ├──────────────┤   ├──────────────┤      │
-│   │ Replica      │   │ Replica      │   │ Replica      │      │
-│   │ US-West      │   │ Paris        │   │              │      │
-│   └──────────────┘   └──────────────┘   └──────────────┘      │
-│          │                   │                   │             │
-│          └───────────────────┴───────────────────┘             │
-│                              │                                 │
-│                    ┌─────────┴─────────┐                       │
-│                    │  Global Control   │                       │
-│                    │  Plane (Metadata) │                       │
-│                    │  US-East          │                       │
-│                    └───────────────────┘                       │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[GLOBAL ARCHITECTURE]
+    A --> B[North America<br>US/CA/MX]
+    A --> C[Europe<br>EU/UK]
+    A --> D[APAC<br>AU/NZ]
+
+    B --> B1[Primary DB<br>US-East]
+    B --> B2[Replica<br>US-West]
+
+    C --> C1[Primary DB<br>Frankfurt<br>London]
+    C --> C2[Replica<br>Paris]
+
+    D --> D1[Primary DB<br>Sydney]
+    D --> D2[Replica]
+
+    B1 --> E[Global Control<br>Plane Metadata<br>US-East]
+    C1 --> E
+    D1 --> E
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style B1 fill:#00bcd4,color:#fff
+    style B2 fill:#00bcd4,color:#fff
+    style C1 fill:#ffeb3b,color:#000
+    style C2 fill:#ffeb3b,color:#000
+    style D1 fill:#e91e63,color:#fff
+    style D2 fill:#e91e63,color:#fff
+    style E fill:#f44336,color:#fff
 ```
 
 ### Regional Isolation Model

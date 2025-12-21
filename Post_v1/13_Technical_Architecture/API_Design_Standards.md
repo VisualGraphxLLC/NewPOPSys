@@ -264,13 +264,14 @@ Accept: application/vnd.popsystem.v3+json
 
 ### Version Lifecycle
 
-```
-ACTIVE → DEPRECATED → SUNSET
-  │         │            │
-  │         ├─ 6 months warning
-  │         └─ Migration guide published
-  │
-  └─ New version released
+```mermaid
+graph TD
+    Active["ACTIVE<br>New version released"] --> Deprecated["DEPRECATED<br>6 months warning<br>Migration guide published"]
+    Deprecated --> Sunset["SUNSET"]
+
+    style Active fill:#4caf50,color:#fff
+    style Deprecated fill:#ff9800,color:#fff
+    style Sunset fill:#f44336,color:#fff
 ```
 
 #### Versioning Policy
@@ -305,35 +306,20 @@ Can be added to existing version:
 ### OAuth 2.0 + JWT Strategy
 
 #### Flow Diagram
-```
-┌──────────┐                              ┌──────────┐
-│  Client  │                              │  Auth    │
-│  (SPA)   │                              │  Server  │
-└────┬─────┘                              └────┬─────┘
-     │                                         │
-     │ 1. GET /authorize                       │
-     │────────────────────────────────────────>│
-     │                                         │
-     │ 2. Login page                           │
-     │<────────────────────────────────────────│
-     │                                         │
-     │ 3. User credentials                     │
-     │────────────────────────────────────────>│
-     │                                         │
-     │ 4. Authorization code                   │
-     │<────────────────────────────────────────│
-     │                                         │
-     │ 5. POST /token (code)                   │
-     │────────────────────────────────────────>│
-     │                                         │
-     │ 6. Access token + Refresh token         │
-     │<────────────────────────────────────────│
-     │                                         │
-     ▼                                         ▼
-┌──────────┐                              ┌──────────┐
-│  Client  │  7. API Request with token   │   API    │
-│  (SPA)   │─────────────────────────────>│  Server  │
-└──────────┘                              └──────────┘
+```mermaid
+graph TD
+    Client1["Client<br>(SPA)"] -->|"1. GET /authorize"| Auth["Auth<br>Server"]
+    Auth -->|"2. Login page"| Client1
+    Client1 -->|"3. User credentials"| Auth
+    Auth -->|"4. Authorization code"| Client1
+    Client1 -->|"5. POST /token (code)"| Auth
+    Auth -->|"6. Access token + Refresh token"| Client2["Client<br>(SPA)"]
+    Client2 -->|"7. API Request with token"| API["API<br>Server"]
+
+    style Client1 fill:#2196f3,color:#fff
+    style Client2 fill:#2196f3,color:#fff
+    style Auth fill:#4caf50,color:#fff
+    style API fill:#ff9800,color:#fff
 ```
 
 ### JWT Token Structure

@@ -313,23 +313,43 @@ module.exports = {
 
 ### Translation File Structure
 
-```
-locales/
-├── en/                     # English (source language)
-│   ├── common.json         # Common UI elements
-│   ├── auth.json           # Authentication flows
-│   ├── dashboard.json      # Dashboard
-│   ├── settings.json       # Settings pages
-│   ├── billing.json        # Billing/payments
-│   ├── errors.json         # Error messages
-│   └── validation.json     # Form validation
-├── es/                     # Spanish
-│   ├── common.json
-│   ├── auth.json
-│   └── ...
-├── fr/                     # French
-├── de/                     # German
-└── pt/                     # Portuguese
+```mermaid
+graph TD
+    A[locales/]
+    A --> B[en/<br>English source language]
+    A --> C[es/<br>Spanish]
+    A --> D[fr/<br>French]
+    A --> E[de/<br>German]
+    A --> F[pt/<br>Portuguese]
+
+    B --> B1[common.json<br>Common UI elements]
+    B --> B2[auth.json<br>Authentication flows]
+    B --> B3[dashboard.json<br>Dashboard]
+    B --> B4[settings.json<br>Settings pages]
+    B --> B5[billing.json<br>Billing/payments]
+    B --> B6[errors.json<br>Error messages]
+    B --> B7[validation.json<br>Form validation]
+
+    C --> C1[common.json]
+    C --> C2[auth.json]
+    C --> C3[...]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#00bcd4,color:#fff
+    style F fill:#f44336,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style B2 fill:#81c784,color:#fff
+    style B3 fill:#81c784,color:#fff
+    style B4 fill:#81c784,color:#fff
+    style B5 fill:#81c784,color:#fff
+    style B6 fill:#81c784,color:#fff
+    style B7 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style C2 fill:#ffb74d,color:#fff
+    style C3 fill:#ffb74d,color:#fff
 ```
 
 ```json
@@ -1332,18 +1352,32 @@ export default i18n;
 
 ### Android Localization
 
-```
-android/app/src/main/res/
-├── values/              # Default (English)
-│   └── strings.xml
-├── values-es/           # Spanish
-│   └── strings.xml
-├── values-fr/           # French
-│   └── strings.xml
-├── values-de/           # German
-│   └── strings.xml
-└── values-pt/           # Portuguese
-    └── strings.xml
+```mermaid
+graph TD
+    A[android/app/src/main/res/]
+    A --> B[values/<br>Default English]
+    A --> C[values-es/<br>Spanish]
+    A --> D[values-fr/<br>French]
+    A --> E[values-de/<br>German]
+    A --> F[values-pt/<br>Portuguese]
+
+    B --> B1[strings.xml]
+    C --> C1[strings.xml]
+    D --> D1[strings.xml]
+    E --> E1[strings.xml]
+    F --> F1[strings.xml]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#00bcd4,color:#fff
+    style F fill:#f44336,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style D1 fill:#ba68c8,color:#fff
+    style E1 fill:#4dd0e1,color:#fff
+    style F1 fill:#e57373,color:#fff
 ```
 
 ```xml
@@ -1657,35 +1691,54 @@ async function translateWithReview(contentId, targetLanguages) {
 
 ### Hybrid Workflow
 
-```
-┌─────────────────────────────────────────────────────────┐
-│              TRANSLATION WORKFLOW                       │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  1. Source Content (English)                           │
-│     └─> Developer creates content                      │
-│                                                         │
-│  2. Machine Translation (Optional)                     │
-│     └─> Google Translate generates drafts             │
-│                                                         │
-│  3. Professional Translation                           │
-│     └─> Human translator reviews/translates           │
-│     └─> Uses translation memory                       │
-│     └─> Follows glossary                              │
-│                                                         │
-│  4. Linguistic Review                                  │
-│     └─> Native speaker QA                             │
-│     └─> Context verification                          │
-│                                                         │
-│  5. In-Context Review                                  │
-│     └─> View in actual UI                             │
-│     └─> Check for overflow, clarity                   │
-│                                                         │
-│  6. Approval & Deployment                             │
-│     └─> Mark as approved                              │
-│     └─> Deploy to production                          │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[TRANSLATION WORKFLOW]
+    A --> B[1. Source Content English]
+    B --> B1[Developer creates content]
+
+    B1 --> C[2. Machine Translation Optional]
+    C --> C1[Google Translate generates drafts]
+
+    C1 --> D[3. Professional Translation]
+    D --> D1[Human translator reviews/translates]
+    D --> D2[Uses translation memory]
+    D --> D3[Follows glossary]
+
+    D1 --> E[4. Linguistic Review]
+    D2 --> E
+    D3 --> E
+    E --> E1[Native speaker QA]
+    E --> E2[Context verification]
+
+    E1 --> F[5. In-Context Review]
+    E2 --> F
+    F --> F1[View in actual UI]
+    F --> F2[Check for overflow, clarity]
+
+    F1 --> G[6. Approval & Deployment]
+    F2 --> G
+    G --> G1[Mark as approved]
+    G --> G2[Deploy to production]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#00bcd4,color:#fff
+    style F fill:#ffeb3b,color:#000
+    style G fill:#f44336,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style D1 fill:#ba68c8,color:#fff
+    style D2 fill:#ba68c8,color:#fff
+    style D3 fill:#ba68c8,color:#fff
+    style E1 fill:#4dd0e1,color:#fff
+    style E2 fill:#4dd0e1,color:#fff
+    style F1 fill:#fff59d,color:#000
+    style F2 fill:#fff59d,color:#000
+    style G1 fill:#e57373,color:#fff
+    style G2 fill:#e57373,color:#fff
 ```
 
 ## Translation Workflow Automation

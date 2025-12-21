@@ -6,31 +6,37 @@ The PopSystem AI Agent Harness framework enables autonomous development teams or
 
 ## Architectural Overview
 
-```
-                    ┌─────────────────────┐
-                    │   HUMAN OVERSIGHT   │
-                    │  (Architects/PMs)   │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │   ORCHESTRATOR      │
-                    │   AGENT             │
-                    │  (Cross-Pillar)     │
-                    └──────────┬──────────┘
-                               │
-        ┌──────────┬───────────┼───────────┬──────────┐
-        │          │           │           │          │
-   ┌────▼────┐ ┌───▼───┐ ┌────▼────┐ ┌────▼────┐ ┌───▼───┐
-   │   DAM   │ │  AI   │ │Designer │ │Proofing │ │ More  │
-   │  Agent  │ │ Agent │ │  Agent  │ │  Agent  │ │Agents │
-   └────┬────┘ └───┬───┘ └────┬────┘ └────┬────┘ └───┬───┘
-        │          │           │           │          │
-        └──────────┴───────────┴───────────┴──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │   SHARED CONTEXT    │
-                    │   & KNOWLEDGE BASE  │
-                    └─────────────────────┘
+```mermaid
+graph TD
+    A[HUMAN OVERSIGHT<br>Architects/PMs]
+    B[ORCHESTRATOR<br>AGENT<br>Cross-Pillar]
+    C[DAM<br>Agent]
+    D[AI<br>Agent]
+    E[Designer<br>Agent]
+    F[Proofing<br>Agent]
+    G[More<br>Agents]
+    H[SHARED CONTEXT<br>& KNOWLEDGE BASE]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    B --> G
+    C --> H
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#ff9800,color:#fff
+    style H fill:#9c27b0,color:#fff
 ```
 
 ## Agent Harness Concept
@@ -256,20 +262,30 @@ Agents expose standardized endpoints:
 
 ### Message Queue Architecture
 
-```
-┌─────────────┐
-│ Orchestrator│
-└──────┬──────┘
-       │
-   ┌───▼───────────────┐
-   │  Message Broker   │
-   │  (Redis/RabbitMQ) │
-   └───┬───────────────┘
-       │
-   ┌───┴────┬────┬────┬────┐
-   ▼        ▼    ▼    ▼    ▼
- DAM      AI  Design Proof ...
- Agent    Agent Agent Agent
+```mermaid
+graph TD
+    A[Orchestrator]
+    B[Message Broker<br>Redis/RabbitMQ]
+    C[DAM<br>Agent]
+    D[AI<br>Agent]
+    E[Design<br>Agent]
+    F[Proof<br>Agent]
+    G[...]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    B --> G
+
+    style A fill:#4caf50,color:#fff
+    style B fill:#e91e63,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#ff9800,color:#fff
 ```
 
 Benefits:
@@ -310,28 +326,82 @@ Each agent maintains:
 
 ### Knowledge Base Structure
 
-```
-knowledge_base/
-├── architecture/
-│   ├── system_overview.md
-│   ├── pillar_boundaries.md
-│   └── integration_patterns.md
-├── decisions/
-│   ├── adr-001-database-choice.md
-│   ├── adr-002-auth-strategy.md
-│   └── ...
-├── technical_debt/
-│   ├── dam_debt_register.md
-│   ├── ai_debt_register.md
-│   └── ...
-├── runbooks/
-│   ├── deployment_procedures.md
-│   ├── incident_response.md
-│   └── ...
-└── patterns/
-    ├── api_design_patterns.md
-    ├── error_handling.md
-    └── testing_strategies.md
+```mermaid
+graph TD
+    A[knowledge_base/]
+    B[architecture/]
+    C[decisions/]
+    D[technical_debt/]
+    E[runbooks/]
+    F[patterns/]
+
+    B1[system_overview.md]
+    B2[pillar_boundaries.md]
+    B3[integration_patterns.md]
+
+    C1[adr-001-database-choice.md]
+    C2[adr-002-auth-strategy.md]
+    C3[...]
+
+    D1[dam_debt_register.md]
+    D2[ai_debt_register.md]
+    D3[...]
+
+    E1[deployment_procedures.md]
+    E2[incident_response.md]
+    E3[...]
+
+    F1[api_design_patterns.md]
+    F2[error_handling.md]
+    F3[testing_strategies.md]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+
+    B --> B1
+    B --> B2
+    B --> B3
+
+    C --> C1
+    C --> C2
+    C --> C3
+
+    D --> D1
+    D --> D2
+    D --> D3
+
+    E --> E1
+    E --> E2
+    E --> E3
+
+    F --> F1
+    F --> F2
+    F --> F3
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+    style E fill:#4caf50,color:#fff
+    style F fill:#4caf50,color:#fff
+    style B1 fill:#9c27b0,color:#fff
+    style B2 fill:#9c27b0,color:#fff
+    style B3 fill:#9c27b0,color:#fff
+    style C1 fill:#9c27b0,color:#fff
+    style C2 fill:#9c27b0,color:#fff
+    style C3 fill:#9c27b0,color:#fff
+    style D1 fill:#9c27b0,color:#fff
+    style D2 fill:#9c27b0,color:#fff
+    style D3 fill:#9c27b0,color:#fff
+    style E1 fill:#9c27b0,color:#fff
+    style E2 fill:#9c27b0,color:#fff
+    style E3 fill:#9c27b0,color:#fff
+    style F1 fill:#9c27b0,color:#fff
+    style F2 fill:#9c27b0,color:#fff
+    style F3 fill:#9c27b0,color:#fff
 ```
 
 ## Tool Access Patterns

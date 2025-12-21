@@ -49,81 +49,57 @@ This document provides comprehensive mapping of module dependencies, communicati
 ### Module Classification
 
 #### Core Platform (Required)
-```
-┌─────────────────────────────────────┐
-│         CORE PLATFORM               │
-│                                     │
-│  • Campaign Management              │
-│  • User Management                  │
-│  • Order Management                 │
-│  • Basic Asset Library              │
-│  • API Gateway                      │
-│  • Authentication/Authorization     │
-│  • Notification Engine              │
-│  • Basic Reporting                  │
-│                                     │
-│  Status: REQUIRED                   │
-│  Can exist standalone: YES          │
-│  Dependencies: None                 │
-└─────────────────────────────────────┘
+```mermaid
+graph TD
+    Core[CORE PLATFORM<br><br>Campaign Management<br>User Management<br>Order Management<br>Basic Asset Library<br>API Gateway<br>Authentication/Authorization<br>Notification Engine<br>Basic Reporting<br><br>Status: REQUIRED<br>Can exist standalone: YES<br>Dependencies: None]
+
+    style Core fill:#4caf50,color:#fff
 ```
 
 #### Tier 1 Add-ons (Standalone)
-```
+
 Modules that require only Core Platform:
 
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│     DAM      │  │   Workflow   │  │  MIS Basic   │
-│              │  │              │  │              │
-│ Standalone:  │  │ Standalone:  │  │ Standalone:  │
-│     YES      │  │     YES      │  │     YES      │
-│              │  │              │  │              │
-│ Depends on:  │  │ Depends on:  │  │ Depends on:  │
-│     Core     │  │     Core     │  │     Core     │
-└──────────────┘  └──────────────┘  └──────────────┘
+```mermaid
+graph TD
+    DAM[DAM<br><br>Standalone: YES<br>Depends on: Core]
+    Workflow[Workflow<br><br>Standalone: YES<br>Depends on: Core]
+    MISBasic[MIS Basic<br><br>Standalone: YES<br>Depends on: Core]
+    AIImage[AI - Image<br><br>Standalone: YES<br>Depends on: None]
+    Academy[Academy<br><br>Standalone: YES<br>Depends on: Core]
+    Marketplace[Marketplace<br><br>Standalone: YES<br>Depends on: Core]
 
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│  AI - Image  │  │   Academy    │  │ Marketplace  │
-│              │  │              │  │              │
-│ Standalone:  │  │ Standalone:  │  │ Standalone:  │
-│     YES      │  │     YES      │  │     YES      │
-│              │  │              │  │              │
-│ Depends on:  │  │ Depends on:  │  │ Depends on:  │
-│     None     │  │     Core     │  │     Core     │
-└──────────────┘  └──────────────┘  └──────────────┘
+    style DAM fill:#2196f3,color:#fff
+    style Workflow fill:#2196f3,color:#fff
+    style MISBasic fill:#2196f3,color:#fff
+    style AIImage fill:#ff9800,color:#fff
+    style Academy fill:#2196f3,color:#fff
+    style Marketplace fill:#2196f3,color:#fff
 ```
 
 #### Tier 2 Add-ons (Dependent)
-```
+
 Modules that require other add-ons:
 
-┌──────────────┐       ┌──────────────┐
-│   Designer   │       │   Proofing   │
-│              │       │              │
-│ Requires:    │       │ Recommends:  │
-│  • DAM       │       │  • DAM       │
-│  • Core      │       │              │
-└──────────────┘       └──────────────┘
+```mermaid
+graph TD
+    Designer[Designer<br><br>Requires:<br>• DAM<br>• Core]
+    Proofing[Proofing<br><br>Recommends:<br>• DAM]
+    AIData[AI - Data<br><br>Requires:<br>• Core]
+    MISPro[MIS Pro<br><br>Requires:<br>• MIS Basic<br>• Core]
 
-┌──────────────┐       ┌──────────────┐
-│   AI - Data  │       │   MIS Pro    │
-│              │       │              │
-│ Requires:    │       │ Requires:    │
-│  • Core      │       │  • MIS Basic │
-│              │       │  • Core      │
-└──────────────┘       └──────────────┘
+    style Designer fill:#9c27b0,color:#fff
+    style Proofing fill:#2196f3,color:#fff
+    style AIData fill:#ff9800,color:#fff
+    style MISPro fill:#9c27b0,color:#fff
 ```
 
 #### Universal Add-ons (Cross-Cutting)
-```
-┌─────────────────────────────────────┐
-│          WHITE-LABEL                │
-│                                     │
-│  Works with: ANY module             │
-│  Provides: UI/branding overlay      │
-│  Dependencies: None (module-level)  │
-│  Integration: All modules           │
-└─────────────────────────────────────┘
+```mermaid
+graph TD
+    WhiteLabel[WHITE-LABEL<br><br>Works with: ANY module<br>Provides: UI/branding overlay<br>Dependencies: None module-level<br>Integration: All modules]
+
+    style WhiteLabel fill:#4caf50,color:#fff
 ```
 
 ---
@@ -149,51 +125,56 @@ Modules that require other add-ons:
 
 ### Visual Dependency Map
 
-```
-                    ┌─────────────────┐
-                    │  CORE PLATFORM  │◄────────────┐
-                    │   (v2.0+)       │             │
-                    └────────┬────────┘             │
-                             │                      │
-             ┌───────────────┼───────────────┐     │
-             │               │               │     │
-             ▼               ▼               ▼     │
-      ┌──────────┐    ┌──────────┐    ┌──────────┐│
-      │   DAM    │    │ Workflow │    │ AI-Data  ││
-      │  (v2.0+) │    │ (v2.1+)  │    │ (v2.1+)  ││
-      └────┬─────┘    └────┬─────┘    └────┬─────┘│
-           │               │               │      │
-     ┌─────┼─────┬─────────┼───────────────┤      │
-     │     │     │         │               │      │
-     ▼     ▼     ▼         ▼               ▼      │
-┌─────────┐│ ┌────────┐ ┌──────────┐  ┌─────────┐│
-│Designer ││ │Proofing│ │AI-Image  │  │MIS Basic││
-│(v2.0+)  ││ │(v2.0+) │ │(v2.0+)   │  │(v2.0+)  ││
-└─────────┘│ └────────┘ └──────────┘  └────┬────┘│
-           │                                │     │
-           │                                ▼     │
-           │                           ┌─────────┐│
-           │                           │MIS Pro  ││
-           │                           │(v2.1+)  ││
-           │                           └─────────┘│
-           │                                      │
-           │       ┌──────────────────────────────┘
-           │       │
-           ▼       ▼
-      ┌─────────────────┐     ┌─────────────┐
-      │    Academy      │────▶│ Marketplace │
-      │    (v2.0+)      │     │  (v2.0+)    │
-      └─────────────────┘     └─────────────┘
+```mermaid
+graph TD
+    Core[CORE PLATFORM<br>v2.0+]
+    DAM[DAM<br>v2.0+]
+    Workflow[Workflow<br>v2.1+]
+    AIData[AI-Data<br>v2.1+]
+    Designer[Designer<br>v2.0+]
+    Proofing[Proofing<br>v2.0+]
+    AIImage[AI-Image<br>v2.0+]
+    MISBasic[MIS Basic<br>v2.0+]
+    MISPro[MIS Pro<br>v2.1+]
+    Academy[Academy<br>v2.0+]
+    Marketplace[Marketplace<br>v2.0+]
+    WhiteLabel[WHITE-LABEL<br>Overlays All]
 
-                    ┌──────────────────┐
-                    │   WHITE-LABEL    │
-                    │  (Overlays All)  │
-                    └──────────────────┘
+    Core --> DAM
+    Core --> Workflow
+    Core --> AIData
+    Core --> MISBasic
+    Core --> Academy
+    Core --> Marketplace
 
-Legend:
-────▶  Hard Dependency (required)
-- - ▶  Soft Dependency (recommended)
+    DAM --> Designer
+    DAM -.-> Proofing
+    DAM -.-> AIImage
+
+    Workflow -.-> Designer
+    Workflow -.-> Proofing
+
+    MISBasic --> MISPro
+
+    Academy -.-> Marketplace
+
+    style Core fill:#4caf50,color:#fff
+    style DAM fill:#2196f3,color:#fff
+    style Workflow fill:#2196f3,color:#fff
+    style AIData fill:#ff9800,color:#fff
+    style Designer fill:#9c27b0,color:#fff
+    style Proofing fill:#2196f3,color:#fff
+    style AIImage fill:#ff9800,color:#fff
+    style MISBasic fill:#2196f3,color:#fff
+    style MISPro fill:#9c27b0,color:#fff
+    style Academy fill:#2196f3,color:#fff
+    style Marketplace fill:#2196f3,color:#fff
+    style WhiteLabel fill:#4caf50,color:#fff
 ```
+
+**Legend:**
+- Solid line (→) = Hard Dependency (required)
+- Dashed line (-.→) = Soft Dependency (recommended)
 
 ### Detailed Dependency Descriptions
 
@@ -394,64 +375,63 @@ White-Label:
 ### Inter-Module API Communication
 
 #### API Dependency Graph
-```
-Core Platform APIs:
-├── /api/v1/auth          → Used by: ALL modules
-├── /api/v1/users         → Used by: ALL modules
-├── /api/v1/tenants       → Used by: ALL modules
-├── /api/v1/campaigns     → Used by: Designer, DAM, AI-Data, MIS
-├── /api/v1/orders        → Used by: MIS Basic, MIS Pro, AI-Data
-└── /api/v1/notifications → Used by: ALL modules
 
-DAM APIs:
-├── /api/v1/dam/assets         → Used by: Designer, AI-Image, Proofing
-├── /api/v1/dam/collections    → Used by: Designer, Core
-├── /api/v1/dam/search         → Used by: Designer, Core, AI-Image
-└── /api/v1/dam/analytics      → Used by: AI-Data
+**Core Platform APIs:**
+- /api/v1/auth → Used by: ALL modules
+- /api/v1/users → Used by: ALL modules
+- /api/v1/tenants → Used by: ALL modules
+- /api/v1/campaigns → Used by: Designer, DAM, AI-Data, MIS
+- /api/v1/orders → Used by: MIS Basic, MIS Pro, AI-Data
+- /api/v1/notifications → Used by: ALL modules
 
-Designer APIs:
-├── /api/v1/designer/templates → Used by: Core, Workflow
-├── /api/v1/designer/export    → Used by: Core, Proofing
-└── /api/v1/designer/preview   → Used by: Proofing
+**DAM APIs:**
+- /api/v1/dam/assets → Used by: Designer, AI-Image, Proofing
+- /api/v1/dam/collections → Used by: Designer, Core
+- /api/v1/dam/search → Used by: Designer, Core, AI-Image
+- /api/v1/dam/analytics → Used by: AI-Data
 
-AI-Image APIs:
-├── /api/v1/ai/image/enhance   → Used by: DAM, Designer
-├── /api/v1/ai/image/upscale   → Used by: DAM, Designer
-└── /api/v1/ai/image/quality   → Used by: Proofing
+**Designer APIs:**
+- /api/v1/designer/templates → Used by: Core, Workflow
+- /api/v1/designer/export → Used by: Core, Proofing
+- /api/v1/designer/preview → Used by: Proofing
 
-AI-Data APIs:
-├── /api/v1/ai/analytics       → Used by: Core, MIS Pro
-├── /api/v1/ai/recommendations → Used by: Core, MIS
-└── /api/v1/ai/forecasts       → Used by: MIS Pro
+**AI-Image APIs:**
+- /api/v1/ai/image/enhance → Used by: DAM, Designer
+- /api/v1/ai/image/upscale → Used by: DAM, Designer
+- /api/v1/ai/image/quality → Used by: Proofing
 
-Proofing APIs:
-├── /api/v1/proofing/proofs    → Used by: Designer, DAM
-├── /api/v1/proofing/approve   → Used by: Workflow
-└── /api/v1/proofing/workflows → Used by: Core
+**AI-Data APIs:**
+- /api/v1/ai/analytics → Used by: Core, MIS Pro
+- /api/v1/ai/recommendations → Used by: Core, MIS
+- /api/v1/ai/forecasts → Used by: MIS Pro
 
-Workflow APIs:
-├── /api/v1/workflow/execute   → Used by: ALL modules
-├── /api/v1/workflow/trigger   → Used by: ALL modules
-└── /api/v1/workflow/webhooks  → Used by: External systems
+**Proofing APIs:**
+- /api/v1/proofing/proofs → Used by: Designer, DAM
+- /api/v1/proofing/approve → Used by: Workflow
+- /api/v1/proofing/workflows → Used by: Core
 
-MIS APIs:
-├── /api/v1/mis/jobs           → Used by: Core, AI-Data
-├── /api/v1/mis/invoices       → Used by: Core
-└── /api/v1/mis-pro/schedule   → Used by: Workflow, AI-Data
+**Workflow APIs:**
+- /api/v1/workflow/execute → Used by: ALL modules
+- /api/v1/workflow/trigger → Used by: ALL modules
+- /api/v1/workflow/webhooks → Used by: External systems
 
-Academy APIs:
-├── /api/v1/academy/courses    → Used by: Core, Marketplace
-└── /api/v1/academy/certs      → Used by: Marketplace
+**MIS APIs:**
+- /api/v1/mis/jobs → Used by: Core, AI-Data
+- /api/v1/mis/invoices → Used by: Core
+- /api/v1/mis-pro/schedule → Used by: Workflow, AI-Data
 
-Marketplace APIs:
-├── /api/v1/marketplace/installers → Used by: Core
-├── /api/v1/marketplace/quotes     → Used by: MIS Basic
-└── /api/v1/marketplace/reviews    → Used by: Academy
+**Academy APIs:**
+- /api/v1/academy/courses → Used by: Core, Marketplace
+- /api/v1/academy/certs → Used by: Marketplace
 
-White-Label APIs:
-├── /api/v1/white-label/config → Used by: ALL modules
-└── /api/v1/white-label/themes → Used by: ALL modules
-```
+**Marketplace APIs:**
+- /api/v1/marketplace/installers → Used by: Core
+- /api/v1/marketplace/quotes → Used by: MIS Basic
+- /api/v1/marketplace/reviews → Used by: Academy
+
+**White-Label APIs:**
+- /api/v1/white-label/config → Used by: ALL modules
+- /api/v1/white-label/themes → Used by: ALL modules
 
 ### API Contract Examples
 
@@ -827,198 +807,129 @@ const events: DomainEvent[] = [
 ### Common Infrastructure Services
 
 #### Authentication Service
-```
-┌──────────────────────────────────────────┐
-│      AUTHENTICATION SERVICE              │
-│  (Part of Core Platform)                 │
-├──────────────────────────────────────────┤
-│  • OAuth2 / OpenID Connect               │
-│  • SAML 2.0                              │
-│  • LDAP / Active Directory               │
-│  • API Key Management                    │
-│  • Session Management                    │
-│  • MFA / 2FA                             │
-└────────────────┬─────────────────────────┘
-                 │
-         Used by ALL modules
-                 │
-    ┌────────────┼────────────┐
-    │            │            │
-    ▼            ▼            ▼
-  [DAM]     [Designer]   [MIS Pro]
-  [AI-*]    [Proofing]   [Academy]
-  [...]     [Workflow]   [...]
+```mermaid
+graph TD
+    Auth[AUTHENTICATION SERVICE<br>Part of Core Platform<br><br>• OAuth2 / OpenID Connect<br>• SAML 2.0<br>• LDAP / Active Directory<br>• API Key Management<br>• Session Management<br>• MFA / 2FA]
+    AllModules[ALL MODULES<br>DAM, Designer, MIS Pro<br>AI-*, Proofing, Academy<br>Workflow, etc]
 
-Dependency Type: Hard
-Failure Impact: Module access denied
-Fallback: None (auth required for security)
+    Auth -->|Used by| AllModules
+
+    style Auth fill:#4caf50,color:#fff
+    style AllModules fill:#2196f3,color:#fff
 ```
+
+**Dependency Type:** Hard
+**Failure Impact:** Module access denied
+**Fallback:** None (auth required for security)
 
 #### Notification Service
-```
-┌──────────────────────────────────────────┐
-│      NOTIFICATION SERVICE                │
-│  (Part of Core Platform)                 │
-├──────────────────────────────────────────┤
-│  • Email (SMTP, SendGrid, SES)           │
-│  • SMS (Twilio)                          │
-│  • Push Notifications                    │
-│  • In-App Notifications                  │
-│  • Webhooks                              │
-│  • Slack / Teams Integration             │
-└────────────────┬─────────────────────────┘
-                 │
-         Used by ALL modules
-                 │
-    ┌────────────┼────────────┐
-    │            │            │
-    ▼            ▼            ▼
-  [Core]    [Proofing]   [Workflow]
-  [MIS]     [Academy]    [Marketplace]
+```mermaid
+graph TD
+    Notify[NOTIFICATION SERVICE<br>Part of Core Platform<br><br>• Email SMTP, SendGrid, SES<br>• SMS Twilio<br>• Push Notifications<br>• In-App Notifications<br>• Webhooks<br>• Slack / Teams Integration]
+    Modules[ALL MODULES<br>Core, Proofing, Workflow<br>MIS, Academy, Marketplace]
 
-Dependency Type: Soft
-Failure Impact: Notifications not sent
-Fallback: Queue for retry, log errors
+    Notify -->|Used by| Modules
+
+    style Notify fill:#4caf50,color:#fff
+    style Modules fill:#2196f3,color:#fff
 ```
+
+**Dependency Type:** Soft
+**Failure Impact:** Notifications not sent
+**Fallback:** Queue for retry, log errors
 
 #### Event Bus
-```
-┌──────────────────────────────────────────┐
-│         EVENT BUS SERVICE                │
-│  (RabbitMQ, Kafka, AWS EventBridge)      │
-├──────────────────────────────────────────┤
-│  • Publish/Subscribe                     │
-│  • Event Routing                         │
-│  • Dead Letter Queue                     │
-│  • Replay Capability                     │
-│  • Event Schema Registry                 │
-└────────────────┬─────────────────────────┘
-                 │
-    Publishers & Subscribers
-                 │
-    ┌────────────┼────────────┐
-    │            │            │
-    ▼            ▼            ▼
-  ALL       ALL          ALL
-  MODULES   MODULES      MODULES
+```mermaid
+graph TD
+    EventBus[EVENT BUS SERVICE<br>RabbitMQ, Kafka, AWS EventBridge<br><br>• Publish/Subscribe<br>• Event Routing<br>• Dead Letter Queue<br>• Replay Capability<br>• Event Schema Registry]
+    AllMods[ALL MODULES<br>Publishers & Subscribers]
 
-Dependency Type: Soft
-Failure Impact: Async operations delayed
-Fallback: Local queue, retry on recovery
+    EventBus <-->|Pub/Sub| AllMods
+
+    style EventBus fill:#9c27b0,color:#fff
+    style AllMods fill:#2196f3,color:#fff
 ```
+
+**Dependency Type:** Soft
+**Failure Impact:** Async operations delayed
+**Fallback:** Local queue, retry on recovery
 
 #### Storage Service
-```
-┌──────────────────────────────────────────┐
-│      OBJECT STORAGE SERVICE              │
-│  (S3, Azure Blob, Google Cloud Storage)  │
-├──────────────────────────────────────────┤
-│  • File Upload/Download                  │
-│  • CDN Integration                       │
-│  • Versioning                            │
-│  • Lifecycle Management                  │
-│  • Access Control                        │
-└────────────────┬─────────────────────────┘
-                 │
-         Primary users
-                 │
-    ┌────────────┼────────────┐
-    │            │            │
-    ▼            ▼            ▼
-  [DAM]     [Designer]   [Academy]
-  [Core]    [AI-Image]   [Proofing]
+```mermaid
+graph TD
+    Storage[OBJECT STORAGE SERVICE<br>S3, Azure Blob, Google Cloud Storage<br><br>• File Upload/Download<br>• CDN Integration<br>• Versioning<br>• Lifecycle Management<br>• Access Control]
+    PrimaryUsers[PRIMARY USERS<br>DAM, Designer, Academy<br>Core, AI-Image, Proofing]
 
-Dependency Type: Hard (for these modules)
-Failure Impact: Cannot upload/access files
-Fallback: Local temp storage, sync when available
+    Storage <-->|Files| PrimaryUsers
+
+    style Storage fill:#ff9800,color:#fff
+    style PrimaryUsers fill:#2196f3,color:#fff
 ```
+
+**Dependency Type:** Hard (for these modules)
+**Failure Impact:** Cannot upload/access files
+**Fallback:** Local temp storage, sync when available
 
 #### Cache Service
-```
-┌──────────────────────────────────────────┐
-│         CACHE SERVICE                    │
-│  (Redis, Memcached)                      │
-├──────────────────────────────────────────┤
-│  • Session Cache                         │
-│  • Permission Cache                      │
-│  • Query Results Cache                   │
-│  • Rate Limiting                         │
-│  • Distributed Locks                     │
-└────────────────┬─────────────────────────┘
-                 │
-         Used by ALL modules
-                 │
-    ┌────────────┼────────────┐
-    │            │            │
-    ▼            ▼            ▼
-  ALL       ALL          ALL
-  MODULES   MODULES      MODULES
+```mermaid
+graph TD
+    Cache[CACHE SERVICE<br>Redis, Memcached<br><br>• Session Cache<br>• Permission Cache<br>• Query Results Cache<br>• Rate Limiting<br>• Distributed Locks]
+    AllModules[ALL MODULES]
 
-Dependency Type: Soft
-Failure Impact: Degraded performance
-Fallback: Direct database queries
+    Cache <-->|Caching| AllModules
+
+    style Cache fill:#ff9800,color:#fff
+    style AllModules fill:#2196f3,color:#fff
 ```
+
+**Dependency Type:** Soft
+**Failure Impact:** Degraded performance
+**Fallback:** Direct database queries
 
 #### Search Service
-```
-┌──────────────────────────────────────────┐
-│      SEARCH SERVICE                      │
-│  (Elasticsearch, Algolia)                │
-├──────────────────────────────────────────┤
-│  • Full-Text Search                      │
-│  • Faceted Search                        │
-│  • Auto-Complete                         │
-│  • Search Analytics                      │
-│  • Relevance Tuning                      │
-└────────────────┬─────────────────────────┘
-                 │
-         Primary users
-                 │
-    ┌────────────┼────────────┐
-    │            │            │
-    ▼            ▼            ▼
-  [DAM]     [Academy]    [Marketplace]
-  [Core]    [Designer]
+```mermaid
+graph TD
+    Search[SEARCH SERVICE<br>Elasticsearch, Algolia<br><br>• Full-Text Search<br>• Faceted Search<br>• Auto-Complete<br>• Search Analytics<br>• Relevance Tuning]
+    PrimaryUsers[PRIMARY USERS<br>DAM, Academy, Marketplace<br>Core, Designer]
 
-Dependency Type: Soft
-Failure Impact: Search unavailable
-Fallback: Basic database LIKE queries
+    Search <-->|Search| PrimaryUsers
+
+    style Search fill:#9c27b0,color:#fff
+    style PrimaryUsers fill:#2196f3,color:#fff
 ```
+
+**Dependency Type:** Soft
+**Failure Impact:** Search unavailable
+**Fallback:** Basic database LIKE queries
 
 ### Service Mesh Architecture
 
-```
-┌─────────────────────────────────────────────────────────┐
-│              SERVICE MESH (Istio / Linkerd)             │
-│                                                         │
-│  Features:                                              │
-│  • Service Discovery                                    │
-│  • Load Balancing                                       │
-│  • Circuit Breaking                                     │
-│  • Retry Logic                                          │
-│  • Timeout Management                                   │
-│  • Mutual TLS (mTLS)                                    │
-│  • Observability (Traces, Metrics, Logs)                │
-└─────────────┬───────────────────────────────────────────┘
-              │
-              │ All module-to-module communication
-              │ flows through service mesh
-              │
-    ┌─────────┼─────────────────────┐
-    │         │                     │
-    ▼         ▼                     ▼
-┌────────┐ ┌────────┐         ┌──────────┐
-│  Core  │ │  DAM   │  . . .  │ MIS Pro  │
-│ Module │ │ Module │         │  Module  │
-└────────┘ └────────┘         └──────────┘
+```mermaid
+graph TD
+    ServiceMesh[SERVICE MESH<br>Istio / Linkerd<br><br>Features:<br>• Service Discovery<br>• Load Balancing<br>• Circuit Breaking<br>• Retry Logic<br>• Timeout Management<br>• Mutual TLS mTLS<br>• Observability Traces, Metrics, Logs]
+    Core[Core<br>Module]
+    DAM[DAM<br>Module]
+    MISPro[MIS Pro<br>Module]
+    Others[Other<br>Modules]
 
-Benefits:
-• Standardized communication patterns
-• Automatic retries and circuit breaking
-• Security by default (mTLS)
-• Observability without code changes
-• Service-to-service authentication
+    ServiceMesh -->|Module Communication| Core
+    ServiceMesh -->|Module Communication| DAM
+    ServiceMesh -->|Module Communication| MISPro
+    ServiceMesh -->|Module Communication| Others
+
+    style ServiceMesh fill:#9c27b0,color:#fff
+    style Core fill:#4caf50,color:#fff
+    style DAM fill:#2196f3,color:#fff
+    style MISPro fill:#ff9800,color:#fff
+    style Others fill:#2196f3,color:#fff
 ```
+
+**Benefits:**
+- Standardized communication patterns
+- Automatic retries and circuit breaking
+- Security by default (mTLS)
+- Observability without code changes
+- Service-to-service authentication
 
 ---
 
@@ -1051,68 +962,75 @@ PROHIBITED: Cross-layer or upward dependencies
 ```
 
 #### Rule 2: Event-Driven Decoupling
-```
-WRONG (Circular Dependency):
-┌──────────┐ ──calls──▶ ┌──────────┐
-│ Designer │             │   DAM    │
-└──────────┘ ◀──calls── └──────────┘
-                              (CIRCULAR!)
 
-RIGHT (Event-Driven):
-┌──────────┐ ──publishes event──▶ ┌───────────┐
-│ Designer │                       │ Event Bus │
-└──────────┘                       └─────┬─────┘
-                                         │
-                                         │ delivers event
-                                         ▼
-                                   ┌──────────┐
-                                   │   DAM    │
-                                   └──────────┘
+**WRONG (Circular Dependency):**
+```mermaid
+graph LR
+    Designer[Designer]
+    DAM[DAM]
 
-Benefits:
-• No direct coupling
-• Modules don't need to know about each other
-• Can add new listeners without changing publishers
-• Temporal decoupling (async)
+    Designer -->|calls| DAM
+    DAM -->|calls| Designer
+
+    style Designer fill:#f44336,color:#fff
+    style DAM fill:#f44336,color:#fff
 ```
+
+**RIGHT (Event-Driven):**
+```mermaid
+graph TD
+    Designer[Designer]
+    EventBus[Event Bus]
+    DAM[DAM]
+
+    Designer -->|publishes event| EventBus
+    EventBus -->|delivers event| DAM
+
+    style Designer fill:#4caf50,color:#fff
+    style EventBus fill:#9c27b0,color:#fff
+    style DAM fill:#4caf50,color:#fff
+```
+
+**Benefits:**
+- No direct coupling
+- Modules don't need to know about each other
+- Can add new listeners without changing publishers
+- Temporal decoupling (async)
 
 #### Rule 3: Dependency Inversion
-```
-WRONG (Concrete Dependency):
-┌──────────────────┐
-│   AI - Data      │
-└────────┬─────────┘
-         │
-         │ depends on concrete implementation
-         ▼
-┌──────────────────┐
-│   MIS Pro        │
-│ (Specific Class) │
-└──────────────────┘
 
-RIGHT (Abstracted Dependency):
-┌──────────────────┐
-│   AI - Data      │
-└────────┬─────────┘
-         │
-         │ depends on interface
-         ▼
-┌─────────────────────┐
-│ IFinancialDataSource│ (Interface)
-└──────────┬──────────┘
-           │
-           │ implemented by
-           ▼
-   ┌──────────────┐
-   │   MIS Pro    │
-   └──────────────┘
+**WRONG (Concrete Dependency):**
+```mermaid
+graph TD
+    AIData[AI - Data]
+    MISPro[MIS Pro<br>Specific Class]
 
-Benefits:
-• AI-Data doesn't know about MIS Pro
-• Can swap implementations
-• Can mock for testing
-• Follows SOLID principles
+    AIData -->|depends on concrete<br>implementation| MISPro
+
+    style AIData fill:#f44336,color:#fff
+    style MISPro fill:#f44336,color:#fff
 ```
+
+**RIGHT (Abstracted Dependency):**
+```mermaid
+graph TD
+    AIData[AI - Data]
+    Interface[IFinancialDataSource<br>Interface]
+    MISPro[MIS Pro]
+
+    AIData -->|depends on<br>interface| Interface
+    Interface -->|implemented by| MISPro
+
+    style AIData fill:#4caf50,color:#fff
+    style Interface fill:#2196f3,color:#fff
+    style MISPro fill:#4caf50,color:#fff
+```
+
+**Benefits:**
+- AI-Data doesn't know about MIS Pro
+- Can swap implementations
+- Can mock for testing
+- Follows SOLID principles
 
 ### Automated Dependency Checking
 

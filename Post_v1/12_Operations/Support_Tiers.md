@@ -151,24 +151,48 @@ This document defines the customer support structure for PopSystem, outlining se
 
 ### Escalation Matrix
 
-```
-Customer Report
-       ↓
-  L1 Support (Triage & Initial Response)
-       ↓
-  [Can resolve?] → Yes → Resolution & Documentation
-       ↓ No
-  L2 Support (Technical Specialists)
-       ↓
-  [Can resolve?] → Yes → Resolution & Documentation
-       ↓ No
-  L3 Engineering (Product Team)
-       ↓
-  [Bug or Feature?]
-       ↓                    ↓
-    Bug Fix          Feature Request
-       ↓                    ↓
-  Engineering Sprint    Product Backlog
+```mermaid
+graph TD
+    A["Customer Report"]
+    B["L1 Support<br>Triage & Initial Response"]
+    C{"Can resolve?"}
+    D["Resolution &<br>Documentation"]
+    E["L2 Support<br>Technical Specialists"]
+    F{"Can resolve?"}
+    G["Resolution &<br>Documentation"]
+    H["L3 Engineering<br>Product Team"]
+    I{"Bug or Feature?"}
+    J["Bug Fix"]
+    K["Feature Request"]
+    L["Engineering Sprint"]
+    M["Product Backlog"]
+
+    A --> B
+    B --> C
+    C -->|Yes| D
+    C -->|No| E
+    E --> F
+    F -->|Yes| G
+    F -->|No| H
+    H --> I
+    I -->|Bug| J
+    I -->|Feature| K
+    J --> L
+    K --> M
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#e91e63,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#f44336,color:#fff
+    style I fill:#ff9800,color:#fff
+    style J fill:#3f51b5,color:#fff
+    style K fill:#00bcd4,color:#fff
+    style L fill:#009688,color:#fff
+    style M fill:#795548,color:#fff
 ```
 
 ### Escalation Triggers
@@ -199,30 +223,78 @@ Customer Report
 ### Automated Routing Rules
 
 **By Customer Tier:**
-```
-Premium/Enterprise → Dedicated CSM queue
-Pro → Priority queue
-Starter → Standard queue
-Free/Trial → Self-service (with limited ticket option)
+
+```mermaid
+graph TD
+    A["Customer Tier Routing"]
+    B["Premium/Enterprise<br>Dedicated CSM queue"]
+    C["Pro<br>Priority queue"]
+    D["Starter<br>Standard queue"]
+    E["Free/Trial<br>Self-service with limited ticket option"]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#e91e63,color:#fff
 ```
 
 **By Issue Type:**
-```
-Technical Bug → Engineering queue
-Billing → Finance team
-Feature Request → Product queue
-Security Concern → Security team (immediate)
-API/Integration → Developer support queue
-Training → Customer Success
+
+```mermaid
+graph TD
+    A["Issue Type Routing"]
+    B["Technical Bug<br>Engineering queue"]
+    C["Billing<br>Finance team"]
+    D["Feature Request<br>Product queue"]
+    E["Security Concern<br>Security team immediate"]
+    F["API/Integration<br>Developer support queue"]
+    G["Training<br>Customer Success"]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#f44336,color:#fff
+    style F fill:#3f51b5,color:#fff
+    style G fill:#00bcd4,color:#fff
 ```
 
 **By Keywords/Tags:**
-```
-"urgent", "down", "outage" → P1/P2 severity, immediate routing
-"invoice", "payment", "refund" → Billing queue
-"how to", "tutorial" → Direct to knowledge base first
-"API", "webhook", "integration" → Technical queue
-"cancel", "churn" → Retention team
+
+```mermaid
+graph TD
+    A["Keyword-Based Routing"]
+    B["urgent, down, outage<br>P1/P2 severity, immediate routing"]
+    C["invoice, payment, refund<br>Billing queue"]
+    D["how to, tutorial<br>Direct to knowledge base first"]
+    E["API, webhook, integration<br>Technical queue"]
+    F["cancel, churn<br>Retention team"]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#f44336,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#4caf50,color:#fff
+    style E fill:#9c27b0,color:#fff
+    style F fill:#e91e63,color:#fff
 ```
 
 ### Intelligent Routing Features
@@ -366,29 +438,70 @@ Training → Customer Success
 ### Content Structure
 
 **User-Facing Documentation:**
-```
-Getting Started
-├── Account Setup
-├── First Campaign
-└── Platform Overview
 
-Feature Guides
-├── Campaign Management
-├── Store Operations
-├── Reporting & Analytics
-└── Integrations
+```mermaid
+graph TD
+    A["Knowledge Base"]
+    B["Getting Started"]
+    C["Account Setup"]
+    D["First Campaign"]
+    E["Platform Overview"]
+    F["Feature Guides"]
+    G["Campaign Management"]
+    H["Store Operations"]
+    I["Reporting & Analytics"]
+    J["Integrations"]
+    K["Admin Guides"]
+    L["User Management"]
+    M["Billing & Subscriptions"]
+    N["Security Settings"]
+    O["API Access"]
+    P["Troubleshooting"]
+    Q["Common Issues"]
+    R["Error Messages"]
+    S["Performance Tips"]
+    T["Browser Compatibility"]
 
-Admin Guides
-├── User Management
-├── Billing & Subscriptions
-├── Security Settings
-└── API Access
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    A --> F
+    F --> G
+    F --> H
+    F --> I
+    F --> J
+    A --> K
+    K --> L
+    K --> M
+    K --> N
+    K --> O
+    A --> P
+    P --> Q
+    P --> R
+    P --> S
+    P --> T
 
-Troubleshooting
-├── Common Issues
-├── Error Messages
-├── Performance Tips
-└── Browser Compatibility
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#9c27b0,color:#fff
+    style G fill:#e91e63,color:#fff
+    style H fill:#e91e63,color:#fff
+    style I fill:#e91e63,color:#fff
+    style J fill:#e91e63,color:#fff
+    style K fill:#3f51b5,color:#fff
+    style L fill:#00bcd4,color:#fff
+    style M fill:#00bcd4,color:#fff
+    style N fill:#00bcd4,color:#fff
+    style O fill:#00bcd4,color:#fff
+    style P fill:#f44336,color:#fff
+    style Q fill:#ff5722,color:#fff
+    style R fill:#ff5722,color:#fff
+    style S fill:#ff5722,color:#fff
+    style T fill:#ff5722,color:#fff
 ```
 
 ### Content Creation Workflow

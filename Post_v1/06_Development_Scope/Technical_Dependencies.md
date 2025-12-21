@@ -27,112 +27,145 @@ PopSystem is composed of multiple interconnected pillars that must be developed 
 
 ### High-Level Pillar Dependencies
 
-```
-                          ┌─────────────┐
-                          │   CORE      │
-                          │  PLATFORM   │
-                          └──────┬──────┘
-                                 │
-                 ┌───────────────┼───────────────┐
-                 │               │               │
-                 ▼               ▼               ▼
-          ┌──────────┐    ┌──────────┐    ┌──────────┐
-          │   DAM    │    │  MOBILE  │    │  AI/ML   │
-          │ SERVICES │    │   /PWA   │    │ SERVICES │
-          └────┬─────┘    └────┬─────┘    └────┬─────┘
-               │               │               │
-               │         ┌─────┴─────┐        │
-               │         │           │        │
-               ▼         ▼           ▼        ▼
-          ┌──────────┐ ┌──────────┐ ┌──────────┐
-          │ DESIGNER │ │ PROOFING │ │  PRINT   │
-          │          │ │          │ │   MGMT   │
-          └────┬─────┘ └────┬─────┘ └────┬─────┘
-               │            │            │
-               └────────────┼────────────┘
-                            │
-                            ▼
-                     ┌──────────┐
-                     │  MARKET  │
-                     │  PLACE   │
-                     └──────────┘
+```mermaid
+graph TD
+    A[CORE<br>PLATFORM]
+    B[DAM<br>SERVICES]
+    C[MOBILE<br>/PWA]
+    D[AI/ML<br>SERVICES]
+    E[DESIGNER]
+    F[PROOFING]
+    G[PRINT<br>MGMT]
+    H[MARKET<br>PLACE]
+
+    A --> B
+    A --> C
+    A --> D
+    B --> E
+    C --> E
+    C --> F
+    D --> E
+    D --> G
+    E --> H
+    F --> H
+    G --> H
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#ff9800,color:#fff
+    style H fill:#9c27b0,color:#fff
 ```
 
 ### Detailed Dependency Flow
 
-```
-Phase: v1 (Foundation)
-┌─────────────────────────────────────────────────────────────┐
-│                       CORE PLATFORM                         │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐           │
-│  │   Auth     │  │ User Mgmt  │  │  Org/Team  │           │
-│  │ (Auth0)    │→ │  (CRUD)    │→ │  Hierarchy │           │
-│  └────────────┘  └────────────┘  └────────────┘           │
-│         │              │                │                   │
-│         └──────────────┴────────────────┘                   │
-│                        ▼                                    │
-│              ┌──────────────────┐                          │
-│              │  Base API Layer  │                          │
-│              │  (GraphQL/REST)  │                          │
-│              └──────────────────┘                          │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-Phase: v2 (Core Features)
-                      │
-      ┌───────────────┼───────────────┐
-      │               │               │
-      ▼               ▼               ▼
-┌──────────┐    ┌──────────┐    ┌──────────┐
-│   DAM    │    │ DESIGNER │    │ PROOFING │
-│          │    │          │    │          │
-│ ┌──────┐ │    │ ┌──────┐ │    │ ┌──────┐ │
-│ │Asset │ │───→│ │Canvas│ │───→│ │Review│ │
-│ │Store │ │    │ │Editor│ │    │ │Flow  │ │
-│ └──────┘ │    │ └──────┘ │    │ └──────┘ │
-│          │    │          │    │          │
-│ ┌──────┐ │    │ ┌──────┐ │    │ ┌──────┐ │
-│ │Search│ │───→│ │Templt│ │───→│ │Apprvl│ │
-│ │Index │ │    │ │Engine│ │    │ │System│ │
-│ └──────┘ │    │ └──────┘ │    │ └──────┘ │
-└──────────┘    └────┬─────┘    └──────────┘
-                     │
-Phase: v3 (Advanced Features)
-                     │
-         ┌───────────┼───────────┐
-         │           │           │
-         ▼           ▼           ▼
-   ┌──────────┐ ┌──────────┐ ┌──────────┐
-   │  AI/ML   │ │  MOBILE  │ │  PRINT   │
-   │ SERVICES │ │   /PWA   │ │   MGMT   │
-   │          │ │          │ │          │
-   │ ┌──────┐ │ │ ┌──────┐ │ │ ┌──────┐ │
-   │ │Smart │ │ │ │Native│ │ │ │Print │ │
-   │ │Recomm│ │ │ │Apps  │ │ │ │Queue │ │
-   │ └──────┘ │ │ └──────┘ │ │ └──────┘ │
-   │          │ │          │ │          │
-   │ ┌──────┐ │ │ ┌──────┐ │ │ ┌──────┐ │
-   │ │Auto  │ │ │ │Sync  │ │ │ │Vendor│ │
-   │ │Tag   │ │ │ │Engine│ │ │ │API   │ │
-   │ └──────┘ │ │ └──────┘ │ │ └──────┘ │
-   └──────────┘ └──────────┘ └────┬─────┘
-                                  │
-Phase: v4 (Marketplace)
-                                  │
-                                  ▼
-                           ┌──────────┐
-                           │  MARKET  │
-                           │  PLACE   │
-                           │          │
-                           │ ┌──────┐ │
-                           │ │Vendor│ │
-                           │ │Onbrd │ │
-                           │ └──────┘ │
-                           │          │
-                           │ ┌──────┐ │
-                           │ │3rd Pty│ │
-                           │ │Integr│ │
-                           │ └──────┘ │
-                           └──────────┘
+```mermaid
+graph TD
+    subgraph "Phase: v1 Foundation"
+        A1[Auth<br>Auth0]
+        A2[User Mgmt<br>CRUD]
+        A3[Org/Team<br>Hierarchy]
+        A4[Base API Layer<br>GraphQL/REST]
+
+        A1 --> A2
+        A2 --> A3
+        A1 --> A4
+        A2 --> A4
+        A3 --> A4
+    end
+
+    subgraph "Phase: v2 Core Features"
+        B1[DAM]
+        B1A[Asset<br>Store]
+        B1B[Search<br>Index]
+
+        C1[DESIGNER]
+        C1A[Canvas<br>Editor]
+        C1B[Templt<br>Engine]
+
+        D1[PROOFING]
+        D1A[Review<br>Flow]
+        D1B[Apprvl<br>System]
+
+        B1A --> B1
+        B1B --> B1
+        C1A --> C1
+        C1B --> C1
+        D1A --> D1
+        D1B --> D1
+
+        B1A --> C1A
+        B1B --> C1B
+        C1A --> D1A
+        C1B --> D1B
+    end
+
+    subgraph "Phase: v3 Advanced Features"
+        E1[AI/ML<br>SERVICES]
+        E1A[Smart<br>Recomm]
+        E1B[Auto<br>Tag]
+
+        F1[MOBILE<br>/PWA]
+        F1A[Native<br>Apps]
+        F1B[Sync<br>Engine]
+
+        G1[PRINT<br>MGMT]
+        G1A[Print<br>Queue]
+        G1B[Vendor<br>API]
+
+        E1A --> E1
+        E1B --> E1
+        F1A --> F1
+        F1B --> F1
+        G1A --> G1
+        G1B --> G1
+    end
+
+    subgraph "Phase: v4 Marketplace"
+        H1[MARKET<br>PLACE]
+        H1A[Vendor<br>Onbrd]
+        H1B[3rd Pty<br>Integr]
+
+        H1A --> H1
+        H1B --> H1
+    end
+
+    A4 --> B1
+    A4 --> C1
+    A4 --> D1
+    C1 --> E1
+    C1 --> F1
+    C1 --> G1
+    G1 --> H1
+
+    style A1 fill:#2196f3,color:#fff
+    style A2 fill:#2196f3,color:#fff
+    style A3 fill:#2196f3,color:#fff
+    style A4 fill:#2196f3,color:#fff
+    style B1 fill:#4caf50,color:#fff
+    style B1A fill:#4caf50,color:#fff
+    style B1B fill:#4caf50,color:#fff
+    style C1 fill:#ff9800,color:#fff
+    style C1A fill:#ff9800,color:#fff
+    style C1B fill:#ff9800,color:#fff
+    style D1 fill:#9c27b0,color:#fff
+    style D1A fill:#9c27b0,color:#fff
+    style D1B fill:#9c27b0,color:#fff
+    style E1 fill:#e91e63,color:#fff
+    style E1A fill:#e91e63,color:#fff
+    style E1B fill:#e91e63,color:#fff
+    style F1 fill:#00bcd4,color:#fff
+    style F1A fill:#00bcd4,color:#fff
+    style F1B fill:#00bcd4,color:#fff
+    style G1 fill:#795548,color:#fff
+    style G1A fill:#795548,color:#fff
+    style G1B fill:#795548,color:#fff
+    style H1 fill:#607d8b,color:#fff
+    style H1A fill:#607d8b,color:#fff
+    style H1B fill:#607d8b,color:#fff
 ```
 
 ---
@@ -517,40 +550,103 @@ Response Contract:
 
 ### Component Library Architecture
 
-```
-@popsystem/ui-components
-  │
-  ├── atoms/
-  │   ├── Button
-  │   ├── Input
-  │   ├── Icon
-  │   ├── Badge
-  │   └── Avatar
-  │
-  ├── molecules/
-  │   ├── Card
-  │   ├── Modal
-  │   ├── Dropdown
-  │   ├── SearchBar
-  │   └── FileUpload
-  │
-  ├── organisms/
-  │   ├── Header
-  │   ├── Sidebar
-  │   ├── AssetGrid
-  │   ├── ProofingPanel
-  │   └── DesignerToolbar
-  │
-  ├── templates/
-  │   ├── DashboardLayout
-  │   ├── EditorLayout
-  │   └── AuthLayout
-  │
-  └── theme/
-      ├── colors.ts
-      ├── typography.ts
-      ├── spacing.ts
-      └── breakpoints.ts
+```mermaid
+graph TD
+    A[@popsystem/ui-components]
+    B[atoms/]
+    C[molecules/]
+    D[organisms/]
+    E[templates/]
+    F[theme/]
+
+    B1[Button]
+    B2[Input]
+    B3[Icon]
+    B4[Badge]
+    B5[Avatar]
+
+    C1[Card]
+    C2[Modal]
+    C3[Dropdown]
+    C4[SearchBar]
+    C5[FileUpload]
+
+    D1[Header]
+    D2[Sidebar]
+    D3[AssetGrid]
+    D4[ProofingPanel]
+    D5[DesignerToolbar]
+
+    E1[DashboardLayout]
+    E2[EditorLayout]
+    E3[AuthLayout]
+
+    F1[colors.ts]
+    F2[typography.ts]
+    F3[spacing.ts]
+    F4[breakpoints.ts]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+
+    B --> B1
+    B --> B2
+    B --> B3
+    B --> B4
+    B --> B5
+
+    C --> C1
+    C --> C2
+    C --> C3
+    C --> C4
+    C --> C5
+
+    D --> D1
+    D --> D2
+    D --> D3
+    D --> D4
+    D --> D5
+
+    E --> E1
+    E --> E2
+    E --> E3
+
+    F --> F1
+    F --> F2
+    F --> F3
+    F --> F4
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#e91e63,color:#fff
+    style F fill:#00bcd4,color:#fff
+    style B1 fill:#4caf50,color:#fff
+    style B2 fill:#4caf50,color:#fff
+    style B3 fill:#4caf50,color:#fff
+    style B4 fill:#4caf50,color:#fff
+    style B5 fill:#4caf50,color:#fff
+    style C1 fill:#ff9800,color:#fff
+    style C2 fill:#ff9800,color:#fff
+    style C3 fill:#ff9800,color:#fff
+    style C4 fill:#ff9800,color:#fff
+    style C5 fill:#ff9800,color:#fff
+    style D1 fill:#9c27b0,color:#fff
+    style D2 fill:#9c27b0,color:#fff
+    style D3 fill:#9c27b0,color:#fff
+    style D4 fill:#9c27b0,color:#fff
+    style D5 fill:#9c27b0,color:#fff
+    style E1 fill:#e91e63,color:#fff
+    style E2 fill:#e91e63,color:#fff
+    style E3 fill:#e91e63,color:#fff
+    style F1 fill:#00bcd4,color:#fff
+    style F2 fill:#00bcd4,color:#fff
+    style F3 fill:#00bcd4,color:#fff
+    style F4 fill:#00bcd4,color:#fff
 ```
 
 ### Component Development Workflow
@@ -572,11 +668,27 @@ Response Contract:
 
 ### Component Library Dependencies
 
-```
-Designer   ─┐
-Proofing   ─┼──→  @popsystem/ui-components  ←──  Design System
-Mobile     ─┤                                      (Figma)
-Marketplace─┘
+```mermaid
+graph LR
+    A[Designer]
+    B[Proofing]
+    C[Mobile]
+    D[Marketplace]
+    E[@popsystem/ui-components]
+    F[Design System<br>Figma]
+
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    F --> E
+
+    style A fill:#ff9800,color:#fff
+    style B fill:#9c27b0,color:#fff
+    style C fill:#00bcd4,color:#fff
+    style D fill:#607d8b,color:#fff
+    style E fill:#2196f3,color:#fff
+    style F fill:#4caf50,color:#fff
 ```
 
 ---

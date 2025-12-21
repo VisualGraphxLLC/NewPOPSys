@@ -12,24 +12,18 @@ This document defines how PopSystem AI agents maintain context, share knowledge,
 
 ### Three-Layer Context Model
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  Layer 1: Immediate Context             │
-│  (Working Memory - Current Task, Recent History)        │
-│                   Token Window: 100K-200K               │
-└─────────────────────────────────────────────────────────┘
-                            ▼
-┌─────────────────────────────────────────────────────────┐
-│                Layer 2: Session Context                 │
-│  (Conversation History, Task Queue, Agent State)        │
-│              Storage: Redis (ephemeral, 24h TTL)        │
-└─────────────────────────────────────────────────────────┘
-                            ▼
-┌─────────────────────────────────────────────────────────┐
-│               Layer 3: Long-Term Memory                 │
-│  (Knowledge Base, Code Corpus, Historical Decisions)    │
-│         Storage: Vector DB + PostgreSQL (persistent)    │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[Layer 1: Immediate Context<br>Working Memory - Current Task, Recent History<br>Token Window: 100K-200K]
+    B[Layer 2: Session Context<br>Conversation History, Task Queue, Agent State<br>Storage: Redis ephemeral, 24h TTL]
+    C[Layer 3: Long-Term Memory<br>Knowledge Base, Code Corpus, Historical Decisions<br>Storage: Vector DB + PostgreSQL persistent]
+
+    A --> B
+    B --> C
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#9c27b0,color:#fff
 ```
 
 ---
@@ -154,54 +148,158 @@ Persistent storage of learnings, decisions, code patterns, and best practices th
 ### Knowledge Base Structure
 
 **1. Code Corpus**
-```
-/knowledge/code/
-  ├── embeddings/
-  │   ├── designer_agent_code.pkl
-  │   ├── proofing_agent_code.pkl
-  │   └── ...
-  ├── patterns/
-  │   ├── canvas_rendering_patterns.md
-  │   ├── pdf_generation_patterns.md
-  │   └── ...
-  └── snippets/
-      ├── common_typescript_utils.ts
-      ├── error_handling_patterns.ts
-      └── ...
+```mermaid
+graph TD
+    A[/knowledge/code/]
+    B[embeddings/]
+    C[patterns/]
+    D[snippets/]
+
+    B1[designer_agent_code.pkl]
+    B2[proofing_agent_code.pkl]
+    B3[...]
+
+    C1[canvas_rendering_patterns.md]
+    C2[pdf_generation_patterns.md]
+    C3[...]
+
+    D1[common_typescript_utils.ts]
+    D2[error_handling_patterns.ts]
+    D3[...]
+
+    A --> B
+    A --> C
+    A --> D
+
+    B --> B1
+    B --> B2
+    B --> B3
+
+    C --> C1
+    C --> C2
+    C --> C3
+
+    D --> D1
+    D --> D2
+    D --> D3
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+    style B1 fill:#ff9800,color:#fff
+    style B2 fill:#ff9800,color:#fff
+    style B3 fill:#ff9800,color:#fff
+    style C1 fill:#9c27b0,color:#fff
+    style C2 fill:#9c27b0,color:#fff
+    style C3 fill:#9c27b0,color:#fff
+    style D1 fill:#e91e63,color:#fff
+    style D2 fill:#e91e63,color:#fff
+    style D3 fill:#e91e63,color:#fff
 ```
 
 **2. Documentation Corpus**
-```
-/knowledge/docs/
-  ├── embeddings/
-  │   ├── api_docs.pkl
-  │   ├── architecture_docs.pkl
-  │   └── ...
-  ├── adrs/  (Architecture Decision Records)
-  │   ├── adr-001-canvas-library-selection.md
-  │   ├── adr-002-pdf-generation-strategy.md
-  │   └── ...
-  ├── runbooks/
-  │   ├── designer/canvas-performance.md
-  │   ├── proofing/websocket-scaling.md
-  │   └── ...
-  └── api_specs/
-      ├── designer_api.yaml
-      ├── proofing_api.yaml
-      └── ...
+```mermaid
+graph TD
+    A[/knowledge/docs/]
+    B[embeddings/]
+    C[adrs/]
+    D[runbooks/]
+    E[api_specs/]
+
+    B1[api_docs.pkl]
+    B2[architecture_docs.pkl]
+    B3[...]
+
+    C1[adr-001-canvas-library-selection.md]
+    C2[adr-002-pdf-generation-strategy.md]
+    C3[...]
+
+    D1[designer/canvas-performance.md]
+    D2[proofing/websocket-scaling.md]
+    D3[...]
+
+    E1[designer_api.yaml]
+    E2[proofing_api.yaml]
+    E3[...]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+
+    B --> B1
+    B --> B2
+    B --> B3
+
+    C --> C1
+    C --> C2
+    C --> C3
+
+    D --> D1
+    D --> D2
+    D --> D3
+
+    E --> E1
+    E --> E2
+    E --> E3
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+    style E fill:#4caf50,color:#fff
+    style B1 fill:#ff9800,color:#fff
+    style B2 fill:#ff9800,color:#fff
+    style B3 fill:#ff9800,color:#fff
+    style C1 fill:#9c27b0,color:#fff
+    style C2 fill:#9c27b0,color:#fff
+    style C3 fill:#9c27b0,color:#fff
+    style D1 fill:#e91e63,color:#fff
+    style D2 fill:#e91e63,color:#fff
+    style D3 fill:#e91e63,color:#fff
+    style E1 fill:#00bcd4,color:#fff
+    style E2 fill:#00bcd4,color:#fff
+    style E3 fill:#00bcd4,color:#fff
 ```
 
 **3. Conversation History** (Anonymized & Summarized)
-```
-/knowledge/conversations/
-  ├── designer_agent/
-  │   ├── 2025-12/
-  │   │   ├── pdf_issues_summary.md
-  │   │   ├── performance_optimization_summary.md
-  │   │   └── ...
-  │   └── embeddings.pkl
-  └── proofing_agent/
-      └── ...
+```mermaid
+graph TD
+    A[/knowledge/conversations/]
+    B[designer_agent/]
+    C[proofing_agent/]
+
+    B1[2025-12/]
+    B2[embeddings.pkl]
+
+    B1A[pdf_issues_summary.md]
+    B1B[performance_optimization_summary.md]
+    B1C[...]
+
+    C1[...]
+
+    A --> B
+    A --> C
+
+    B --> B1
+    B --> B2
+
+    B1 --> B1A
+    B1 --> B1B
+    B1 --> B1C
+
+    C --> C1
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style B1 fill:#ff9800,color:#fff
+    style B2 fill:#ff9800,color:#fff
+    style B1A fill:#9c27b0,color:#fff
+    style B1B fill:#9c27b0,color:#fff
+    style B1C fill:#9c27b0,color:#fff
+    style C1 fill:#9c27b0,color:#fff
 ```
 
 **4. Decision Log**

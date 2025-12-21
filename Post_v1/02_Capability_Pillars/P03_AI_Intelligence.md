@@ -368,15 +368,27 @@ Verification Photo → Preprocessing → Feature Extraction → Comparison to Ma
 
 #### Architecture Pattern
 
-```
-PopSystem Core Application
-        ↓
-AI Gateway Service (API abstraction layer)
-        ↓
-    ┌───────┴───────┬──────────┬──────────┐
-    ↓               ↓          ↓          ↓
-OpenAI API    Google Vision  AWS        Custom
-                              SageMaker  Models
+```mermaid
+graph TD
+    App["PopSystem Core Application"]
+    Gateway["AI Gateway Service<br>API abstraction layer"]
+    OpenAI["OpenAI API"]
+    GoogleVision["Google Vision"]
+    AWS["AWS SageMaker"]
+    Custom["Custom Models"]
+
+    App --> Gateway
+    Gateway --> OpenAI
+    Gateway --> GoogleVision
+    Gateway --> AWS
+    Gateway --> Custom
+
+    style App fill:#2196f3,color:#fff
+    style Gateway fill:#4caf50,color:#fff
+    style OpenAI fill:#ff9800,color:#fff
+    style GoogleVision fill:#ff9800,color:#fff
+    style AWS fill:#ff9800,color:#fff
+    style Custom fill:#9c27b0,color:#fff
 ```
 
 **AI Gateway Responsibilities**:
@@ -454,8 +466,27 @@ AI capabilities require robust data pipelines to prepare, transform, and serve d
 
 #### Data Flow Architecture
 
-```
-Source Systems → Data Lake (Raw) → ETL/Transformation → Feature Store → ML Models → Application
+```mermaid
+graph LR
+    Source["Source Systems"]
+    DataLake["Data Lake<br>Raw"]
+    ETL["ETL/Transformation"]
+    FeatureStore["Feature Store"]
+    MLModels["ML Models"]
+    Application["Application"]
+
+    Source --> DataLake
+    DataLake --> ETL
+    ETL --> FeatureStore
+    FeatureStore --> MLModels
+    MLModels --> Application
+
+    style Source fill:#2196f3,color:#fff
+    style DataLake fill:#4caf50,color:#fff
+    style ETL fill:#ff9800,color:#fff
+    style FeatureStore fill:#9c27b0,color:#fff
+    style MLModels fill:#e91e63,color:#fff
+    style Application fill:#00bcd4,color:#fff
 ```
 
 **Components**:

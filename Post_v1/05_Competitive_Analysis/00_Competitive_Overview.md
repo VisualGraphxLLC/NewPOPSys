@@ -24,26 +24,27 @@ Unlike horizontal platforms (Canva, Zapier, Bynder) that serve general business 
 
 ### Competitive Landscape Matrix
 
-```
-                        VERTICAL SPECIALIZATION
-                                 ▲
-                                 │
-                                 │
-          Print MIS/ERP     PopSystem
-         (Tharstern, EFI)   (CORE)
-                 ◆            ★
-                 │            │
-                 │            │
-    ─────────────┼────────────┼──────────────► HORIZONTAL PLATFORM
-    LOW          │            │          HIGH
-    INTEGRATION  │            │     INTEGRATION
-                 │            │
-           DAM Platforms   Design Tools
-         (Bynder, Canto)  (Canva, Adobe)
-                 ◆            ◆
-                 │            │
-                 ▼            ▼
-                        GENERAL PURPOSE
+```mermaid
+graph TD
+    subgraph "VERTICAL SPECIALIZATION"
+        A[Print MIS/ERP<br>Tharstern, EFI]
+        B[PopSystem<br>CORE ⭐]
+    end
+
+    subgraph "GENERAL PURPOSE"
+        C[DAM Platforms<br>Bynder, Canto]
+        D[Design Tools<br>Canva, Adobe]
+    end
+
+    A -.LOW INTEGRATION.-> C
+    B -.HIGH INTEGRATION.-> D
+    A -.-> B
+    C -.-> D
+
+    style A fill:#795548,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#2196f3,color:#fff
+    style D fill:#ff9800,color:#fff
 ```
 
 ### Key Positioning Insights

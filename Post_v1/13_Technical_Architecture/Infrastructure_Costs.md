@@ -54,20 +54,31 @@ This document provides a comprehensive analysis of NewPOPSys infrastructure cost
 
 ### Cost by Component (Percentage)
 
-```
-Total Monthly Cost: $829.55
+```mermaid
+graph TD
+    Total["Total Monthly Cost<br>$829.55"] --> ThirdParty["Third-Party Services<br>$405 (48.8%)"]
+    Total --> Compute["Compute<br>$180 (21.7%)"]
+    Total --> Database["Database<br>$161 (19.4%)"]
+    Total --> Network["Network<br>$43 (5.2%)"]
+    Total --> Monitoring["Monitoring<br>$30 (3.6%)"]
+    Total --> Storage["Storage<br>$7 (0.8%)"]
+    Total --> Other["Other<br>$4 (0.5%)"]
 
-Third-Party Services:    $405 (48.8%)  ████████████████████
-├─ AI APIs:              $225          ███████████
-├─ Payment Processing:   $170          ████████
-└─ Email:                $10           █
+    ThirdParty --> AI["AI APIs<br>$225"]
+    ThirdParty --> Payment["Payment Processing<br>$170"]
+    ThirdParty --> Email["Email<br>$10"]
 
-Compute:                 $180 (21.7%)  ██████████
-Database:                $161 (19.4%)  █████████
-Network:                 $43  (5.2%)   ██
-Monitoring:              $30  (3.6%)   █
-Storage:                 $7   (0.8%)   █
-Other:                   $4   (0.5%)   █
+    style Total fill:#2196f3,color:#fff
+    style ThirdParty fill:#ff9800,color:#fff
+    style Compute fill:#4caf50,color:#fff
+    style Database fill:#9c27b0,color:#fff
+    style Network fill:#f44336,color:#fff
+    style Monitoring fill:#00bcd4,color:#fff
+    style Storage fill:#ffc107,color:#fff
+    style Other fill:#607d8b,color:#fff
+    style AI fill:#ff5722,color:#fff
+    style Payment fill:#795548,color:#fff
+    style Email fill:#3f51b5,color:#fff
 ```
 
 ---
@@ -337,35 +348,74 @@ Other:                   $4   (0.5%)   █
 
 ### Cost Composition Evolution
 
+**v1 Cost Breakdown ($830/month)**
+```mermaid
+graph TD
+    v1["v1 Total<br>$830/month"] --> v1_TP["Third-Party<br>48.8%"]
+    v1 --> v1_C["Compute<br>21.7%"]
+    v1 --> v1_DB["Database<br>19.4%"]
+    v1 --> v1_N["Network<br>5.2%"]
+    v1 --> v1_O["Other<br>4.9%"]
+
+    style v1 fill:#2196f3,color:#fff
+    style v1_TP fill:#ff9800,color:#fff
+    style v1_C fill:#4caf50,color:#fff
+    style v1_DB fill:#9c27b0,color:#fff
+    style v1_N fill:#f44336,color:#fff
+    style v1_O fill:#607d8b,color:#fff
 ```
-v1 Cost Breakdown ($830/month)
-Third-Party: 48.8% ████████████████████
-Compute:     21.7% ██████████
-Database:    19.4% █████████
-Network:      5.2% ██
-Other:        4.9% ██
 
-v2 Cost Breakdown ($4,476/month)
-Third-Party: 65.7% ███████████████████████████
-Compute:     13.7% █████
-Database:    13.2% █████
-CDN:          4.0% █
-Other:        3.4% █
+**v2 Cost Breakdown ($4,476/month)**
+```mermaid
+graph TD
+    v2["v2 Total<br>$4,476/month"] --> v2_TP["Third-Party<br>65.7%"]
+    v2 --> v2_C["Compute<br>13.7%"]
+    v2 --> v2_DB["Database<br>13.2%"]
+    v2 --> v2_CDN["CDN<br>4.0%"]
+    v2 --> v2_O["Other<br>3.4%"]
 
-v3 Cost Breakdown ($34,683/month)
-Third-Party: 59.8% ███████████████████████
-Compute:     18.9% ███████
-Database:    10.1% ████
-CDN:         13.7% █████
-Other:        7.5% ██
+    style v2 fill:#2196f3,color:#fff
+    style v2_TP fill:#ff9800,color:#fff
+    style v2_C fill:#4caf50,color:#fff
+    style v2_DB fill:#9c27b0,color:#fff
+    style v2_CDN fill:#00bcd4,color:#fff
+    style v2_O fill:#607d8b,color:#fff
+```
 
-v4 Cost Breakdown ($310,031/month)
-Third-Party: 66.7% ██████████████████████████
-Compute:     10.4% ████
-Database:     3.7% █
-CDN:         12.9% █████
-Network:      1.1% █
-Other:        5.2% ██
+**v3 Cost Breakdown ($34,683/month)**
+```mermaid
+graph TD
+    v3["v3 Total<br>$34,683/month"] --> v3_TP["Third-Party<br>59.8%"]
+    v3 --> v3_C["Compute<br>18.9%"]
+    v3 --> v3_DB["Database<br>10.1%"]
+    v3 --> v3_CDN["CDN<br>13.7%"]
+    v3 --> v3_O["Other<br>7.5%"]
+
+    style v3 fill:#2196f3,color:#fff
+    style v3_TP fill:#ff9800,color:#fff
+    style v3_C fill:#4caf50,color:#fff
+    style v3_DB fill:#9c27b0,color:#fff
+    style v3_CDN fill:#00bcd4,color:#fff
+    style v3_O fill:#607d8b,color:#fff
+```
+
+**v4 Cost Breakdown ($310,031/month)**
+```mermaid
+graph TD
+    v4["v4 Total<br>$310,031/month"] --> v4_TP["Third-Party<br>66.7%"]
+    v4 --> v4_C["Compute<br>10.4%"]
+    v4 --> v4_DB["Database<br>3.7%"]
+    v4 --> v4_CDN["CDN<br>12.9%"]
+    v4 --> v4_N["Network<br>1.1%"]
+    v4 --> v4_O["Other<br>5.2%"]
+
+    style v4 fill:#2196f3,color:#fff
+    style v4_TP fill:#ff9800,color:#fff
+    style v4_C fill:#4caf50,color:#fff
+    style v4_DB fill:#9c27b0,color:#fff
+    style v4_CDN fill:#00bcd4,color:#fff
+    style v4_N fill:#f44336,color:#fff
+    style v4_O fill:#607d8b,color:#fff
 ```
 
 **Key Insight:** Third-party services (AI APIs, payment processing) dominate costs across all phases, ranging from 48-67% of total infrastructure spend.
@@ -429,25 +479,17 @@ Other:        5.2% ██
 
 **Recommended Approach:**
 
-```
-Primary: AWS (US-East-1, EU-West-1)
-- Mature ecosystem
-- Best managed services (RDS, ElastiCache, MSK)
-- Strong ML services (SageMaker)
+```mermaid
+graph TD
+    Primary["Primary: AWS<br>(US-East-1, EU-West-1)<br>- Mature ecosystem<br>- Best managed services<br>- Strong ML services"]
+    Secondary["Secondary: GCP<br>(asia-southeast1)<br>- Cheaper egress for APAC<br>- Better Kubernetes (GKE)<br>- TensorFlow ecosystem"]
+    CDN["CDN: Cloudflare<br>- Best global performance<br>- DDoS protection included<br>- Edge computing"]
+    Payment["Payment: Stripe<br>(all regions)<br>- Global coverage<br>- Best developer experience"]
 
-Secondary: GCP (asia-southeast1)
-- Cheaper egress for APAC
-- Better Kubernetes (GKE)
-- TensorFlow ecosystem
-
-CDN: Cloudflare
-- Best global performance
-- DDoS protection included
-- Edge computing (Workers)
-
-Payment: Stripe (all regions)
-- Global coverage
-- Best developer experience
+    style Primary fill:#ff9800,color:#fff
+    style Secondary fill:#4caf50,color:#fff
+    style CDN fill:#2196f3,color:#fff
+    style Payment fill:#9c27b0,color:#fff
 ```
 
 **Cost Comparison (v4 scale):**
@@ -549,27 +591,32 @@ Effective hourly:   $0.180/instance (vs $0.340 on-demand)
 
 ### Cost Optimization Roadmap
 
-```
-Month 1-2: Quick Wins
-├─ Right-size instances
-├─ S3 lifecycle policies
-├─ Clean up unused resources
-└─ Expected savings: $500/month
+```mermaid
+graph TD
+    Roadmap["Cost Optimization<br>Roadmap"] --> Month1["Month 1-2: Quick Wins<br>Expected savings: $500/month"]
+    Roadmap --> Month3["Month 3-6: Medium-Term<br>Expected savings: $5,000/month"]
+    Roadmap --> Month6["Month 6-12: Long-Term<br>Expected savings: $15,000/month"]
 
-Month 3-6: Medium-Term
-├─ Purchase RIs for baseline capacity
-├─ Implement caching (Redis)
-├─ CDN for all media
-├─ Spot instances for workers
-└─ Expected savings: $5,000/month
+    Month1 --> M1_1["Right-size instances"]
+    Month1 --> M1_2["S3 lifecycle policies"]
+    Month1 --> M1_3["Clean up unused resources"]
 
-Month 6-12: Long-Term
-├─ Database optimization
-├─ Custom ML models
-├─ Advanced caching strategies
-└─ Expected savings: $15,000/month
+    Month3 --> M3_1["Purchase RIs for baseline capacity"]
+    Month3 --> M3_2["Implement caching (Redis)"]
+    Month3 --> M3_3["CDN for all media"]
+    Month3 --> M3_4["Spot instances for workers"]
 
-Total Annual Savings: $150,000+
+    Month6 --> M6_1["Database optimization"]
+    Month6 --> M6_2["Custom ML models"]
+    Month6 --> M6_3["Advanced caching strategies"]
+
+    Roadmap --> Total["Total Annual Savings<br>$150,000+"]
+
+    style Roadmap fill:#2196f3,color:#fff
+    style Month1 fill:#4caf50,color:#fff
+    style Month3 fill:#ff9800,color:#fff
+    style Month6 fill:#f44336,color:#fff
+    style Total fill:#9c27b0,color:#fff
 ```
 
 ---
@@ -580,38 +627,42 @@ Total Annual Savings: $150,000+
 
 #### Option 1: Self-Hosted RabbitMQ
 
-```
-Infrastructure:
-- 3x EC2 t3.medium (HA cluster):  $90/month
-- EBS storage (300GB):            $35/month
-- Network traffic:                $20/month
-- Backups:                        $15/month
-                                  ───────────
-Total:                            $160/month
+```mermaid
+graph TD
+    SelfHosted["Self-Hosted RabbitMQ<br>Total: $777/month"] --> Infra["Infrastructure: $160/month"]
+    SelfHosted --> Ops["Operational Costs: $617/month"]
 
-Operational Costs:
-- DevOps time (10 hrs/month):     $500
-- Monitoring setup:               $50/month
-- Upgrades/patches:               $200/quarter
-                                  ───────────
-Total with ops:                   $777/month
+    Infra --> I1["3x EC2 t3.medium (HA cluster)<br>$90/month"]
+    Infra --> I2["EBS storage (300GB)<br>$35/month"]
+    Infra --> I3["Network traffic<br>$20/month"]
+    Infra --> I4["Backups<br>$15/month"]
+
+    Ops --> O1["DevOps time (10 hrs/month)<br>$500"]
+    Ops --> O2["Monitoring setup<br>$50/month"]
+    Ops --> O3["Upgrades/patches<br>$200/quarter"]
+
+    style SelfHosted fill:#2196f3,color:#fff
+    style Infra fill:#4caf50,color:#fff
+    style Ops fill:#ff9800,color:#fff
 ```
 
 #### Option 2: Amazon MSK (Managed Kafka)
 
-```
-Infrastructure:
-- 3x kafka.m5.large brokers:      $600/month
-- Storage (500GB):                $115/month
-- Network traffic:                $20/month
-                                  ───────────
-Total:                            $735/month
+```mermaid
+graph TD
+    Managed["Amazon MSK<br>Total: $765/month"] --> Infra["Infrastructure: $735/month"]
+    Managed --> Ops["Operational Costs: $30/month"]
 
-Operational Costs:
-- Managed service (included)      $0
-- Monitoring (CloudWatch):        $30/month
-                                  ───────────
-Total:                            $765/month
+    Infra --> I1["3x kafka.m5.large brokers<br>$600/month"]
+    Infra --> I2["Storage (500GB)<br>$115/month"]
+    Infra --> I3["Network traffic<br>$20/month"]
+
+    Ops --> O1["Managed service (included)<br>$0"]
+    Ops --> O2["Monitoring (CloudWatch)<br>$30/month"]
+
+    style Managed fill:#2196f3,color:#fff
+    style Infra fill:#4caf50,color:#fff
+    style Ops fill:#9c27b0,color:#fff
 ```
 
 **Analysis:**
@@ -631,41 +682,45 @@ Total:                            $765/month
 
 #### Option 1: Self-Hosted on EC2
 
-```
-Infrastructure (Primary + 2 Replicas):
-- 3x EC2 m5.2xlarge:              $1,110/month
-- EBS gp3 (3TB):                  $345/month
-- Snapshot backups:               $200/month
-- Network:                        $100/month
-                                  ───────────
-Total:                            $1,755/month
+```mermaid
+graph TD
+    SelfHostedDB["Self-Hosted PostgreSQL<br>Total: $6,688/month"] --> InfraDB["Infrastructure: $1,755/month"]
+    SelfHostedDB --> OpsDB["Operational Costs: $4,933/month"]
 
-Operational Costs:
-- DBA time (40 hrs/month):        $4,000
-- Backup management:              $500
-- Security patches:               $400/quarter
-- Monitoring setup:               $200/month
-                                  ───────────
-Total with ops:                   $6,688/month
+    InfraDB --> I1["3x EC2 m5.2xlarge<br>$1,110/month"]
+    InfraDB --> I2["EBS gp3 (3TB)<br>$345/month"]
+    InfraDB --> I3["Snapshot backups<br>$200/month"]
+    InfraDB --> I4["Network<br>$100/month"]
+
+    OpsDB --> O1["DBA time (40 hrs/month)<br>$4,000"]
+    OpsDB --> O2["Backup management<br>$500"]
+    OpsDB --> O3["Security patches<br>$400/quarter"]
+    OpsDB --> O4["Monitoring setup<br>$200/month"]
+
+    style SelfHostedDB fill:#2196f3,color:#fff
+    style InfraDB fill:#4caf50,color:#fff
+    style OpsDB fill:#ff9800,color:#fff
 ```
 
 #### Option 2: Amazon RDS PostgreSQL
 
-```
-Infrastructure:
-- 1x db.m5.2xlarge (Multi-AZ):    $1,110/month
-- 2x read replicas:               $1,110/month
-- Storage (3TB gp3):              $345/month
-- Automated backups:              $195/month
-                                  ───────────
-Total:                            $2,760/month
+```mermaid
+graph TD
+    RDS["Amazon RDS PostgreSQL<br>Total: $3,310/month"] --> InfraRDS["Infrastructure: $2,760/month"]
+    RDS --> OpsRDS["Operational Costs: $550/month"]
 
-Operational Costs:
-- Managed (included):             $0
-- Monitoring (CloudWatch):        $50/month
-- DBA oversight (5 hrs/month):    $500
-                                  ───────────
-Total with ops:                   $3,310/month
+    InfraRDS --> I1["1x db.m5.2xlarge (Multi-AZ)<br>$1,110/month"]
+    InfraRDS --> I2["2x read replicas<br>$1,110/month"]
+    InfraRDS --> I3["Storage (3TB gp3)<br>$345/month"]
+    InfraRDS --> I4["Automated backups<br>$195/month"]
+
+    OpsRDS --> O1["Managed (included)<br>$0"]
+    OpsRDS --> O2["Monitoring (CloudWatch)<br>$50/month"]
+    OpsRDS --> O3["DBA oversight (5 hrs/month)<br>$500"]
+
+    style RDS fill:#2196f3,color:#fff
+    style InfraRDS fill:#4caf50,color:#fff
+    style OpsRDS fill:#9c27b0,color:#fff
 ```
 
 **Analysis:**
@@ -779,41 +834,42 @@ Total with ops:                   $3,310/month
 
 ### 5-Year TCO Projection
 
-```
-Year 1 (v1 → v2 transition)
-Infrastructure:     $25,000
-Third-party:        $30,000
-Personnel (2 devs): $200,000
-Total:              $255,000
+```mermaid
+graph TD
+    TCO["5-Year Total<br>$11,265,000"] --> Y1["Year 1 (v1 → v2)<br>$255,000"]
+    TCO --> Y2["Year 2 (v2 stable)<br>$544,000"]
+    TCO --> Y3["Year 3 (v2 → v3)<br>$1,350,000"]
+    TCO --> Y4["Year 4 (v3 stable)<br>$2,116,000"]
+    TCO --> Y5["Year 5 (v3 → v4)<br>$7,000,000"]
 
-Year 2 (v2 stable)
-Infrastructure:     $54,000
-Third-party:        $90,000
-Personnel (4 devs): $400,000
-Total:              $544,000
+    Y1 --> Y1_I["Infrastructure: $25,000"]
+    Y1 --> Y1_T["Third-party: $30,000"]
+    Y1 --> Y1_P["Personnel (2 devs): $200,000"]
 
-Year 3 (v2 → v3 transition)
-Infrastructure:     $200,000
-Third-party:        $250,000
-Personnel (8 devs): $800,000
-Migration costs:    $100,000
-Total:              $1,350,000
+    Y2 --> Y2_I["Infrastructure: $54,000"]
+    Y2 --> Y2_T["Third-party: $90,000"]
+    Y2 --> Y2_P["Personnel (4 devs): $400,000"]
 
-Year 4 (v3 stable)
-Infrastructure:     $416,000
-Third-party:        $500,000
-Personnel (12 devs): $1,200,000
-Total:              $2,116,000
+    Y3 --> Y3_I["Infrastructure: $200,000"]
+    Y3 --> Y3_T["Third-party: $250,000"]
+    Y3 --> Y3_P["Personnel (8 devs): $800,000"]
+    Y3 --> Y3_M["Migration: $100,000"]
 
-Year 5 (v3 → v4 transition)
-Infrastructure:     $2,000,000
-Third-party:        $2,500,000
-Personnel (20 devs): $2,000,000
-Migration costs:    $500,000
-Total:              $7,000,000
+    Y4 --> Y4_I["Infrastructure: $416,000"]
+    Y4 --> Y4_T["Third-party: $500,000"]
+    Y4 --> Y4_P["Personnel (12 devs): $1,200,000"]
 
-───────────────────────────────
-5-Year Total:       $11,265,000
+    Y5 --> Y5_I["Infrastructure: $2,000,000"]
+    Y5 --> Y5_T["Third-party: $2,500,000"]
+    Y5 --> Y5_P["Personnel (20 devs): $2,000,000"]
+    Y5 --> Y5_M["Migration: $500,000"]
+
+    style TCO fill:#2196f3,color:#fff
+    style Y1 fill:#4caf50,color:#fff
+    style Y2 fill:#8bc34a,color:#fff
+    style Y3 fill:#ff9800,color:#fff
+    style Y4 fill:#ff5722,color:#fff
+    style Y5 fill:#f44336,color:#fff
 ```
 
 ### TCO Breakdown by Category

@@ -414,17 +414,32 @@ The Brand-First SaaS Model represents a fundamental shift in PopSystem's go-to-m
 #### Multi-Brand/Division Support
 
 **Enterprise Hierarchy:**
-```
-Enterprise Organization
-├── Division A (Apparel)
-│   ├── Brand 1
-│   ├── Brand 2
-│   └── Brand 3
-├── Division B (Home Goods)
-│   ├── Brand 4
-│   └── Brand 5
-└── Division C (Promotional)
-    └── Brand 6
+```mermaid
+graph TD
+    A[Enterprise Organization]
+    A --> B[Division A<br>Apparel]
+    A --> C[Division B<br>Home Goods]
+    A --> D[Division C<br>Promotional]
+
+    B --> B1[Brand 1]
+    B --> B2[Brand 2]
+    B --> B3[Brand 3]
+
+    C --> C1[Brand 4]
+    C --> C2[Brand 5]
+
+    D --> D1[Brand 6]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style B2 fill:#81c784,color:#fff
+    style B3 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style C2 fill:#ffb74d,color:#fff
+    style D1 fill:#ba68c8,color:#fff
 ```
 
 **Capabilities:**
@@ -515,23 +530,45 @@ Enterprise Organization
 #### Catalog Organization
 
 **Structure:**
-```
-Product Catalog
-├── Collections
-│   ├── Spring 2026 Line
-│   ├── Core Basics
-│   └── Limited Edition
-├── Categories
-│   ├── Apparel
-│   │   ├── T-Shirts
-│   │   ├── Hoodies
-│   │   └── Hats
-│   ├── Accessories
-│   └── Home Goods
-└── Tags
-    ├── Eco-Friendly
-    ├── Premium
-    └── Quick-Turn
+```mermaid
+graph TD
+    A[Product Catalog]
+    A --> B[Collections]
+    A --> C[Categories]
+    A --> D[Tags]
+
+    B --> B1[Spring 2026 Line]
+    B --> B2[Core Basics]
+    B --> B3[Limited Edition]
+
+    C --> C1[Apparel]
+    C --> C2[Accessories]
+    C --> C3[Home Goods]
+
+    C1 --> C1A[T-Shirts]
+    C1 --> C1B[Hoodies]
+    C1 --> C1C[Hats]
+
+    D --> D1[Eco-Friendly]
+    D --> D2[Premium]
+    D --> D3[Quick-Turn]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style B2 fill:#81c784,color:#fff
+    style B3 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style C2 fill:#ffb74d,color:#fff
+    style C3 fill:#ffb74d,color:#fff
+    style C1A fill:#ffcc80,color:#fff
+    style C1B fill:#ffcc80,color:#fff
+    style C1C fill:#ffcc80,color:#fff
+    style D1 fill:#ba68c8,color:#fff
+    style D2 fill:#ba68c8,color:#fff
+    style D3 fill:#ba68c8,color:#fff
 ```
 
 **Capabilities:**

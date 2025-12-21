@@ -6,74 +6,72 @@ This document defines the data architecture and infrastructure required to suppo
 
 ## Architecture Diagram
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        DATA SOURCES                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐             │
-│  │ Application  │  │   Database   │  │  3rd Party   │             │
-│  │   Events     │  │   (Postgres) │  │   Systems    │             │
-│  │  (Frontend   │  │              │  │  (Stripe,    │             │
-│  │   Backend)   │  │              │  │   Segment)   │             │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘             │
-│         │                  │                  │                     │
-└─────────┼──────────────────┼──────────────────┼─────────────────────┘
-          │                  │                  │
-          ▼                  ▼                  ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                     EVENT BUS / INGESTION                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│         ┌────────────────────────────────────┐                     │
-│         │      Event Streaming Platform      │                     │
-│         │    (Kafka / AWS Kinesis / Pub/Sub) │                     │
-│         └─────────────┬──────────────────────┘                     │
-│                       │                                             │
-│              ┌────────┴────────┐                                   │
-│              ▼                 ▼                                   │
-│      ┌──────────────┐  ┌──────────────┐                           │
-│      │  Real-time   │  │    Batch     │                           │
-│      │ Processing   │  │  Processing  │                           │
-│      │   (Stream)   │  │    (ETL)     │                           │
-│      └──────┬───────┘  └──────┬───────┘                           │
-│             │                  │                                   │
-└─────────────┼──────────────────┼───────────────────────────────────┘
-              │                  │
-              ▼                  ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                      DATA WAREHOUSE                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │               Analytics Database                             │  │
-│  │         (Snowflake / BigQuery / Redshift)                    │  │
-│  │                                                              │  │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │  │
-│  │  │    Raw      │  │ Transformed │  │   Mart      │         │  │
-│  │  │    Data     │→ │    Data     │→ │   Data      │         │  │
-│  │  │  (Bronze)   │  │  (Silver)   │  │  (Gold)     │         │  │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘         │  │
-│  │                                                              │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                                                                     │
-└─────────────────────────────┬───────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    ANALYTICS & BI LAYER                             │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐             │
-│  │  BI Tools    │  │  Data APIs   │  │  ML Models   │             │
-│  │ (Metabase,   │  │  (GraphQL,   │  │ (Predictions,│             │
-│  │  Looker)     │  │   REST)      │  │  Insights)   │             │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘             │
-│         │                  │                  │                     │
-└─────────┼──────────────────┼──────────────────┼─────────────────────┘
-          │                  │                  │
-          ▼                  ▼                  ▼
-     Dashboards         Applications        AI Features
+```mermaid
+graph TD
+    A["DATA SOURCES"]
+    B["Application Events<br>Frontend Backend"]
+    C["Database<br>Postgres"]
+    D["3rd Party Systems<br>Stripe, Segment"]
+    E["EVENT BUS / INGESTION"]
+    F["Event Streaming Platform<br>Kafka / AWS Kinesis / Pub/Sub"]
+    G["Real-time Processing<br>Stream"]
+    H["Batch Processing<br>ETL"]
+    I["DATA WAREHOUSE"]
+    J["Analytics Database<br>Snowflake / BigQuery / Redshift"]
+    K["Raw Data<br>Bronze"]
+    L["Transformed Data<br>Silver"]
+    M["Mart Data<br>Gold"]
+    N["ANALYTICS & BI LAYER"]
+    O["BI Tools<br>Metabase, Looker"]
+    P["Data APIs<br>GraphQL, REST"]
+    Q["ML Models<br>Predictions, Insights"]
+    R["Dashboards"]
+    S["Applications"]
+    T["AI Features"]
+
+    A --> B
+    A --> C
+    A --> D
+    B --> E
+    C --> E
+    D --> E
+    E --> F
+    F --> G
+    F --> H
+    G --> I
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    L --> M
+    J --> N
+    N --> O
+    N --> P
+    N --> Q
+    O --> R
+    P --> S
+    Q --> T
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#9c27b0,color:#fff
+    style I fill:#f44336,color:#fff
+    style J fill:#f44336,color:#fff
+    style K fill:#e91e63,color:#fff
+    style L fill:#e91e63,color:#fff
+    style M fill:#e91e63,color:#fff
+    style N fill:#3f51b5,color:#fff
+    style O fill:#00bcd4,color:#fff
+    style P fill:#00bcd4,color:#fff
+    style Q fill:#00bcd4,color:#fff
+    style R fill:#009688,color:#fff
+    style S fill:#009688,color:#fff
+    style T fill:#009688,color:#fff
 ```
 
 ---

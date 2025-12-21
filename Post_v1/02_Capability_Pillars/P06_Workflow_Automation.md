@@ -230,44 +230,49 @@ Rather than building every integration from scratch, our phased approach leverag
 
 ### High-Level System Design
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                          Event Sources                              │
-├─────────────────────────────────────────────────────────────────────┤
-│  Orders  │  Payments  │  Inventory  │  Users  │  Webhooks  │  Cron  │
-└────┬──────────┬────────────┬──────────┬─────────────┬─────────┬─────┘
-     │          │            │          │             │         │
-     └──────────┴────────────┴──────────┴─────────────┴─────────┘
-                              │
-                              ▼
-                    ┌─────────────────┐
-                    │   Event Bus     │◄────── External Events
-                    │  (Message Queue)│
-                    └────────┬────────┘
-                             │
-                    ┌────────┴────────┐
-                    │                 │
-                    ▼                 ▼
-           ┌────────────────┐  ┌──────────────┐
-           │ Rules Engine   │  │  Workflow    │
-           │ (Conditions)   │  │  Orchestrator│
-           └────────┬───────┘  └──────┬───────┘
-                    │                 │
-                    └────────┬────────┘
-                             │
-                    ┌────────┴─────────┐
-                    │ Action Executors │
-                    └────────┬─────────┘
-                             │
-         ┌───────────────────┼───────────────────┐
-         │                   │                   │
-         ▼                   ▼                   ▼
-    ┌─────────┐      ┌─────────────┐     ┌────────────┐
-    │Internal │      │  External   │     │   iPaaS    │
-    │Actions  │      │  APIs       │     │ Platforms  │
-    │(Email,  │      │(Salesforce, │     │ (Zapier,   │
-    │ SMS,DB) │      │ SAP, etc.)  │     │  Make)     │
-    └─────────┘      └─────────────┘     └────────────┘
+```mermaid
+graph TD
+    ORDERS["Orders"]
+    PAYMENTS["Payments"]
+    INVENTORY["Inventory"]
+    USERS["Users"]
+    WEBHOOKS["Webhooks"]
+    CRON["Cron"]
+    EXTERNAL_EVENTS["External Events"]
+
+    BUS["Event Bus<br>Message Queue"]
+    RULES["Rules Engine<br>Conditions"]
+    WORKFLOW["Workflow<br>Orchestrator"]
+    EXECUTORS["Action Executors"]
+
+    INTERNAL["Internal<br>Actions<br>Email, SMS, DB"]
+    EXTERNAL_API["External<br>APIs<br>Salesforce, SAP"]
+    IPAAS["iPaaS<br>Platforms<br>Zapier, Make"]
+
+    ORDERS --> BUS
+    PAYMENTS --> BUS
+    INVENTORY --> BUS
+    USERS --> BUS
+    WEBHOOKS --> BUS
+    CRON --> BUS
+    EXTERNAL_EVENTS --> BUS
+
+    BUS --> RULES
+    BUS --> WORKFLOW
+    RULES --> EXECUTORS
+    WORKFLOW --> EXECUTORS
+
+    EXECUTORS --> INTERNAL
+    EXECUTORS --> EXTERNAL_API
+    EXECUTORS --> IPAAS
+
+    style BUS fill:#2196f3,color:#fff
+    style RULES fill:#2196f3,color:#fff
+    style WORKFLOW fill:#2196f3,color:#fff
+    style EXECUTORS fill:#2196f3,color:#fff
+    style INTERNAL fill:#4caf50,color:#fff
+    style EXTERNAL_API fill:#4caf50,color:#fff
+    style IPAAS fill:#4caf50,color:#fff
 ```
 
 ### Component Architecture

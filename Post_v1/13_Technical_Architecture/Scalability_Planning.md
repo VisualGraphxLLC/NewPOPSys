@@ -82,20 +82,27 @@ graph TD
 
 **Components Using Horizontal Scaling:**
 
-```
-┌─────────────────────────────────────────────────┐
-│              Load Balancer (ALB)                │
-└────┬────────┬────────┬────────┬────────┬────────┘
-     │        │        │        │        │
-  ┌──v──┐  ┌──v──┐  ┌──v──┐  ┌──v──┐  ┌──v──┐
-  │App-1│  │App-2│  │App-3│  │App-4│  │App-N│
-  └──┬──┘  └──┬──┘  └──┬──┘  └──┬──┘  └──┬──┘
-     └────────┴────────┴────────┴────────┘
-                      │
-              [Shared Resources]
-              - PostgreSQL
-              - Redis
-              - S3
+```mermaid
+graph TD
+    LB["Load Balancer (ALB)"] --> App1["App-1"]
+    LB --> App2["App-2"]
+    LB --> App3["App-3"]
+    LB --> App4["App-4"]
+    LB --> AppN["App-N"]
+
+    App1 --> Shared["Shared Resources<br>- PostgreSQL<br>- Redis<br>- S3"]
+    App2 --> Shared
+    App3 --> Shared
+    App4 --> Shared
+    AppN --> Shared
+
+    style LB fill:#2196f3,color:#fff
+    style App1 fill:#4caf50,color:#fff
+    style App2 fill:#4caf50,color:#fff
+    style App3 fill:#4caf50,color:#fff
+    style App4 fill:#4caf50,color:#fff
+    style AppN fill:#4caf50,color:#fff
+    style Shared fill:#ff9800,color:#fff
 ```
 
 **Scaling Metrics:**
@@ -185,20 +192,22 @@ reserve_pool_size = 5
 
 **Read Replica Architecture**
 
-```
-┌──────────────────┐
-│  Primary (Write) │ ←── All writes (INSERT, UPDATE, DELETE)
-└────────┬─────────┘
-         │ Async replication (streaming)
-         ├──────────────┬──────────────┐
-         │              │              │
-    ┌────v────┐    ┌────v────┐    ┌────v────┐
-    │Replica-1│    │Replica-2│    │Replica-3│
-    │ (Read)  │    │ (Read)  │    │ (Read)  │
-    └─────────┘    └─────────┘    └─────────┘
-         ↑              ↑              ↑
-         └──────────────┴──────────────┘
-              All reads (SELECT)
+```mermaid
+graph TD
+    Primary["Primary (Write)<br>All writes (INSERT, UPDATE, DELETE)"]
+    Primary -->|Async replication<br>(streaming)| Replica1["Replica-1<br>(Read)"]
+    Primary -->|Async replication<br>(streaming)| Replica2["Replica-2<br>(Read)"]
+    Primary -->|Async replication<br>(streaming)| Replica3["Replica-3<br>(Read)"]
+
+    Reads["All reads (SELECT)"] --> Replica1
+    Reads --> Replica2
+    Reads --> Replica3
+
+    style Primary fill:#2196f3,color:#fff
+    style Replica1 fill:#4caf50,color:#fff
+    style Replica2 fill:#4caf50,color:#fff
+    style Replica3 fill:#4caf50,color:#fff
+    style Reads fill:#ff9800,color:#fff
 ```
 
 **Read Routing Strategy:**
@@ -266,14 +275,17 @@ async getCampaign(id: string) {
 
 **Tenant-Based Sharding**
 
-```
-Shard 1 (Tenants A-F)     Shard 2 (Tenants G-M)     Shard 3 (Tenants N-Z)
-┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-│ Primary          │      │ Primary          │      │ Primary          │
-│ + 2 Replicas     │      │ + 2 Replicas     │      │ + 2 Replicas     │
-└──────────────────┘      └──────────────────┘      └──────────────────┘
-   5K writes/sec             5K writes/sec             5K writes/sec
-   = 15K total writes/sec across all shards
+```mermaid
+graph TD
+    Total["Total Capacity<br>15K writes/sec across all shards"]
+    Total --> Shard1["Shard 1<br>Tenants A-F<br>Primary + 2 Replicas<br>5K writes/sec"]
+    Total --> Shard2["Shard 2<br>Tenants G-M<br>Primary + 2 Replicas<br>5K writes/sec"]
+    Total --> Shard3["Shard 3<br>Tenants N-Z<br>Primary + 2 Replicas<br>5K writes/sec"]
+
+    style Total fill:#2196f3,color:#fff
+    style Shard1 fill:#4caf50,color:#fff
+    style Shard2 fill:#ff9800,color:#fff
+    style Shard3 fill:#9c27b0,color:#fff
 ```
 
 **Sharding Strategy:**
@@ -322,18 +334,27 @@ SELECT COUNT(*) FROM campaigns;
 
 **Multi-Region Architecture**
 
-```
-                    Global Load Balancer
-                         (Route53)
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-  [US-East Region]   [EU-West Region]    [APAC Region]
-        │                   │                   │
-    [Primary DB]       [Read Replica]      [Read Replica]
-        │                   ↑                   ↑
-        └───────────────────┴───────────────────┘
-              Async replication (cross-region)
+```mermaid
+graph TD
+    GLB["Global Load Balancer<br>(Route53)"]
+    GLB --> USEast["US-East Region"]
+    GLB --> EUWest["EU-West Region"]
+    GLB --> APAC["APAC Region"]
+
+    USEast --> PrimaryDB["Primary DB"]
+    EUWest --> EUReplicaDB["Read Replica"]
+    APAC --> APACReplicaDB["Read Replica"]
+
+    PrimaryDB -->|Async replication<br>(cross-region)| EUReplicaDB
+    PrimaryDB -->|Async replication<br>(cross-region)| APACReplicaDB
+
+    style GLB fill:#2196f3,color:#fff
+    style USEast fill:#4caf50,color:#fff
+    style EUWest fill:#ff9800,color:#fff
+    style APAC fill:#9c27b0,color:#fff
+    style PrimaryDB fill:#f44336,color:#fff
+    style EUReplicaDB fill:#00bcd4,color:#fff
+    style APACReplicaDB fill:#00bcd4,color:#fff
 ```
 
 **Latency Improvement:**
@@ -352,21 +373,20 @@ SELECT COUNT(*) FROM campaigns;
 
 **Architecture:**
 
-```
-User Request for Image
-    │
-    v
-[CloudFront CDN]
-    │
-    ├─ Cache HIT (99% of requests) → Return immediately (10-50ms)
-    │
-    └─ Cache MISS (1% of requests)
-           │
-           v
-       [S3 Origin]
-           │
-           v
-       Return image + cache at edge (200-500ms)
+```mermaid
+graph TD
+    User["User Request for Image"] --> CDN["CloudFront CDN"]
+    CDN --> Hit["Cache HIT (99%)<br>Return immediately<br>(10-50ms)"]
+    CDN --> Miss["Cache MISS (1%)"]
+    Miss --> S3["S3 Origin"]
+    S3 --> Return["Return image +<br>cache at edge<br>(200-500ms)"]
+
+    style User fill:#2196f3,color:#fff
+    style CDN fill:#4caf50,color:#fff
+    style Hit fill:#8bc34a,color:#fff
+    style Miss fill:#ff9800,color:#fff
+    style S3 fill:#ff5722,color:#fff
+    style Return fill:#9c27b0,color:#fff
 ```
 
 **CDN Configuration:**
@@ -719,31 +739,24 @@ async function handleRequest(req: Request, priority: Priority) {
 
 ### Queue Architecture
 
-```
-┌─────────────────┐
-│  API Request    │
-└────────┬────────┘
-         │
-         v
-┌─────────────────┐     ┌──────────────────┐
-│ Add to Queue    │────>│  Redis (BullMQ)  │
-│ Return Job ID   │     └────────┬─────────┘
-└─────────────────┘              │
-                                 │
-                    ┌────────────┼────────────┐
-                    │            │            │
-                ┌───v───┐    ┌───v───┐    ┌───v───┐
-                │Worker │    │Worker │    │Worker │
-                │  #1   │    │  #2   │    │  #N   │
-                └───┬───┘    └───┬───┘    └───┬───┘
-                    │            │            │
-                    └────────────┴────────────┘
-                                 │
-                                 v
-                    ┌─────────────────────┐
-                    │  Job Complete       │
-                    │  Webhook/SSE Update │
-                    └─────────────────────┘
+```mermaid
+graph TD
+    API["API Request"] --> AddQueue["Add to Queue<br>Return Job ID"]
+    AddQueue --> Redis["Redis (BullMQ)"]
+    Redis --> Worker1["Worker #1"]
+    Redis --> Worker2["Worker #2"]
+    Redis --> WorkerN["Worker #N"]
+    Worker1 --> Complete["Job Complete<br>Webhook/SSE Update"]
+    Worker2 --> Complete
+    WorkerN --> Complete
+
+    style API fill:#2196f3,color:#fff
+    style AddQueue fill:#4caf50,color:#fff
+    style Redis fill:#ff9800,color:#fff
+    style Worker1 fill:#9c27b0,color:#fff
+    style Worker2 fill:#9c27b0,color:#fff
+    style WorkerN fill:#9c27b0,color:#fff
+    style Complete fill:#00bcd4,color:#fff
 ```
 
 ### Job Queues by Type
@@ -902,31 +915,16 @@ async function getQueueMetrics(queueName: string) {
 
 ### Multi-Layer Caching
 
-```
-┌────────────────────────────────────────────────┐
-│ L1: Application Memory (Node.js)               │ ← 10ms access
-│ - In-memory LRU cache (node-cache)             │
-│ - 100MB max, 60s TTL                           │
-└────────────────────────────────────────────────┘
-                     │ Cache miss
-                     v
-┌────────────────────────────────────────────────┐
-│ L2: Redis (Distributed)                        │ ← 50ms access
-│ - Shared across all app instances             │
-│ - 10GB max, 5min-1hr TTL                       │
-└────────────────────────────────────────────────┘
-                     │ Cache miss
-                     v
-┌────────────────────────────────────────────────┐
-│ L3: CDN (CloudFront)                           │ ← 10-50ms access
-│ - Static assets only                           │
-│ - 1 day - 1 year TTL                           │
-└────────────────────────────────────────────────┘
-                     │ Cache miss
-                     v
-┌────────────────────────────────────────────────┐
-│ Database / S3 (Source of Truth)                │ ← 200-500ms access
-└────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    L1["L1: Application Memory (Node.js)<br>In-memory LRU cache<br>100MB max, 60s TTL<br>10ms access"] -->|Cache miss| L2["L2: Redis (Distributed)<br>Shared across all app instances<br>10GB max, 5min-1hr TTL<br>50ms access"]
+    L2 -->|Cache miss| L3["L3: CDN (CloudFront)<br>Static assets only<br>1 day - 1 year TTL<br>10-50ms access"]
+    L3 -->|Cache miss| DB["Database / S3<br>Source of Truth<br>200-500ms access"]
+
+    style L1 fill:#4caf50,color:#fff
+    style L2 fill:#2196f3,color:#fff
+    style L3 fill:#ff9800,color:#fff
+    style DB fill:#f44336,color:#fff
 ```
 
 ### Caching Strategy by Data Type
@@ -1064,55 +1062,72 @@ setInterval(warmCache, 300000); // Every 5 minutes
 
 ### Phase 1: Single Region (v1-v2)
 
-```
-Region: US-East-1
-├─ Application Servers (3x AZs for HA)
-│  ├─ AZ-1a: 2 instances
-│  ├─ AZ-1b: 2 instances
-│  └─ AZ-1c: 1 instance
-├─ Database (Multi-AZ)
-│  ├─ Primary (AZ-1a)
-│  └─ Standby (AZ-1b)
-└─ Global CDN (CloudFront)
-   └─ Edge locations worldwide
+```mermaid
+graph TD
+    Region["Region: US-East-1"] --> AppServers["Application Servers<br>(3x AZs for HA)"]
+    Region --> Database["Database (Multi-AZ)"]
+    Region --> CDN["Global CDN (CloudFront)"]
+
+    AppServers --> AZ1a["AZ-1a: 2 instances"]
+    AppServers --> AZ1b["AZ-1b: 2 instances"]
+    AppServers --> AZ1c["AZ-1c: 1 instance"]
+
+    Database --> Primary["Primary (AZ-1a)"]
+    Database --> Standby["Standby (AZ-1b)"]
+
+    CDN --> Edge["Edge locations worldwide"]
+
+    style Region fill:#2196f3,color:#fff
+    style AppServers fill:#4caf50,color:#fff
+    style Database fill:#ff9800,color:#fff
+    style CDN fill:#9c27b0,color:#fff
 ```
 
 ### Phase 2: Active-Passive Multi-Region (v3)
 
-```
-Primary Region: US-East-1
-├─ Application: Active
-├─ Database: Primary
-└─ S3: Primary bucket
+```mermaid
+graph TD
+    Failover["Failover Strategy<br>- Automated health checks<br>- DNS failover (Route53)<br>- Manual database promotion<br>- RTO: 15 minutes, RPO: 5 minutes"]
 
-Secondary Region: EU-West-1
-├─ Application: Standby (cold)
-├─ Database: Replica (read-only)
-└─ S3: Replicated bucket
+    Primary["Primary Region: US-East-1"] --> PrimaryApp["Application: Active"]
+    Primary --> PrimaryDB["Database: Primary"]
+    Primary --> PrimaryS3["S3: Primary bucket"]
 
-Failover:
-- Automated health checks
-- DNS failover (Route53)
-- Manual database promotion
-- RTO: 15 minutes, RPO: 5 minutes
+    Secondary["Secondary Region: EU-West-1"] --> SecondaryApp["Application: Standby (cold)"]
+    Secondary --> SecondaryDB["Database: Replica (read-only)"]
+    Secondary --> SecondaryS3["S3: Replicated bucket"]
+
+    PrimaryDB -->|Replication| SecondaryDB
+    PrimaryS3 -->|Replication| SecondaryS3
+
+    style Failover fill:#2196f3,color:#fff
+    style Primary fill:#4caf50,color:#fff
+    style Secondary fill:#ff9800,color:#fff
 ```
 
 ### Phase 3: Active-Active Multi-Region (v4)
 
-```
-                    Global Load Balancer
-                    (Route53 + GeoDNS)
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-   [US-East-1]         [EU-West-1]          [AP-Southeast-1]
-        │                   │                   │
-    [5 Instances]       [3 Instances]       [2 Instances]
-        │                   │                   │
-    [DB Primary]        [DB Replica]        [DB Replica]
-        │                   ↑                   ↑
-        └───────────────────┴───────────────────┘
-              Async replication
+```mermaid
+graph TD
+    GLB["Global Load Balancer<br>(Route53 + GeoDNS)"]
+    GLB --> USEast["US-East-1<br>5 Instances"]
+    GLB --> EUWest["EU-West-1<br>3 Instances"]
+    GLB --> APSoutheast["AP-Southeast-1<br>2 Instances"]
+
+    USEast --> DBPrimary["DB Primary"]
+    EUWest --> DBReplicaEU["DB Replica"]
+    APSoutheast --> DBReplicaAP["DB Replica"]
+
+    DBPrimary -->|Async replication| DBReplicaEU
+    DBPrimary -->|Async replication| DBReplicaAP
+
+    style GLB fill:#2196f3,color:#fff
+    style USEast fill:#4caf50,color:#fff
+    style EUWest fill:#ff9800,color:#fff
+    style APSoutheast fill:#9c27b0,color:#fff
+    style DBPrimary fill:#f44336,color:#fff
+    style DBReplicaEU fill:#00bcd4,color:#fff
+    style DBReplicaAP fill:#00bcd4,color:#fff
 ```
 
 **Traffic Routing:**

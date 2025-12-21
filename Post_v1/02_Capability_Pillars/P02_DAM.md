@@ -102,26 +102,52 @@ PopSystem v1 has minimal asset management functionality:
 
 **Organizational Hierarchy**
 
-```
-PopSystem DAM
-├── Brands
-│   ├── [Brand Name]
-│   │   ├── Brand Assets (logos, guidelines, templates)
-│   │   ├── Campaigns
-│   │   │   ├── [Campaign ID]
-│   │   │   │   ├── Design Files
-│   │   │   │   ├── Production Files
-│   │   │   │   ├── Proofs & Approvals
-│   │   │   │   └── Final Deliverables
-│   │   └── Reusable Components
-├── Templates
-│   ├── Kit Templates
-│   ├── Design Templates
-│   └── Installation Guide Templates
-└── System Assets
-    ├── UI Components
-    ├── Icons & Graphics
-    └── Documentation
+```mermaid
+graph TD
+    Root["PopSystem DAM"]
+
+    Root --> Brands["Brands"]
+    Root --> Templates["Templates"]
+    Root --> System["System Assets"]
+
+    Brands --> BrandName["[Brand Name]"]
+    BrandName --> BrandAssets["Brand Assets<br>logos, guidelines, templates"]
+    BrandName --> Campaigns["Campaigns"]
+    BrandName --> Reusable["Reusable Components"]
+
+    Campaigns --> CampaignID["[Campaign ID]"]
+    CampaignID --> DesignFiles["Design Files"]
+    CampaignID --> ProductionFiles["Production Files"]
+    CampaignID --> Proofs["Proofs & Approvals"]
+    CampaignID --> FinalDeliv["Final Deliverables"]
+
+    Templates --> KitTemplates["Kit Templates"]
+    Templates --> DesignTemplates["Design Templates"]
+    Templates --> InstallGuide["Installation Guide Templates"]
+
+    System --> UIComp["UI Components"]
+    System --> Icons["Icons & Graphics"]
+    System --> Docs["Documentation"]
+
+    style Root fill:#2196f3,color:#fff
+    style Brands fill:#4caf50,color:#fff
+    style Templates fill:#4caf50,color:#fff
+    style System fill:#4caf50,color:#fff
+    style BrandName fill:#ff9800,color:#fff
+    style BrandAssets fill:#9c27b0,color:#fff
+    style Campaigns fill:#9c27b0,color:#fff
+    style Reusable fill:#9c27b0,color:#fff
+    style CampaignID fill:#e91e63,color:#fff
+    style DesignFiles fill:#00bcd4,color:#fff
+    style ProductionFiles fill:#00bcd4,color:#fff
+    style Proofs fill:#00bcd4,color:#fff
+    style FinalDeliv fill:#00bcd4,color:#fff
+    style KitTemplates fill:#9c27b0,color:#fff
+    style DesignTemplates fill:#9c27b0,color:#fff
+    style InstallGuide fill:#9c27b0,color:#fff
+    style UIComp fill:#9c27b0,color:#fff
+    style Icons fill:#9c27b0,color:#fff
+    style Docs fill:#9c27b0,color:#fff
 ```
 
 **Asset Types Supported**
@@ -1104,31 +1130,63 @@ def validate_pdf(pdf_file, profile):
 
 **Hybrid Architecture Diagram**
 
-```
-PopSystem Platform
-├── Core DAM Logic (Custom)
-│   ├── Asset metadata database (PostgreSQL)
-│   ├── Access control & permissions
-│   ├── Integration orchestration
-│   └── API gateway
-├── Storage Layer
-│   ├── AWS S3 (primary storage)
-│   ├── CloudFront CDN (global delivery)
-│   └── S3 Glacier (long-term archive)
-├── ResourceSpace (Self-Hosted)
-│   ├── Asset browsing UI
-│   ├── Collections & sharing
-│   ├── Metadata management
-│   └── User portals
-├── Cloudinary (SaaS)
-│   ├── Image optimization
-│   ├── Responsive delivery
-│   └── Basic transformations
-└── Custom Services
-    ├── PDF conversion workers
-    ├── AI tagging service
-    ├── Rights management
-    └── Archive lifecycle
+```mermaid
+graph TD
+    Root["PopSystem Platform"]
+
+    Root --> Core["Core DAM Logic<br>Custom"]
+    Root --> Storage["Storage Layer"]
+    Root --> ResourceSpace["ResourceSpace<br>Self-Hosted"]
+    Root --> Cloudinary["Cloudinary<br>SaaS"]
+    Root --> Custom["Custom Services"]
+
+    Core --> CoreDB["Asset metadata database<br>PostgreSQL"]
+    Core --> CoreAccess["Access control &<br>permissions"]
+    Core --> CoreInteg["Integration orchestration"]
+    Core --> CoreAPI["API gateway"]
+
+    Storage --> S3["AWS S3<br>primary storage"]
+    Storage --> CloudFront["CloudFront CDN<br>global delivery"]
+    Storage --> Glacier["S3 Glacier<br>long-term archive"]
+
+    ResourceSpace --> RSUI["Asset browsing UI"]
+    ResourceSpace --> RSColl["Collections & sharing"]
+    ResourceSpace --> RSMeta["Metadata management"]
+    ResourceSpace --> RSPort["User portals"]
+
+    Cloudinary --> CldImg["Image optimization"]
+    Cloudinary --> CldResp["Responsive delivery"]
+    Cloudinary --> CldTrans["Basic transformations"]
+
+    Custom --> CustPDF["PDF conversion workers"]
+    Custom --> CustAI["AI tagging service"]
+    Custom --> CustRights["Rights management"]
+    Custom --> CustArchive["Archive lifecycle"]
+
+    style Root fill:#2196f3,color:#fff
+    style Core fill:#4caf50,color:#fff
+    style Storage fill:#4caf50,color:#fff
+    style ResourceSpace fill:#4caf50,color:#fff
+    style Cloudinary fill:#4caf50,color:#fff
+    style Custom fill:#4caf50,color:#fff
+    style CoreDB fill:#9c27b0,color:#fff
+    style CoreAccess fill:#9c27b0,color:#fff
+    style CoreInteg fill:#9c27b0,color:#fff
+    style CoreAPI fill:#9c27b0,color:#fff
+    style S3 fill:#ff9800,color:#fff
+    style CloudFront fill:#ff9800,color:#fff
+    style Glacier fill:#ff9800,color:#fff
+    style RSUI fill:#9c27b0,color:#fff
+    style RSColl fill:#9c27b0,color:#fff
+    style RSMeta fill:#9c27b0,color:#fff
+    style RSPort fill:#9c27b0,color:#fff
+    style CldImg fill:#9c27b0,color:#fff
+    style CldResp fill:#9c27b0,color:#fff
+    style CldTrans fill:#9c27b0,color:#fff
+    style CustPDF fill:#e91e63,color:#fff
+    style CustAI fill:#e91e63,color:#fff
+    style CustRights fill:#e91e63,color:#fff
+    style CustArchive fill:#e91e63,color:#fff
 ```
 
 **Why Hybrid?**

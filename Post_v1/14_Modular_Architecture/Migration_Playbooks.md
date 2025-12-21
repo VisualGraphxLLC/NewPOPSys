@@ -234,47 +234,33 @@ Deliverables:
 - White-Label
 
 #### Express Activation Flow
-```
-┌──────────────────┐
-│ Purchase Module  │
-└────────┬─────────┘
-         │
-         v
-┌──────────────────┐
-│ Validate Payment │
-└────────┬─────────┘
-         │
-         v
-┌──────────────────┐
-│ Update           │
-│ Entitlements     │
-└────────┬─────────┘
-         │
-         v
-┌──────────────────┐
-│ Provision        │
-│ Infrastructure   │ (Automated)
-└────────┬─────────┘
-         │
-         v
-┌──────────────────┐
-│ Enable Module    │
-│ Access           │
-└────────┬─────────┘
-         │
-         v
-┌──────────────────┐
-│ Send Welcome     │
-│ Email            │
-└────────┬─────────┘
-         │
-         v
-┌──────────────────┐
-│ Module Active    │
-└──────────────────┘
+```mermaid
+graph TD
+    Purchase[Purchase Module]
+    ValidatePayment[Validate Payment]
+    UpdateEntitlements[Update<br>Entitlements]
+    Provision[Provision<br>Infrastructure<br>Automated]
+    EnableAccess[Enable Module<br>Access]
+    SendWelcome[Send Welcome<br>Email]
+    Active[Module Active]
 
-Total Time: 2-5 minutes
+    Purchase --> ValidatePayment
+    ValidatePayment --> UpdateEntitlements
+    UpdateEntitlements --> Provision
+    Provision --> EnableAccess
+    EnableAccess --> SendWelcome
+    SendWelcome --> Active
+
+    style Purchase fill:#2196f3,color:#fff
+    style ValidatePayment fill:#4caf50,color:#fff
+    style UpdateEntitlements fill:#ff9800,color:#fff
+    style Provision fill:#9c27b0,color:#fff
+    style EnableAccess fill:#2196f3,color:#fff
+    style SendWelcome fill:#4caf50,color:#fff
+    style Active fill:#4caf50,color:#fff
 ```
+
+**Total Time: 2-5 minutes**
 
 ---
 
@@ -492,21 +478,18 @@ interface MigrationStage {
 ### Blue-Green Deployment Strategy
 
 #### Architecture
-```
-┌─────────────────────────────────────────────┐
-│           Load Balancer / Router            │
-└───────┬─────────────────────────┬───────────┘
-        │                         │
-        │                         │
-┌───────v─────────┐      ┌────────v────────┐
-│  BLUE (Current) │      │  GREEN (New)    │
-│                 │      │                 │
-│  - v3.x Active  │      │  - v4.x Staged  │
-│  - Live Traffic │      │  - Test Traffic │
-│  - Production   │      │  - Validation   │
-│    Database     │      │    Database     │
-│                 │      │    (Synced)     │
-└─────────────────┘      └─────────────────┘
+```mermaid
+graph TD
+    LoadBalancer[Load Balancer / Router]
+    Blue[BLUE Current<br>v3.x Active<br>Live Traffic<br>Production Database]
+    Green[GREEN New<br>v4.x Staged<br>Test Traffic<br>Validation Database<br>Synced]
+
+    LoadBalancer --> Blue
+    LoadBalancer --> Green
+
+    style LoadBalancer fill:#2196f3,color:#fff
+    style Blue fill:#4caf50,color:#fff
+    style Green fill:#ff9800,color:#fff
 ```
 
 #### Migration Process
@@ -573,31 +556,27 @@ DROP COLUMN old_field;
 ```
 
 #### Data Replication Approach
-```
-┌──────────────────┐
-│ Source Database  │
-│ (v3.x Schema)    │
-└────────┬─────────┘
-         │
-         │ Continuous Replication
-         │ (Change Data Capture)
-         v
-┌──────────────────┐
-│ Target Database  │
-│ (v4.x Schema)    │
-└──────────────────┘
+```mermaid
+graph TD
+    Source[Source Database<br>v3.x Schema]
+    Target[Target Database<br>v4.x Schema]
 
-Replication Methods:
+    Source -->|Continuous Replication<br>Change Data Capture| Target
+
+    style Source fill:#2196f3,color:#fff
+    style Target fill:#4caf50,color:#fff
+```
+
+**Replication Methods:**
 1. Logical Replication (PostgreSQL)
 2. Binary Log Replication (MySQL)
 3. Change Data Capture (SQL Server)
 4. AWS DMS (Multi-database)
 
-Monitoring:
+**Monitoring:**
 - Replication lag (must be < 1 second)
 - Error rate (must be 0%)
 - Data consistency checks (hourly)
-```
 
 ---
 
@@ -643,51 +622,33 @@ const rollbackTriggers: HealthCheck[] = [
 ```
 
 #### Automatic Rollback Flow
-```
-┌──────────────────┐
-│ Health Monitor   │
-└────────┬─────────┘
-         │
-         │ Threshold Exceeded
-         v
-┌──────────────────┐
-│ Trigger Alert    │
-└────────┬─────────┘
-         │
-         │ Evaluate Severity
-         v
-    ┌────────────┐
-    │  Critical? │
-    └─────┬──────┘
-          │ Yes
-          v
-┌───────────────────┐
-│ Initiate Rollback │
-└────────┬──────────┘
-         │
-         v
-┌───────────────────┐
-│ Stop New Traffic  │
-│ to GREEN          │
-└────────┬──────────┘
-         │
-         v
-┌───────────────────┐
-│ Route All Traffic │
-│ to BLUE           │
-└────────┬──────────┘
-         │
-         v
-┌───────────────────┐
-│ Verify System     │
-│ Stable            │
-└────────┬──────────┘
-         │
-         v
-┌───────────────────┐
-│ Send Incident     │
-│ Report            │
-└───────────────────┘
+```mermaid
+graph TD
+    HealthMonitor[Health Monitor]
+    TriggerAlert[Trigger Alert]
+    Critical{Critical?}
+    InitiateRollback[Initiate Rollback]
+    StopTraffic[Stop New Traffic<br>to GREEN]
+    RouteToBlue[Route All Traffic<br>to BLUE]
+    VerifySystem[Verify System<br>Stable]
+    SendReport[Send Incident<br>Report]
+
+    HealthMonitor -->|Threshold Exceeded| TriggerAlert
+    TriggerAlert -->|Evaluate Severity| Critical
+    Critical -->|Yes| InitiateRollback
+    InitiateRollback --> StopTraffic
+    StopTraffic --> RouteToBlue
+    RouteToBlue --> VerifySystem
+    VerifySystem --> SendReport
+
+    style HealthMonitor fill:#2196f3,color:#fff
+    style TriggerAlert fill:#ff9800,color:#fff
+    style Critical fill:#f44336,color:#fff
+    style InitiateRollback fill:#f44336,color:#fff
+    style StopTraffic fill:#ff9800,color:#fff
+    style RouteToBlue fill:#4caf50,color:#fff
+    style VerifySystem fill:#4caf50,color:#fff
+    style SendReport fill:#2196f3,color:#fff
 ```
 
 ### Manual Rollback Procedures

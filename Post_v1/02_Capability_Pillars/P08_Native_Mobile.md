@@ -105,13 +105,21 @@ PopSystem v1 delivers comprehensive mobile functionality through responsive web 
 **Description:** One app containing all role functionality with dynamic UI based on user permissions.
 
 **Architecture:**
-```
-PopSystem App (iOS + Android)
-├── Login & Role Detection
-├── Store Associate Module
-├── Field Merchandiser Module
-├── PSP Manager Module
-└── Brand Manager Module (view-only)
+```mermaid
+graph TD
+    A[PopSystem App<br>iOS + Android]
+    A --> B[Login & Role Detection]
+    A --> C[Store Associate Module]
+    A --> D[Field Merchandiser Module]
+    A --> E[PSP Manager Module]
+    A --> F[Brand Manager Module<br>view-only]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#9c27b0,color:#fff
+    style F fill:#607d8b,color:#fff
 ```
 
 **Pros:**
@@ -134,21 +142,35 @@ PopSystem App (iOS + Android)
 **Description:** Dedicated apps optimized for each primary user role.
 
 **Architecture:**
-```
-PopSystem Store (iOS + Android)
-├── Campaign viewer
-├── Photo verification
-└── Display compliance checks
+```mermaid
+graph TD
+    subgraph Store["PopSystem Store (iOS + Android)"]
+        S1[Campaign viewer]
+        S2[Photo verification]
+        S3[Display compliance checks]
+    end
 
-PopSystem Field (iOS + Android)
-├── Visit scheduling
-├── Multi-store routes
-└── Audit workflows
+    subgraph Field["PopSystem Field (iOS + Android)"]
+        F1[Visit scheduling]
+        F2[Multi-store routes]
+        F3[Audit workflows]
+    end
 
-PopSystem Manager (iOS + Android)
-├── Team oversight
-├── Approval workflows
-└── Analytics dashboard
+    subgraph Manager["PopSystem Manager (iOS + Android)"]
+        M1[Team oversight]
+        M2[Approval workflows]
+        M3[Analytics dashboard]
+    end
+
+    style S1 fill:#4caf50,color:#fff
+    style S2 fill:#4caf50,color:#fff
+    style S3 fill:#4caf50,color:#fff
+    style F1 fill:#ff9800,color:#fff
+    style F2 fill:#ff9800,color:#fff
+    style F3 fill:#ff9800,color:#fff
+    style M1 fill:#9c27b0,color:#fff
+    style M2 fill:#9c27b0,color:#fff
+    style M3 fill:#9c27b0,color:#fff
 ```
 
 **Pros:**
@@ -172,15 +194,25 @@ PopSystem Manager (iOS + Android)
 **Description:** Native shell with shared web views for complex features, native implementation for hardware-dependent features.
 
 **Architecture:**
-```
-Native Shell (iOS + Android)
-├── Native: Auth (biometric)
-├── Native: Camera capture
-├── Native: Offline sync engine
-├── Native: Push notifications
-├── Web View: Campaign listings (responsive web)
-├── Web View: Analytics dashboards (responsive web)
-└── Web View: Admin settings (responsive web)
+```mermaid
+graph TD
+    A[Native Shell<br>iOS + Android]
+    A --> B[Native: Auth<br>biometric]
+    A --> C[Native: Camera capture]
+    A --> D[Native: Offline sync engine]
+    A --> E[Native: Push notifications]
+    A --> F[Web View: Campaign listings<br>responsive web]
+    A --> G[Web View: Analytics dashboards<br>responsive web]
+    A --> H[Web View: Admin settings<br>responsive web]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+    style E fill:#4caf50,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#ff9800,color:#fff
+    style H fill:#ff9800,color:#fff
 ```
 
 **Pros:**
@@ -308,13 +340,21 @@ Native Shell (iOS + Android)
 - Strong enterprise adoption and long-term support from Meta/community
 
 **Architecture Decision:**
-```
-Expo React Native (managed workflow)
-├── TypeScript for type safety
-├── React Navigation for routing
-├── Redux Toolkit for state management (shared with web)
-├── React Query for API caching
-└── Expo modules for camera, location, notifications
+```mermaid
+graph TD
+    A[Expo React Native<br>managed workflow]
+    A --> B[TypeScript for type safety]
+    A --> C[React Navigation for routing]
+    A --> D[Redux Toolkit for state management<br>shared with web]
+    A --> E[React Query for API caching]
+    A --> F[Expo modules for camera,<br>location, notifications]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#00bcd4,color:#fff
+    style C fill:#00bcd4,color:#fff
+    style D fill:#00bcd4,color:#fff
+    style E fill:#00bcd4,color:#fff
+    style F fill:#00bcd4,color:#fff
 ```
 
 ---
@@ -324,11 +364,17 @@ Expo React Native (managed workflow)
 #### Local Database: SQLite with WatermelonDB
 
 **Technology Stack:**
-```
-WatermelonDB (React Native ORM)
-├── SQLite (underlying storage)
-├── LokiJS (in-memory query engine)
-└── Sync adapter (custom PopSystem protocol)
+```mermaid
+graph TD
+    A[WatermelonDB<br>React Native ORM]
+    A --> B[SQLite<br>underlying storage]
+    A --> C[LokiJS<br>in-memory query engine]
+    A --> D[Sync adapter<br>custom PopSystem protocol]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
 ```
 
 **Why WatermelonDB:**
@@ -404,24 +450,59 @@ Scenario 3: Form Field Edit
 - Integration with Expo notification API
 
 **Notification Architecture:**
-```
-PopSystem Backend
-├── Event Triggered (e.g., photo needs approval)
-├── Notification Service (Node.js microservice)
-│   ├── Determine recipient user(s)
-│   ├── Fetch FCM device tokens from user DB
-│   ├── Compose notification payload
-│   └── Send to FCM API
-└── FCM
-    ├── Routes to APNs (iOS devices)
-    └── Routes to Android devices
+```mermaid
+graph TD
+    subgraph Backend["PopSystem Backend"]
+        A[Event Triggered<br>e.g., photo needs approval]
+        B[Notification Service<br>Node.js microservice]
+        B1[Determine recipient users]
+        B2[Fetch FCM device tokens<br>from user DB]
+        B3[Compose notification payload]
+        B4[Send to FCM API]
+        C[FCM]
+        C1[Routes to APNs<br>iOS devices]
+        C2[Routes to Android devices]
 
-Mobile App
-├── FCM SDK receives notification
-├── Display system notification (even if app closed)
-├── User taps notification
-├── App opens to deep-linked screen (e.g., photo approval page)
-└── Mark notification as read in backend
+        A --> B
+        B --> B1
+        B1 --> B2
+        B2 --> B3
+        B3 --> B4
+        B4 --> C
+        C --> C1
+        C --> C2
+    end
+
+    subgraph MobileApp["Mobile App"]
+        D[FCM SDK receives notification]
+        E[Display system notification<br>even if app closed]
+        F[User taps notification]
+        G[App opens to deep-linked screen<br>e.g., photo approval page]
+        H[Mark notification as read<br>in backend]
+
+        D --> E
+        E --> F
+        F --> G
+        G --> H
+    end
+
+    C1 --> D
+    C2 --> D
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style B1 fill:#00bcd4,color:#fff
+    style B2 fill:#00bcd4,color:#fff
+    style B3 fill:#00bcd4,color:#fff
+    style B4 fill:#00bcd4,color:#fff
+    style C fill:#ff9800,color:#fff
+    style C1 fill:#ff5722,color:#fff
+    style C2 fill:#ff5722,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#673ab7,color:#fff
+    style F fill:#673ab7,color:#fff
+    style G fill:#673ab7,color:#fff
+    style H fill:#673ab7,color:#fff
 ```
 
 **Notification Categories:**
@@ -497,15 +578,25 @@ AR Display Preview Flow:
 ```
 
 **Technical Architecture:**
-```
-React Native AR Integration:
-├── ViroReact (React Native AR framework)
-│   ├── ARKit bridge (iOS)
-│   └── ARCore bridge (Android)
-├── 3D Model Loading (GLTF/GLB format)
-├── Plane Detection & Raycast
-├── Object Placement & Manipulation
-└── Screenshot Capture
+```mermaid
+graph TD
+    A[React Native AR Integration]
+    A --> B[ViroReact<br>React Native AR framework]
+    B --> B1[ARKit bridge<br>iOS]
+    B --> B2[ARCore bridge<br>Android]
+    A --> C[3D Model Loading<br>GLTF/GLB format]
+    A --> D[Plane Detection & Raycast]
+    A --> E[Object Placement & Manipulation]
+    A --> F[Screenshot Capture]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style B1 fill:#00bcd4,color:#fff
+    style B2 fill:#00bcd4,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
 ```
 
 **Development Effort:**
@@ -829,27 +920,67 @@ Quarter 4: NFC integration, wearable apps
 ### 2. Push Notification Service Integration
 
 **Architecture:**
-```
-PopSystem Backend
-├── Event Triggers (campaign assigned, photo needs approval, etc.)
-│   └── Emit to Notification Service Queue
-│
-Notification Service (Microservice)
-├── Queue Consumer (BullMQ/RabbitMQ)
-├── User Device Token Lookup (PostgreSQL)
-├── Notification Composer
-│   ├── Localization (EN/ES/FR)
-│   ├── Deep Link Generation
-│   └── Payload Assembly
-└── FCM API Client
-    ├── Send to iOS (via APNs)
-    └── Send to Android
+```mermaid
+graph TD
+    subgraph Backend["PopSystem Backend"]
+        A[Event Triggers<br>campaign assigned, photo needs approval, etc.]
+        A1[Emit to Notification Service Queue]
+        A --> A1
+    end
 
-Mobile App
-├── FCM SDK (Expo Notifications)
-├── Notification Display
-├── Deep Link Handler
-└── Analytics Tracker (notification opened, action taken)
+    subgraph NotifService["Notification Service (Microservice)"]
+        B[Queue Consumer<br>BullMQ/RabbitMQ]
+        C[User Device Token Lookup<br>PostgreSQL]
+        D[Notification Composer]
+        D1[Localization<br>EN/ES/FR]
+        D2[Deep Link Generation]
+        D3[Payload Assembly]
+        E[FCM API Client]
+        E1[Send to iOS<br>via APNs]
+        E2[Send to Android]
+
+        B --> C
+        C --> D
+        D --> D1
+        D --> D2
+        D --> D3
+        D1 --> E
+        D2 --> E
+        D3 --> E
+        E --> E1
+        E --> E2
+    end
+
+    subgraph MobileApp["Mobile App"]
+        F[FCM SDK<br>Expo Notifications]
+        G[Notification Display]
+        H[Deep Link Handler]
+        I[Analytics Tracker<br>notification opened, action taken]
+
+        F --> G
+        G --> H
+        H --> I
+    end
+
+    A1 --> B
+    E1 --> F
+    E2 --> F
+
+    style A fill:#2196f3,color:#fff
+    style A1 fill:#1976d2,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#ff9800,color:#fff
+    style D1 fill:#fb8c00,color:#fff
+    style D2 fill:#fb8c00,color:#fff
+    style D3 fill:#fb8c00,color:#fff
+    style E fill:#9c27b0,color:#fff
+    style E1 fill:#7b1fa2,color:#fff
+    style E2 fill:#7b1fa2,color:#fff
+    style F fill:#00bcd4,color:#fff
+    style G fill:#0097a7,color:#fff
+    style H fill:#0097a7,color:#fff
+    style I fill:#0097a7,color:#fff
 ```
 
 **Notification Payload Format:**

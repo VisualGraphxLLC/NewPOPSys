@@ -763,20 +763,24 @@ Data Collection → Labeling → Training → Evaluation → Deployment
 ```
 
 **MLOps Pipeline:**
-```
-┌─────────────┐      ┌──────────────┐      ┌─────────────┐
-│   Feature   │─────>│   Training   │─────>│    Model    │
-│   Pipeline  │      │   Pipeline   │      │   Registry  │
-└─────────────┘      └──────────────┘      └─────────────┘
-       │                     │                      │
-       │                     v                      v
-       │              ┌──────────────┐      ┌─────────────┐
-       │              │  Evaluation  │      │  Serving    │
-       │              │  (A/B Test)  │      │  (K8s)      │
-       │              └──────────────┘      └─────────────┘
-       │                     │                      │
-       └─────────────────────┴──────────────────────┘
-                      Monitoring & Feedback
+```mermaid
+graph TD
+    Feature["Feature<br>Pipeline"] --> Training["Training<br>Pipeline"]
+    Training --> Registry["Model<br>Registry"]
+    Training --> Evaluation["Evaluation<br>(A/B Test)"]
+    Registry --> Serving["Serving<br>(K8s)"]
+
+    Monitoring["Monitoring & Feedback"]
+    Feature --> Monitoring
+    Evaluation --> Monitoring
+    Serving --> Monitoring
+
+    style Feature fill:#2196f3,color:#fff
+    style Training fill:#4caf50,color:#fff
+    style Registry fill:#ff9800,color:#fff
+    style Evaluation fill:#9c27b0,color:#fff
+    style Serving fill:#00bcd4,color:#fff
+    style Monitoring fill:#f44336,color:#fff
 ```
 
 **Advanced Features:**
@@ -833,16 +837,26 @@ class RecommendationEngine:
 ```
 
 **Simple Architecture:**
-```
-Internet
-   │
-   v
-[Load Balancer]
-   │
-   ├─> [App Server 1] ─┐
-   ├─> [App Server 2] ─┼─> [RDS PostgreSQL]
-   └─> [App Server 3] ─┘         │
-                              [S3 Storage]
+```mermaid
+graph TD
+    Internet["Internet"] --> LB["Load Balancer"]
+    LB --> App1["App Server 1"]
+    LB --> App2["App Server 2"]
+    LB --> App3["App Server 3"]
+
+    App1 --> RDS["RDS PostgreSQL"]
+    App2 --> RDS
+    App3 --> RDS
+
+    RDS --> S3["S3 Storage"]
+
+    style Internet fill:#2196f3,color:#fff
+    style LB fill:#4caf50,color:#fff
+    style App1 fill:#ff9800,color:#fff
+    style App2 fill:#ff9800,color:#fff
+    style App3 fill:#ff9800,color:#fff
+    style RDS fill:#9c27b0,color:#fff
+    style S3 fill:#00bcd4,color:#fff
 ```
 
 **Rationale:**
@@ -945,21 +959,32 @@ spec:
 ```
 
 **Multi-Cloud Architecture:**
-```
-                    [Global Load Balancer]
-                    (Cloudflare / Route53)
-                           │
-        ┌──────────────────┴──────────────────┐
-        │                                      │
-    [AWS Region]                          [Azure Region]
-        │                                      │
-    [EKS Cluster]                         [AKS Cluster]
-        │                                      │
-    [Services]                            [Services]
-        │                                      │
-    [RDS Primary]                         [RDS Replica]
-        └──────────────────────────────────────┘
-                   Data Replication
+```mermaid
+graph TD
+    GLB["Global Load Balancer<br>(Cloudflare / Route53)"]
+    GLB --> AWS["AWS Region"]
+    GLB --> Azure["Azure Region"]
+
+    AWS --> EKS["EKS Cluster"]
+    Azure --> AKS["AKS Cluster"]
+
+    EKS --> AWSServices["Services"]
+    AKS --> AzureServices["Services"]
+
+    AWSServices --> RDSPrimary["RDS Primary"]
+    AzureServices --> RDSReplica["RDS Replica"]
+
+    RDSPrimary -->|Data Replication| RDSReplica
+
+    style GLB fill:#2196f3,color:#fff
+    style AWS fill:#ff9800,color:#fff
+    style Azure fill:#00bcd4,color:#fff
+    style EKS fill:#4caf50,color:#fff
+    style AKS fill:#4caf50,color:#fff
+    style AWSServices fill:#9c27b0,color:#fff
+    style AzureServices fill:#9c27b0,color:#fff
+    style RDSPrimary fill:#f44336,color:#fff
+    style RDSReplica fill:#ff5722,color:#fff
 ```
 
 **Service Mesh Benefits:**
@@ -1020,10 +1045,16 @@ Red flags:
 
 ### 1. Strangler Fig Pattern
 Gradually replace old system:
-```
-Old System ←─┐
-             ├─ Proxy ←─ Users
-New System ←─┘
+```mermaid
+graph LR
+    Users["Users"] --> Proxy["Proxy"]
+    Proxy --> OldSystem["Old System"]
+    Proxy --> NewSystem["New System"]
+
+    style Users fill:#2196f3,color:#fff
+    style Proxy fill:#ff9800,color:#fff
+    style OldSystem fill:#f44336,color:#fff
+    style NewSystem fill:#4caf50,color:#fff
 ```
 
 ### 2. Feature Flags

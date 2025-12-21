@@ -10,25 +10,27 @@ This document provides a comprehensive technical specification for implementing 
 
 PopSystem implements a three-currency architecture:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  USER PREFERENCES                                           │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ Display Currency: What user wants to see (USD)       │  │
-│  │ Billing Currency: What they're actually charged (EUR)│  │
-│  │ Base Currency: Company reporting currency (USD)      │  │
-│  └──────────────────────────────────────────────────────┘  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[USER PREFERENCES]
+    A --> B[Display Currency:<br>What user wants to see USD]
+    A --> C[Billing Currency:<br>What they're actually charged EUR]
+    A --> D[Base Currency:<br>Company reporting currency USD]
 
-┌─────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│ Display Currency│────>│Billing Currency  │────>│  Base Currency   │
-│  (User Pref)    │     │  (Transaction)   │     │  (Reporting)     │
-│                 │     │                  │     │                  │
-│  Show: $100     │     │  Charge: €92.50  │     │  Report: $100    │
-│  (Convenience)  │     │  (Actual billing)│     │  (Finance/CFO)   │
-└─────────────────┘     └──────────────────┘     └──────────────────┘
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#4caf50,color:#fff
+```
+
+```mermaid
+graph LR
+    A[Display Currency<br>User Pref<br><br>Show: $100<br>Convenience] --> B[Billing Currency<br>Transaction<br><br>Charge: €92.50<br>Actual billing]
+    B --> C[Base Currency<br>Reporting<br><br>Report: $100<br>Finance/CFO]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#ff9800,color:#fff
+    style C fill:#4caf50,color:#fff
 ```
 
 **Display Currency**
@@ -730,35 +732,25 @@ class InvoiceService {
 
 ### Invoice Display Example
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                      INVOICE #INV-2025-001234            │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│  Issue Date: December 21, 2025                          │
-│  Due Date: January 20, 2026                             │
-│                                                          │
-│  Bill To:                                               │
-│  Acme GmbH                                              │
-│  Berlin, Germany                                        │
-│                                                          │
-├─────────────────────────────────────────────────────────┤
-│  Description                              Amount        │
-├─────────────────────────────────────────────────────────┤
-│  Professional Plan (Monthly)              €185.00       │
-│  Additional Users (3 × €25)               €75.00        │
-│                                                          │
-│  Subtotal                                 €260.00       │
-│  VAT (19%)                                €49.40        │
-│                                                          │
-│  TOTAL DUE (EUR)                          €309.40       │
-│                                                          │
-│  ------------------------------------------------        │
-│  Display Amount (USD)*                    $336.22       │
-│                                                          │
-│  * Informational only. You will be charged €309.40     │
-│    Exchange rate: 1 EUR = 1.0866 USD (Dec 21, 2025)   │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[INVOICE #INV-2025-001234]
+    A --> B[Issue Date: December 21, 2025<br>Due Date: January 20, 2026]
+    B --> C[Bill To:<br>Acme GmbH<br>Berlin, Germany]
+    C --> D[Description and Amounts]
+    D --> E[Professional Plan Monthly: €185.00<br>Additional Users 3 × €25: €75.00]
+    E --> F[Subtotal: €260.00<br>VAT 19%: €49.40]
+    F --> G[TOTAL DUE EUR: €309.40]
+    G --> H[Display Amount USD*: $336.22<br>* Informational only. You will be charged €309.40<br>Exchange rate: 1 EUR = 1.0866 USD Dec 21, 2025]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#9c27b0,color:#fff
+    style F fill:#9c27b0,color:#fff
+    style G fill:#f44336,color:#fff
+    style H fill:#607d8b,color:#fff
 ```
 
 ## Financial Reporting in Base Currency

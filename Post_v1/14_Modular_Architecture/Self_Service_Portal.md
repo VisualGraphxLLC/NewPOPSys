@@ -9,18 +9,27 @@ The Self-Service Portal empowers PopSystem customers to discover, trial, purchas
 ## Portal Architecture
 
 ### Navigation Structure
-```
-┌─────────────────────────────────────────────┐
-│           PopSystem Dashboard                │
-├─────────────────────────────────────────────┤
-│  [Home] [Modules] [Billing] [Usage] [Support]│
-└─────────────────────────────────────────────┘
-       │
-       └──> MODULES TAB
-            ├── Module Catalog
-            ├── My Modules
-            ├── Recommendations
-            └── Trials & Activations
+```mermaid
+graph TD
+    Dashboard[PopSystem Dashboard<br>Home - Modules - Billing - Usage - Support]
+    ModulesTab[MODULES TAB]
+    Catalog[Module Catalog]
+    MyModules[My Modules]
+    Recommendations[Recommendations]
+    Trials[Trials & Activations]
+
+    Dashboard --> ModulesTab
+    ModulesTab --> Catalog
+    ModulesTab --> MyModules
+    ModulesTab --> Recommendations
+    ModulesTab --> Trials
+
+    style Dashboard fill:#2196f3,color:#fff
+    style ModulesTab fill:#4caf50,color:#fff
+    style Catalog fill:#ff9800,color:#fff
+    style MyModules fill:#ff9800,color:#fff
+    style Recommendations fill:#ff9800,color:#fff
+    style Trials fill:#ff9800,color:#fff
 ```
 
 ---

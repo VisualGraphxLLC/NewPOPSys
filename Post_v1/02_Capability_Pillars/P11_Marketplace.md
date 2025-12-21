@@ -1292,24 +1292,27 @@ await stripe.paymentIntents.capture(paymentIntentId);
 - **Real-time**: WebSockets (Socket.io) for messaging
 
 **Architecture**:
-```
-┌─────────────────┐      ┌─────────────────┐
-│  React Web App  │      │ React Native    │
-│  (PSP/Brand)    │      │ (Provider App)  │
-└────────┬────────┘      └────────┬────────┘
-         │                        │
-         └────────────┬───────────┘
-                      │ REST API / GraphQL
-                ┌─────▼──────┐
-                │  Node.js   │
-                │  Backend   │
-                └─────┬──────┘
-         ┌────────────┼────────────┐
-         │            │            │
-    ┌────▼───┐   ┌───▼────┐  ┌────▼────┐
-    │ Postgres│   │ Redis  │  │ Stripe  │
-    │ +PostGIS│   │(cache) │  │ Connect │
-    └─────────┘   └────────┘  └─────────┘
+```mermaid
+graph TD
+    A[React Web App<br>PSP/Brand]
+    B[React Native<br>Provider App]
+    C[Node.js Backend]
+    D[Postgres + PostGIS]
+    E[Redis<br>cache]
+    F[Stripe Connect]
+
+    A -->|REST API / GraphQL| C
+    B -->|REST API / GraphQL| C
+    C --> D
+    C --> E
+    C --> F
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#f44336,color:#fff
+    style F fill:#00bcd4,color:#fff
 ```
 
 **Pros**:

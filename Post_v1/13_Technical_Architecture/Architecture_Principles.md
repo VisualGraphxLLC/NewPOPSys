@@ -119,18 +119,17 @@ Decouple systems through asynchronous event messaging for scalability and resili
 | Integrations | Webhook | `InfluencerPosted` | Best-effort |
 
 ### Architecture Diagram
-```
-┌──────────────┐         ┌──────────────┐         ┌──────────────┐
-│   Campaign   │         │  Event Bus   │         │  Analytics   │
-│   Service    │────────>│   (Kafka/    │────────>│   Service    │
-│              │ publish │   RabbitMQ)  │subscribe│              │
-└──────────────┘         └──────────────┘         └──────────────┘
-       │                        │                        │
-       │                        v                        │
-       │                 ┌──────────────┐               │
-       │                 │ Notification │               │
-       └────────────────>│   Service    │<──────────────┘
-                 direct  └──────────────┘  direct
+```mermaid
+graph TD
+    Campaign["Campaign<br>Service"] -->|publish| EventBus["Event Bus<br>(Kafka/<br>RabbitMQ)"]
+    EventBus -->|subscribe| Analytics["Analytics<br>Service"]
+    Campaign -->|direct| Notification["Notification<br>Service"]
+    Analytics -->|direct| Notification
+
+    style Campaign fill:#2196f3,color:#fff
+    style EventBus fill:#ff9800,color:#fff
+    style Analytics fill:#4caf50,color:#fff
+    style Notification fill:#9c27b0,color:#fff
 ```
 
 ### Implementation Guidelines
@@ -223,23 +222,20 @@ class CampaignRepository {
 Design every component to scale by adding instances, not increasing instance size.
 
 ### Stateless Application Tier
-```
-┌─────────────────────────────────────────┐
-│         Load Balancer (Layer 7)         │
-└────────┬───────────┬───────────┬────────┘
-         │           │           │
-    ┌────v────┐ ┌────v────┐ ┌────v────┐
-    │  App    │ │  App    │ │  App    │
-    │Instance │ │Instance │ │Instance │
-    │   #1    │ │   #2    │ │   #N    │
-    └────┬────┘ └────┬────┘ └────┬────┘
-         │           │           │
-         └───────────┴───────────┘
-                     │
-              ┌──────v──────┐
-              │   Shared    │
-              │  Database   │
-              └─────────────┘
+```mermaid
+graph TD
+    LB["Load Balancer<br>(Layer 7)"] --> App1["App<br>Instance<br>#1"]
+    LB --> App2["App<br>Instance<br>#2"]
+    LB --> AppN["App<br>Instance<br>#N"]
+    App1 --> DB["Shared<br>Database"]
+    App2 --> DB
+    AppN --> DB
+
+    style LB fill:#2196f3,color:#fff
+    style App1 fill:#4caf50,color:#fff
+    style App2 fill:#4caf50,color:#fff
+    style AppN fill:#4caf50,color:#fff
+    style DB fill:#ff9800,color:#fff
 ```
 
 ### Design Requirements

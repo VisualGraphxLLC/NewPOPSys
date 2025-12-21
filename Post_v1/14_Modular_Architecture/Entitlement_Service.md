@@ -9,46 +9,36 @@ The Entitlement Service is the central authorization system that controls access
 ## Architecture Overview
 
 ### High-Level Flow
-```
-┌─────────────┐
-│   Request   │
-└──────┬──────┘
-       │
-       v
-┌─────────────────┐
-│  API Gateway    │
-└──────┬──────────┘
-       │
-       v
-┌──────────────────────┐
-│ Entitlement Check    │◄───────┐
-│ (Middleware)         │        │
-└──────┬───────────────┘        │
-       │                        │
-       │ Valid?                 │
-       v                        │
-┌─────────────────┐             │
-│  Module Service │             │
-└─────────────────┘             │
-                                │
-┌───────────────────────────────┴─────┐
-│      Entitlement Service            │
-│  ┌─────────────────────────────┐   │
-│  │  Permission Cache (Redis)   │   │
-│  └─────────────────────────────┘   │
-│  ┌─────────────────────────────┐   │
-│  │  Entitlement Database       │   │
-│  └─────────────────────────────┘   │
-│  ┌─────────────────────────────┐   │
-│  │  Usage Metering             │   │
-│  └─────────────────────────────┘   │
-└─────────────────┬───────────────────┘
-                  │
-                  v
-┌─────────────────────────────┐
-│     Billing System          │
-│  (Subscription Management)  │
-└─────────────────────────────┘
+```mermaid
+graph TD
+    Request[Request]
+    APIGateway[API Gateway]
+    EntitlementCheck[Entitlement Check<br>Middleware]
+    ModuleService[Module Service]
+    EntitlementService[Entitlement Service]
+    PermissionCache[Permission Cache<br>Redis]
+    EntitlementDB[Entitlement Database]
+    UsageMetering[Usage Metering]
+    BillingSystem[Billing System<br>Subscription Management]
+
+    Request --> APIGateway
+    APIGateway --> EntitlementCheck
+    EntitlementCheck -->|Valid?| ModuleService
+    EntitlementCheck --> EntitlementService
+    EntitlementService --> PermissionCache
+    EntitlementService --> EntitlementDB
+    EntitlementService --> UsageMetering
+    EntitlementService --> BillingSystem
+
+    style Request fill:#2196f3,color:#fff
+    style APIGateway fill:#2196f3,color:#fff
+    style EntitlementCheck fill:#2196f3,color:#fff
+    style ModuleService fill:#2196f3,color:#fff
+    style EntitlementService fill:#4caf50,color:#fff
+    style PermissionCache fill:#ff9800,color:#fff
+    style EntitlementDB fill:#ff9800,color:#fff
+    style UsageMetering fill:#ff9800,color:#fff
+    style BillingSystem fill:#9c27b0,color:#fff
 ```
 
 ---
@@ -788,34 +778,27 @@ app.post('/api/v1/designer/templates',
 
 ### Real-Time Metering Pipeline
 
-```
-┌─────────────┐
-│  API Call   │
-└──────┬──────┘
-       │
-       v
-┌──────────────────┐
-│  Usage Tracker   │──┐
-└──────────────────┘  │
-                      │
-       ┌──────────────┘
-       │
-       v
-┌──────────────────┐     ┌──────────────────┐
-│  Redis Counter   │────>│  Limit Checker   │
-└──────────────────┘     └──────┬───────────┘
-                                │
-                                v
-                         ┌─────────────┐
-                         │  Postgres   │
-                         │  (Periodic) │
-                         └─────────────┘
-                                │
-                                v
-                         ┌─────────────┐
-                         │   Billing   │
-                         │   System    │
-                         └─────────────┘
+```mermaid
+graph TD
+    APICall[API Call]
+    UsageTracker[Usage Tracker]
+    RedisCounter[Redis Counter]
+    LimitChecker[Limit Checker]
+    Postgres[Postgres<br>Periodic]
+    BillingSystem[Billing<br>System]
+
+    APICall --> UsageTracker
+    UsageTracker --> RedisCounter
+    RedisCounter --> LimitChecker
+    LimitChecker --> Postgres
+    Postgres --> BillingSystem
+
+    style APICall fill:#2196f3,color:#fff
+    style UsageTracker fill:#2196f3,color:#fff
+    style RedisCounter fill:#ff9800,color:#fff
+    style LimitChecker fill:#4caf50,color:#fff
+    style Postgres fill:#9c27b0,color:#fff
+    style BillingSystem fill:#9c27b0,color:#fff
 ```
 
 ### Implementation

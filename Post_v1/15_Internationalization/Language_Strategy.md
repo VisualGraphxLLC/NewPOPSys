@@ -44,27 +44,52 @@ This document outlines PopSystem's multi-language support roadmap, establishing 
 
 ### Development Workflow
 
-```
-1. Feature Development
-   ├─> Developers use translation keys (not hardcoded strings)
-   └─> Keys follow namespace convention: section.component.element
+```mermaid
+graph TD
+    A[1. Feature Development]
+    A --> A1[Developers use translation keys<br>not hardcoded strings]
+    A --> A2[Keys follow namespace convention:<br>section.component.element]
 
-2. String Extraction
-   ├─> Automated extraction during build process
-   ├─> New keys added to base English file
-   └─> CI/CD flags missing translations
+    A1 --> B[2. String Extraction]
+    A2 --> B
+    B --> B1[Automated extraction during build process]
+    B --> B2[New keys added to base English file]
+    B --> B3[CI/CD flags missing translations]
 
-3. Translation Management
-   ├─> Export to translation platform (Lokalise/Phrase)
-   ├─> Professional translators work on new strings
-   ├─> Context screenshots and notes provided
-   └─> Translator review and QA
+    B1 --> C[3. Translation Management]
+    B2 --> C
+    B3 --> C
+    C --> C1[Export to translation platform<br>Lokalise/Phrase]
+    C --> C2[Professional translators work on new strings]
+    C --> C3[Context screenshots and notes provided]
+    C --> C4[Translator review and QA]
 
-4. Import & Deploy
-   ├─> Import completed translations
-   ├─> Automated QA checks (variable replacement, length)
-   ├─> Deploy to staging for linguistic review
-   └─> Production deployment
+    C1 --> D[4. Import & Deploy]
+    C2 --> D
+    C3 --> D
+    C4 --> D
+    D --> D1[Import completed translations]
+    D --> D2[Automated QA checks<br>variable replacement, length]
+    D --> D3[Deploy to staging for linguistic review]
+    D --> D4[Production deployment]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style A1 fill:#64b5f6,color:#fff
+    style A2 fill:#64b5f6,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style B2 fill:#81c784,color:#fff
+    style B3 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style C2 fill:#ffb74d,color:#fff
+    style C3 fill:#ffb74d,color:#fff
+    style C4 fill:#ffb74d,color:#fff
+    style D1 fill:#ba68c8,color:#fff
+    style D2 fill:#ba68c8,color:#fff
+    style D3 fill:#ba68c8,color:#fff
+    style D4 fill:#ba68c8,color:#fff
 ```
 
 ### Translation Quality Gates
@@ -107,21 +132,39 @@ This document outlines PopSystem's multi-language support roadmap, establishing 
 
 ### String Organization
 
-```
-locales/
-├── en/
-│   ├── common.json          # Shared strings (buttons, labels)
-│   ├── auth.json            # Authentication flows
-│   ├── dashboard.json       # Dashboard UI
-│   ├── settings.json        # Settings pages
-│   ├── billing.json         # Billing/payments
-│   ├── errors.json          # Error messages
-│   └── validation.json      # Form validation
-├── es/
-│   ├── common.json
-│   ├── auth.json
-│   └── ...
-└── ...
+```mermaid
+graph TD
+    A[locales/]
+    A --> B[en/]
+    A --> C[es/]
+    A --> D[...]
+
+    B --> B1[common.json<br>Shared strings buttons, labels]
+    B --> B2[auth.json<br>Authentication flows]
+    B --> B3[dashboard.json<br>Dashboard UI]
+    B --> B4[settings.json<br>Settings pages]
+    B --> B5[billing.json<br>Billing/payments]
+    B --> B6[errors.json<br>Error messages]
+    B --> B7[validation.json<br>Form validation]
+
+    C --> C1[common.json]
+    C --> C2[auth.json]
+    C --> C3[...]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style B2 fill:#81c784,color:#fff
+    style B3 fill:#81c784,color:#fff
+    style B4 fill:#81c784,color:#fff
+    style B5 fill:#81c784,color:#fff
+    style B6 fill:#81c784,color:#fff
+    style B7 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style C2 fill:#ffb74d,color:#fff
+    style C3 fill:#ffb74d,color:#fff
 ```
 
 ### Context Provision
@@ -565,31 +608,56 @@ jobs:
 
 ### Quality Assurance Process
 
-```
-1. Automated QA
-   ├─> ESLint rules (no hardcoded strings)
-   ├─> Build-time translation key validation
-   └─> Character length warnings
+```mermaid
+graph TD
+    A[Quality Assurance Process]
+    A --> B[1. Automated QA]
+    A --> C[2. Translation QA]
+    A --> D[3. Visual QA]
+    A --> E[4. Linguistic QA]
+    A --> F[5. User Testing]
 
-2. Translation QA
-   ├─> Variable placeholder verification
-   ├─> Syntax validation
-   └─> Glossary compliance
+    B --> B1[ESLint rules<br>no hardcoded strings]
+    B --> B2[Build-time translation<br>key validation]
+    B --> B3[Character length warnings]
 
-3. Visual QA
-   ├─> Automated screenshot comparison
-   ├─> UI overflow detection
-   └─> Layout shift monitoring
+    C --> C1[Variable placeholder verification]
+    C --> C2[Syntax validation]
+    C --> C3[Glossary compliance]
 
-4. Linguistic QA
-   ├─> Native speaker review
-   ├─> Context verification
-   └─> Cultural appropriateness
+    D --> D1[Automated screenshot comparison]
+    D --> D2[UI overflow detection]
+    D --> D3[Layout shift monitoring]
 
-5. User Testing
-   ├─> Beta testing with target markets
-   ├─> Feedback collection
-   └─> Iterative improvements
+    E --> E1[Native speaker review]
+    E --> E2[Context verification]
+    E --> E3[Cultural appropriateness]
+
+    F --> F1[Beta testing with target markets]
+    F --> F2[Feedback collection]
+    F --> F3[Iterative improvements]
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#00bcd4,color:#fff
+    style F fill:#f44336,color:#fff
+    style B1 fill:#81c784,color:#fff
+    style B2 fill:#81c784,color:#fff
+    style B3 fill:#81c784,color:#fff
+    style C1 fill:#ffb74d,color:#fff
+    style C2 fill:#ffb74d,color:#fff
+    style C3 fill:#ffb74d,color:#fff
+    style D1 fill:#ba68c8,color:#fff
+    style D2 fill:#ba68c8,color:#fff
+    style D3 fill:#ba68c8,color:#fff
+    style E1 fill:#4dd0e1,color:#fff
+    style E2 fill:#4dd0e1,color:#fff
+    style E3 fill:#4dd0e1,color:#fff
+    style F1 fill:#e57373,color:#fff
+    style F2 fill:#e57373,color:#fff
+    style F3 fill:#e57373,color:#fff
 ```
 
 ## Next Steps

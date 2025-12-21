@@ -28,31 +28,42 @@ Real-time for platform metrics, daily for business metrics
 
 ### Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  EXECUTIVE OVERVIEW                         Updated: 2m ago │
-├─────────────────────────────────────────────────────────────┤
-│  KEY METRICS (Big Numbers)                                  │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │   ARR    │  │  Customers│  │   NRR    │  │   NPS    │   │
-│  │  $2.4M   │  │    45     │  │   112%   │  │   58     │   │
-│  │  ↑ 23%   │  │  ↑ 8 MoM  │  │  ↑ 3pts  │  │  ↑ 5pts  │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
-├─────────────────────────────────────────────────────────────┤
-│  REVENUE TREND (12-month chart)                             │
-│  [Line chart: ARR, MRR, Expansion Revenue]                  │
-├────────────────┬────────────────────────────────────────────┤
-│ CUSTOMER HEALTH│ PLATFORM OPERATIONS                        │
-│  Churn: 2.1%   │  Active Campaigns: 127                     │
-│  Health: 85/100│  Completion Rate: 94.2%                    │
-│  At Risk: 3    │  Uptime: 99.97%                            │
-├────────────────┴────────────────────────────────────────────┤
-│  TOP CAMPAIGNS BY REVENUE                                   │
-│  [Horizontal bar chart: Top 10 campaigns]                   │
-├─────────────────────────────────────────────────────────────┤
-│  GEOGRAPHIC DISTRIBUTION                                    │
-│  [Map: Revenue by region with heat mapping]                │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["EXECUTIVE OVERVIEW<br>Updated: 2m ago"]
+    B["KEY METRICS<br>Big Numbers"]
+    C["ARR<br>$2.4M<br>↑ 23%"]
+    D["Customers<br>45<br>↑ 8 MoM"]
+    E["NRR<br>112%<br>↑ 3pts"]
+    F["NPS<br>58<br>↑ 5pts"]
+    G["REVENUE TREND<br>12-month chart<br>Line chart: ARR, MRR, Expansion Revenue"]
+    H["CUSTOMER HEALTH<br>Churn: 2.1%<br>Health: 85/100<br>At Risk: 3"]
+    I["PLATFORM OPERATIONS<br>Active Campaigns: 127<br>Completion Rate: 94.2%<br>Uptime: 99.97%"]
+    J["TOP CAMPAIGNS BY REVENUE<br>Horizontal bar chart: Top 10 campaigns"]
+    K["GEOGRAPHIC DISTRIBUTION<br>Map: Revenue by region with heat mapping"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+    A --> K
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#f44336,color:#fff
+    style I fill:#f44336,color:#fff
+    style J fill:#3f51b5,color:#fff
+    style K fill:#00bcd4,color:#fff
 ```
 
 ### Metrics Displayed
@@ -119,37 +130,57 @@ Real-time (30-second updates)
 
 ### Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  PSP OPERATIONS                            Live │ Filters ▼ │
-├─────────────────────────────────────────────────────────────┤
-│  TODAY'S SNAPSHOT                                           │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐          │
-│  │ Orders  │ │Producing│ │Completed│ │Capacity │          │
-│  │   34    │ │   12    │ │   22    │ │  78%    │          │
-│  └─────────┘ └─────────┘ └─────────┘ └─────────┘          │
-├─────────────────────────────────────────────────────────────┤
-│  PRODUCTION PIPELINE                                        │
-│  [Kanban view: New → In Prod → QA → Shipping → Delivered]  │
-│     8          12        5        6           3             │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────┬─────────────────────────────────┐ │
-│  │ PERFORMANCE METRICS │ REVENUE & FINANCIALS            │ │
-│  │ Exec Time: 4.2 days │ MTD Revenue: $87k               │ │
-│  │ First Pass: 83%     │ Avg Order: $2.1k                │ │
-│  │ Rework Rate: 7%     │ Top Client: BrandCo ($24k)      │ │
-│  │ On-time: 91%        │ Margin: 42%                     │ │
-│  └─────────────────────┴─────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────────┤
-│  ACTIVE ORDERS (Table)                                      │
-│  Order │ Brand   │ Status      │ Due Date  │ Progress  ▼   │
-│  #1234 │ BrandCo │ Producing   │ Dec 23    │ ████░ 75%     │
-│  #1235 │ RetailX │ QA Review   │ Dec 24    │ ████░ 80%     │
-│  ...                                                        │
-├─────────────────────────────────────────────────────────────┤
-│  CAPACITY PLANNING                                          │
-│  [Gantt chart: Scheduled work vs available capacity]       │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["PSP OPERATIONS<br>Live | Filters ▼"]
+    B["TODAY'S SNAPSHOT"]
+    C["Orders<br>34"]
+    D["Producing<br>12"]
+    E["Completed<br>22"]
+    F["Capacity<br>78%"]
+    G["PRODUCTION PIPELINE<br>Kanban view"]
+    H["New<br>8"]
+    I["In Prod<br>12"]
+    J["QA<br>5"]
+    K["Shipping<br>6"]
+    L["Delivered<br>3"]
+    M["PERFORMANCE METRICS<br>Exec Time: 4.2 days<br>First Pass: 83%<br>Rework Rate: 7%<br>On-time: 91%"]
+    N["REVENUE & FINANCIALS<br>MTD Revenue: $87k<br>Avg Order: $2.1k<br>Top Client: BrandCo $24k<br>Margin: 42%"]
+    O["ACTIVE ORDERS TABLE<br>Order | Brand | Status | Due Date | Progress"]
+    P["CAPACITY PLANNING<br>Gantt chart: Scheduled work vs available capacity"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    A --> G
+    G --> H
+    G --> I
+    G --> J
+    G --> K
+    G --> L
+    A --> M
+    A --> N
+    A --> O
+    A --> P
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#e91e63,color:#fff
+    style I fill:#e91e63,color:#fff
+    style J fill:#e91e63,color:#fff
+    style K fill:#e91e63,color:#fff
+    style L fill:#e91e63,color:#fff
+    style M fill:#3f51b5,color:#fff
+    style N fill:#3f51b5,color:#fff
+    style O fill:#00bcd4,color:#fff
+    style P fill:#009688,color:#fff
 ```
 
 ### Metrics Displayed
@@ -235,38 +266,39 @@ Hourly updates
 
 ### Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  BRAND PERFORMANCE                    Brand: [BrandCo ▼]    │
-├─────────────────────────────────────────────────────────────┤
-│  ACTIVE CAMPAIGNS                                           │
-│  ┌─────────────────┐ ┌─────────────────┐ ┌──────────────┐  │
-│  │ Holiday Promo   │ │ Spring Launch   │ │ Q1 Refresh   │  │
-│  │ 156 stores      │ │ 89 stores       │ │ 234 stores   │  │
-│  │ ████████░ 92%   │ │ ████░░░░░ 45%   │ │ ██░░░░░░░ 23%│  │
-│  │ Due: Dec 30     │ │ Due: Jan 15     │ │ Due: Feb 1   │  │
-│  └─────────────────┘ └─────────────────┘ └──────────────┘  │
-├─────────────────────────────────────────────────────────────┤
-│  CAMPAIGN METRICS                                           │
-│  Overall Completion: 87% │ Store Compliance: 94%            │
-│  Avg Approval Time: 1.8d │ First-Pass Approval: 79%         │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────┬───────────────────────────┐│
-│  │ STORE PERFORMANCE           │ ASSET LIBRARY             ││
-│  │ [Map: Store status by geo]  │ Total Assets: 1,247       ││
-│  │  ● Completed   ● In-Progress│ Used This Month: 342      ││
-│  │  ● Not Started ● Issues     │ Top: Logo_2024.svg (89x)  ││
-│  │                             │ Expiring Soon: 12         ││
-│  └─────────────────────────────┴───────────────────────────┘│
-├─────────────────────────────────────────────────────────────┤
-│  APPROVAL WORKFLOW                                          │
-│  Pending Your Review: 7 items                               │
-│  [Card view of items needing approval with thumbnails]      │
-├─────────────────────────────────────────────────────────────┤
-│  COST TRACKING                                              │
-│  Budget: $125k  │  Spent: $87k  │  Committed: $23k          │
-│  [Progress bar showing budget utilization]                  │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["BRAND PERFORMANCE<br>Brand: BrandCo ▼"]
+    B["ACTIVE CAMPAIGNS"]
+    C["Holiday Promo<br>156 stores<br>████████░ 92%<br>Due: Dec 30"]
+    D["Spring Launch<br>89 stores<br>████░░░░░ 45%<br>Due: Jan 15"]
+    E["Q1 Refresh<br>234 stores<br>██░░░░░░░ 23%<br>Due: Feb 1"]
+    F["CAMPAIGN METRICS<br>Overall Completion: 87%<br>Store Compliance: 94%<br>Avg Approval Time: 1.8d<br>First-Pass Approval: 79%"]
+    G["STORE PERFORMANCE<br>Map: Store status by geo<br>● Completed ● In-Progress<br>● Not Started ● Issues"]
+    H["ASSET LIBRARY<br>Total Assets: 1,247<br>Used This Month: 342<br>Top: Logo_2024.svg 89x<br>Expiring Soon: 12"]
+    I["APPROVAL WORKFLOW<br>Pending Your Review: 7 items<br>Card view of items needing approval"]
+    J["COST TRACKING<br>Budget: $125k | Spent: $87k | Committed: $23k<br>Progress bar showing budget utilization"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    A --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#9c27b0,color:#fff
+    style G fill:#3f51b5,color:#fff
+    style H fill:#3f51b5,color:#fff
+    style I fill:#00bcd4,color:#fff
+    style J fill:#f44336,color:#fff
 ```
 
 ### Metrics Displayed
@@ -362,38 +394,42 @@ Real-time for technical metrics, hourly for usage metrics
 
 ### Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  PRODUCT HEALTH                              Last 30 Days   │
-├─────────────────────────────────────────────────────────────┤
-│  ENGAGEMENT METRICS                                         │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐      │
-│  │   MAU    │ │   DAU    │ │ DAU/MAU  │ │  Sessions│      │
-│  │   1,247  │ │    456   │ │   36.6%  │ │  8,234   │      │
-│  │  ↑ 12%   │ │  ↑ 8%    │ │  ↓ 1.2%  │ │  ↑ 15%   │      │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘      │
-├─────────────────────────────────────────────────────────────┤
-│  USER ACTIVITY TREND                                        │
-│  [Line chart: DAU, WAU, MAU over 90 days]                  │
-├─────────────────────────────────────────────────────────────┤
-│  ┌────────────────────────┬────────────────────────────────┐│
-│  │ FEATURE ADOPTION       │ TECHNICAL HEALTH               ││
-│  │ Campaign Mgmt:   98%   │ Uptime:           99.97%       ││
-│  │ Asset Library:   87%   │ Error Rate:       0.08%        ││
-│  │ Approval Flow:   92%   │ P95 Load Time:    1.8s         ││
-│  │ Analytics:       45%   │ API Success:      99.2%        ││
-│  │ Mobile App:      34%   │ Failed Jobs:      12           ││
-│  └────────────────────────┴────────────────────────────────┘│
-├─────────────────────────────────────────────────────────────┤
-│  MODULE ADOPTION                                            │
-│  [Stacked bar: Customers by module combination]            │
-│  Core Only: 12  │  +Analytics: 18  │  +AI: 8  │  All: 7    │
-├─────────────────────────────────────────────────────────────┤
-│  RECENT FEEDBACK (Sorted by upvotes)                        │
-│  ▲156 Bulk approval of similar items                        │
-│  ▲89  Mobile app for store managers                         │
-│  ▲67  Integration with Adobe Creative Cloud                 │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["PRODUCT HEALTH<br>Last 30 Days"]
+    B["ENGAGEMENT METRICS"]
+    C["MAU<br>1,247<br>↑ 12%"]
+    D["DAU<br>456<br>↑ 8%"]
+    E["DAU/MAU<br>36.6%<br>↓ 1.2%"]
+    F["Sessions<br>8,234<br>↑ 15%"]
+    G["USER ACTIVITY TREND<br>Line chart: DAU, WAU, MAU over 90 days"]
+    H["FEATURE ADOPTION<br>Campaign Mgmt: 98%<br>Asset Library: 87%<br>Approval Flow: 92%<br>Analytics: 45%<br>Mobile App: 34%"]
+    I["TECHNICAL HEALTH<br>Uptime: 99.97%<br>Error Rate: 0.08%<br>P95 Load Time: 1.8s<br>API Success: 99.2%<br>Failed Jobs: 12"]
+    J["MODULE ADOPTION<br>Stacked bar: Customers by module combination<br>Core Only: 12 | +Analytics: 18 | +AI: 8 | All: 7"]
+    K["RECENT FEEDBACK<br>Sorted by upvotes<br>▲156 Bulk approval of similar items<br>▲89 Mobile app for store managers<br>▲67 Integration with Adobe Creative Cloud"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+    A --> K
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#3f51b5,color:#fff
+    style I fill:#3f51b5,color:#fff
+    style J fill:#00bcd4,color:#fff
+    style K fill:#f44336,color:#fff
 ```
 
 ### Metrics Displayed
@@ -496,29 +532,39 @@ Support ticket management and customer health monitoring
 
 ### Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  SUPPORT OPERATIONS                         Live Updates    │
-├─────────────────────────────────────────────────────────────┤
-│  TICKET OVERVIEW                                            │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐      │
-│  │  Open    │ │ Overdue  │ │ Avg FRT  │ │ Avg RTT  │      │
-│  │    23    │ │     3    │ │  1.2h    │ │  18.5h   │      │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘      │
-├─────────────────────────────────────────────────────────────┤
-│  MY QUEUE (Assigned to me)                                  │
-│  [List: Urgent tickets requiring attention]                │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────┬───────────────────────────────┐│
-│  │ TICKET TRENDS           │ CUSTOMER HEALTH               ││
-│  │ [Line: Volume over 30d] │ At Risk: 3 customers          ││
-│  │ Peak: Mondays 10am      │ Avg Health: 82/100            ││
-│  │ Common: Login issues    │ QBRs This Week: 2             ││
-│  └─────────────────────────┴───────────────────────────────┘│
-├─────────────────────────────────────────────────────────────┤
-│  CSAT & FEEDBACK                                            │
-│  Current CSAT: 4.6/5  │  Recent Feedback: "Great support!" │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["SUPPORT OPERATIONS<br>Live Updates"]
+    B["TICKET OVERVIEW"]
+    C["Open<br>23"]
+    D["Overdue<br>3"]
+    E["Avg FRT<br>1.2h"]
+    F["Avg RTT<br>18.5h"]
+    G["MY QUEUE<br>Assigned to me<br>List: Urgent tickets requiring attention"]
+    H["TICKET TRENDS<br>Line: Volume over 30d<br>Peak: Mondays 10am<br>Common: Login issues"]
+    I["CUSTOMER HEALTH<br>At Risk: 3 customers<br>Avg Health: 82/100<br>QBRs This Week: 2"]
+    J["CSAT & FEEDBACK<br>Current CSAT: 4.6/5<br>Recent Feedback: Great support!"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#3f51b5,color:#fff
+    style I fill:#3f51b5,color:#fff
+    style J fill:#00bcd4,color:#fff
 ```
 
 ### Metrics Displayed
@@ -563,23 +609,48 @@ Pipeline management, quota tracking, and sales performance
 
 ### Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  SALES PERFORMANCE                          Q4 2024         │
-├─────────────────────────────────────────────────────────────┤
-│  QUOTA ATTAINMENT                                           │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐      │
-│  │  Quota   │ │  Closed  │ │ Progress │ │ Forecast │      │
-│  │  $500k   │ │  $387k   │ │   77%    │ │  $523k   │      │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘      │
-├─────────────────────────────────────────────────────────────┤
-│  PIPELINE                                                   │
-│  [Funnel: Lead → Qualified → Demo → Proposal → Closed]     │
-│    127      45           23      12          8              │
-├─────────────────────────────────────────────────────────────┤
-│  TOP OPPORTUNITIES                                          │
-│  [Table: Company, Value, Stage, Close Date, Probability]   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["SALES PERFORMANCE<br>Q4 2024"]
+    B["QUOTA ATTAINMENT"]
+    C["Quota<br>$500k"]
+    D["Closed<br>$387k"]
+    E["Progress<br>77%"]
+    F["Forecast<br>$523k"]
+    G["PIPELINE"]
+    H["Lead<br>127"]
+    I["Qualified<br>45"]
+    J["Demo<br>23"]
+    K["Proposal<br>12"]
+    L["Closed<br>8"]
+    M["TOP OPPORTUNITIES<br>Table: Company, Value, Stage, Close Date, Probability"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    A --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    A --> M
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#e91e63,color:#fff
+    style I fill:#e91e63,color:#fff
+    style J fill:#e91e63,color:#fff
+    style K fill:#e91e63,color:#fff
+    style L fill:#e91e63,color:#fff
+    style M fill:#00bcd4,color:#fff
 ```
 
 ### Metrics Displayed

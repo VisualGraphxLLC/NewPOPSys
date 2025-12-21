@@ -128,26 +128,46 @@ Route orders by:         Compete/collaborate on:
 
 Brands maintain a roster of approved PSPs with configurable routing rules:
 
-```
-Brand: Acme Corp
-├── PSP Relationships
-│   ├── PSP Alpha (Primary - East Coast)
-│   │   ├── Capabilities: [Offset, Digital, Large Format]
-│   │   ├── Regions: [US-Northeast, US-Southeast]
-│   │   ├── Priority: Primary
-│   │   └── Status: Active
-│   │
-│   ├── PSP Beta (Specialty - Packaging)
-│   │   ├── Capabilities: [Flexo, Packaging, Diecutting]
-│   │   ├── Regions: [All US]
-│   │   ├── Priority: Specialty
-│   │   └── Status: Active
-│   │
-│   └── PSP Gamma (Backup - Multi-region)
-│       ├── Capabilities: [Digital, Fulfillment]
-│       ├── Regions: [US-West, International]
-│       ├── Priority: Failover
-│       └── Status: Active
+```mermaid
+graph TD
+    Brand["Brand: Acme Corp"]
+    Brand --> PSPRel["PSP Relationships"]
+
+    PSPRel --> Alpha["PSP Alpha<br>Primary - East Coast"]
+    Alpha --> AlphaCap["Capabilities:<br>Offset, Digital, Large Format"]
+    Alpha --> AlphaReg["Regions:<br>US-Northeast, US-Southeast"]
+    Alpha --> AlphaPri["Priority: Primary"]
+    Alpha --> AlphaStat["Status: Active"]
+
+    PSPRel --> Beta["PSP Beta<br>Specialty - Packaging"]
+    Beta --> BetaCap["Capabilities:<br>Flexo, Packaging, Diecutting"]
+    Beta --> BetaReg["Regions: All US"]
+    Beta --> BetaPri["Priority: Specialty"]
+    Beta --> BetaStat["Status: Active"]
+
+    PSPRel --> Gamma["PSP Gamma<br>Backup - Multi-region"]
+    Gamma --> GammaCap["Capabilities:<br>Digital, Fulfillment"]
+    Gamma --> GammaReg["Regions:<br>US-West, International"]
+    Gamma --> GammaPri["Priority: Failover"]
+    Gamma --> GammaStat["Status: Active"]
+
+    style Brand fill:#2196f3,color:#fff
+    style PSPRel fill:#4caf50,color:#fff
+    style Alpha fill:#ff9800,color:#fff
+    style Beta fill:#ff9800,color:#fff
+    style Gamma fill:#ff9800,color:#fff
+    style AlphaCap fill:#9c27b0,color:#fff
+    style AlphaReg fill:#9c27b0,color:#fff
+    style AlphaPri fill:#9c27b0,color:#fff
+    style AlphaStat fill:#9c27b0,color:#fff
+    style BetaCap fill:#9c27b0,color:#fff
+    style BetaReg fill:#9c27b0,color:#fff
+    style BetaPri fill:#9c27b0,color:#fff
+    style BetaStat fill:#9c27b0,color:#fff
+    style GammaCap fill:#9c27b0,color:#fff
+    style GammaReg fill:#9c27b0,color:#fff
+    style GammaPri fill:#9c27b0,color:#fff
+    style GammaStat fill:#9c27b0,color:#fff
 ```
 
 ### Regional PSP Assignment

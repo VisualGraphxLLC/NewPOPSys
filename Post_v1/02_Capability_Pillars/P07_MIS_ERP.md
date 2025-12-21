@@ -88,32 +88,16 @@ PopSystem v1 focuses exclusively on **campaign orchestration**, not production m
 
 PSPs use external MIS systems and sync with PopSystem via API:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                       PSP MIS System                        │
-│          (EFI Pace, PrintVis, Tharstern, Custom)            │
-│                                                             │
-│  • Job costing & estimating                                 │
-│  • Production scheduling                                    │
-│  • Equipment tracking                                       │
-│  • Inventory management                                     │
-│  • Purchasing & receiving                                   │
-│  • Invoicing & A/R                                          │
-│  • Financial reporting                                      │
-└─────────────────────────────────────────────────────────────┘
-                           ↑ ↓
-                    REST API + Webhooks
-                           ↑ ↓
-┌─────────────────────────────────────────────────────────────┐
-│                        PopSystem v1                         │
-│                                                             │
-│  • Campaign orchestration                                   │
-│  • Order generation & tracking                              │
-│  • Store fulfillment status                                 │
-│  • Issue/reorder workflow                                   │
-│  • Verification & proof management                          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    MIS["PSP MIS System<br>EFI Pace, PrintVis, Tharstern, Custom<br><br>Job costing & estimating<br>Production scheduling<br>Equipment tracking<br>Inventory management<br>Purchasing & receiving<br>Invoicing & A/R<br>Financial reporting"]
+
+    POP["PopSystem v1<br><br>Campaign orchestration<br>Order generation & tracking<br>Store fulfillment status<br>Issue/reorder workflow<br>Verification & proof management"]
+
+    MIS <-->|REST API + Webhooks| POP
+
+    style MIS fill:#2196f3,color:#fff
+    style POP fill:#4caf50,color:#fff
 ```
 
 **Key Fields:**
@@ -252,39 +236,20 @@ Three strategic approaches to MIS/ERP:
 **Concept:** MIS features built into PopSystem as premium tier.
 
 **Packaging:**
-```
-PopSystem Tiers:
+```mermaid
+graph TD
+    STARTER["PSP Starter - $500/mo<br><br>Campaign orchestration<br>Order tracking<br>Store execution<br>Basic reporting<br>MIS integration required bring your own"]
 
-┌────────────────────────────────────────────────────┐
-│  PSP Starter ($500/mo)                             │
-│  • Campaign orchestration                          │
-│  • Order tracking                                  │
-│  • Store execution                                 │
-│  • Basic reporting                                 │
-│  • MIS integration required (bring your own)       │
-└────────────────────────────────────────────────────┘
+    PRO["PSP Professional - $1,500/mo<br><br>Everything in Starter PLUS:<br>Job costing & estimating<br>Production scheduling<br>Equipment tracking<br>Inventory management<br>Labor tracking<br>Financial subledger<br>QuickBooks/Xero integration"]
 
-┌────────────────────────────────────────────────────┐
-│  PSP Professional ($1,500/mo)                      │
-│  • Everything in Starter, PLUS:                    │
-│  • Job costing & estimating                        │
-│  • Production scheduling                           │
-│  • Equipment tracking                              │
-│  • Inventory management                            │
-│  • Labor tracking                                  │
-│  • Financial subledger                             │
-│  • QuickBooks/Xero integration                     │
-└────────────────────────────────────────────────────┘
+    ENTERPRISE["PSP Enterprise - Custom pricing<br><br>Everything in Professional PLUS:<br>Multi-plant management<br>Advanced GL integration<br>Custom workflows<br>API access unlimited<br>Dedicated support"]
 
-┌────────────────────────────────────────────────────┐
-│  PSP Enterprise (Custom pricing)                   │
-│  • Everything in Professional, PLUS:               │
-│  • Multi-plant management                          │
-│  • Advanced GL integration                         │
-│  • Custom workflows                                │
-│  • API access (unlimited)                          │
-│  • Dedicated support                               │
-└────────────────────────────────────────────────────┘
+    STARTER -->|Upgrade| PRO
+    PRO -->|Upgrade| ENTERPRISE
+
+    style STARTER fill:#2196f3,color:#fff
+    style PRO fill:#ff9800,color:#fff
+    style ENTERPRISE fill:#9c27b0,color:#fff
 ```
 
 **Target Market:**
@@ -313,34 +278,43 @@ PopSystem Tiers:
 
 **Market Segmentation:**
 
-```
-Customer Journey:
+```mermaid
+graph TD
+    SMALL_START["Small PSP<br>New to MIS"]
+    SMALL_COMBO["PopSystem Starter<br>+ PopMIS Standalone"]
+    SMALL_GROW["Grows<br>wants integration"]
+    SMALL_PRO["PopSystem Pro<br>integrated"]
+    SMALL_ENT["Becomes enterprise"]
+    SMALL_MIGRATE["EFI Pace<br>+ PopSystem integration"]
 
-Small PSP, New to MIS
-    ↓
-PopSystem Starter + PopMIS Standalone
-    ↓
-Grows, wants integration
-    ↓
-Upgrades to PopSystem Pro (integrated)
-    ↓
-Becomes enterprise
-    ↓
-Migrates to EFI Pace + PopSystem integration
+    MID_START["Mid-size PSP<br>Has QuickBooks"]
+    MID_PRO["PopSystem Pro<br>integrated QB sync"]
+    MID_STAY["Stays on Pro<br>tier long-term"]
 
+    LARGE_START["Large PSP<br>Has EFI Pace"]
+    LARGE_STARTER["PopSystem Starter<br>+ API integration"]
+    LARGE_STAY["Never needs MIS<br>features already has"]
 
-Mid-size PSP, Has QuickBooks
-    ↓
-PopSystem Pro (integrated, QB sync)
-    ↓
-Stays on Pro tier long-term
+    SMALL_START --> SMALL_COMBO
+    SMALL_COMBO --> SMALL_GROW
+    SMALL_GROW --> SMALL_PRO
+    SMALL_PRO --> SMALL_ENT
+    SMALL_ENT --> SMALL_MIGRATE
 
+    MID_START --> MID_PRO
+    MID_PRO --> MID_STAY
 
-Large PSP, Has EFI Pace
-    ↓
-PopSystem Starter + API integration
-    ↓
-Never needs MIS features (already has)
+    LARGE_START --> LARGE_STARTER
+    LARGE_STARTER --> LARGE_STAY
+
+    style SMALL_START fill:#2196f3,color:#fff
+    style SMALL_COMBO fill:#2196f3,color:#fff
+    style SMALL_PRO fill:#ff9800,color:#fff
+    style SMALL_MIGRATE fill:#9c27b0,color:#fff
+    style MID_START fill:#2196f3,color:#fff
+    style MID_PRO fill:#ff9800,color:#fff
+    style LARGE_START fill:#2196f3,color:#fff
+    style LARGE_STARTER fill:#2196f3,color:#fff
 ```
 
 **Product Catalog:**
@@ -787,32 +761,20 @@ Accounting integration is the most complex aspect of MIS development. Two primar
 **Concept:** PopSystem manages operational data (jobs, costs, inventory). Accounting handled by external system (QuickBooks, Xero, Sage).
 
 **Architecture:**
-```
-┌────────────────────────────────────────────────────────┐
-│              PopSystem MIS Module                      │
-│                                                        │
-│  Operational Data:                                     │
-│  • Job costing                                         │
-│  • Inventory transactions                              │
-│  • Purchase orders                                     │
-│  • Labor time                                          │
-│                                                        │
-│         ↓ Subledger Journals ↓                         │
-└────────────────────────────────────────────────────────┘
-                       ↓
-           Journal Entry Generator
-                       ↓
-┌────────────────────────────────────────────────────────┐
-│          QuickBooks / Xero / Sage (GL)                 │
-│                                                        │
-│  Financial Data:                                       │
-│  • General ledger                                      │
-│  • Accounts receivable                                 │
-│  • Accounts payable                                    │
-│  • Bank reconciliation                                 │
-│  • Tax reporting                                       │
-│  • Financial statements                                │
-└────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    MIS["PopSystem MIS Module<br><br>Operational Data:<br>Job costing<br>Inventory transactions<br>Purchase orders<br>Labor time"]
+
+    GENERATOR["Journal Entry<br>Generator"]
+
+    GL["QuickBooks / Xero / Sage GL<br><br>Financial Data:<br>General ledger<br>Accounts receivable<br>Accounts payable<br>Bank reconciliation<br>Tax reporting<br>Financial statements"]
+
+    MIS -->|Subledger Journals| GENERATOR
+    GENERATOR --> GL
+
+    style MIS fill:#2196f3,color:#fff
+    style GENERATOR fill:#ff9800,color:#fff
+    style GL fill:#4caf50,color:#fff
 ```
 
 **How It Works:**
@@ -870,33 +832,20 @@ Invoice Created (Job #12345):
 **Concept:** PopSystem includes full general ledger, A/R, A/P, and financial reporting.
 
 **Architecture:**
-```
-┌─────────────────────────────────────────────────────────┐
-│           PopSystem Full ERP Platform                   │
-│                                                         │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │  Operational Modules                              │  │
-│  │  • Job costing                                    │  │
-│  │  • Inventory                                      │  │
-│  │  • Purchasing                                     │  │
-│  │  • Labor                                          │  │
-│  └───────────────────────────────────────────────────┘  │
-│                      ↓                                  │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │  General Ledger                                   │  │
-│  │  • Chart of accounts                              │  │
-│  │  • Journal entries                                │  │
-│  │  • Financial statements                           │  │
-│  │  • Multi-currency                                 │  │
-│  └───────────────────────────────────────────────────┘  │
-│                      ↓                                  │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │  Reporting & Compliance                           │  │
-│  │  • Tax reporting                                  │  │
-│  │  • Audit trails                                   │  │
-│  │  • Financial exports                              │  │
-│  └───────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    OPS["Operational Modules<br><br>Job costing<br>Inventory<br>Purchasing<br>Labor"]
+
+    GL["General Ledger<br><br>Chart of accounts<br>Journal entries<br>Financial statements<br>Multi-currency"]
+
+    REPORTING["Reporting & Compliance<br><br>Tax reporting<br>Audit trails<br>Financial exports"]
+
+    OPS --> GL
+    GL --> REPORTING
+
+    style OPS fill:#2196f3,color:#fff
+    style GL fill:#2196f3,color:#fff
+    style REPORTING fill:#4caf50,color:#fff
 ```
 
 **Pros:**
@@ -921,29 +870,26 @@ Invoice Created (Job #12345):
 **Concept:** Best of both worlds. PopSystem maintains detailed subledgers for operational data, with flexible GL integration.
 
 **Architecture:**
-```
-┌─────────────────────────────────────────────────────────┐
-│              PopSystem Subledgers                       │
-│                                                         │
-│  • Job Cost Subledger (detailed job expenses)           │
-│  • Inventory Subledger (detailed stock movements)       │
-│  • A/R Subledger (customer invoices)                    │
-│  • A/P Subledger (vendor bills)                         │
-│                                                         │
-│         ↓ Configurable Mapping ↓                        │
-└─────────────────────────────────────────────────────────┘
-                       ↓
-        ┌──────────────────────────────┐
-        │  Journal Entry Generator     │
-        │  • Account mapping rules     │
-        │  • Summarization logic       │
-        │  • Multi-currency conversion │
-        └──────────────────────────────┘
-                       ↓
-        ┌──────────────┬────────────────┐
-        ↓              ↓                ↓
-  QuickBooks       Xero            Built-in GL
-   Connector     Connector        (Optional)
+```mermaid
+graph TD
+    SUBLEDGERS["PopSystem Subledgers<br><br>Job Cost Subledger detailed job expenses<br>Inventory Subledger detailed stock movements<br>A/R Subledger customer invoices<br>A/P Subledger vendor bills"]
+
+    GENERATOR["Journal Entry Generator<br><br>Account mapping rules<br>Summarization logic<br>Multi-currency conversion"]
+
+    QB["QuickBooks<br>Connector"]
+    XERO["Xero<br>Connector"]
+    BUILTIN["Built-in GL<br>Optional"]
+
+    SUBLEDGERS -->|Configurable Mapping| GENERATOR
+    GENERATOR --> QB
+    GENERATOR --> XERO
+    GENERATOR --> BUILTIN
+
+    style SUBLEDGERS fill:#2196f3,color:#fff
+    style GENERATOR fill:#ff9800,color:#fff
+    style QB fill:#4caf50,color:#fff
+    style XERO fill:#4caf50,color:#fff
+    style BUILTIN fill:#4caf50,color:#fff
 ```
 
 **Key Features:**
@@ -1260,95 +1206,20 @@ Transaction
 
 **Subledger Entities:**
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                  Job Cost Subledger                      │
-└──────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    JOBCOST["Job Cost Subledger<br><br>transactionId UUID<br>jobNumber<br>campaignId<br>transactionDate<br>transactionType<br>description<br>quantity<br>unitCost<br>totalCost<br>glAccountCode<br>posted<br>journalEntryRef"]
 
-JobCostTransaction
-  - transactionId (UUID)
-  - jobNumber
-  - campaignId (link to PopSystem campaign)
-  - transactionDate
-  - transactionType (MATERIAL, LABOR, EQUIPMENT, OVERHEAD, OUTSOURCE)
-  - description
-  - quantity
-  - unitCost
-  - totalCost
-  - glAccountCode (mapped to external GL)
-  - posted (boolean - has it been sent to GL?)
-  - journalEntryRef (GL entry ID after posting)
+    INVENTORY["Inventory Subledger<br><br>transactionId<br>transactionDate<br>transactionType<br>itemSku<br>quantity<br>unitCost<br>totalValue<br>reference<br>warehouseLocation<br>glAccountCode<br>posted"]
 
+    AR["A/R Subledger Invoices<br><br>Invoice:<br>invoiceNumber<br>brandId<br>campaignId<br>invoiceDate<br>dueDate<br>totalAmount<br>amountPaid<br>balanceDue<br>status<br>posted<br><br>InvoiceLine:<br>invoiceNumber<br>lineNumber<br>jobNumber<br>description<br>quantity<br>unitPrice<br>lineTotal<br>glAccountCode"]
 
-┌──────────────────────────────────────────────────────────┐
-│               Inventory Subledger                        │
-└──────────────────────────────────────────────────────────┘
+    AP["A/P Subledger Vendor Bills<br><br>VendorBill:<br>billNumber<br>vendorId<br>billDate<br>dueDate<br>totalAmount<br>amountPaid<br>balanceDue<br>status<br>posted<br><br>BillLine:<br>billNumber<br>lineNumber<br>poNumber<br>description<br>quantity<br>unitCost<br>lineTotal<br>glAccountCode"]
 
-InventoryTransaction
-  - transactionId
-  - transactionDate
-  - transactionType (PURCHASE, CONSUMPTION, ADJUSTMENT, TRANSFER)
-  - itemSku
-  - quantity (+ or -)
-  - unitCost
-  - totalValue
-  - reference (PO number, job number, etc.)
-  - warehouseLocation
-  - glAccountCode
-  - posted
-
-
-┌──────────────────────────────────────────────────────────┐
-│                A/R Subledger (Invoices)                  │
-└──────────────────────────────────────────────────────────┘
-
-Invoice
-  - invoiceNumber
-  - brandId
-  - campaignId
-  - invoiceDate
-  - dueDate
-  - totalAmount
-  - amountPaid
-  - balanceDue
-  - status (DRAFT, SENT, PARTIAL_PAYMENT, PAID, OVERDUE)
-  - posted
-
-InvoiceLine
-  - invoiceNumber
-  - lineNumber
-  - jobNumber
-  - description
-  - quantity
-  - unitPrice
-  - lineTotal
-  - glAccountCode (revenue account)
-
-
-┌──────────────────────────────────────────────────────────┐
-│                A/P Subledger (Vendor Bills)              │
-└──────────────────────────────────────────────────────────┘
-
-VendorBill
-  - billNumber
-  - vendorId
-  - billDate
-  - dueDate
-  - totalAmount
-  - amountPaid
-  - balanceDue
-  - status (PENDING, PAID)
-  - posted
-
-BillLine
-  - billNumber
-  - lineNumber
-  - poNumber
-  - description
-  - quantity
-  - unitCost
-  - lineTotal
-  - glAccountCode (expense account)
+    style JOBCOST fill:#2196f3,color:#fff
+    style INVENTORY fill:#2196f3,color:#fff
+    style AR fill:#2196f3,color:#fff
+    style AP fill:#2196f3,color:#fff
 ```
 
 ---

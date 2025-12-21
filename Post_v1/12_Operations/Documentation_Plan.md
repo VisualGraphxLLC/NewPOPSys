@@ -195,24 +195,58 @@ This document defines the comprehensive documentation strategy for PopSystem, co
 - Developer track (4 hours)
 
 **Training Programs:**
-```
-Foundation Level:
-├── Platform Overview (30 min)
-├── Navigation and Basics (45 min)
-├── Your First Campaign (60 min)
-└── Reporting Essentials (45 min)
 
-Intermediate Level:
-├── Advanced Campaigns (90 min)
-├── Automation and Workflows (60 min)
-├── Integrations (60 min)
-└── Analytics Deep Dive (90 min)
+```mermaid
+graph TD
+    A["Training Programs"]
+    B["Foundation Level"]
+    C["Platform Overview<br>30 min"]
+    D["Navigation and Basics<br>45 min"]
+    E["Your First Campaign<br>60 min"]
+    F["Reporting Essentials<br>45 min"]
+    G["Intermediate Level"]
+    H["Advanced Campaigns<br>90 min"]
+    I["Automation and Workflows<br>60 min"]
+    J["Integrations<br>60 min"]
+    K["Analytics Deep Dive<br>90 min"]
+    L["Advanced Level"]
+    M["API Development<br>120 min"]
+    N["System Optimization<br>60 min"]
+    O["Enterprise Features<br>90 min"]
+    P["Custom Solutions<br>120 min"]
 
-Advanced Level:
-├── API Development (120 min)
-├── System Optimization (60 min)
-├── Enterprise Features (90 min)
-└── Custom Solutions (120 min)
+    A --> B
+    A --> G
+    A --> L
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    G --> H
+    G --> I
+    G --> J
+    G --> K
+    L --> M
+    L --> N
+    L --> O
+    L --> P
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#e91e63,color:#fff
+    style I fill:#e91e63,color:#fff
+    style J fill:#e91e63,color:#fff
+    style K fill:#e91e63,color:#fff
+    style L fill:#f44336,color:#fff
+    style M fill:#3f51b5,color:#fff
+    style N fill:#3f51b5,color:#fff
+    style O fill:#3f51b5,color:#fff
+    style P fill:#3f51b5,color:#fff
 ```
 
 **Format:**
@@ -443,63 +477,150 @@ Advanced Level:
 
 **Information Architecture:**
 
-```
-PopSystem Documentation
-│
-├── Getting Started
-│   ├── Platform Overview
-│   ├── Quick Start by Role
-│   ├── Key Concepts
-│   └── First Steps Checklist
-│
-├── User Guides
-│   ├── PSP Users
-│   │   ├── Account Setup
-│   │   ├── Campaign Management
-│   │   ├── Field Operations
-│   │   └── Reporting
-│   │
-│   ├── Brand Users
-│   │   ├── Getting Started
-│   │   ├── Campaign Briefs
-│   │   ├── Collaboration
-│   │   └── Analytics
-│   │
-│   └── Store/Installer
-│       ├── Mobile App Guide
-│       ├── Task Execution
-│       └── Best Practices
-│
-├── Administrator Guides
-│   ├── Account Administration
-│   ├── User Management
-│   ├── Security Settings
-│   ├── Integrations
-│   └── Advanced Configuration
-│
-├── Developer Documentation
-│   ├── API Reference
-│   ├── Integration Guides
-│   ├── SDKs and Tools
-│   ├── Webhooks
-│   └── Code Examples
-│
-├── Integrations
-│   ├── CRM Systems
-│   ├── Inventory Management
-│   ├── Analytics Tools
-│   └── Authentication (SSO)
-│
-├── Troubleshooting
-│   ├── Common Issues
-│   ├── Error Messages
-│   ├── Performance Tips
-│   └── Browser Compatibility
-│
-└── Release Notes
-    ├── Latest Release
-    ├── Version History
-    └── Deprecation Notices
+```mermaid
+graph TD
+    A["PopSystem Documentation"]
+    B["Getting Started"]
+    C["Platform Overview"]
+    D["Quick Start by Role"]
+    E["Key Concepts"]
+    F["First Steps Checklist"]
+    G["User Guides"]
+    H["PSP Users"]
+    I["Account Setup"]
+    J["Campaign Management"]
+    K["Field Operations"]
+    L["Reporting"]
+    M["Brand Users"]
+    N["Getting Started"]
+    O["Campaign Briefs"]
+    P["Collaboration"]
+    Q["Analytics"]
+    R["Store/Installer"]
+    S["Mobile App Guide"]
+    T["Task Execution"]
+    U["Best Practices"]
+    V["Administrator Guides"]
+    W["Account Administration"]
+    X["User Management"]
+    Y["Security Settings"]
+    Z["Integrations"]
+    AA["Advanced Configuration"]
+    AB["Developer Documentation"]
+    AC["API Reference"]
+    AD["Integration Guides"]
+    AE["SDKs and Tools"]
+    AF["Webhooks"]
+    AG["Code Examples"]
+    AH["Integrations"]
+    AI["CRM Systems"]
+    AJ["Inventory Management"]
+    AK["Analytics Tools"]
+    AL["Authentication SSO"]
+    AM["Troubleshooting"]
+    AN["Common Issues"]
+    AO["Error Messages"]
+    AP["Performance Tips"]
+    AQ["Browser Compatibility"]
+    AR["Release Notes"]
+    AS["Latest Release"]
+    AT["Version History"]
+    AU["Deprecation Notices"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    A --> G
+    G --> H
+    H --> I
+    H --> J
+    H --> K
+    H --> L
+    G --> M
+    M --> N
+    M --> O
+    M --> P
+    M --> Q
+    G --> R
+    R --> S
+    R --> T
+    R --> U
+    A --> V
+    V --> W
+    V --> X
+    V --> Y
+    V --> Z
+    V --> AA
+    A --> AB
+    AB --> AC
+    AB --> AD
+    AB --> AE
+    AB --> AF
+    AB --> AG
+    A --> AH
+    AH --> AI
+    AH --> AJ
+    AH --> AK
+    AH --> AL
+    A --> AM
+    AM --> AN
+    AM --> AO
+    AM --> AP
+    AM --> AQ
+    A --> AR
+    AR --> AS
+    AR --> AT
+    AR --> AU
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#ff9800,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#ff9800,color:#fff
+    style G fill:#9c27b0,color:#fff
+    style H fill:#e91e63,color:#fff
+    style I fill:#673ab7,color:#fff
+    style J fill:#673ab7,color:#fff
+    style K fill:#673ab7,color:#fff
+    style L fill:#673ab7,color:#fff
+    style M fill:#e91e63,color:#fff
+    style N fill:#3f51b5,color:#fff
+    style O fill:#3f51b5,color:#fff
+    style P fill:#3f51b5,color:#fff
+    style Q fill:#3f51b5,color:#fff
+    style R fill:#e91e63,color:#fff
+    style S fill:#00bcd4,color:#fff
+    style T fill:#00bcd4,color:#fff
+    style U fill:#00bcd4,color:#fff
+    style V fill:#f44336,color:#fff
+    style W fill:#795548,color:#fff
+    style X fill:#795548,color:#fff
+    style Y fill:#795548,color:#fff
+    style Z fill:#795548,color:#fff
+    style AA fill:#795548,color:#fff
+    style AB fill:#009688,color:#fff
+    style AC fill:#607d8b,color:#fff
+    style AD fill:#607d8b,color:#fff
+    style AE fill:#607d8b,color:#fff
+    style AF fill:#607d8b,color:#fff
+    style AG fill:#607d8b,color:#fff
+    style AH fill:#8bc34a,color:#fff
+    style AI fill:#cddc39,color:#000
+    style AJ fill:#cddc39,color:#000
+    style AK fill:#cddc39,color:#000
+    style AL fill:#cddc39,color:#000
+    style AM fill:#ffc107,color:#000
+    style AN fill:#ff5722,color:#fff
+    style AO fill:#ff5722,color:#fff
+    style AP fill:#ff5722,color:#fff
+    style AQ fill:#ff5722,color:#fff
+    style AR fill:#9e9e9e,color:#fff
+    style AS fill:#607d8b,color:#fff
+    style AT fill:#607d8b,color:#fff
+    style AU fill:#607d8b,color:#fff
 ```
 
 ### Metadata and Tagging
@@ -878,18 +999,39 @@ Brief description of what this article covers
 
 **Platform Structure:**
 
-```
-PopSystem Video Library
-│
-├── Getting Started Series (10 videos)
-├── PSP Campaign Management (15 videos)
-├── Brand Collaboration (8 videos)
-├── Mobile App Guides (12 videos)
-├── Admin and Setup (10 videos)
-├── Reporting and Analytics (8 videos)
-├── Integrations (6 videos)
-├── Developer Tutorials (10 videos)
-└── What's New (Monthly updates)
+```mermaid
+graph TD
+    A["PopSystem Video Library"]
+    B["Getting Started Series<br>10 videos"]
+    C["PSP Campaign Management<br>15 videos"]
+    D["Brand Collaboration<br>8 videos"]
+    E["Mobile App Guides<br>12 videos"]
+    F["Admin and Setup<br>10 videos"]
+    G["Reporting and Analytics<br>8 videos"]
+    H["Integrations<br>6 videos"]
+    I["Developer Tutorials<br>10 videos"]
+    J["What's New<br>Monthly updates"]
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#9c27b0,color:#fff
+    style E fill:#e91e63,color:#fff
+    style F fill:#3f51b5,color:#fff
+    style G fill:#00bcd4,color:#fff
+    style H fill:#009688,color:#fff
+    style I fill:#f44336,color:#fff
+    style J fill:#ff5722,color:#fff
 ```
 
 **Video Hosting:**

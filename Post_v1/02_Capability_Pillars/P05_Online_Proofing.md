@@ -98,31 +98,25 @@ Online Proofing transforms the approval process from fragmented email chains and
 
 #### Technical Foundation
 
-```
-Proofing State Machine (v2):
-┌──────────────┐
-│   DRAFT      │ ← PSP uploads design
-└──────┬───────┘
-       │
-       ↓
-┌──────────────┐
-│ PENDING      │ ← Submitted for brand review
-│ REVIEW       │
-└──────┬───────┘
-       │
-       ↓
-    ┌──┴──┐
-    │     │
-    ↓     ↓
-┌────────┐ ┌──────────┐
-│APPROVED│ │ CHANGES  │
-│        │ │ REQUESTED│
-└────────┘ └────┬─────┘
-              │
-              ↓
-           ┌──────────┐
-           │ REVISION │ → Back to DRAFT
-           └──────────┘
+```mermaid
+graph TD
+    DRAFT["DRAFT<br>PSP uploads design"]
+    PENDING["PENDING<br>REVIEW<br>Submitted for brand review"]
+    APPROVED["APPROVED"]
+    CHANGES["CHANGES<br>REQUESTED"]
+    REVISION["REVISION<br>Back to DRAFT"]
+
+    DRAFT --> PENDING
+    PENDING --> APPROVED
+    PENDING --> CHANGES
+    CHANGES --> REVISION
+    REVISION --> DRAFT
+
+    style DRAFT fill:#2196f3,color:#fff
+    style PENDING fill:#2196f3,color:#fff
+    style APPROVED fill:#4caf50,color:#fff
+    style CHANGES fill:#ff9800,color:#fff
+    style REVISION fill:#f44336,color:#fff
 ```
 
 #### Success Metrics
@@ -180,75 +174,75 @@ Proofing State Machine (v2):
 
 **Design Approval Workflow (v3):**
 
-```
-┌─────────────┐
-│   DRAFT     │
-└──────┬──────┘
-       │
-       ↓
-┌─────────────────┐
-│ TIER 1 REVIEW   │ ← Brand Marketing
-└──────┬──────────┘
-       │
-       ↓ (approved)
-┌─────────────────┐
-│ TIER 2 REVIEW   │ ← Brand Legal (if required)
-└──────┬──────────┘
-       │
-       ↓ (approved)
-┌─────────────────┐
-│ TIER 3 REVIEW   │ ← Executive (if budget > threshold)
-└──────┬──────────┘
-       │
-       ↓ (approved)
-┌─────────────────┐
-│ FINAL APPROVED  │ → Production released
-└─────────────────┘
+```mermaid
+graph TD
+    DRAFT["DRAFT"]
+    TIER1["TIER 1 REVIEW<br>Brand Marketing"]
+    TIER2["TIER 2 REVIEW<br>Brand Legal if required"]
+    TIER3["TIER 3 REVIEW<br>Executive if budget exceeds threshold"]
+    FINAL["FINAL APPROVED<br>Production released"]
 
-(At any tier: changes requested → back to DRAFT)
+    DRAFT --> TIER1
+    TIER1 -->|approved| TIER2
+    TIER2 -->|approved| TIER3
+    TIER3 -->|approved| FINAL
+    TIER1 -->|changes requested| DRAFT
+    TIER2 -->|changes requested| DRAFT
+    TIER3 -->|changes requested| DRAFT
+
+    style DRAFT fill:#2196f3,color:#fff
+    style TIER1 fill:#2196f3,color:#fff
+    style TIER2 fill:#2196f3,color:#fff
+    style TIER3 fill:#2196f3,color:#fff
+    style FINAL fill:#4caf50,color:#fff
 ```
 
 **Campaign Approval Workflow (v3):**
 
-```
-┌──────────────────┐
-│ KIT ASSEMBLY     │ ← PSP creates campaign kit
-└────────┬─────────┘
-         │
-         ↓
-┌──────────────────┐
-│ PSP INTERNAL QA  │ ← PSP reviews own work
-└────────┬─────────┘
-         │
-         ↓ (QA passed)
-┌──────────────────┐
-│ BRAND REVIEW     │ ← Brand reviews entire kit
-└────────┬─────────┘
-         │
-         ├─ approved ─→ READY FOR ASSIGNMENT
-         │
-         └─ changes ──→ REVISION → back to KIT ASSEMBLY
+```mermaid
+graph TD
+    KIT["KIT ASSEMBLY<br>PSP creates campaign kit"]
+    QA["PSP INTERNAL QA<br>PSP reviews own work"]
+    BRAND["BRAND REVIEW<br>Brand reviews entire kit"]
+    READY["READY FOR<br>ASSIGNMENT"]
+    REVISION["REVISION"]
+
+    KIT --> QA
+    QA -->|QA passed| BRAND
+    BRAND -->|approved| READY
+    BRAND -->|changes| REVISION
+    REVISION --> KIT
+
+    style KIT fill:#2196f3,color:#fff
+    style QA fill:#2196f3,color:#fff
+    style BRAND fill:#2196f3,color:#fff
+    style READY fill:#4caf50,color:#fff
+    style REVISION fill:#ff9800,color:#fff
 ```
 
 **Store Customization Approval (v3):**
 
-```
-┌─────────────────────┐
-│ STORE SUBMITS       │ ← Store requests customization
-│ CUSTOMIZATION       │    (e.g., swap out hero product)
-└──────────┬──────────┘
-           │
-           ↓
-┌─────────────────────┐
-│ BRAND REVIEW        │ ← Brand approves/rejects
-└──────────┬──────────┘
-           │
-           ├─ approved ─→ PSP PRODUCTION QUEUE
-           │
-           ├─ rejected ─→ CLOSED (store notified)
-           │
-           └─ alternate ─→ BRAND COUNTER-PROPOSES
-                            └→ STORE RE-REVIEW
+```mermaid
+graph TD
+    STORE["STORE SUBMITS<br>CUSTOMIZATION<br>e.g. swap out hero product"]
+    BRAND["BRAND REVIEW<br>Brand approves or rejects"]
+    PRODUCTION["PSP PRODUCTION<br>QUEUE"]
+    CLOSED["CLOSED<br>store notified"]
+    COUNTER["BRAND<br>COUNTER-PROPOSES"]
+    REREVIEW["STORE<br>RE-REVIEW"]
+
+    STORE --> BRAND
+    BRAND -->|approved| PRODUCTION
+    BRAND -->|rejected| CLOSED
+    BRAND -->|alternate| COUNTER
+    COUNTER --> REREVIEW
+
+    style STORE fill:#2196f3,color:#fff
+    style BRAND fill:#2196f3,color:#fff
+    style PRODUCTION fill:#4caf50,color:#fff
+    style CLOSED fill:#757575,color:#fff
+    style COUNTER fill:#ff9800,color:#fff
+    style REREVIEW fill:#2196f3,color:#fff
 ```
 
 #### Success Metrics
@@ -307,38 +301,32 @@ Proofing State Machine (v2):
 
 #### AI Architecture
 
-```
-┌──────────────────────────────────────────────┐
-│          AI-Assisted Review Pipeline         │
-└──────────────────────────────────────────────┘
-                     │
-        ┌────────────┼────────────┐
-        │            │            │
-        ↓            ↓            ↓
-┌───────────┐ ┌────────────┐ ┌─────────────┐
-│ Brand     │ │ Content    │ │ Accessibility│
-│ Guideline │ │ Analysis   │ │ Checker      │
-│ Compliance│ │ (OCR+NLP)  │ │ (WCAG)       │
-└─────┬─────┘ └─────┬──────┘ └──────┬──────┘
-      │             │                │
-      └─────────────┴────────────────┘
-                    │
-                    ↓
-         ┌──────────────────┐
-         │ Issue Aggregator │
-         └────────┬─────────┘
-                  │
-                  ↓
-         ┌──────────────────┐
-         │ Auto-Annotation  │
-         │ Generator        │
-         └────────┬─────────┘
-                  │
-                  ↓
-         ┌──────────────────┐
-         │ Reviewer UI      │
-         │ (pre-marked)     │
-         └──────────────────┘
+```mermaid
+graph TD
+    PIPELINE["AI-Assisted Review Pipeline"]
+    BRAND["Brand<br>Guideline<br>Compliance"]
+    CONTENT["Content<br>Analysis<br>OCR + NLP"]
+    ACCESS["Accessibility<br>Checker<br>WCAG"]
+    AGGREGATOR["Issue Aggregator"]
+    GENERATOR["Auto-Annotation<br>Generator"]
+    UI["Reviewer UI<br>pre-marked"]
+
+    PIPELINE --> BRAND
+    PIPELINE --> CONTENT
+    PIPELINE --> ACCESS
+    BRAND --> AGGREGATOR
+    CONTENT --> AGGREGATOR
+    ACCESS --> AGGREGATOR
+    AGGREGATOR --> GENERATOR
+    GENERATOR --> UI
+
+    style PIPELINE fill:#2196f3,color:#fff
+    style BRAND fill:#2196f3,color:#fff
+    style CONTENT fill:#2196f3,color:#fff
+    style ACCESS fill:#2196f3,color:#fff
+    style AGGREGATOR fill:#2196f3,color:#fff
+    style GENERATOR fill:#2196f3,color:#fff
+    style UI fill:#4caf50,color:#fff
 ```
 
 #### Success Metrics
@@ -380,18 +368,15 @@ Proofing State Machine (v2):
 **Direction:** DAM → Proofing
 **Use Case:** Brand pulls approved logos, product images, brand guidelines into proofing context
 
-```
-┌───────────────┐
-│   DAM System  │
-│   (Pillar 2)  │
-└───────┬───────┘
-        │
-        │ API: GET /assets/{id}
-        ↓
-┌───────────────┐
-│   Proofing    │ ← Reference assets during review
-│   Reviewer    │ ← Compare design against source assets
-└───────────────┘
+```mermaid
+graph TD
+    DAM["DAM System<br>Pillar 2"]
+    PROOFING["Proofing<br>Reviewer"]
+
+    DAM -->|API: GET /assets/{id}| PROOFING
+
+    style DAM fill:#2196f3,color:#fff
+    style PROOFING fill:#2196f3,color:#fff
 ```
 
 **Integration Requirements:**
@@ -407,19 +392,19 @@ Proofing State Machine (v2):
 **Direction:** Proofing → Designer (bidirectional)
 **Use Case:** PSP creates design, submits for proofing, brand requests changes, PSP revises in Designer
 
-```
-┌───────────────┐
-│  Designer     │ ─ publish ─→ ┌───────────┐
-│  (Pillar 4)   │               │  Proofing │
-└───────────────┘ ←─ changes ── └───────────┘
-        ↑                              │
-        │                              │
-        └──────── approved ────────────┘
-                      ↓
-              ┌──────────────┐
-              │  Production  │
-              │    Queue     │
-              └──────────────┘
+```mermaid
+graph TD
+    DESIGNER["Designer<br>Pillar 4"]
+    PROOFING["Proofing"]
+    PRODUCTION["Production<br>Queue"]
+
+    DESIGNER -->|publish| PROOFING
+    PROOFING -->|changes| DESIGNER
+    PROOFING -->|approved| PRODUCTION
+
+    style DESIGNER fill:#2196f3,color:#fff
+    style PROOFING fill:#2196f3,color:#fff
+    style PRODUCTION fill:#4caf50,color:#fff
 ```
 
 **Integration Requirements:**
@@ -435,21 +420,15 @@ Proofing State Machine (v2):
 **Direction:** Proofing ↔ Mobile Apps (Pillar 8)
 **Use Case:** Brand managers approve designs from phone during commute, stores review customizations on-site
 
-```
-┌───────────────────┐
-│   iOS/Android     │
-│   Native Apps     │
-│   (Pillar 8)      │
-└─────────┬─────────┘
-          │
-          │ Push notifications
-          ↓
-┌───────────────────┐
-│   Proofing API    │
-│   - GET proofs    │
-│   - POST approval │
-│   - POST comments │
-└───────────────────┘
+```mermaid
+graph TD
+    APPS["iOS/Android<br>Native Apps<br>Pillar 8"]
+    API["Proofing API<br>GET proofs<br>POST approval<br>POST comments"]
+
+    APPS -->|Push notifications| API
+
+    style APPS fill:#2196f3,color:#fff
+    style API fill:#2196f3,color:#fff
 ```
 
 **Integration Requirements:**
@@ -465,16 +444,24 @@ Proofing State Machine (v2):
 **Direction:** Proofing → Email/Push
 **Use Case:** Notify stakeholders of pending approvals, comment replies, deadline warnings
 
-```
-┌───────────────┐
-│   Proofing    │
-│   Workflow    │
-└───────┬───────┘
-        │
-        ├─→ Email (SendGrid/SES)
-        ├─→ Push (Firebase/APNs)
-        ├─→ Slack webhook
-        └─→ Teams webhook
+```mermaid
+graph TD
+    PROOFING["Proofing<br>Workflow"]
+    EMAIL["Email<br>SendGrid/SES"]
+    PUSH["Push<br>Firebase/APNs"]
+    SLACK["Slack webhook"]
+    TEAMS["Teams webhook"]
+
+    PROOFING --> EMAIL
+    PROOFING --> PUSH
+    PROOFING --> SLACK
+    PROOFING --> TEAMS
+
+    style PROOFING fill:#2196f3,color:#fff
+    style EMAIL fill:#2196f3,color:#fff
+    style PUSH fill:#2196f3,color:#fff
+    style SLACK fill:#2196f3,color:#fff
+    style TEAMS fill:#2196f3,color:#fff
 ```
 
 **Notification Types:**
@@ -491,18 +478,15 @@ Proofing State Machine (v2):
 **Direction:** Proofing → MIS
 **Use Case:** Approved designs automatically trigger production orders in PSP's MIS system
 
-```
-┌───────────────┐
-│   Proofing    │
-│   (Approved)  │
-└───────┬───────┘
-        │
-        │ Webhook: proof.approved
-        ↓
-┌───────────────┐
-│   MIS/ERP     │ ← Create production job
-│   (Pillar 7)  │ ← Attach approved files
-└───────────────┘
+```mermaid
+graph TD
+    PROOFING["Proofing<br>Approved"]
+    MIS["MIS/ERP<br>Pillar 7"]
+
+    PROOFING -->|Webhook: proof.approved| MIS
+
+    style PROOFING fill:#4caf50,color:#fff
+    style MIS fill:#2196f3,color:#fff
 ```
 
 **Integration Requirements:**
@@ -884,20 +868,24 @@ Multiple reviewers may proof the same design simultaneously. We need real-time u
 
 **Architecture: WebSocket + Operational Transform (OT)**
 
-```
-┌──────────────┐
-│  Reviewer A  │ ← WebSocket connection
-└──────┬───────┘
-       │
-       ↓ (creates annotation)
-┌──────────────────┐
-│  WebSocket Hub   │ ← Receives event: annotation.created
-│  (SignalR/Pusher)│
-└──────┬───────────┘
-       │
-       ├─→ Broadcast to Reviewer B
-       ├─→ Broadcast to Reviewer C
-       └─→ Persist to database
+```mermaid
+graph TD
+    REVIEWER["Reviewer A<br>WebSocket connection"]
+    HUB["WebSocket Hub<br>SignalR/Pusher"]
+    REVIEWERB["Reviewer B"]
+    REVIEWERC["Reviewer C"]
+    DB["Database"]
+
+    REVIEWER -->|creates annotation| HUB
+    HUB --> REVIEWERB
+    HUB --> REVIEWERC
+    HUB --> DB
+
+    style REVIEWER fill:#2196f3,color:#fff
+    style HUB fill:#2196f3,color:#fff
+    style REVIEWERB fill:#2196f3,color:#fff
+    style REVIEWERC fill:#2196f3,color:#fff
+    style DB fill:#4caf50,color:#fff
 ```
 
 **Conflict Resolution:**
@@ -1014,12 +1002,24 @@ CREATE INDEX idx_annotations_status ON annotations(status);
 
 **Threading Logic:**
 
-```
-Annotation A (parent)
-├─ Reply B (child of A)
-├─ Reply C (child of A)
-│  └─ Reply D (child of C) ← nested reply
-└─ Reply E (child of A)
+```mermaid
+graph TD
+    A["Annotation A<br>parent"]
+    B["Reply B<br>child of A"]
+    C["Reply C<br>child of A"]
+    D["Reply D<br>child of C<br>nested reply"]
+    E["Reply E<br>child of A"]
+
+    A --> B
+    A --> C
+    C --> D
+    A --> E
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#2196f3,color:#fff
+    style C fill:#2196f3,color:#fff
+    style D fill:#2196f3,color:#fff
+    style E fill:#2196f3,color:#fff
 ```
 
 **Query to Fetch Thread:**
