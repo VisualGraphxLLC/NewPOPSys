@@ -39,14 +39,11 @@ function initDocModal() {
         <div class="absolute inset-4 md:inset-8 lg:inset-12 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
             <div class="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
                 <h3 id="doc-modal-title" class="font-semibold text-gray-900 truncate">Loading...</h3>
-                <div class="flex items-center gap-3">
-                    <a id="doc-modal-link" href="#" target="_blank" class="text-sm text-blue-600 hover:text-blue-800">Open in new tab</a>
-                    <button onclick="closeDocModal()" class="p-2 hover:bg-gray-200 rounded-lg transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
+                <button onclick="closeDocModal()" class="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
             <div id="doc-modal-content" class="flex-1 overflow-auto p-6 md:p-8 prose prose-sm md:prose-base max-w-none">
                 <div class="flex items-center justify-center h-32">
@@ -181,7 +178,6 @@ function openDocModal(url, title, type = 'markdown') {
     const modal = document.getElementById('doc-modal');
     const content = document.getElementById('doc-modal-content');
     const titleEl = document.getElementById('doc-modal-title');
-    const linkEl = document.getElementById('doc-modal-link');
 
     // Parse URL for anchor
     const urlObj = new URL(url, window.location.href);
@@ -192,21 +188,6 @@ function openDocModal(url, title, type = 'markdown') {
     currentDocBaseUrl = baseUrl;
 
     titleEl.textContent = title || 'Loading...';
-
-    // For markdown files, use the markdown viewer; for SVG, use direct URL
-    if (type === 'markdown') {
-        // Get relative path from current page location
-        const currentPath = window.location.pathname;
-        const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-        const relativePath = baseUrl.startsWith('http')
-            ? new URL(baseUrl).pathname
-            : new URL(baseUrl, window.location.href).pathname;
-        // Build viewer URL with the file parameter
-        linkEl.href = `${currentDir}markdown-viewer.html?file=${encodeURIComponent(relativePath)}`;
-    } else {
-        linkEl.href = url;
-    }
-
     content.innerHTML = '<div class="flex items-center justify-center h-32"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>';
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
