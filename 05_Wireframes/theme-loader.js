@@ -73,6 +73,7 @@
             body.dark-mode .bg-gray-50,
             body.dark-mode .bg-gray-100 {
                 background-color: #0f172a !important;
+                color: #f1f5f9 !important;
             }
 
             body.dark-mode .bg-gray-200 {
@@ -366,6 +367,7 @@
             body.high-contrast .bg-gray-100,
             body.high-contrast .bg-gray-200 {
                 background-color: #000000 !important;
+                color: #ffffff !important;
             }
 
             body.high-contrast .text-gray-900,
