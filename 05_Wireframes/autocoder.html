@@ -40,6 +40,82 @@
         .stat-card {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
         }
+
+        /* Dark mode specific overrides for AutoCoder page */
+        body.dark-mode .bg-gray-50 {
+            background-color: #0f172a !important;
+        }
+
+        body.dark-mode section.bg-white {
+            background-color: #1e293b !important;
+        }
+
+        body.dark-mode section.bg-gray-100 {
+            background-color: #0f172a !important;
+        }
+
+        body.dark-mode .glow-card {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+        }
+
+        body.dark-mode .bg-white.rounded-xl {
+            background-color: #1e293b !important;
+        }
+
+        body.dark-mode .stat-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%) !important;
+            border: 1px solid #334155;
+        }
+
+        body.dark-mode .text-gray-900 {
+            color: #f1f5f9 !important;
+        }
+
+        body.dark-mode .text-gray-700 {
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-mode .text-gray-600 {
+            color: #94a3b8 !important;
+        }
+
+        body.dark-mode .border-gray-200 {
+            border-color: #334155 !important;
+        }
+
+        /* High contrast specific overrides */
+        body.high-contrast .bg-gray-50,
+        body.high-contrast section.bg-white,
+        body.high-contrast section.bg-gray-100 {
+            background-color: #000000 !important;
+        }
+
+        body.high-contrast .glow-card,
+        body.high-contrast .bg-white.rounded-xl {
+            background-color: #000000 !important;
+            border: 2px solid #ffffff !important;
+        }
+
+        body.high-contrast .stat-card {
+            background: #000000 !important;
+            border: 2px solid #ffffff !important;
+        }
+
+        body.high-contrast .text-gray-900,
+        body.high-contrast .text-gray-700,
+        body.high-contrast .text-gray-600,
+        body.high-contrast .text-gray-500 {
+            color: #ffffff !important;
+        }
+
+        body.high-contrast .border-gray-200 {
+            border-color: #ffffff !important;
+        }
+
+        body.high-contrast .gradient-hero {
+            background: #000000 !important;
+        }
     </style>
 </head>
 
@@ -53,10 +129,30 @@
                 <span class="font-bold text-lg">AutoCoder</span>
                 <span class="text-xs bg-blue-500 px-2 py-0.5 rounded-full">AI Development</span>
             </div>
-            <a href="index.html" class="text-sm text-gray-300 hover:text-white flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Back to Main
-            </a>
+            <div class="flex items-center gap-4">
+                <!-- Mode Toggle -->
+                <div class="appearance-switcher relative">
+                    <button id="mode-toggle" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition text-sm">
+                        <span id="mode-icon">☀️</span>
+                        <span id="mode-label" class="hidden sm:inline">Light</span>
+                    </button>
+                    <div id="mode-dropdown" class="appearance-dropdown hidden absolute right-0 top-full mt-2 bg-slate-800 rounded-lg shadow-xl border border-slate-700 py-2 min-w-[140px] z-50">
+                        <button class="appearance-option w-full px-4 py-2 text-left text-sm hover:bg-slate-700 flex items-center gap-2" data-mode="light">
+                            <span>☀️</span> Light
+                        </button>
+                        <button class="appearance-option w-full px-4 py-2 text-left text-sm hover:bg-slate-700 flex items-center gap-2" data-mode="dark">
+                            <span>🌙</span> Dark
+                        </button>
+                        <button class="appearance-option w-full px-4 py-2 text-left text-sm hover:bg-slate-700 flex items-center gap-2" data-mode="high-contrast">
+                            <span>◐</span> High Contrast
+                        </button>
+                    </div>
+                </div>
+                <a href="index.html" class="text-sm text-gray-300 hover:text-white flex items-center gap-2">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Back to Main
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -279,6 +375,63 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="doc-modal.js"></script>
     <script src="doc-sidebar.js"></script>
+
+    <script>
+        // Mode Toggle functionality
+        const modeToggle = document.getElementById('mode-toggle');
+        const modeDropdown = document.getElementById('mode-dropdown');
+        const modeIcon = document.getElementById('mode-icon');
+        const modeLabel = document.getElementById('mode-label');
+        const modeOptions = document.querySelectorAll('.appearance-option');
+
+        const modeConfig = {
+            light: { icon: '☀️', label: 'Light' },
+            dark: { icon: '🌙', label: 'Dark' },
+            'high-contrast': { icon: '◐', label: 'High Contrast' }
+        };
+
+        function updateModeUI(mode) {
+            const config = modeConfig[mode] || modeConfig.light;
+            modeIcon.textContent = config.icon;
+            modeLabel.textContent = config.label;
+
+            modeOptions.forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.mode === mode);
+                if (opt.dataset.mode === mode) {
+                    opt.style.background = 'var(--accent, #3b82f6)';
+                } else {
+                    opt.style.background = '';
+                }
+            });
+        }
+
+        // Initialize from localStorage
+        const savedMode = localStorage.getItem('appearanceMode') || 'light';
+        updateModeUI(savedMode);
+
+        // Toggle dropdown
+        modeToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modeDropdown.classList.toggle('hidden');
+        });
+
+        // Handle mode selection
+        modeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const mode = option.dataset.mode;
+                if (window.setAppearance) {
+                    window.setAppearance(mode);
+                }
+                updateModeUI(mode);
+                modeDropdown.classList.add('hidden');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            modeDropdown.classList.add('hidden');
+        });
+    </script>
 
 </body>
 
