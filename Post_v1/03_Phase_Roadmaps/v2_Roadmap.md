@@ -261,17 +261,21 @@ Phase 2 transforms PopSystem from a foundational PSP platform into a comprehensi
 
 ## Timeline and Dependencies
 
-```
-Month 6          Month 7          Month 8          Month 9
-[Planning]       [Sprint 1]       [Sprint 2]       [Beta Launch]
-    |                |                |                |
-    v                v                v                v
-Architecture   Brand Portal     Mobile Apps      All Features
-Mobile POC     DAM Core        iPaaS Core       100% Complete
-UX Designs     Mobile MVP      Proofing         App Store Launch
-               (70%)           (80%)            Beta w/ 5 Brands
-                                                Load Testing
-                                                GO/NO-GO
+```mermaid
+graph LR
+    M6["Month 6<br>Planning<br>━━━━━━━━<br>Architecture<br>Mobile POC<br>UX Designs"]
+    M7["Month 7<br>Sprint 1<br>━━━━━━━━<br>Brand Portal<br>DAM Core<br>Mobile MVP<br>(70%)"]
+    M8["Month 8<br>Sprint 2<br>━━━━━━━━<br>Mobile Apps<br>iPaaS Core<br>Proofing<br>(80%)"]
+    M9["Month 9<br>Beta Launch<br>━━━━━━━━<br>All Features<br>100% Complete<br>App Store Launch<br>Beta w/ 5 Brands<br>Load Testing<br>GO/NO-GO"]
+
+    M6 --> M7
+    M7 --> M8
+    M8 --> M9
+
+    style M6 fill:#9c27b0,color:#fff
+    style M7 fill:#2196f3,color:#fff
+    style M8 fill:#ff9800,color:#fff
+    style M9 fill:#4caf50,color:#fff
 ```
 
 **Critical Path:**

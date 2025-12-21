@@ -823,18 +823,21 @@ Phase 4 completes the transformation of PopSystem into a comprehensive ecosystem
 
 ## Timeline and Dependencies
 
-```
-Month 12-13      Month 14-15      Month 16-17      Month 18
-[Foundation]     [Sprint 1]       [Sprint 2]       [Ecosystem Launch]
-    |                |                |                |
-    v                v                v                v
-Architecture   Marketplace 50%  Marketplace 90%  All Features 100%
-ISO 27001      MIS 45%          MIS 85%          Marketplace: $1M GMV
-Planning       Designer 40%     Designer 80%     MIS: 20+ Facilities
-Legal Prep     Enterprise 35%   Enterprise 75%   Designer: 1000+ Designs
-               AR 30%           AR 70%           Enterprise: 10+ Clients
-                                Analytics 60%    AR: 100+ Campaigns
-                                                 GO/NO-GO
+```mermaid
+graph LR
+    M12_13["Month 12-13<br>Foundation<br>━━━━━━━━━━━━<br>Architecture<br>ISO 27001<br>Planning<br>Legal Prep"]
+    M14_15["Month 14-15<br>Sprint 1<br>━━━━━━━━━━━━<br>Marketplace 50%<br>MIS 45%<br>Designer 40%<br>Enterprise 35%<br>AR 30%"]
+    M16_17["Month 16-17<br>Sprint 2<br>━━━━━━━━━━━━<br>Marketplace 90%<br>MIS 85%<br>Designer 80%<br>Enterprise 75%<br>AR 70%<br>Analytics 60%"]
+    M18["Month 18<br>Ecosystem Launch<br>━━━━━━━━━━━━<br>All Features 100%<br>Marketplace: $1M GMV<br>MIS: 20+ Facilities<br>Designer: 1000+ Designs<br>Enterprise: 10+ Clients<br>AR: 100+ Campaigns<br>GO/NO-GO"]
+
+    M12_13 --> M14_15
+    M14_15 --> M16_17
+    M16_17 --> M18
+
+    style M12_13 fill:#2196f3,color:#fff
+    style M14_15 fill:#9c27b0,color:#fff
+    style M16_17 fill:#ff9800,color:#fff
+    style M18 fill:#4caf50,color:#fff
 ```
 
 **Critical Path:**

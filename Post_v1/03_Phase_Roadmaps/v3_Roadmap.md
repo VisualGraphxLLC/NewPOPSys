@@ -509,19 +509,35 @@ Performance Score: quality_rating, on_time_delivery%, defect_rate, response_time
 
 ## Timeline and Dependencies
 
-```
-Month 9          Month 10         Month 11         Month 12
-[Planning &      [Sprint 1]       [Sprint 2]       [Launch]
-Certification]
-    |                |                |                |
-    v                v                v                v
-Architecture   Multi-PSP 50%    Multi-PSP 85%    All Features
-SOC 2 Audit    AI 40%           AI 75%           100% Complete
-Kickoff        Workflow 35%     Workflow 80%     10+ PSPs Live
-Data Pipeline  MIS 30%          MIS 70%          SOC 2 Certified
-               SOC 2 60%        WCAG 2.1 AA
-                                Network Launch
-                                GO/NO-GO
+```mermaid
+graph LR
+    M9["Month 9<br/>Planning &<br/>Certification"]
+    M10["Month 10<br/>Sprint 1"]
+    M11["Month 11<br/>Sprint 2"]
+    M12["Month 12<br/>Launch"]
+
+    M9_1["Architecture<br/>SOC 2 Audit<br/>Kickoff<br/>Data Pipeline"]
+    M10_1["Multi-PSP 50%<br/>AI 40%<br/>Workflow 35%<br/>MIS 30%"]
+    M11_1["Multi-PSP 85%<br/>AI 75%<br/>Workflow 80%<br/>MIS 70%<br/>SOC 2 60%"]
+    M12_1["All Features<br/>100% Complete<br/>10+ PSPs Live<br/>SOC 2 Certified<br/>WCAG 2.1 AA<br/>Network Launch<br/>GO/NO-GO"]
+
+    M9 --> M9_1
+    M10 --> M10_1
+    M11 --> M11_1
+    M12 --> M12_1
+
+    M9_1 --> M10_1
+    M10_1 --> M11_1
+    M11_1 --> M12_1
+
+    style M9 fill:#2196f3,color:#fff
+    style M10 fill:#2196f3,color:#fff
+    style M11 fill:#2196f3,color:#fff
+    style M12 fill:#2196f3,color:#fff
+    style M9_1 fill:#4caf50,color:#fff
+    style M10_1 fill:#ff9800,color:#fff
+    style M11_1 fill:#ff9800,color:#fff
+    style M12_1 fill:#9c27b0,color:#fff
 ```
 
 **Critical Path:**

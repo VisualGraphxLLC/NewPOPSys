@@ -710,24 +710,29 @@ Push notifications show app name and icon from App Store listing.
 - **Suspend/Delete:** Suspend for non-payment or delete tenant
 
 **UI Wireframe:**
-```
-+-----------------------------------------------------+
-| Partner Portal - Acme Agency                         |
-+-----------------------------------------------------+
-| Dashboard | Tenants | Billing | Support | Analytics |
-+-----------------------------------------------------+
+```mermaid
+graph TB
+    Header["Partner Portal - Acme Agency"]
+    Nav["Dashboard | Tenants | Billing | Support | Analytics"]
+    Title["Tenants (12)"]
+    NewBtn["+ New Tenant"]
 
-Tenants (12)                          [+ New Tenant]
+    Table["<table><tr><th>Client Name</th><th>Domain</th><th>MRR</th><th>Users</th></tr><tr><td>Brand A</td><td>branda.acme.io</td><td>$499</td><td>12</td></tr><tr><td>Brand B</td><td>brandb.acme.io</td><td>$899</td><td>24</td></tr><tr><td>Brand C</td><td>brandc.acme.io</td><td>$299</td><td>6</td></tr></table>"]
 
-+--------------------------------------------------+
-| Client Name    | Domain             | MRR   | Users |
-|----------------|--------------------+-------+------|
-| Brand A        | branda.acme.io     | $499  | 12   |
-| Brand B        | brandb.acme.io     | $899  | 24   |
-| Brand C        | brandc.acme.io     | $299  | 6    |
-+--------------------------------------------------+
+    Stats["Total MRR: $8,543 | Total Users: 156 | Avg MRR/Tenant: $712"]
 
-Total MRR: $8,543  |  Total Users: 156  |  Avg MRR/Tenant: $712
+    Header --> Nav
+    Nav --> Title
+    Title -.-> NewBtn
+    Title --> Table
+    Table --> Stats
+
+    style Header fill:#1976d2,color:#fff
+    style Nav fill:#0288d1,color:#fff
+    style Title fill:#0097a7,color:#fff
+    style NewBtn fill:#43a047,color:#fff
+    style Table fill:#5e35b1,color:#fff
+    style Stats fill:#00897b,color:#fff
 ```
 
 ---
@@ -779,12 +784,27 @@ Breakdown by Tenant:
 - Always handled by PopSystem engineering
 
 **Ticket Routing:**
-```javascript
-// Client submits support ticket
-→ Ticket assigned to reseller by default
-→ Reseller triages: handle or escalate
-→ If escalated: PopSystem support takes over
-→ Resolution communicated back through reseller
+```mermaid
+flowchart LR
+    Client["Client submits<br>support ticket"]
+    Reseller["Ticket assigned to<br>reseller by default"]
+    Triage{"Reseller triages:<br>handle or escalate"}
+    Handle["Reseller handles<br>and resolves"]
+    Escalate["PopSystem support<br>takes over"]
+    Resolve["Resolution communicated<br>back through reseller"]
+
+    Client --> Reseller
+    Reseller --> Triage
+    Triage -->|Handle| Handle
+    Triage -->|Escalate| Escalate
+    Escalate --> Resolve
+
+    style Client fill:#1976d2,color:#fff
+    style Reseller fill:#0288d1,color:#fff
+    style Triage fill:#f57c00,color:#fff
+    style Handle fill:#43a047,color:#fff
+    style Escalate fill:#e53935,color:#fff
+    style Resolve fill:#5e35b1,color:#fff
 ```
 
 **SLA Tracking:**

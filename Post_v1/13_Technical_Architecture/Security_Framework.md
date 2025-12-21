@@ -8,31 +8,24 @@ This document outlines PopSystem's comprehensive security architecture, encompas
 
 ## Security Architecture Layers
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 5: AUDIT & MONITORING                                 │
-│  - Security logs │ Anomaly detection │ Incident response    │
-└─────────────────────────────────────────────────────────────┘
-                              ↑
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 4: DATA PROTECTION                                    │
-│  - Encryption at rest │ PII tokenization │ Key management   │
-└─────────────────────────────────────────────────────────────┘
-                              ↑
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 3: AUTHORIZATION                                      │
-│  - RBAC │ Row-level security │ API permissions             │
-└─────────────────────────────────────────────────────────────┘
-                              ↑
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 2: AUTHENTICATION                                     │
-│  - OAuth 2.0 │ MFA │ Session management │ JWT tokens       │
-└─────────────────────────────────────────────────────────────┘
-                              ↑
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 1: PERIMETER                                          │
-│  - WAF │ DDoS protection │ VPC │ Security groups           │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph BT
+    Layer1["LAYER 1: PERIMETER<br>WAF | DDoS protection | VPC | Security groups"]
+    Layer2["LAYER 2: AUTHENTICATION<br>OAuth 2.0 | MFA | Session management | JWT tokens"]
+    Layer3["LAYER 3: AUTHORIZATION<br>RBAC | Row-level security | API permissions"]
+    Layer4["LAYER 4: DATA PROTECTION<br>Encryption at rest | PII tokenization | Key management"]
+    Layer5["LAYER 5: AUDIT & MONITORING<br>Security logs | Anomaly detection | Incident response"]
+
+    Layer1 --> Layer2
+    Layer2 --> Layer3
+    Layer3 --> Layer4
+    Layer4 --> Layer5
+
+    style Layer1 fill:#f44336,color:#fff
+    style Layer2 fill:#ff9800,color:#fff
+    style Layer3 fill:#ffc107,color:#fff
+    style Layer4 fill:#4caf50,color:#fff
+    style Layer5 fill:#2196f3,color:#fff
 ```
 
 ---
@@ -42,13 +35,27 @@ This document outlines PopSystem's comprehensive security architecture, encompas
 ### Web Application Firewall (WAF)
 
 #### v1-v2: Cloud-Native WAF
-```
-AWS WAF / Azure Front Door
-├─ OWASP Top 10 protection
-├─ IP reputation blocking
-├─ Rate limiting (Layer 7)
-├─ Geo-blocking (optional)
-└─ Custom rules for API protection
+```mermaid
+graph TD
+    WAF["AWS WAF / Azure Front Door"]
+    OWASP["OWASP Top 10 protection"]
+    IP["IP reputation blocking"]
+    Rate["Rate limiting - Layer 7"]
+    Geo["Geo-blocking - optional"]
+    Custom["Custom rules for API protection"]
+
+    WAF --> OWASP
+    WAF --> IP
+    WAF --> Rate
+    WAF --> Geo
+    WAF --> Custom
+
+    style WAF fill:#2196f3,color:#fff
+    style OWASP fill:#9c27b0,color:#fff
+    style IP fill:#9c27b0,color:#fff
+    style Rate fill:#9c27b0,color:#fff
+    style Geo fill:#9c27b0,color:#fff
+    style Custom fill:#9c27b0,color:#fff
 ```
 
 #### WAF Rule Sets
@@ -117,70 +124,150 @@ rules:
 
 #### Multi-Layer Defense
 
-```
-Layer 3/4 (Network/Transport):
-├─ AWS Shield Standard / Azure DDoS Protection
-├─ SYN flood protection
-├─ UDP reflection mitigation
-└─ Automatic traffic scrubbing
+```mermaid
+graph TD
+    L34["Layer 3/4<br>Network/Transport"]
+    L7["Layer 7<br>Application"]
 
-Layer 7 (Application):
-├─ WAF rate limiting
-├─ CAPTCHA challenges
-├─ Behavioral analysis
-└─ IP throttling
+    Shield["AWS Shield Standard /<br>Azure DDoS Protection"]
+    SYN["SYN flood protection"]
+    UDP["UDP reflection mitigation"]
+    Scrub["Automatic traffic scrubbing"]
+
+    WAF["WAF rate limiting"]
+    CAPTCHA["CAPTCHA challenges"]
+    Behavioral["Behavioral analysis"]
+    Throttle["IP throttling"]
+
+    L34 --> Shield
+    L34 --> SYN
+    L34 --> UDP
+    L34 --> Scrub
+
+    L7 --> WAF
+    L7 --> CAPTCHA
+    L7 --> Behavioral
+    L7 --> Throttle
+
+    style L34 fill:#f44336,color:#fff
+    style L7 fill:#ff9800,color:#fff
+    style Shield fill:#2196f3,color:#fff
+    style SYN fill:#2196f3,color:#fff
+    style UDP fill:#2196f3,color:#fff
+    style Scrub fill:#2196f3,color:#fff
+    style WAF fill:#4caf50,color:#fff
+    style CAPTCHA fill:#4caf50,color:#fff
+    style Behavioral fill:#4caf50,color:#fff
+    style Throttle fill:#4caf50,color:#fff
 ```
 
 #### DDoS Response Plan
 
-```
-Detection (< 1 minute)
-├─ Automated alerting
-├─ Traffic pattern analysis
-└─ Anomaly detection
+```mermaid
+graph TD
+    Detection["Detection<br>< 1 minute"]
+    Mitigation["Mitigation<br>< 5 minutes"]
+    Recovery["Recovery<br>< 30 minutes"]
 
-Mitigation (< 5 minutes)
-├─ Automatic WAF rule activation
-├─ CDN cache aggressive mode
-├─ Non-essential service degradation
-└─ CAPTCHA for suspicious traffic
+    Alert["Automated alerting"]
+    Pattern["Traffic pattern analysis"]
+    Anomaly["Anomaly detection"]
 
-Recovery (< 30 minutes)
-├─ Gradual service restoration
-├─ Post-incident analysis
-└─ Rule tuning
+    WAF["Automatic WAF rule activation"]
+    CDN["CDN cache aggressive mode"]
+    Degrade["Non-essential service degradation"]
+    CAPTCHA["CAPTCHA for suspicious traffic"]
+
+    Restore["Gradual service restoration"]
+    PostIncident["Post-incident analysis"]
+    Tuning["Rule tuning"]
+
+    Detection --> Alert
+    Detection --> Pattern
+    Detection --> Anomaly
+
+    Mitigation --> WAF
+    Mitigation --> CDN
+    Mitigation --> Degrade
+    Mitigation --> CAPTCHA
+
+    Recovery --> Restore
+    Recovery --> PostIncident
+    Recovery --> Tuning
+
+    Detection ==> Mitigation
+    Mitigation ==> Recovery
+
+    style Detection fill:#f44336,color:#fff
+    style Mitigation fill:#ff9800,color:#fff
+    style Recovery fill:#4caf50,color:#fff
+    style Alert fill:#2196f3,color:#fff
+    style Pattern fill:#2196f3,color:#fff
+    style Anomaly fill:#2196f3,color:#fff
+    style WAF fill:#9c27b0,color:#fff
+    style CDN fill:#9c27b0,color:#fff
+    style Degrade fill:#9c27b0,color:#fff
+    style CAPTCHA fill:#9c27b0,color:#fff
+    style Restore fill:#00bcd4,color:#fff
+    style PostIncident fill:#00bcd4,color:#fff
+    style Tuning fill:#00bcd4,color:#fff
 ```
 
 ### Network Security
 
 #### VPC Architecture (AWS Example)
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  VPC: 10.0.0.0/16                                       │
-│                                                         │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │  Public Subnet (10.0.1.0/24)                    │   │
-│  │  ├─ NAT Gateway                                 │   │
-│  │  ├─ Load Balancer                               │   │
-│  │  └─ Bastion Host (SSH access only)              │   │
-│  └─────────────────────────────────────────────────┘   │
-│                        │                                │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │  Private Subnet (10.0.2.0/24)                   │   │
-│  │  ├─ Application Servers                         │   │
-│  │  ├─ No direct internet access                   │   │
-│  │  └─ Outbound via NAT Gateway only               │   │
-│  └─────────────────────────────────────────────────┘   │
-│                        │                                │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │  Database Subnet (10.0.3.0/24)                  │   │
-│  │  ├─ RDS PostgreSQL                              │   │
-│  │  ├─ Redis Cache                                 │   │
-│  │  └─ No internet access                          │   │
-│  └─────────────────────────────────────────────────┘   │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    VPC["VPC: 10.0.0.0/16"]
+
+    PublicSubnet["Public Subnet<br>10.0.1.0/24"]
+    NAT["NAT Gateway"]
+    LB["Load Balancer"]
+    Bastion["Bastion Host<br>SSH access only"]
+
+    PrivateSubnet["Private Subnet<br>10.0.2.0/24"]
+    AppServers["Application Servers"]
+    NoInternet["No direct internet access"]
+    ViaNAT["Outbound via NAT Gateway only"]
+
+    DBSubnet["Database Subnet<br>10.0.3.0/24"]
+    RDS["RDS PostgreSQL"]
+    Redis["Redis Cache"]
+    NoDB["No internet access"]
+
+    VPC --> PublicSubnet
+    VPC --> PrivateSubnet
+    VPC --> DBSubnet
+
+    PublicSubnet --> NAT
+    PublicSubnet --> LB
+    PublicSubnet --> Bastion
+
+    PrivateSubnet --> AppServers
+    PrivateSubnet --> NoInternet
+    PrivateSubnet --> ViaNAT
+
+    DBSubnet --> RDS
+    DBSubnet --> Redis
+    DBSubnet --> NoDB
+
+    PublicSubnet -.-> PrivateSubnet
+    PrivateSubnet -.-> DBSubnet
+
+    style VPC fill:#2196f3,color:#fff
+    style PublicSubnet fill:#4caf50,color:#fff
+    style PrivateSubnet fill:#ff9800,color:#fff
+    style DBSubnet fill:#f44336,color:#fff
+    style NAT fill:#00bcd4,color:#fff
+    style LB fill:#00bcd4,color:#fff
+    style Bastion fill:#00bcd4,color:#fff
+    style AppServers fill:#9c27b0,color:#fff
+    style NoInternet fill:#9c27b0,color:#fff
+    style ViaNAT fill:#9c27b0,color:#fff
+    style RDS fill:#e91e63,color:#fff
+    style Redis fill:#e91e63,color:#fff
+    style NoDB fill:#e91e63,color:#fff
 ```
 
 #### Security Groups
@@ -247,49 +334,17 @@ DatabaseSG:
 
 #### Authentication Flow
 
-```
-┌──────────┐                                      ┌──────────┐
-│  Client  │                                      │   Auth   │
-│   App    │                                      │  Server  │
-└────┬─────┘                                      └────┬─────┘
-     │                                                 │
-     │  1. GET /authorize?                            │
-     │     response_type=code                         │
-     │     client_id=app123                           │
-     │     redirect_uri=https://app.com/callback      │
-     │     scope=openid profile email                 │
-     │     state=random_state                         │
-     │────────────────────────────────────────────────>│
-     │                                                 │
-     │  2. 302 Redirect to login page                 │
-     │<────────────────────────────────────────────────│
-     │                                                 │
-     │  3. User enters credentials + MFA              │
-     │────────────────────────────────────────────────>│
-     │                                                 │
-     │  4. 302 Redirect with authorization code       │
-     │    https://app.com/callback?                   │
-     │    code=AUTH_CODE&state=random_state           │
-     │<────────────────────────────────────────────────│
-     │                                                 │
-     │  5. POST /token                                │
-     │     grant_type=authorization_code              │
-     │     code=AUTH_CODE                             │
-     │     client_id=app123                           │
-     │     client_secret=SECRET                       │
-     │     redirect_uri=https://app.com/callback      │
-     │────────────────────────────────────────────────>│
-     │                                                 │
-     │  6. Response with tokens                       │
-     │    {                                           │
-     │      "access_token": "...",                    │
-     │      "refresh_token": "...",                   │
-     │      "id_token": "...",                        │
-     │      "token_type": "Bearer",                   │
-     │      "expires_in": 900                         │
-     │    }                                           │
-     │<────────────────────────────────────────────────│
-     │                                                 │
+```mermaid
+sequenceDiagram
+    participant Client as Client App
+    participant Auth as Auth Server
+
+    Client->>Auth: 1. GET /authorize?<br>response_type=code<br>client_id=app123<br>redirect_uri=https://app.com/callback<br>scope=openid profile email<br>state=random_state
+    Auth->>Client: 2. 302 Redirect to login page
+    Client->>Auth: 3. User enters credentials + MFA
+    Auth->>Client: 4. 302 Redirect with authorization code<br>https://app.com/callback?<br>code=AUTH_CODE&state=random_state
+    Client->>Auth: 5. POST /token<br>grant_type=authorization_code<br>code=AUTH_CODE<br>client_id=app123<br>client_secret=SECRET<br>redirect_uri=https://app.com/callback
+    Auth->>Client: 6. Response with tokens<br>{"access_token": "...",<br>"refresh_token": "...",<br>"id_token": "...",<br>"token_type": "Bearer",<br>"expires_in": 900}
 ```
 
 ### Multi-Factor Authentication (MFA)
@@ -468,40 +523,27 @@ app.post('/auth/refresh', async (req, res) => {
 
 #### Role Hierarchy
 
-```
-┌─────────────────────────────────────────────────┐
-│  SUPER_ADMIN (Platform Admin)                   │
-│  - Platform-wide access                         │
-│  - Manage all tenants                           │
-│  - System configuration                         │
-└──────────────────┬──────────────────────────────┘
-                   │
-┌──────────────────▼──────────────────────────────┐
-│  ACCOUNT_OWNER (Tenant Admin)                   │
-│  - Full tenant access                           │
-│  - Billing & settings                           │
-│  - User management                              │
-└──────────────────┬──────────────────────────────┘
-                   │
-    ┌──────────────┴──────────────┐
-    │                             │
-┌───▼─────────┐          ┌────────▼──────┐
-│ TEAM_ADMIN  │          │  BILLING_ADMIN │
-│ - Team mgmt │          │  - Billing only│
-│ - Analytics │          │  - No campaigns│
-└───┬─────────┘          └────────────────┘
-    │
-┌───▼──────────────┐
-│ CAMPAIGN_MANAGER │
-│ - Create/edit    │
-│ - Own campaigns  │
-└───┬──────────────┘
-    │
-┌───▼──────┐
-│  VIEWER  │
-│ - Read   │
-│ - No edit│
-└──────────┘
+```mermaid
+graph TD
+    SuperAdmin["SUPER_ADMIN<br>Platform Admin<br>- Platform-wide access<br>- Manage all tenants<br>- System configuration"]
+    AccountOwner["ACCOUNT_OWNER<br>Tenant Admin<br>- Full tenant access<br>- Billing & settings<br>- User management"]
+    TeamAdmin["TEAM_ADMIN<br>- Team mgmt<br>- Analytics"]
+    BillingAdmin["BILLING_ADMIN<br>- Billing only<br>- No campaigns"]
+    CampaignManager["CAMPAIGN_MANAGER<br>- Create/edit<br>- Own campaigns"]
+    Viewer["VIEWER<br>- Read<br>- No edit"]
+
+    SuperAdmin --> AccountOwner
+    AccountOwner --> TeamAdmin
+    AccountOwner --> BillingAdmin
+    TeamAdmin --> CampaignManager
+    CampaignManager --> Viewer
+
+    style SuperAdmin fill:#f44336,color:#fff
+    style AccountOwner fill:#ff9800,color:#fff
+    style TeamAdmin fill:#ffc107,color:#fff
+    style BillingAdmin fill:#00bcd4,color:#fff
+    style CampaignManager fill:#4caf50,color:#fff
+    style Viewer fill:#2196f3,color:#fff
 ```
 
 #### Permission Model
@@ -859,23 +901,18 @@ await db.payments.create({
 
 #### Key Hierarchy
 
-```
-┌─────────────────────────────────────────┐
-│  Master Key (HSM / Cloud KMS)           │
-│  - Rotated yearly                       │
-│  - Never leaves HSM                     │
-└───────────────┬─────────────────────────┘
-                │
-        ┌───────┴───────┐
-        │               │
-┌───────▼─────┐  ┌──────▼──────┐
-│ Data        │  │ Key         │
-│ Encryption  │  │ Encryption  │
-│ Keys (DEK)  │  │ Keys (KEK)  │
-│ - Per tenant│  │ - Per region│
-│ - Rotated   │  │ - Rotated   │
-│   quarterly │  │   annually  │
-└─────────────┘  └─────────────┘
+```mermaid
+graph TD
+    MasterKey["Master Key<br>HSM / Cloud KMS<br>- Rotated yearly<br>- Never leaves HSM"]
+    DEK["Data Encryption Keys<br>DEK<br>- Per tenant<br>- Rotated quarterly"]
+    KEK["Key Encryption Keys<br>KEK<br>- Per region<br>- Rotated annually"]
+
+    MasterKey --> DEK
+    MasterKey --> KEK
+
+    style MasterKey fill:#f44336,color:#fff
+    style DEK fill:#2196f3,color:#fff
+    style KEK fill:#4caf50,color:#fff
 ```
 
 ---
@@ -1077,12 +1114,24 @@ class AnomalyDetector {
 
 #### Incident Response Workflow
 
-```
-Detection → Containment → Eradication → Recovery → Post-Mortem
-    │            │              │            │            │
-    ├─ Alert     ├─ Isolate     ├─ Remove   ├─ Restore  ├─ Document
-    ├─ Classify  ├─ Preserve    │   threat   ├─ Verify   ├─ Review
-    └─ Notify    └─ Evidence    └─ Patch     └─ Monitor  └─ Improve
+```mermaid
+graph LR
+    Detection["Detection<br>- Alert<br>- Classify<br>- Notify"]
+    Containment["Containment<br>- Isolate<br>- Preserve<br>- Evidence"]
+    Eradication["Eradication<br>- Remove threat<br>- Patch"]
+    Recovery["Recovery<br>- Restore<br>- Verify<br>- Monitor"]
+    PostMortem["Post-Mortem<br>- Document<br>- Review<br>- Improve"]
+
+    Detection --> Containment
+    Containment --> Eradication
+    Eradication --> Recovery
+    Recovery --> PostMortem
+
+    style Detection fill:#f44336,color:#fff
+    style Containment fill:#ff9800,color:#fff
+    style Eradication fill:#ffc107,color:#fff
+    style Recovery fill:#4caf50,color:#fff
+    style PostMortem fill:#2196f3,color:#fff
 ```
 
 ---
@@ -1118,22 +1167,50 @@ Testing Schedule:
 
 ### Patch Management
 
-```
-Critical Vulnerabilities (CVSS 9.0-10.0):
-├─ Notification: Immediate
-├─ Assessment: < 4 hours
-├─ Patch deployment: < 24 hours
-└─ Verification: < 48 hours
+```mermaid
+graph TD
+    Critical["Critical Vulnerabilities<br>CVSS 9.0-10.0"]
+    CritNotif["Notification: Immediate"]
+    CritAssess["Assessment: < 4 hours"]
+    CritPatch["Patch deployment: < 24 hours"]
+    CritVerify["Verification: < 48 hours"]
 
-High Vulnerabilities (CVSS 7.0-8.9):
-├─ Notification: < 24 hours
-├─ Assessment: < 48 hours
-├─ Patch deployment: < 7 days
-└─ Verification: < 10 days
+    High["High Vulnerabilities<br>CVSS 7.0-8.9"]
+    HighNotif["Notification: < 24 hours"]
+    HighAssess["Assessment: < 48 hours"]
+    HighPatch["Patch deployment: < 7 days"]
+    HighVerify["Verification: < 10 days"]
 
-Medium/Low:
-├─ Notification: Weekly digest
-├─ Patch deployment: Next release cycle
+    MedLow["Medium/Low"]
+    MedNotif["Notification: Weekly digest"]
+    MedPatch["Patch deployment: Next release cycle"]
+
+    Critical --> CritNotif
+    Critical --> CritAssess
+    Critical --> CritPatch
+    Critical --> CritVerify
+
+    High --> HighNotif
+    High --> HighAssess
+    High --> HighPatch
+    High --> HighVerify
+
+    MedLow --> MedNotif
+    MedLow --> MedPatch
+
+    style Critical fill:#f44336,color:#fff
+    style CritNotif fill:#e91e63,color:#fff
+    style CritAssess fill:#e91e63,color:#fff
+    style CritPatch fill:#e91e63,color:#fff
+    style CritVerify fill:#e91e63,color:#fff
+    style High fill:#ff9800,color:#fff
+    style HighNotif fill:#ffc107,color:#fff
+    style HighAssess fill:#ffc107,color:#fff
+    style HighPatch fill:#ffc107,color:#fff
+    style HighVerify fill:#ffc107,color:#fff
+    style MedLow fill:#4caf50,color:#fff
+    style MedNotif fill:#2196f3,color:#fff
+    style MedPatch fill:#2196f3,color:#fff
 ```
 
 ---
@@ -1177,22 +1254,55 @@ Privacy:
 
 ### ISO 27001 (v4 Target)
 
-```
-14 Domains:
-├─ Information security policies
-├─ Organization of information security
-├─ Human resource security
-├─ Asset management
-├─ Access control
-├─ Cryptography
-├─ Physical security
-├─ Operations security
-├─ Communications security
-├─ System acquisition/development
-├─ Supplier relationships
-├─ Incident management
-├─ Business continuity
-└─ Compliance
+```mermaid
+graph TD
+    ISO["ISO 27001<br>14 Domains"]
+
+    D1["Information security policies"]
+    D2["Organization of information security"]
+    D3["Human resource security"]
+    D4["Asset management"]
+    D5["Access control"]
+    D6["Cryptography"]
+    D7["Physical security"]
+    D8["Operations security"]
+    D9["Communications security"]
+    D10["System acquisition/development"]
+    D11["Supplier relationships"]
+    D12["Incident management"]
+    D13["Business continuity"]
+    D14["Compliance"]
+
+    ISO --> D1
+    ISO --> D2
+    ISO --> D3
+    ISO --> D4
+    ISO --> D5
+    ISO --> D6
+    ISO --> D7
+    ISO --> D8
+    ISO --> D9
+    ISO --> D10
+    ISO --> D11
+    ISO --> D12
+    ISO --> D13
+    ISO --> D14
+
+    style ISO fill:#2196f3,color:#fff
+    style D1 fill:#9c27b0,color:#fff
+    style D2 fill:#9c27b0,color:#fff
+    style D3 fill:#9c27b0,color:#fff
+    style D4 fill:#9c27b0,color:#fff
+    style D5 fill:#9c27b0,color:#fff
+    style D6 fill:#9c27b0,color:#fff
+    style D7 fill:#9c27b0,color:#fff
+    style D8 fill:#9c27b0,color:#fff
+    style D9 fill:#9c27b0,color:#fff
+    style D10 fill:#9c27b0,color:#fff
+    style D11 fill:#9c27b0,color:#fff
+    style D12 fill:#9c27b0,color:#fff
+    style D13 fill:#9c27b0,color:#fff
+    style D14 fill:#9c27b0,color:#fff
 ```
 
 ---

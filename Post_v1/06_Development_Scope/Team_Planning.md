@@ -20,16 +20,28 @@ This document outlines the resource requirements, organizational structure evolu
 
 ### Phase v2: Foundation Team (Months 1-9)
 
-```
-                    Engineering Lead
-                           |
-        +------------------+------------------+
-        |                  |                  |
-   Backend Team      Frontend Team       Mobile Team
-    (2 devs)            (2 devs)           (1-2 devs)
-        |                  |                  |
-    Core APIs         Web Interface    React Native App
-    DAM Services      Designer UI      PWA Development
+```mermaid
+graph TD
+    EL[Engineering Lead]
+    BT[Backend Team<br>2 devs]
+    FT[Frontend Team<br>2 devs]
+    MT[Mobile Team<br>1-2 devs]
+
+    EL --> BT
+    EL --> FT
+    EL --> MT
+
+    BT --> BA[Core APIs<br>DAM Services]
+    FT --> FA[Web Interface<br>Designer UI]
+    MT --> MA[React Native App<br>PWA Development]
+
+    style EL fill:#e91e63,color:#fff
+    style BT fill:#2196f3,color:#fff
+    style FT fill:#4caf50,color:#fff
+    style MT fill:#ff9800,color:#fff
+    style BA fill:#42a5f5,color:#fff
+    style FA fill:#66bb6a,color:#fff
+    style MA fill:#ffa726,color:#fff
 ```
 
 **Team Composition:**
@@ -41,18 +53,42 @@ This document outlines the resource requirements, organizational structure evolu
 
 ### Phase v3: Scaling Team (Months 10-21)
 
-```
-                    VP Engineering
-                           |
-        +------------------+------------------+------------------+
-        |                  |                  |                  |
-   Backend Team      Frontend Team       Mobile Team        AI/ML Team
-    (3 devs)            (2 devs)           (2 devs)           (2 devs)
-        |                  |                  |                  |
-    Platform Lead      UI/UX Lead        Mobile Lead         ML Lead
-        |                  |                  |                  |
-   Microservices    Component Library   Cross-platform   Smart Features
-   API Gateway      Design System       Performance      Recommendations
+```mermaid
+graph TD
+    VP[VP Engineering]
+    BT[Backend Team<br>3 devs]
+    FT[Frontend Team<br>2 devs]
+    MT[Mobile Team<br>2 devs]
+    AT[AI/ML Team<br>2 devs]
+
+    VP --> BT
+    VP --> FT
+    VP --> MT
+    VP --> AT
+
+    BT --> BL[Platform Lead]
+    FT --> FL[UI/UX Lead]
+    MT --> ML[Mobile Lead]
+    AT --> AL[ML Lead]
+
+    BL --> BA[Microservices<br>API Gateway]
+    FL --> FA[Component Library<br>Design System]
+    ML --> MA[Cross-platform<br>Performance]
+    AL --> AA[Smart Features<br>Recommendations]
+
+    style VP fill:#e91e63,color:#fff
+    style BT fill:#2196f3,color:#fff
+    style FT fill:#4caf50,color:#fff
+    style MT fill:#ff9800,color:#fff
+    style AT fill:#9c27b0,color:#fff
+    style BL fill:#1976d2,color:#fff
+    style FL fill:#388e3c,color:#fff
+    style ML fill:#f57c00,color:#fff
+    style AL fill:#7b1fa2,color:#fff
+    style BA fill:#42a5f5,color:#fff
+    style FA fill:#66bb6a,color:#fff
+    style MA fill:#ffa726,color:#fff
+    style AA fill:#ab47bc,color:#fff
 ```
 
 **Team Composition:**
@@ -70,22 +106,46 @@ This document outlines the resource requirements, organizational structure evolu
 
 ### Phase v4: Full Platform Team (Months 22+)
 
-```
-                         CTO
-                          |
-              +-----------+------------+
-              |                        |
-        VP Engineering           VP Product Engineering
-              |                        |
-    +---------+---------+      +-------+--------+
-    |         |         |      |                |
-Backend    Frontend  Mobile  AI/ML        Marketplace
-  Team       Team     Team    Team           Team
-(4 devs)   (3 devs) (2 devs) (3 devs)      (3 devs)
-    |         |         |       |              |
-Platform  Design   Native   Smart        Distributed
-Services  System    Apps   Features         Systems
-Data Ops  WebUI   PWA/RN   ML Ops      Payment/Vendor
+```mermaid
+graph TD
+    CTO[CTO]
+    VPE[VP Engineering]
+    VPP[VP Product Engineering]
+
+    CTO --> VPE
+    CTO --> VPP
+
+    BT[Backend Team<br>4 devs]
+    FT[Frontend Team<br>3 devs]
+    MT[Mobile Team<br>2 devs]
+    AT[AI/ML Team<br>3 devs]
+    MKT[Marketplace Team<br>3 devs]
+
+    VPE --> BT
+    VPE --> FT
+    VPE --> MT
+    VPP --> AT
+    VPP --> MKT
+
+    BT --> BA[Platform Services<br>Data Ops]
+    FT --> FA[Design System<br>WebUI]
+    MT --> MA[Native Apps<br>PWA/RN]
+    AT --> AA[Smart Features<br>ML Ops]
+    MKT --> MKA[Distributed Systems<br>Payment/Vendor]
+
+    style CTO fill:#d32f2f,color:#fff
+    style VPE fill:#e91e63,color:#fff
+    style VPP fill:#c2185b,color:#fff
+    style BT fill:#2196f3,color:#fff
+    style FT fill:#4caf50,color:#fff
+    style MT fill:#ff9800,color:#fff
+    style AT fill:#9c27b0,color:#fff
+    style MKT fill:#00bcd4,color:#fff
+    style BA fill:#42a5f5,color:#fff
+    style FA fill:#66bb6a,color:#fff
+    style MA fill:#ffa726,color:#fff
+    style AA fill:#ab47bc,color:#fff
+    style MKA fill:#26c6da,color:#fff
 ```
 
 **Team Composition:**
@@ -329,21 +389,42 @@ As AI capabilities advance, PopSystem will integrate AI agents into the developm
 
 ### Hybrid Team Composition Example (v4)
 
-```
-Backend Team (4 human devs + AI agents)
-    |
-    +-- Senior Backend Engineer (FTE)
-    |   +-- AI Code Assistant (Copilot)
-    |   +-- AI Code Reviewer (DeepCode)
-    |
-    +-- Backend Engineer (FTE)
-    |   +-- AI Code Assistant
-    |
-    +-- Backend Engineer (FTE)
-    |   +-- AI Test Generator
-    |
-    +-- Backend Engineer (Contractor)
-        +-- AI Documentation Generator
+```mermaid
+graph TD
+    BT[Backend Team<br>4 human devs + AI agents]
+
+    BE1[Senior Backend Engineer<br>FTE]
+    BE2[Backend Engineer<br>FTE]
+    BE3[Backend Engineer<br>FTE]
+    BE4[Backend Engineer<br>Contractor]
+
+    AI1A[AI Code Assistant<br>Copilot]
+    AI1B[AI Code Reviewer<br>DeepCode]
+    AI2[AI Code Assistant]
+    AI3[AI Test Generator]
+    AI4[AI Documentation Generator]
+
+    BT --> BE1
+    BT --> BE2
+    BT --> BE3
+    BT --> BE4
+
+    BE1 --> AI1A
+    BE1 --> AI1B
+    BE2 --> AI2
+    BE3 --> AI3
+    BE4 --> AI4
+
+    style BT fill:#2196f3,color:#fff
+    style BE1 fill:#1976d2,color:#fff
+    style BE2 fill:#1976d2,color:#fff
+    style BE3 fill:#1976d2,color:#fff
+    style BE4 fill:#42a5f5,color:#fff
+    style AI1A fill:#9c27b0,color:#fff
+    style AI1B fill:#9c27b0,color:#fff
+    style AI2 fill:#9c27b0,color:#fff
+    style AI3 fill:#9c27b0,color:#fff
+    style AI4 fill:#9c27b0,color:#fff
 ```
 
 ### AI Agent Integration Phases

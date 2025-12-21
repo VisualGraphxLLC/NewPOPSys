@@ -303,16 +303,25 @@ capability_confidence = (
 - Review performance ratings and customer reviews
 
 **PSP Comparison Dashboard:**
-```
-+------------------+----------+----------+----------+
-| Metric           | PSP A    | PSP B    | PSP C    |
-+------------------+----------+----------+----------+
-| Quality Score    | 4.8/5.0  | 4.6/5.0  | 4.9/5.0  |
-| Avg Turnaround   | 5.2 days | 4.8 days | 6.1 days |
-| On-time Delivery | 97%      | 94%      | 99%      |
-| Price Index      | 102      | 98       | 110      |
-| Defect Rate      | 0.8%     | 1.2%     | 0.3%     |
-+------------------+----------+----------+----------+
+```mermaid
+graph TB
+    subgraph Dashboard["PSP Comparison Dashboard"]
+        Header["<b>Metric Comparison</b>"]
+
+        PSPA["<b>PSP A</b><br>Quality: 4.8/5.0<br>Turnaround: 5.2 days<br>On-time: 97%<br>Price Index: 102<br>Defect Rate: 0.8%"]
+        PSPB["<b>PSP B</b><br>Quality: 4.6/5.0<br>Turnaround: 4.8 days<br>On-time: 94%<br>Price Index: 98<br>Defect Rate: 1.2%"]
+        PSPC["<b>PSP C</b><br>Quality: 4.9/5.0<br>Turnaround: 6.1 days<br>On-time: 99%<br>Price Index: 110<br>Defect Rate: 0.3%"]
+
+        Header --> PSPA
+        Header --> PSPB
+        Header --> PSPC
+    end
+
+    style Dashboard fill:#263238,stroke:#37474f,color:#fff
+    style Header fill:#1976d2,stroke:#1565c0,color:#fff
+    style PSPA fill:#43a047,stroke:#2e7d32,color:#fff
+    style PSPB fill:#fb8c00,stroke:#ef6c00,color:#fff
+    style PSPC fill:#5e35b1,stroke:#4527a0,color:#fff
 ```
 
 **Sample Request System:**
@@ -370,16 +379,59 @@ def match_psp_to_order(order, brand_preferences, psp_network):
 
 **Comparative Visualizations:**
 
-```
-Quality Score Trend (Last 90 Days)
-5.0 |                    ●─────●
-4.5 |        ●───●──●         ○
-4.0 |    ○                 ■
-3.5 |  ■
-    +─────────────────────────────
-      Jan    Feb    Mar    Apr
+```mermaid
+graph LR
+    subgraph QualityTrend["Quality Score Trend - Last 90 Days"]
+        Jan["January"]
+        Feb["February"]
+        Mar["March"]
+        Apr["April"]
 
-  ● PSP A    ○ PSP B    ■ PSP C
+        JanA["PSP A: 4.5"]
+        FebA["PSP A: 4.7"]
+        MarA["PSP A: 4.8"]
+        AprA["PSP A: 5.0"]
+
+        JanB["PSP B: 4.0"]
+        FebB["PSP B: 4.5"]
+        MarB["PSP B: 4.5"]
+        AprB["PSP B: 4.5"]
+
+        JanC["PSP C: 3.5"]
+        FebC["PSP C: 4.0"]
+        MarC["PSP C: 4.0"]
+        AprC["PSP C: 4.0"]
+
+        Jan -.-> JanA & JanB & JanC
+        Feb -.-> FebA & FebB & FebC
+        Mar -.-> MarA & MarB & MarC
+        Apr -.-> AprA & AprB & AprC
+
+        JanA --> FebA --> MarA --> AprA
+        JanB --> FebB --> MarB --> AprB
+        JanC --> FebC --> MarC --> AprC
+    end
+
+    style QualityTrend fill:#263238,stroke:#37474f,color:#fff
+    style Jan fill:#546e7a,stroke:#37474f,color:#fff
+    style Feb fill:#546e7a,stroke:#37474f,color:#fff
+    style Mar fill:#546e7a,stroke:#37474f,color:#fff
+    style Apr fill:#546e7a,stroke:#37474f,color:#fff
+
+    style JanA fill:#2196f3,stroke:#1976d2,color:#fff
+    style FebA fill:#2196f3,stroke:#1976d2,color:#fff
+    style MarA fill:#2196f3,stroke:#1976d2,color:#fff
+    style AprA fill:#2196f3,stroke:#1976d2,color:#fff
+
+    style JanB fill:#ff9800,stroke:#f57c00,color:#fff
+    style FebB fill:#ff9800,stroke:#f57c00,color:#fff
+    style MarB fill:#ff9800,stroke:#f57c00,color:#fff
+    style AprB fill:#ff9800,stroke:#f57c00,color:#fff
+
+    style JanC fill:#9c27b0,stroke:#7b1fa2,color:#fff
+    style FebC fill:#9c27b0,stroke:#7b1fa2,color:#fff
+    style MarC fill:#9c27b0,stroke:#7b1fa2,color:#fff
+    style AprC fill:#9c27b0,stroke:#7b1fa2,color:#fff
 ```
 
 **Cost Analysis Dashboard:**

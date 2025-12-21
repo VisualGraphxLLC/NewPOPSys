@@ -296,37 +296,22 @@ priority_score = (
 
 ### Mediation Process
 
-```
-1. Conflict Detected
-   ↓
-2. Gather Context from Both Agents
-   - What is each trying to achieve?
-   - What are the constraints?
-   - What are the alternatives?
-   ↓
-3. Consult Knowledge Base
-   - Have we resolved similar conflicts before?
-   - What are the architectural principles?
-   - What do the ADRs say?
-   ↓
-4. Generate Resolution Options
-   - Option A: Compromise solution
-   - Option B: Sequential approach
-   - Option C: Alternative design
-   ↓
-5. Evaluate Options
-   - Technical feasibility
-   - Time/cost impact
-   - Risk assessment
-   ↓
-6. Make Decision or Escalate
-   - If clear winner: Communicate decision
-   - If unclear: Present options to human
-   ↓
-7. Document Resolution
-   - Update knowledge base
-   - Create ADR if architectural
-   - Inform both agents
+```mermaid
+flowchart TD
+    A["1. Conflict Detected"] --> B["2. Gather Context from Both Agents<br>- What is each trying to achieve?<br>- What are the constraints?<br>- What are the alternatives?"]
+    B --> C["3. Consult Knowledge Base<br>- Have we resolved similar conflicts before?<br>- What are the architectural principles?<br>- What do the ADRs say?"]
+    C --> D["4. Generate Resolution Options<br>- Option A: Compromise solution<br>- Option B: Sequential approach<br>- Option C: Alternative design"]
+    D --> E["5. Evaluate Options<br>- Technical feasibility<br>- Time/cost impact<br>- Risk assessment"]
+    E --> F["6. Make Decision or Escalate<br>- If clear winner: Communicate decision<br>- If unclear: Present options to human"]
+    F --> G["7. Document Resolution<br>- Update knowledge base<br>- Create ADR if architectural<br>- Inform both agents"]
+
+    style A fill:#e91e63,color:#fff
+    style B fill:#9c27b0,color:#fff
+    style C fill:#673ab7,color:#fff
+    style D fill:#3f51b5,color:#fff
+    style E fill:#2196f3,color:#fff
+    style F fill:#00bcd4,color:#fff
+    style G fill:#009688,color:#fff
 ```
 
 ## Progress Tracking
@@ -489,22 +474,21 @@ priority_score = (
 
 ### Agent Communication Pattern
 
-```
-Orchestrator                          Pillar Agent
-     |                                      |
-     |------ Task Assignment -------------->|
-     |                                      |
-     |<----- Acknowledgment ---------------|
-     |                                      |
-     |<----- Progress Updates -------------|
-     |                                      |
-     |------ Blocker Resolution ----------->|
-     |                                      |
-     |<----- Completion Notification ------|
-     |                                      |
-     |------ Quality Validation ----------->|
-     |                                      |
-     |<----- Artifacts & Metrics ----------|
+```mermaid
+sequenceDiagram
+    participant O as Orchestrator
+    participant P as Pillar Agent
+
+    O->>P: Task Assignment
+    P->>O: Acknowledgment
+    P->>O: Progress Updates
+    O->>P: Blocker Resolution
+    P->>O: Completion Notification
+    O->>P: Quality Validation
+    P->>O: Artifacts & Metrics
+
+    Note over O: #2196f3
+    Note over P: #4caf50
 ```
 
 ### Coordination Scenarios
@@ -513,66 +497,56 @@ Orchestrator                          Pillar Agent
 
 **Feature**: "AI-powered asset tagging in mobile app"
 
-```
-Orchestrator receives feature request
-   ↓
-Decomposes into tasks:
-   - DAM: Extend asset schema for tags
-   - AI: Build classification service
-   - Platform: Create tag API endpoints
-   - Designer: Design tag UI
-   - Mobile: Implement mobile UI
-   ↓
-Identifies dependencies:
-   - Platform API needs DAM schema first
-   - Mobile UI needs Platform API first
-   - Designer UI needed before Mobile implementation
-   ↓
-Sequences work:
-   Phase 1: DAM schema + AI service (parallel)
-   Phase 2: Platform API + Designer UI (parallel)
-   Phase 3: Mobile implementation
-   ↓
-Assigns tasks with dependency metadata
-   ↓
-Monitors progress and coordinates integration
-   ↓
-Validates end-to-end flow
-   ↓
-Reports feature completion
+```mermaid
+flowchart TD
+    A["Orchestrator receives feature request"] --> B["Decomposes into tasks:<br>- DAM: Extend asset schema for tags<br>- AI: Build classification service<br>- Platform: Create tag API endpoints<br>- Designer: Design tag UI<br>- Mobile: Implement mobile UI"]
+    B --> C["Identifies dependencies:<br>- Platform API needs DAM schema first<br>- Mobile UI needs Platform API first<br>- Designer UI needed before Mobile implementation"]
+    C --> D["Sequences work:<br>Phase 1: DAM schema + AI service (parallel)<br>Phase 2: Platform API + Designer UI (parallel)<br>Phase 3: Mobile implementation"]
+    D --> E["Assigns tasks with dependency metadata"]
+    E --> F["Monitors progress and coordinates integration"]
+    F --> G["Validates end-to-end flow"]
+    G --> H["Reports feature completion"]
+
+    style A fill:#f44336,color:#fff
+    style B fill:#e91e63,color:#fff
+    style C fill:#9c27b0,color:#fff
+    style D fill:#673ab7,color:#fff
+    style E fill:#3f51b5,color:#fff
+    style F fill:#2196f3,color:#fff
+    style G fill:#00bcd4,color:#fff
+    style H fill:#009688,color:#fff
 ```
 
 #### Scenario 2: Emergency Bug Fix
 
 **Bug**: "Asset uploads failing for files > 10MB"
 
-```
-Orchestrator receives critical bug report
-   ↓
-Analyzes symptoms and logs
-   ↓
-Identifies likely owner: DAM Agent
-   ↓
-Assigns high-priority investigation task
-   ↓
-DAM Agent diagnoses: Cloudinary timeout
-   ↓
-DAM Agent proposes: Increase timeout + chunk uploads
-   ↓
-Orchestrator reviews:
-   - Impact: Low-risk change
-   - Testing: Need integration test
-   - Timeline: 4 hours to fix + test
-   ↓
-Approves plan
-   ↓
-Monitors implementation
-   ↓
-Validates fix in staging
-   ↓
-Coordinates deployment
-   ↓
-Confirms production resolution
+```mermaid
+flowchart TD
+    A["Orchestrator receives critical bug report"] --> B["Analyzes symptoms and logs"]
+    B --> C["Identifies likely owner: DAM Agent"]
+    C --> D["Assigns high-priority investigation task"]
+    D --> E["DAM Agent diagnoses: Cloudinary timeout"]
+    E --> F["DAM Agent proposes: Increase timeout + chunk uploads"]
+    F --> G["Orchestrator reviews:<br>- Impact: Low-risk change<br>- Testing: Need integration test<br>- Timeline: 4 hours to fix + test"]
+    G --> H["Approves plan"]
+    H --> I["Monitors implementation"]
+    I --> J["Validates fix in staging"]
+    J --> K["Coordinates deployment"]
+    K --> L["Confirms production resolution"]
+
+    style A fill:#d32f2f,color:#fff
+    style B fill:#c2185b,color:#fff
+    style C fill:#7b1fa2,color:#fff
+    style D fill:#512da8,color:#fff
+    style E fill:#303f9f,color:#fff
+    style F fill:#1976d2,color:#fff
+    style G fill:#0288d1,color:#fff
+    style H fill:#0097a7,color:#fff
+    style I fill:#00796b,color:#fff
+    style J fill:#388e3c,color:#fff
+    style K fill:#689f38,color:#fff
+    style L fill:#afb42b,color:#fff
 ```
 
 ## Success Metrics
