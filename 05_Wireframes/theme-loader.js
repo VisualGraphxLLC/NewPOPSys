@@ -136,18 +136,34 @@
                 border-color: #475569 !important;
             }
 
-            /* Dark mode colored pills/badges - keep their colors but adjust for visibility */
+            /* Dark mode colored pills/badges - keep their colors and text dark for readability */
             body.dark-mode .bg-yellow-400,
             body.dark-mode .bg-purple-400,
-            body.dark-mode .bg-blue-400 {
-                opacity: 0.9;
+            body.dark-mode .bg-blue-400,
+            body.dark-mode .bg-teal-400,
+            body.dark-mode .bg-green-400 {
+                opacity: 1;
             }
 
-            /* Dark mode text inside colored areas - use light text for contrast */
-            body.dark-mode .text-yellow-900,
-            body.dark-mode .text-purple-900,
-            body.dark-mode .text-blue-900,
-            body.dark-mode .text-teal-900 {
+            /* Keep badge text DARK inside colored backgrounds (Q1, Q2, Q3, Q4, Q5 badges) */
+            body.dark-mode .bg-yellow-400 .text-yellow-900,
+            body.dark-mode .bg-yellow-400.text-yellow-900,
+            body.dark-mode .bg-purple-400 .text-purple-900,
+            body.dark-mode .bg-purple-400.text-purple-900,
+            body.dark-mode .bg-blue-400 .text-blue-900,
+            body.dark-mode .bg-blue-400.text-blue-900,
+            body.dark-mode .bg-teal-400 .text-teal-900,
+            body.dark-mode .bg-teal-400.text-teal-900,
+            body.dark-mode .bg-green-400 .text-green-900,
+            body.dark-mode .bg-green-400.text-green-900 {
+                color: #1e293b !important;
+            }
+
+            /* Dark mode text inside OTHER colored areas - use light text for contrast */
+            body.dark-mode .text-yellow-900:not(.bg-yellow-400):not([class*="bg-yellow-400"]),
+            body.dark-mode .text-purple-900:not(.bg-purple-400):not([class*="bg-purple-400"]),
+            body.dark-mode .text-blue-900:not(.bg-blue-400):not([class*="bg-blue-400"]),
+            body.dark-mode .text-teal-900:not(.bg-teal-400):not([class*="bg-teal-400"]) {
                 color: #f1f5f9 !important;
             }
 
@@ -422,16 +438,25 @@
                 color: #ffffff !important;
             }
 
-            /* High contrast colored pills - make text visible */
+            /* High contrast colored pills - keep badge text DARK for readability */
             body.high-contrast .bg-yellow-400,
             body.high-contrast .bg-purple-400,
-            body.high-contrast .bg-blue-400 {
+            body.high-contrast .bg-blue-400,
+            body.high-contrast .bg-teal-400,
+            body.high-contrast .bg-green-400 {
                 border: 2px solid #ffffff !important;
             }
 
             body.high-contrast .bg-yellow-400 .text-yellow-900,
+            body.high-contrast .bg-yellow-400.text-yellow-900,
             body.high-contrast .bg-purple-400 .text-purple-900,
-            body.high-contrast .bg-blue-400 .text-blue-900 {
+            body.high-contrast .bg-purple-400.text-purple-900,
+            body.high-contrast .bg-blue-400 .text-blue-900,
+            body.high-contrast .bg-blue-400.text-blue-900,
+            body.high-contrast .bg-teal-400 .text-teal-900,
+            body.high-contrast .bg-teal-400.text-teal-900,
+            body.high-contrast .bg-green-400 .text-green-900,
+            body.high-contrast .bg-green-400.text-green-900 {
                 color: #000000 !important;
             }
 
