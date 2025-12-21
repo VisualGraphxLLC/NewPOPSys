@@ -405,34 +405,34 @@ Track 1 (2) → Track 14 (7) → Track 16: Data Residency (1)
 
 ```mermaid
 flowchart TB
-    T1[Track 1\nFoundation]
+    T1[Track 1<br>Foundation]
 
-    T1 --> T2[Track 2\nBusiness Model]
-    T1 --> T3[Track 3\nCapability Pillars]
-    T1 --> T5[Track 5\nCompetitive Analysis]
+    T1 --> T2[Track 2<br>Business Model]
+    T1 --> T3[Track 3<br>Capability Pillars]
+    T1 --> T5[Track 5<br>Competitive Analysis]
 
-    T2 --> T4[Track 4\nRoadmaps]
+    T2 --> T4[Track 4<br>Roadmaps]
     T3 --> T4
-    T5 --> T6[Track 6\nRevenue]
+    T5 --> T6[Track 6<br>Revenue]
     T2 --> T6
 
-    T4 --> T7[Track 7\nArchitecture]
-    T4 --> T8[Track 8\nModular]
-    T4 --> T9[Track 9\nDev Scope]
-    T6 --> T12[Track 12\nGTM]
+    T4 --> T7[Track 7<br>Architecture]
+    T4 --> T8[Track 8<br>Modular]
+    T4 --> T9[Track 9<br>Dev Scope]
+    T6 --> T12[Track 12<br>GTM]
 
-    T9 --> T10[Track 10\nAI Agents]
+    T9 --> T10[Track 10<br>AI Agents]
 
-    T7 --> T11[Track 11\nRisk]
+    T7 --> T11[Track 11<br>Risk]
     T8 --> T11
     T10 --> T11
-    T12 --> T13[Track 13\nInvestment]
+    T12 --> T13[Track 13<br>Investment]
 
-    T11 --> T14[Track 14\nLegal]
-    T11 --> T15[Track 15\nOperations]
+    T11 --> T14[Track 14<br>Legal]
+    T11 --> T15[Track 15<br>Operations]
 
-    T13 --> T16[Track 16\ni18n]
-    T13 --> T17[Track 17\nAnalytics]
+    T13 --> T16[Track 16<br>i18n]
+    T13 --> T17[Track 17<br>Analytics]
     T14 --> EXEC[Execute v2]
     T15 --> EXEC
     T16 --> EXEC

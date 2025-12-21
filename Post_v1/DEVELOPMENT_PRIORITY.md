@@ -8,11 +8,11 @@
 
 ```mermaid
 flowchart LR
-    T1[Tier 1\nFoundations] --> T2[Tier 2\nStickiness]
-    T2 --> T3[Tier 3\nRevenue]
-    T3 --> T4[Tier 4\nDifferentiation]
-    T4 --> T5[Tier 5\nAdvanced]
-    T5 --> T6[Tier 6\nNetwork Effects]
+    T1[Tier 1<br>Foundations] --> T2[Tier 2<br>Stickiness]
+    T2 --> T3[Tier 3<br>Revenue]
+    T3 --> T4[Tier 4<br>Differentiation]
+    T4 --> T5[Tier 5<br>Advanced]
+    T5 --> T6[Tier 6<br>Network Effects]
 
     style T1 fill:#2196f3,color:#fff
     style T2 fill:#4caf50,color:#fff
@@ -71,8 +71,8 @@ flowchart LR
         Mobile --> Proofing
     end
 
-    DAM -.->|Assets are foundation| Note1[Mobile and Proofing\nboth need asset references]
-    Mobile -.->|Extends DAM to field| Note2[Photos flow into DAM\nMost visible touchpoint]
+    DAM -.->|Assets are foundation| Note1[Mobile and Proofing<br>both need asset references]
+    Mobile -.->|Extends DAM to field| Note2[Photos flow into DAM<br>Most visible touchpoint]
     Proofing -.->|Builds on both| Note3[Proof assets + Mobile approvals]
 
     style DAM fill:#4caf50,color:#fff
@@ -113,9 +113,9 @@ flowchart LR
         WL --> WF[Workflow iPaaS]
     end
 
-    BF -.-> R1[Biggest revenue unlock\nDirect brand subscriptions]
-    WL -.-> R2[Multiply through partners\nEach brings 5-20 brands]
-    WF -.-> R3[Enterprise requirement\nUnlocks larger deals]
+    BF -.-> R1[Biggest revenue unlock<br>Direct brand subscriptions]
+    WL -.-> R2[Multiply through partners<br>Each brings 5-20 brands]
+    WF -.-> R3[Enterprise requirement<br>Unlocks larger deals]
 
     style BF fill:#4caf50,color:#fff
     style WL fill:#9c27b0,color:#fff
@@ -158,10 +158,10 @@ flowchart LR
         PSP --> Acad[Training Academy]
     end
 
-    AI -.-> N1[Monetize collected data\nImmediate premium revenue]
-    Des -.-> N2[Reduce external dependency\nKeep users in platform]
-    PSP -.-> N3[Tool → Marketplace\nBusiness model shift]
-    Acad -.-> N4[Standardize quality\nCertification economy]
+    AI -.-> N1[Monetize collected data<br>Immediate premium revenue]
+    Des -.-> N2[Reduce external dependency<br>Keep users in platform]
+    PSP -.-> N3[Tool → Marketplace<br>Business model shift]
+    Acad -.-> N4[Standardize quality<br>Certification economy]
 
     style AI fill:#ff5722,color:#fff
     style Des fill:#00bcd4,color:#fff
@@ -207,11 +207,11 @@ flowchart LR
         Apps --> FWL[Full White-Label]
     end
 
-    AII -.-> N1[Builds on AI Data\nSame infrastructure]
-    MIS -.-> N2[Deep PSP integration\nComplete dependency]
-    FP -.-> N3[Enterprise requirement\nBrand relationships]
-    Apps -.-> N4[Expand mobile\nStore app learnings]
-    FWL -.-> N5[Reseller program\nFull feature set]
+    AII -.-> N1[Builds on AI Data<br>Same infrastructure]
+    MIS -.-> N2[Deep PSP integration<br>Complete dependency]
+    FP -.-> N3[Enterprise requirement<br>Brand relationships]
+    Apps -.-> N4[Expand mobile<br>Store app learnings]
+    FWL -.-> N5[Reseller program<br>Full feature set]
 
     style AII fill:#ff9800,color:#fff
     style MIS fill:#4caf50,color:#fff
@@ -256,10 +256,10 @@ flowchart LR
         FD --> Cert[Certifications]
     end
 
-    MP -.-> N1[THE network effect\nOnce it works, unstoppable]
-    FMIS -.-> N2[Complete PSP lock-in\nThey can't leave]
-    FD -.-> N3[May be partnership\nDepends on marketplace]
-    Cert -.-> N4[Industry standard\nLong-term moat]
+    MP -.-> N1[THE network effect<br>Once it works, unstoppable]
+    FMIS -.-> N2[Complete PSP lock-in<br>They can't leave]
+    FD -.-> N3[May be partnership<br>Depends on marketplace]
+    Cert -.-> N4[Industry standard<br>Long-term moat]
 
     style MP fill:#ffc107,color:#000
     style FMIS fill:#4caf50,color:#fff
@@ -385,27 +385,27 @@ flowchart LR
 ```mermaid
 flowchart TB
     subgraph T1[Tier 1: PROVE IT]
-        P1[Core works\nPSPs pay\nExecutions happen]
+        P1[Core works<br>PSPs pay<br>Executions happen]
     end
 
     subgraph T2[Tier 2: STICK IT]
-        P2[Users can't leave\nAssets stored\nHabits formed]
+        P2[Users can't leave<br>Assets stored<br>Habits formed]
     end
 
     subgraph T3[Tier 3: GROW IT]
-        P3[More payers\nMore channels\nBigger deals]
+        P3[More payers<br>More channels<br>Bigger deals]
     end
 
     subgraph T4[Tier 4: DEFEND IT]
-        P4[AI moat\nDesign lock-in\nNetwork forming]
+        P4[AI moat<br>Design lock-in<br>Network forming]
     end
 
     subgraph T5[Tier 5: DEEPEN IT]
-        P5[Complete solution\nEnterprise ready\nPartners multiplying]
+        P5[Complete solution<br>Enterprise ready<br>Partners multiplying]
     end
 
     subgraph T6[Tier 6: DOMINATE IT]
-        P6[Network effects\nIndustry standard\nWinner-take-most]
+        P6[Network effects<br>Industry standard<br>Winner-take-most]
     end
 
     T1 --> T2 --> T3 --> T4 --> T5 --> T6
