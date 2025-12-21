@@ -197,6 +197,116 @@
                 background-color: #475569 !important;
             }
 
+            /* Dark mode for Technical Architecture & Research sections */
+            body.dark-mode .bg-gradient-to-br {
+                background: #1e293b !important;
+            }
+
+            body.dark-mode .border-emerald-200,
+            body.dark-mode .border-emerald-100,
+            body.dark-mode .border-indigo-200,
+            body.dark-mode .border-indigo-100,
+            body.dark-mode .border-rose-200,
+            body.dark-mode .border-rose-100,
+            body.dark-mode .border-orange-200 {
+                border-color: #475569 !important;
+            }
+
+            body.dark-mode .text-emerald-900,
+            body.dark-mode .text-emerald-800,
+            body.dark-mode .text-emerald-700,
+            body.dark-mode .text-indigo-900,
+            body.dark-mode .text-indigo-800,
+            body.dark-mode .text-indigo-700,
+            body.dark-mode .text-rose-900,
+            body.dark-mode .text-rose-800,
+            body.dark-mode .text-rose-700 {
+                color: #f1f5f9 !important;
+            }
+
+            body.dark-mode .text-emerald-600,
+            body.dark-mode .text-indigo-600,
+            body.dark-mode .text-rose-600 {
+                color: #34d399 !important;
+            }
+
+            body.dark-mode .text-indigo-600 {
+                color: #818cf8 !important;
+            }
+
+            body.dark-mode .text-rose-600 {
+                color: #fb7185 !important;
+            }
+
+            /* Dark mode for inner cards within gradient sections */
+            body.dark-mode #architecture .bg-white,
+            body.dark-mode #research .bg-white {
+                background-color: #334155 !important;
+            }
+
+            body.dark-mode #architecture .border-emerald-200,
+            body.dark-mode #architecture .border-indigo-200,
+            body.dark-mode #research .border-rose-200 {
+                border-color: #475569 !important;
+            }
+
+            body.dark-mode #architecture details,
+            body.dark-mode #research details {
+                background-color: #334155 !important;
+            }
+
+            body.dark-mode #architecture details summary,
+            body.dark-mode #research details summary {
+                background-color: #334155 !important;
+            }
+
+            /* Dark mode for AutoCoder page specific styles */
+            body.dark-mode .glow-card {
+                background-color: #1e293b !important;
+                border-color: #475569 !important;
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.15) !important;
+            }
+
+            body.dark-mode .glow-card .bg-white {
+                background-color: #334155 !important;
+            }
+
+            body.dark-mode .stat-card {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%) !important;
+            }
+
+            body.dark-mode .bg-slate-900 {
+                background-color: #0f172a !important;
+            }
+
+            body.dark-mode .bg-gradient-to-r {
+                background: linear-gradient(to right, #1e40af, #6d28d9) !important;
+            }
+
+            /* Dark mode ROI boxes */
+            body.dark-mode .bg-red-50 {
+                background-color: #1e293b !important;
+                border-color: #475569 !important;
+            }
+
+            body.dark-mode .bg-green-50 {
+                background-color: #1e293b !important;
+                border-color: #475569 !important;
+            }
+
+            body.dark-mode .text-red-800,
+            body.dark-mode .text-red-600 {
+                color: #fca5a5 !important;
+            }
+
+            body.dark-mode .border-red-200 {
+                border-color: #475569 !important;
+            }
+
+            body.dark-mode .border-green-200 {
+                border-color: #475569 !important;
+            }
+
             /* Dark mode for green elements */
             body.dark-mode .bg-green-100 {
                 background-color: #334155 !important;
@@ -467,6 +577,126 @@
             body.high-contrast .bg-purple-200,
             body.high-contrast .bg-blue-200 {
                 background-color: #ffffff !important;
+            }
+
+            /* High contrast for Technical Architecture & Research sections */
+            body.high-contrast .bg-gradient-to-br {
+                background: #000000 !important;
+            }
+
+            body.high-contrast .border-emerald-200,
+            body.high-contrast .border-emerald-100,
+            body.high-contrast .border-indigo-200,
+            body.high-contrast .border-indigo-100,
+            body.high-contrast .border-rose-200,
+            body.high-contrast .border-rose-100,
+            body.high-contrast .border-orange-200 {
+                border-color: #ffffff !important;
+                border-width: 2px !important;
+            }
+
+            body.high-contrast .text-emerald-900,
+            body.high-contrast .text-emerald-800,
+            body.high-contrast .text-emerald-700,
+            body.high-contrast .text-emerald-600,
+            body.high-contrast .text-indigo-900,
+            body.high-contrast .text-indigo-800,
+            body.high-contrast .text-indigo-700,
+            body.high-contrast .text-indigo-600,
+            body.high-contrast .text-rose-900,
+            body.high-contrast .text-rose-800,
+            body.high-contrast .text-rose-700,
+            body.high-contrast .text-rose-600 {
+                color: #ffffff !important;
+            }
+
+            /* High contrast for inner cards within gradient sections */
+            body.high-contrast #architecture .bg-white,
+            body.high-contrast #research .bg-white {
+                background-color: #000000 !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast #architecture details,
+            body.high-contrast #research details {
+                background-color: #000000 !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast #architecture details summary,
+            body.high-contrast #research details summary {
+                background-color: #000000 !important;
+            }
+
+            /* High contrast for AutoCoder page specific styles */
+            body.high-contrast .glow-card {
+                background-color: #000000 !important;
+                border: 2px solid #ffffff !important;
+                box-shadow: none !important;
+            }
+
+            body.high-contrast .glow-card .bg-white {
+                background-color: #000000 !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast .stat-card {
+                background: #000000 !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast .bg-slate-900 {
+                background-color: #000000 !important;
+                border-bottom: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast .gradient-hero,
+            body.high-contrast .bg-gradient-to-r {
+                background: #000000 !important;
+            }
+
+            body.high-contrast .text-blue-300,
+            body.high-contrast .text-green-300,
+            body.high-contrast .text-purple-300,
+            body.high-contrast .text-blue-100,
+            body.high-contrast .text-gray-300,
+            body.high-contrast .text-gray-400 {
+                color: #ffffff !important;
+            }
+
+            body.high-contrast .bg-white\\/10 {
+                background-color: #333333 !important;
+                border: 1px solid #ffffff !important;
+            }
+
+            body.high-contrast .bg-blue-500\\/20 {
+                background-color: #333333 !important;
+                border: 1px solid #ffffff !important;
+            }
+
+            body.high-contrast .text-blue-600,
+            body.high-contrast .text-green-600,
+            body.high-contrast .text-purple-600,
+            body.high-contrast .text-orange-600 {
+                color: #ffffff !important;
+            }
+
+            body.high-contrast .bg-red-50,
+            body.high-contrast .bg-green-50 {
+                background-color: #000000 !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast .border-red-200,
+            body.high-contrast .border-green-200 {
+                border-color: #ffffff !important;
+                border-width: 2px !important;
+            }
+
+            body.high-contrast .text-red-800,
+            body.high-contrast .text-red-600,
+            body.high-contrast .text-green-800 {
+                color: #ffffff !important;
             }
 
             /* High contrast borders */
