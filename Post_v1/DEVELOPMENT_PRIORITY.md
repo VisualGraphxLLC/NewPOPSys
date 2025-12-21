@@ -14,12 +14,12 @@ flowchart LR
     T4 --> T5[Tier 5\nAdvanced]
     T5 --> T6[Tier 6\nNetwork Effects]
 
-    style T1 fill:#e1f5fe
-    style T2 fill:#b3e5fc
-    style T3 fill:#81d4fa
-    style T4 fill:#4fc3f7
-    style T5 fill:#29b6f6
-    style T6 fill:#03a9f4
+    style T1 fill:#2196f3,color:#fff
+    style T2 fill:#4caf50,color:#fff
+    style T3 fill:#ff9800,color:#fff
+    style T4 fill:#9c27b0,color:#fff
+    style T5 fill:#f44336,color:#fff
+    style T6 fill:#009688,color:#fff
 ```
 
 **Key Insight:** Later tiers are only valuable if earlier tiers succeed. Marketplace (Tier 6) is worthless without users from Tier 1-5. AI differentiation (Tier 4) doesn't matter if basic stickiness (Tier 2) fails.
@@ -75,9 +75,9 @@ flowchart LR
     Mobile -.->|Extends DAM to field| Note2[Photos flow into DAM\nMost visible touchpoint]
     Proofing -.->|Builds on both| Note3[Proof assets + Mobile approvals]
 
-    style DAM fill:#c8e6c9
-    style Mobile fill:#fff9c4
-    style Proofing fill:#ffccbc
+    style DAM fill:#4caf50,color:#fff
+    style Mobile fill:#ffc107,color:#000
+    style Proofing fill:#ff5722,color:#fff
 ```
 
 **Success Metrics Before Tier 3:**
@@ -117,9 +117,9 @@ flowchart LR
     WL -.-> R2[Multiply through partners\nEach brings 5-20 brands]
     WF -.-> R3[Enterprise requirement\nUnlocks larger deals]
 
-    style BF fill:#a5d6a7
-    style WL fill:#ce93d8
-    style WF fill:#90caf9
+    style BF fill:#4caf50,color:#fff
+    style WL fill:#9c27b0,color:#fff
+    style WF fill:#2196f3,color:#fff
 ```
 
 **Success Metrics Before Tier 4:**
@@ -163,10 +163,10 @@ flowchart LR
     PSP -.-> N3[Tool → Marketplace\nBusiness model shift]
     Acad -.-> N4[Standardize quality\nCertification economy]
 
-    style AI fill:#ffab91
-    style Des fill:#80deea
-    style PSP fill:#b39ddb
-    style Acad fill:#f48fb1
+    style AI fill:#ff5722,color:#fff
+    style Des fill:#00bcd4,color:#fff
+    style PSP fill:#673ab7,color:#fff
+    style Acad fill:#e91e63,color:#fff
 ```
 
 **Success Metrics Before Tier 5:**
@@ -213,11 +213,11 @@ flowchart LR
     Apps -.-> N4[Expand mobile\nStore app learnings]
     FWL -.-> N5[Reseller program\nFull feature set]
 
-    style AII fill:#ffcc80
-    style MIS fill:#a5d6a7
-    style FP fill:#ef9a9a
-    style Apps fill:#80cbc4
-    style FWL fill:#ce93d8
+    style AII fill:#ff9800,color:#fff
+    style MIS fill:#4caf50,color:#fff
+    style FP fill:#f44336,color:#fff
+    style Apps fill:#009688,color:#fff
+    style FWL fill:#9c27b0,color:#fff
 ```
 
 **Success Metrics Before Tier 6:**
@@ -261,10 +261,10 @@ flowchart LR
     FD -.-> N3[May be partnership\nDepends on marketplace]
     Cert -.-> N4[Industry standard\nLong-term moat]
 
-    style MP fill:#fff59d
-    style FMIS fill:#a5d6a7
-    style FD fill:#90caf9
-    style Cert fill:#f48fb1
+    style MP fill:#ffc107,color:#000
+    style FMIS fill:#4caf50,color:#fff
+    style FD fill:#2196f3,color:#fff
+    style Cert fill:#e91e63,color:#fff
 ```
 
 **Success Metrics (Ongoing):**
@@ -410,12 +410,12 @@ flowchart TB
 
     T1 --> T2 --> T3 --> T4 --> T5 --> T6
 
-    style T1 fill:#e3f2fd
-    style T2 fill:#bbdefb
-    style T3 fill:#90caf9
-    style T4 fill:#64b5f6
-    style T5 fill:#42a5f5
-    style T6 fill:#1e88e5
+    style T1 fill:#2196f3,color:#fff
+    style T2 fill:#4caf50,color:#fff
+    style T3 fill:#ff9800,color:#fff
+    style T4 fill:#9c27b0,color:#fff
+    style T5 fill:#f44336,color:#fff
+    style T6 fill:#009688,color:#fff
 ```
 
 **Each tier builds on the last. Skip a tier and the snowball falls apart.**

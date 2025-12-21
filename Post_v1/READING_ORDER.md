@@ -438,24 +438,24 @@ flowchart TB
     T16 --> EXEC
     T17 --> EXEC
 
-    style T1 fill:#e1f5fe
-    style T2 fill:#f3e5f5
-    style T3 fill:#e8f5e9
-    style T4 fill:#fff3e0
-    style T5 fill:#fce4ec
-    style T6 fill:#e0f2f1
-    style T7 fill:#e3f2fd
-    style T8 fill:#f1f8e9
-    style T9 fill:#fff8e1
-    style T10 fill:#fbe9e7
-    style T11 fill:#ffebee
-    style T12 fill:#e8eaf6
-    style T13 fill:#e0f7fa
-    style T14 fill:#f9fbe7
-    style T15 fill:#ede7f6
-    style T16 fill:#e1f5fe
-    style T17 fill:#fff3e0
-    style EXEC fill:#c8e6c9,stroke:#4caf50,stroke-width:3px
+    style T1 fill:#2196f3,color:#fff
+    style T2 fill:#9c27b0,color:#fff
+    style T3 fill:#4caf50,color:#fff
+    style T4 fill:#ff9800,color:#fff
+    style T5 fill:#e91e63,color:#fff
+    style T6 fill:#009688,color:#fff
+    style T7 fill:#3f51b5,color:#fff
+    style T8 fill:#8bc34a,color:#fff
+    style T9 fill:#ffc107,color:#000
+    style T10 fill:#ff5722,color:#fff
+    style T11 fill:#f44336,color:#fff
+    style T12 fill:#673ab7,color:#fff
+    style T13 fill:#00bcd4,color:#fff
+    style T14 fill:#cddc39,color:#000
+    style T15 fill:#795548,color:#fff
+    style T16 fill:#607d8b,color:#fff
+    style T17 fill:#ff9800,color:#fff
+    style EXEC fill:#4caf50,color:#fff,stroke:#2e7d32,stroke-width:3px
 ```
 
 ---
