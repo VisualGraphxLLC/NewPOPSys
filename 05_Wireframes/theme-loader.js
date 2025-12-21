@@ -146,32 +146,37 @@
             /* Dark mode text inside colored areas */
             body.dark-mode .text-yellow-900,
             body.dark-mode .text-purple-900,
-            body.dark-mode .text-blue-900 {
+            body.dark-mode .text-blue-900,
+            body.dark-mode .text-teal-900 {
                 color: #1e293b !important;
             }
 
             body.dark-mode .text-yellow-800,
             body.dark-mode .text-purple-800,
-            body.dark-mode .text-blue-800 {
+            body.dark-mode .text-blue-800,
+            body.dark-mode .text-teal-800 {
                 color: #f1f5f9 !important;
             }
 
             body.dark-mode .text-yellow-700,
             body.dark-mode .text-purple-700,
-            body.dark-mode .text-blue-700 {
+            body.dark-mode .text-blue-700,
+            body.dark-mode .text-teal-700 {
                 color: #e2e8f0 !important;
             }
 
             body.dark-mode .text-yellow-600,
             body.dark-mode .text-purple-600,
-            body.dark-mode .text-blue-600 {
+            body.dark-mode .text-blue-600,
+            body.dark-mode .text-teal-600 {
                 color: #cbd5e1 !important;
             }
 
             /* Dark mode colored dividers */
             body.dark-mode .bg-yellow-200,
             body.dark-mode .bg-purple-200,
-            body.dark-mode .bg-blue-200 {
+            body.dark-mode .bg-blue-200,
+            body.dark-mode .bg-teal-200 {
                 background-color: #475569 !important;
             }
 
@@ -180,7 +185,8 @@
                 background-color: #334155 !important;
             }
 
-            body.dark-mode .text-green-800 {
+            body.dark-mode .text-green-800,
+            body.dark-mode .text-green-600 {
                 color: #34d399 !important;
             }
 
@@ -331,13 +337,17 @@
             body.high-contrast .text-yellow-900,
             body.high-contrast .text-purple-900,
             body.high-contrast .text-blue-900,
+            body.high-contrast .text-teal-900,
             body.high-contrast .text-yellow-800,
             body.high-contrast .text-purple-800,
             body.high-contrast .text-blue-800,
+            body.high-contrast .text-teal-800,
             body.high-contrast .text-yellow-700,
             body.high-contrast .text-purple-700,
             body.high-contrast .text-blue-700,
-            body.high-contrast .text-green-800 {
+            body.high-contrast .text-teal-700,
+            body.high-contrast .text-green-800,
+            body.high-contrast .text-green-600 {
                 color: #ffffff !important;
             }
 
