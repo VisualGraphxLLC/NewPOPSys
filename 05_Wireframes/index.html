@@ -264,6 +264,8 @@
                     <a href="#wireframes" class="hover:text-blue-600">Wireframes</a>
                     <a href="#lifecycle" class="hover:text-blue-600">Lifecycle</a>
                     <a href="#diagrams" class="hover:text-blue-600">Diagrams</a>
+                    <a href="#architecture" class="hover:text-blue-600">Architecture</a>
+                    <a href="#research" class="hover:text-blue-600">Research</a>
                     <a href="#questions" class="hover:text-blue-600">Questions</a>
                     <a href="#feedback" class="hover:text-blue-600">Feedback</a>
                 </div>
@@ -929,6 +931,123 @@
                         <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-orange-700">Partial Shipment Exception</h4>
                         <p class="text-xs text-gray-500 text-center mt-1">Exception handling</p>
                     </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section id="architecture" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Technical Architecture</h2>
+            <p class="text-gray-600 mb-10">Database schema and API specifications that power the platform.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Database Model -->
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🗄️</span>
+                        <div>
+                            <h3 class="font-bold text-emerald-900 text-xl">Database Model</h3>
+                            <p class="text-sm text-emerald-700">PostgreSQL schema design</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Complete database architecture including schemas, relationships, constraints, indexes, and seed data organized by module.</p>
+
+                    <div class="space-y-2 mb-4">
+                        <a href="../06_Database_Model/README.md" class="block bg-white rounded-lg p-3 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-emerald-800">📖 Database Overview</span>
+                            <span class="text-xs text-gray-500 block">Architecture & conventions</span>
+                        </a>
+                        <a href="../06_Database_Model/FOUNDATION_ANALYSIS.md" class="block bg-white rounded-lg p-3 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-emerald-800">🏗️ Foundation Analysis</span>
+                            <span class="text-xs text-gray-500 block">Core entities & relationships</span>
+                        </a>
+                    </div>
+
+                    <details class="bg-white rounded-lg border border-emerald-200">
+                        <summary class="px-4 py-3 cursor-pointer font-semibold text-emerald-800 text-sm">
+                            📂 Module Schemas
+                        </summary>
+                        <div class="px-4 pb-3 space-y-2 border-t border-emerald-100 pt-3">
+                            <a href="../06_Database_Model/PSP_MODULE_ANALYSIS.md" class="block text-sm text-emerald-700 hover:text-emerald-900">• PSP Module Analysis</a>
+                            <a href="../06_Database_Model/BRAND_MODULE_ANALYSIS.md" class="block text-sm text-emerald-700 hover:text-emerald-900">• Brand Module Analysis</a>
+                            <a href="../06_Database_Model/STORE_MODULE_ANALYSIS.md" class="block text-sm text-emerald-700 hover:text-emerald-900">• Store Module Analysis</a>
+                            <a href="../06_Database_Model/01_Schema/" class="block text-sm text-emerald-700 hover:text-emerald-900">• Schema Definitions</a>
+                            <a href="../06_Database_Model/02_Relationships/" class="block text-sm text-emerald-700 hover:text-emerald-900">• Relationships</a>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- API Model -->
+                <div class="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🔌</span>
+                        <div>
+                            <h3 class="font-bold text-indigo-900 text-xl">API Specification</h3>
+                            <p class="text-sm text-indigo-700">OpenAPI 3.0 REST API</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Complete REST API specification with endpoints, request/response schemas, authentication, and integration patterns.</p>
+
+                    <div class="space-y-2 mb-4">
+                        <a href="../../API/README.md" class="block bg-white rounded-lg p-3 border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-indigo-800">📖 API Overview</span>
+                            <span class="text-xs text-gray-500 block">Endpoints & authentication</span>
+                        </a>
+                        <a href="../../API/openapi.yaml" class="block bg-white rounded-lg p-3 border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-indigo-800">📋 OpenAPI Spec</span>
+                            <span class="text-xs text-gray-500 block">Full API definition (YAML)</span>
+                        </a>
+                    </div>
+
+                    <div class="bg-white rounded-lg border border-indigo-200 p-4">
+                        <p class="text-sm text-indigo-800 font-medium mb-2">🔗 API Features</p>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• RESTful endpoints by module</li>
+                            <li>• JWT authentication</li>
+                            <li>• Webhook integrations</li>
+                            <li>• Rate limiting & pagination</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Research Section -->
+    <section id="research" class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Market Research & Branding</h2>
+            <p class="text-gray-600 mb-10">Competitive analysis and brand identity exploration for product positioning.</p>
+
+            <div class="bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-3xl">📊</span>
+                    <div>
+                        <h3 class="font-bold text-rose-900 text-xl">Market Analysis & Branding</h3>
+                        <p class="text-sm text-rose-700">Competitive landscape & identity options</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Research into the POP/retail execution software market, competitor analysis, and proposed brand identity directions.</p>
+
+                <a href="../Reports/Market_Analysis_and_Branding.md" class="inline-flex items-center gap-2 bg-rose-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-rose-700 transition-colors">
+                    View Full Report →
+                </a>
+
+                <div class="mt-4 grid md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-lg p-4 border border-rose-200">
+                        <p class="font-medium text-rose-800 text-sm mb-1">🎯 Target Market</p>
+                        <p class="text-xs text-gray-600">Print service providers & brand merchandising teams</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 border border-rose-200">
+                        <p class="font-medium text-rose-800 text-sm mb-1">🏆 Differentiators</p>
+                        <p class="text-xs text-gray-600">Photo verification, offline-first mobile, PSP workflow</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 border border-rose-200">
+                        <p class="font-medium text-rose-800 text-sm mb-1">🎨 Brand Options</p>
+                        <p class="text-xs text-gray-600">6 proposed brand identities with themes</p>
+                    </div>
                 </div>
             </div>
         </div>
