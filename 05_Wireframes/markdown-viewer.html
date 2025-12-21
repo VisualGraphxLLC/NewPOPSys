@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        .prose h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+        .prose h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: #1f2937; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; }
+        .prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #374151; }
+        .prose h4 { font-size: 1.125rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #374151; }
+        .prose p { margin-bottom: 1rem; line-height: 1.7; color: #4b5563; }
+        .prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .prose li { margin-bottom: 0.25rem; color: #4b5563; }
+        .prose code { background: #f3f4f6; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.875em; font-family: 'Consolas', 'Monaco', monospace; }
+        .prose pre { background: #1f2937; color: #e5e7eb; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; }
+        .prose pre code { background: none; padding: 0; color: inherit; }
+        .prose table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.875rem; }
+        .prose th, .prose td { border: 1px solid #e5e7eb; padding: 0.5rem 0.75rem; text-align: left; }
+        .prose th { background: #f9fafb; font-weight: 600; }
+        .prose blockquote { border-left: 4px solid #3b82f6; padding-left: 1rem; margin: 1rem 0; color: #6b7280; font-style: italic; background: #f9fafb; padding: 1rem; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose a:hover { color: #1d4ed8; }
+        .prose hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+        .prose img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1rem 0; }
+        .mermaid-diagram { background: #fafafa; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; overflow-x: auto; }
+        .mermaid-diagram svg { max-width: 100%; height: auto; }
+        .loading { display: flex; align-items: center; justify-content: center; height: 50vh; }
+        .error { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 1rem; border-radius: 0.5rem; margin: 2rem; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <h1 id="doc-title" class="font-semibold text-gray-900 truncate">Loading...</h1>
+            <a href="index.html" class="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back to Wireframes
+            </a>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-5xl mx-auto px-6 py-8">
+        <div id="content" class="bg-white rounded-xl shadow-sm p-8 prose">
+            <div class="loading">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true }
+        });
+
+        async function renderMermaidDiagrams(container) {
+            const mermaidBlocks = container.querySelectorAll('code.language-mermaid');
+            if (mermaidBlocks.length === 0) return;
+
+            for (let i = 0; i < mermaidBlocks.length; i++) {
+                const codeBlock = mermaidBlocks[i];
+                const preBlock = codeBlock.parentElement;
+                const mermaidCode = codeBlock.textContent;
+
+                try {
+                    const { svg } = await mermaid.render(`mermaid-${Date.now()}-${i}`, mermaidCode);
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'mermaid-diagram';
+                    wrapper.innerHTML = svg;
+                    preBlock.replaceWith(wrapper);
+                } catch (err) {
+                    console.warn('Mermaid render error:', err);
+                }
+            }
+        }
+
+        async function loadDocument() {
+            const params = new URLSearchParams(window.location.search);
+            const file = params.get('file');
+            const contentEl = document.getElementById('content');
+            const titleEl = document.getElementById('doc-title');
+
+            if (!file) {
+                contentEl.innerHTML = `<div class="error">
+                    <p class="font-semibold">No document specified</p>
+                    <p class="text-sm mt-1">Add ?file=path/to/document.md to the URL</p>
+                </div>`;
+                titleEl.textContent = 'Error';
+                return;
+            }
+
+            try {
+                const response = await fetch(file);
+                if (!response.ok) throw new Error(`Failed to load: ${response.status}`);
+
+                const markdown = await response.text();
+                contentEl.innerHTML = marked.parse(markdown);
+
+                // Extract title from first H1
+                const h1 = contentEl.querySelector('h1');
+                if (h1) {
+                    titleEl.textContent = h1.textContent;
+                    document.title = h1.textContent + ' - Document Viewer';
+                } else {
+                    const fileName = file.split('/').pop().replace('.md', '');
+                    titleEl.textContent = fileName;
+                    document.title = fileName + ' - Document Viewer';
+                }
+
+                // Render Mermaid diagrams
+                await renderMermaidDiagrams(contentEl);
+
+                // Handle internal markdown links
+                contentEl.querySelectorAll('a').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.endsWith('.md') && !href.startsWith('http')) {
+                        // Resolve relative to current document
+                        const baseDir = file.substring(0, file.lastIndexOf('/') + 1);
+                        const resolvedPath = new URL(href, window.location.origin + '/' + baseDir).pathname;
+                        link.href = `markdown-viewer.html?file=${encodeURIComponent(resolvedPath.substring(1))}`;
+                    }
+                });
+
+            } catch (err) {
+                contentEl.innerHTML = `<div class="error">
+                    <p class="font-semibold">Could not load document</p>
+                    <p class="text-sm mt-1">${err.message}</p>
+                    <a href="${file}" class="text-blue-600 text-sm mt-2 inline-block">Try opening directly</a>
+                </div>`;
+                titleEl.textContent = 'Error';
+            }
+        }
+
+        loadDocument();
+    </script>
+</body>
+</html>

@@ -143,12 +143,12 @@
                 opacity: 0.9;
             }
 
-            /* Dark mode text inside colored areas */
+            /* Dark mode text inside colored areas - use light text for contrast */
             body.dark-mode .text-yellow-900,
             body.dark-mode .text-purple-900,
             body.dark-mode .text-blue-900,
             body.dark-mode .text-teal-900 {
-                color: #1e293b !important;
+                color: #f1f5f9 !important;
             }
 
             body.dark-mode .text-yellow-800,
@@ -259,6 +259,77 @@
             body.dark-mode .brand-logo svg text,
             body.dark-mode #nav-logo text {
                 fill: #f1f5f9 !important;
+            }
+
+            /* Dark mode for details/summary dropdowns (SOW Documents section) */
+            body.dark-mode details {
+                background-color: #1e293b !important;
+                border-color: #475569 !important;
+            }
+
+            body.dark-mode details summary {
+                background-color: #1e293b !important;
+                color: #f1f5f9 !important;
+            }
+
+            body.dark-mode details summary:hover {
+                background-color: #334155 !important;
+            }
+
+            body.dark-mode details[open] summary {
+                background-color: #334155 !important;
+            }
+
+            body.dark-mode details .bg-gray-50 {
+                background-color: #0f172a !important;
+            }
+
+            body.dark-mode details a {
+                color: #93c5fd !important;
+            }
+
+            body.dark-mode details a:hover {
+                color: #bfdbfe !important;
+                background-color: #334155 !important;
+            }
+
+            /* Force doc-modal to always use light mode styles */
+            #doc-modal,
+            #doc-modal * {
+                color-scheme: light !important;
+            }
+
+            #doc-modal .bg-white {
+                background-color: #ffffff !important;
+            }
+
+            #doc-modal .bg-gray-50 {
+                background-color: #f9fafb !important;
+            }
+
+            #doc-modal .text-gray-900 {
+                color: #111827 !important;
+            }
+
+            #doc-modal .text-gray-700 {
+                color: #374151 !important;
+            }
+
+            #doc-modal .text-blue-600 {
+                color: #2563eb !important;
+            }
+
+            #doc-modal .border-b {
+                border-color: #e5e7eb !important;
+            }
+
+            #doc-modal #doc-modal-content {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+            }
+
+            #doc-modal #doc-modal-content a {
+                color: #2563eb !important;
             }
 
             /* High Contrast Mode */
@@ -437,6 +508,40 @@
             body.high-contrast .theme-switcher button:hover,
             body.high-contrast .appearance-switcher button:hover {
                 background: #333333 !important;
+            }
+
+            /* High contrast for details/summary dropdowns (SOW Documents section) */
+            body.high-contrast details {
+                background-color: #000000 !important;
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast details summary {
+                background-color: #000000 !important;
+                color: #ffffff !important;
+                border-bottom: 1px solid #ffffff !important;
+            }
+
+            body.high-contrast details summary:hover {
+                background-color: #333333 !important;
+            }
+
+            body.high-contrast details[open] summary {
+                background-color: #333333 !important;
+            }
+
+            body.high-contrast details .bg-gray-50 {
+                background-color: #000000 !important;
+            }
+
+            body.high-contrast details a {
+                color: #ffffff !important;
+                text-decoration: underline !important;
+            }
+
+            body.high-contrast details a:hover {
+                color: #ffffff !important;
+                background-color: #333333 !important;
             }
         `;
 

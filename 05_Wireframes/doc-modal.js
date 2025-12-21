@@ -192,7 +192,21 @@ function openDocModal(url, title, type = 'markdown') {
     currentDocBaseUrl = baseUrl;
 
     titleEl.textContent = title || 'Loading...';
-    linkEl.href = url;
+
+    // For markdown files, use the markdown viewer; for SVG, use direct URL
+    if (type === 'markdown') {
+        // Get relative path from current page location
+        const currentPath = window.location.pathname;
+        const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+        const relativePath = baseUrl.startsWith('http')
+            ? new URL(baseUrl).pathname
+            : new URL(baseUrl, window.location.href).pathname;
+        // Build viewer URL with the file parameter
+        linkEl.href = `${currentDir}markdown-viewer.html?file=${encodeURIComponent(relativePath)}`;
+    } else {
+        linkEl.href = url;
+    }
+
     content.innerHTML = '<div class="flex items-center justify-center h-32"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>';
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
