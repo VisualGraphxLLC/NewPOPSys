@@ -373,7 +373,11 @@
 
             const logoSrc = useLightLogo && theme.logoLight ? theme.logoLight : theme.logo;
             if (logoSrc) {
-                logoContainer.innerHTML = `<img src="${logoSrc}" alt="${theme.name}" style="height: 32px; width: auto;">`;
+                // Preserve existing logo height if set, otherwise default to 32px
+                const existingImg = logoContainer.querySelector('img');
+                const existingHeight = existingImg ? existingImg.style.height : null;
+                const logoHeight = existingHeight || '32px';
+                logoContainer.innerHTML = `<img src="${logoSrc}" alt="${theme.name}" style="height: ${logoHeight}; width: auto;">`;
             }
         }
 

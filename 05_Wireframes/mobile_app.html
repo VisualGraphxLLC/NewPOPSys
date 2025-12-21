@@ -324,14 +324,14 @@
 
 <body>
 
-    <!-- Tooltip Help Banner - Compact for mobile -->
-    <div class="tooltip-help-banner" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; padding: 8px 12px;">
-        <a href="index.html" style="display: flex; align-items: center; gap: 4px; color: white; text-decoration: none; padding: 4px 8px; background: rgba(255,255,255,0.2); border-radius: 4px; font-size: 11px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="index.html" style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             Index
         </a>
-        <span style="font-size: 11px;">💡 <strong>Tooltips:</strong></span>
-        <button id="tooltip-toggle" class="tooltip-toggle" style="font-size: 10px; padding: 2px 8px;">OFF</button>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
     </div>
 
     <div id="phone" data-tooltip="📱 MOBILE SIMULATOR
@@ -436,25 +436,12 @@ Section: App identity
 Shows: Logo, app name, tagline
 Purpose: Brand recognition
 Design: Centered, clean layout">
-                    <div class="w-16 h-16 bg-blue-600 rounded-xl mx-auto mb-4 flex items-center justify-center" data-tooltip="🏪 APP LOGO
-━━━━━━━━━━━━━━━
-Component: App icon/logo
-Color: Brand blue (#2563eb)
-Icon: Store symbol
-Purpose: Visual identity">
-                        <i data-lucide="store" class="text-white" data-tooltip="🏪 STORE ICON
-━━━━━━━━━━━━━━━
-Visual: Store/shop symbol
-Color: White on blue
-Represents: Store-focused app
-Standard: Lucide icon library"></i>
-                    </div>
-                    <div id="brand-logo" class="flex justify-center mb-2" data-tooltip="🏢 BRAND LOGO
+                    <div id="brand-logo" class="flex justify-center mb-4" data-tooltip="🏢 BRAND LOGO
 ━━━━━━━━━━━━━━━
 Purpose: Brand identity
 Dynamic: Changes with theme
 Container: Logo image holder">
-                        <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 40px; width: auto;">
+                        <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 48px; width: auto;">
                     </div>
                     <h1 id="brand-name" class="text-2xl font-bold text-gray-900" data-tooltip="📱 APP NAME
 ━━━━━━━━━━━━━━━
