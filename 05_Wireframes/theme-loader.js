@@ -129,8 +129,59 @@
             body.dark-mode .border-yellow-200,
             body.dark-mode .border-purple-200,
             body.dark-mode .border-blue-200,
-            body.dark-mode .border-teal-200 {
+            body.dark-mode .border-teal-200,
+            body.dark-mode .border-yellow-400,
+            body.dark-mode .border-purple-400,
+            body.dark-mode .border-blue-400 {
                 border-color: #475569 !important;
+            }
+
+            /* Dark mode colored pills/badges - keep their colors but adjust for visibility */
+            body.dark-mode .bg-yellow-400,
+            body.dark-mode .bg-purple-400,
+            body.dark-mode .bg-blue-400 {
+                opacity: 0.9;
+            }
+
+            /* Dark mode text inside colored areas */
+            body.dark-mode .text-yellow-900,
+            body.dark-mode .text-purple-900,
+            body.dark-mode .text-blue-900 {
+                color: #1e293b !important;
+            }
+
+            body.dark-mode .text-yellow-800,
+            body.dark-mode .text-purple-800,
+            body.dark-mode .text-blue-800 {
+                color: #f1f5f9 !important;
+            }
+
+            body.dark-mode .text-yellow-700,
+            body.dark-mode .text-purple-700,
+            body.dark-mode .text-blue-700 {
+                color: #e2e8f0 !important;
+            }
+
+            body.dark-mode .text-yellow-600,
+            body.dark-mode .text-purple-600,
+            body.dark-mode .text-blue-600 {
+                color: #cbd5e1 !important;
+            }
+
+            /* Dark mode colored dividers */
+            body.dark-mode .bg-yellow-200,
+            body.dark-mode .bg-purple-200,
+            body.dark-mode .bg-blue-200 {
+                background-color: #475569 !important;
+            }
+
+            /* Dark mode for green elements */
+            body.dark-mode .bg-green-100 {
+                background-color: #334155 !important;
+            }
+
+            body.dark-mode .text-green-800 {
+                color: #34d399 !important;
             }
 
             /* Keep theme accent colors working in dark mode */
@@ -191,6 +242,17 @@
             body.dark-mode .theme-switcher button:hover,
             body.dark-mode .appearance-switcher button:hover {
                 background: #475569 !important;
+            }
+
+            /* Nav brand/logo visibility in dark mode */
+            body.dark-mode .nav-brand,
+            body.dark-mode .brand-logo {
+                color: #f1f5f9 !important;
+            }
+
+            body.dark-mode .brand-logo svg text,
+            body.dark-mode #nav-logo text {
+                fill: #f1f5f9 !important;
             }
 
             /* High Contrast Mode */
@@ -259,9 +321,54 @@
             body.high-contrast .bg-yellow-100,
             body.high-contrast .bg-purple-100,
             body.high-contrast .bg-blue-100,
-            body.high-contrast .bg-teal-100 {
+            body.high-contrast .bg-teal-100,
+            body.high-contrast .bg-green-100 {
                 background-color: #000000 !important;
                 border: 2px solid #ffffff !important;
+            }
+
+            /* High contrast text colors */
+            body.high-contrast .text-yellow-900,
+            body.high-contrast .text-purple-900,
+            body.high-contrast .text-blue-900,
+            body.high-contrast .text-yellow-800,
+            body.high-contrast .text-purple-800,
+            body.high-contrast .text-blue-800,
+            body.high-contrast .text-yellow-700,
+            body.high-contrast .text-purple-700,
+            body.high-contrast .text-blue-700,
+            body.high-contrast .text-green-800 {
+                color: #ffffff !important;
+            }
+
+            /* High contrast colored pills - make text visible */
+            body.high-contrast .bg-yellow-400,
+            body.high-contrast .bg-purple-400,
+            body.high-contrast .bg-blue-400 {
+                border: 2px solid #ffffff !important;
+            }
+
+            body.high-contrast .bg-yellow-400 .text-yellow-900,
+            body.high-contrast .bg-purple-400 .text-purple-900,
+            body.high-contrast .bg-blue-400 .text-blue-900 {
+                color: #000000 !important;
+            }
+
+            /* High contrast colored dividers */
+            body.high-contrast .bg-yellow-200,
+            body.high-contrast .bg-purple-200,
+            body.high-contrast .bg-blue-200 {
+                background-color: #ffffff !important;
+            }
+
+            /* High contrast borders */
+            body.high-contrast .border-yellow-200,
+            body.high-contrast .border-purple-200,
+            body.high-contrast .border-blue-200,
+            body.high-contrast .border-yellow-400,
+            body.high-contrast .border-purple-400,
+            body.high-contrast .border-blue-400 {
+                border-color: #ffffff !important;
             }
 
             /* High contrast dropdown styles */

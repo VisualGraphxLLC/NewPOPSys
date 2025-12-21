@@ -363,77 +363,77 @@ Update workflow: edit the relevant SUPP(s) → bump version → regenerate this 
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   Appendix    SUPP        Version     Module                       Title                                                                                          File (relative)
   ----------- ----------- ----------- ---------------------------- ---------------------------------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------
-  App A.01    SUPP-001    v0.2        Shared Foundations           Shared Foundations - Persona Workflows JTBD Screens                                            [SUPP-001](02_SUPPs/Shared_Foundations/SUPP-001%20-%20Shared%20Foundations%20-%20Persona%20Workflows%20JTBD%20Screens.md)
+  App A.01    SUPP-001    v0.2        Shared Foundations           Shared Foundations - Persona Workflows JTBD Screens                                            [SUPP-001](../02_SUPPs/Shared_Foundations/SUPP-001%20-%20Shared%20Foundations%20-%20Persona%20Workflows%20JTBD%20Screens.md)
 
-  App A.02    SUPP-002    v0.5        Shared Foundations           Shared Foundations - Core Domain Model and State Machines                                      [SUPP-002](02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md)
+  App A.02    SUPP-002    v0.5        Shared Foundations           Shared Foundations - Core Domain Model and State Machines                                      [SUPP-002](../02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md)
 
-  App A.03    SUPP-003    v0.7        Shared Foundations           Shared Foundations - RBAC and Permissions Matrix                                               [SUPP-003](02_SUPPs/Shared_Foundations/SUPP-003%20-%20Shared%20Foundations%20-%20RBAC%20and%20Permissions%20Matrix.md)
+  App A.03    SUPP-003    v0.7        Shared Foundations           Shared Foundations - RBAC and Permissions Matrix                                               [SUPP-003](../02_SUPPs/Shared_Foundations/SUPP-003%20-%20Shared%20Foundations%20-%20RBAC%20and%20Permissions%20Matrix.md)
 
-  App A.04    SUPP-004    v0.5        Shared Foundations           Shared Foundations - Notifications and Escalation Matrix                                       [SUPP-004](02_SUPPs/Shared_Foundations/SUPP-004%20-%20Shared%20Foundations%20-%20Notifications%20and%20Escalation%20Matrix.md)
+  App A.04    SUPP-004    v0.5        Shared Foundations           Shared Foundations - Notifications and Escalation Matrix                                       [SUPP-004](../02_SUPPs/Shared_Foundations/SUPP-004%20-%20Shared%20Foundations%20-%20Notifications%20and%20Escalation%20Matrix.md)
 
-  App A.05    SUPP-005    v0.3        Shared Foundations           Shared Foundations - Exports Reports Output Contracts                                          [SUPP-005](02_SUPPs/Shared_Foundations/SUPP-005%20-%20Shared%20Foundations%20-%20Exports%20Reports%20Output%20Contracts.md)
+  App A.05    SUPP-005    v0.3        Shared Foundations           Shared Foundations - Exports Reports Output Contracts                                          [SUPP-005](../02_SUPPs/Shared_Foundations/SUPP-005%20-%20Shared%20Foundations%20-%20Exports%20Reports%20Output%20Contracts.md)
 
-  App A.06    SUPP-006    v0.6        Shared Foundations           Shared Foundations - Webhooks and Inbound API Event Contract                                   [SUPP-006](02_SUPPs/Shared_Foundations/SUPP-006%20-%20Shared%20Foundations%20-%20Webhooks%20and%20Inbound%20API%20Event%20Contract.md)
+  App A.06    SUPP-006    v0.6        Shared Foundations           Shared Foundations - Webhooks and Inbound API Event Contract                                   [SUPP-006](../02_SUPPs/Shared_Foundations/SUPP-006%20-%20Shared%20Foundations%20-%20Webhooks%20and%20Inbound%20API%20Event%20Contract.md)
 
-  App A.07    SUPP-007    v0.4        Shared Foundations           Shared Foundations - Completion Expiration Overrides                                           [SUPP-007](02_SUPPs/Shared_Foundations/SUPP-007%20-%20Shared%20Foundations%20-%20Completion%20Expiration%20Overrides.md)
+  App A.07    SUPP-007    v0.4        Shared Foundations           Shared Foundations - Completion Expiration Overrides                                           [SUPP-007](../02_SUPPs/Shared_Foundations/SUPP-007%20-%20Shared%20Foundations%20-%20Completion%20Expiration%20Overrides.md)
 
-  App A.08    SUPP-008    v0.4        Shared Foundations           Shared Foundations - Data Retention Classification Policy Option A                             [SUPP-008](02_SUPPs/Shared_Foundations/SUPP-008%20-%20Shared%20Foundations%20-%20Data%20Retention%20Classification%20Policy%20Option%20A.md)
+  App A.08    SUPP-008    v0.4        Shared Foundations           Shared Foundations - Data Retention Classification Policy Option A                             [SUPP-008](../02_SUPPs/Shared_Foundations/SUPP-008%20-%20Shared%20Foundations%20-%20Data%20Retention%20Classification%20Policy%20Option%20A.md)
 
-  App B.01    SUPP-013    v0.2        Brand Admin Module           Brand Admin Module - Stores Regions Groups                                                     [SUPP-013](02_SUPPs/Brand_Admin_Module/SUPP-013%20-%20Brand%20Admin%20Module%20-%20Stores%20Regions%20Groups.md)
+  App B.01    SUPP-013    v0.2        Brand Admin Module           Brand Admin Module - Stores Regions Groups                                                     [SUPP-013](../02_SUPPs/Brand_Admin_Module/SUPP-013%20-%20Brand%20Admin%20Module%20-%20Stores%20Regions%20Groups.md)
 
-  App B.02    SUPP-014    v0.4        Brand Admin Module           Brand Admin Module - Survey Builder Layout Photo Rules                                         [SUPP-014](02_SUPPs/Brand_Admin_Module/SUPP-014%20-%20Brand%20Admin%20Module%20-%20Survey%20Builder%20Layout%20Photo%20Rules.md)
+  App B.02    SUPP-014    v0.4        Brand Admin Module           Brand Admin Module - Survey Builder Layout Photo Rules                                         [SUPP-014](../02_SUPPs/Brand_Admin_Module/SUPP-014%20-%20Brand%20Admin%20Module%20-%20Survey%20Builder%20Layout%20Photo%20Rules.md)
 
-  App B.03    SUPP-015    v0.5        Brand Admin Module           Brand Admin Module - Campaigns Kits Assignment                                                 [SUPP-015](02_SUPPs/Brand_Admin_Module/SUPP-015%20-%20Brand%20Admin%20Module%20-%20Campaigns%20Kits%20Assignment.md)
+  App B.03    SUPP-015    v0.5        Brand Admin Module           Brand Admin Module - Campaigns Kits Assignment                                                 [SUPP-015](../02_SUPPs/Brand_Admin_Module/SUPP-015%20-%20Brand%20Admin%20Module%20-%20Campaigns%20Kits%20Assignment.md)
 
-  App B.04    SUPP-033    v0.1        Brand Admin Module           Brand Admin Module - Brand Takeout Export Package Scaffold                                     [SUPP-033](02_SUPPs/Brand_Admin_Module/SUPP-033%20-%20Brand%20Admin%20Module%20-%20Brand%20Takeout%20Export%20Package%20Scaffold.md)
+  App B.04    SUPP-033    v0.1        Brand Admin Module           Brand Admin Module - Brand Takeout Export Package Scaffold                                     [SUPP-033](../02_SUPPs/Brand_Admin_Module/SUPP-033%20-%20Brand%20Admin%20Module%20-%20Brand%20Takeout%20Export%20Package%20Scaffold.md)
 
-  App C.01    SUPP-016    v0.4        PSP Operations Module        PSP Operations Module - Orders Shipments Batches PSP Ops                                       [SUPP-016](02_SUPPs/PSP_Operations_Module/SUPP-016%20-%20PSP%20Operations%20Module%20-%20Orders%20Shipments%20Batches%20PSP%20Ops.md)
+  App C.01    SUPP-016    v0.4        PSP Operations Module        PSP Operations Module - Orders Shipments Batches PSP Ops                                       [SUPP-016](../02_SUPPs/PSP_Operations_Module/SUPP-016%20-%20PSP%20Operations%20Module%20-%20Orders%20Shipments%20Batches%20PSP%20Ops.md)
 
-  App C.02    SUPP-018    v0.3        PSP Operations Module        PSP Operations Module - Verification Photo Review Retake                                       [SUPP-018](02_SUPPs/PSP_Operations_Module/SUPP-018%20-%20PSP%20Operations%20Module%20-%20Verification%20Photo%20Review%20Retake.md)
+  App C.02    SUPP-018    v0.3        PSP Operations Module        PSP Operations Module - Verification Photo Review Retake                                       [SUPP-018](../02_SUPPs/PSP_Operations_Module/SUPP-018%20-%20PSP%20Operations%20Module%20-%20Verification%20Photo%20Review%20Retake.md)
 
-  App C.03    SUPP-019    v0.3        PSP Operations Module        PSP Operations Module - Issues Reorders Expiration Deinstall                                   [SUPP-019](02_SUPPs/PSP_Operations_Module/SUPP-019%20-%20PSP%20Operations%20Module%20-%20Issues%20Reorders%20Expiration%20Deinstall.md)
+  App C.03    SUPP-019    v0.3        PSP Operations Module        PSP Operations Module - Issues Reorders Expiration Deinstall                                   [SUPP-019](../02_SUPPs/PSP_Operations_Module/SUPP-019%20-%20PSP%20Operations%20Module%20-%20Issues%20Reorders%20Expiration%20Deinstall.md)
 
-  App D.01    SUPP-011    v0.3        Store Execution Module       Store Execution Module - Offline and Sync Strategy                                             [SUPP-011](02_SUPPs/Store_Execution_Module/SUPP-011%20-%20Store%20Execution%20Module%20-%20Offline%20and%20Sync%20Strategy.md)
+  App D.01    SUPP-011    v0.3        Store Execution Module       Store Execution Module - Offline and Sync Strategy                                             [SUPP-011](../02_SUPPs/Store_Execution_Module/SUPP-011%20-%20Store%20Execution%20Module%20-%20Offline%20and%20Sync%20Strategy.md)
 
-  App D.02    SUPP-017    v0.3        Store Execution Module       Store Execution Module - Store Execution Proof Capture                                         [SUPP-017](02_SUPPs/Store_Execution_Module/SUPP-017%20-%20Store%20Execution%20Module%20-%20Store%20Execution%20Proof%20Capture.md)
+  App D.02    SUPP-017    v0.3        Store Execution Module       Store Execution Module - Store Execution Proof Capture                                         [SUPP-017](../02_SUPPs/Store_Execution_Module/SUPP-017%20-%20Store%20Execution%20Module%20-%20Store%20Execution%20Proof%20Capture.md)
 
-  App E.01    SUPP-012    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Technology Selections ADR                                       [SUPP-012](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Technology%20Selections%20ADR.md)
+  App E.01    SUPP-012    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Technology Selections ADR                                       [SUPP-012](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Technology%20Selections%20ADR.md)
 
-  App E.02    SUPP-020    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Build Contracts and Physical Schema                             [SUPP-020](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Build%20Contracts%20and%20Physical%20Schema.md)
+  App E.02    SUPP-020    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Build Contracts and Physical Schema                             [SUPP-020](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Build%20Contracts%20and%20Physical%20Schema.md)
 
-  App E.03    SUPP-021    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan                                 [SUPP-021](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Repo%20CI%20and%20Vertical%20Slice%20Plan.md)
+  App E.03    SUPP-021    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan                                 [SUPP-021](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Repo%20CI%20and%20Vertical%20Slice%20Plan.md)
 
-  App E.04    SUPP-022    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Branching FeatureFlags Release Workers                          [SUPP-022](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Branching%20FeatureFlags%20Release%20Workers.md)
+  App E.04    SUPP-022    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Branching FeatureFlags Release Workers                          [SUPP-022](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Branching%20FeatureFlags%20Release%20Workers.md)
 
-  App E.05    SUPP-023    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX                           [SUPP-023](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Feature%20Flags%20Data%20Model%20and%20Admin%20UX.md)
+  App E.05    SUPP-023    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX                           [SUPP-023](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Feature%20Flags%20Data%20Model%20and%20Admin%20UX.md)
 
-  App E.06    SUPP-024    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding                     [SUPP-024](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Env%20Config%20Secrets%20Tenant%20Bootstrap%20Seeding.md)
+  App E.06    SUPP-024    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding                     [SUPP-024](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Env%20Config%20Secrets%20Tenant%20Bootstrap%20Seeding.md)
 
-  App E.07    SUPP-025    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets                     [SUPP-025](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Staging%20Seed%20Scale%20Plan%20and%20Testing%20Targets.md)
+  App E.07    SUPP-025    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets                     [SUPP-025](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Staging%20Seed%20Scale%20Plan%20and%20Testing%20Targets.md)
 
-  App E.08    SUPP-026    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain                          [SUPP-026](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Local%20Dev%20Staging%20Parity%20and%20Toolchain.md)
+  App E.08    SUPP-026    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain                          [SUPP-026](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Local%20Dev%20Staging%20Parity%20and%20Toolchain.md)
 
-  App E.09    SUPP-027    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay          [SUPP-027](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Notifications%20Webhooks%20Deliverability%20Retry%20and%20Replay.md)
+  App E.09    SUPP-027    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay          [SUPP-027](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Notifications%20Webhooks%20Deliverability%20Retry%20and%20Replay.md)
 
-  App E.10    SUPP-029    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation             [SUPP-029](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Observability%20Tracing%20Logging%20and%20Audit%20Correlation.md)
+  App E.10    SUPP-029    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation             [SUPP-029](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Observability%20Tracing%20Logging%20and%20Audit%20Correlation.md)
 
-  App E.11    SUPP-030    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Admin Ops Console Minimum Screens                               [SUPP-030](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Admin%20Ops%20Console%20Minimum%20Screens.md)
+  App E.11    SUPP-030    v0.2        Platform Ops Agent Harness   Platform Ops - Agent Harness - Admin Ops Console Minimum Screens                               [SUPP-030](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Admin%20Ops%20Console%20Minimum%20Screens.md)
 
-  App E.12    SUPP-031    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process      [SUPP-031](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Supportability%20Policies%20Impersonation%20and%20Incident%20Process.md)
+  App E.12    SUPP-031    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process      [SUPP-031](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Supportability%20Policies%20Impersonation%20and%20Incident%20Process.md)
 
-  App E.13    SUPP-032    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests                   [SUPP-032](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20BreakGlass%20Retention%20Safety%20and%20Data%20Requests.md)
+  App E.13    SUPP-032    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests                   [SUPP-032](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20BreakGlass%20Retention%20Safety%20and%20Data%20Requests.md)
 
-  App E.14    SUPP-034    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency   [SUPP-034](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Rate%20Limits%20Upload%20Guards%20Export%20Throttle%20Webhook%20Concurrency.md)
+  App E.14    SUPP-034    v0.1        Platform Ops Agent Harness   Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency   [SUPP-034](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Rate%20Limits%20Upload%20Guards%20Export%20Throttle%20Webhook%20Concurrency.md)
 
-  App E.15    SUPP-035    v1.3        Platform Ops Agent Harness   Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums                      [SUPP-035](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Field%20Level%20Data%20Model%20Tables%20Fields%20Enums.md)
+  App E.15    SUPP-035    v1.3        Platform Ops Agent Harness   Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums                      [SUPP-035](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Field%20Level%20Data%20Model%20Tables%20Fields%20Enums.md)
 
-  App E.16    SUPP-038    v0.1        Platform Ops Agent Harness   Platform Ops - Section 508 Accessibility Scaffold                                              [SUPP-038](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-038%20-%20Platform%20Ops%20-%20Section%20508%20Accessibility%20Scaffold.md)
+  App E.16    SUPP-038    v0.1        Platform Ops Agent Harness   Platform Ops - Section 508 Accessibility Scaffold                                              [SUPP-038](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-038%20-%20Platform%20Ops%20-%20Section%20508%20Accessibility%20Scaffold.md)
 
-  App E.17    SUPP-039    v0.1        Platform Ops Agent Harness   Platform Ops - Infrastructure Performance Security Requirements                                [SUPP-039](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-039%20-%20Platform%20Ops%20-%20Infrastructure%20Performance%20Security%20Requirements.md)
+  App E.17    SUPP-039    v0.1        Platform Ops Agent Harness   Platform Ops - Infrastructure Performance Security Requirements                                [SUPP-039](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-039%20-%20Platform%20Ops%20-%20Infrastructure%20Performance%20Security%20Requirements.md)
 
-  App F.01    SUPP-036    v0.6        Screens Interfaces           Screens - Interfaces - Screens Onboarding and Store Foundation                                 [SUPP-036](02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md)
+  App F.01    SUPP-036    v0.6        Screens Interfaces           Screens - Interfaces - Screens Onboarding and Store Foundation                                 [SUPP-036](../02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md)
 
-  App F.02    SUPP-037    v1.0        Screens Interfaces           Screens - Interfaces - Screens SurveyBuilder and StoreSurveys                                  [SUPP-037](02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md)
+  App F.02    SUPP-037    v1.0        Screens Interfaces           Screens - Interfaces - Screens SurveyBuilder and StoreSurveys                                  [SUPP-037](../02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md)
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # 13. Status & Roadmap (Current as of 2025-12-20)
@@ -508,157 +508,157 @@ Each appendix below links to the corresponding SUPP. For implementation work, us
 
 ### App A.01 --- SUPP-001: Shared Foundations - Persona Workflows JTBD Screens (v0.2)
 
-**Full specification**: [SUPP-001 - Shared Foundations - Persona Workflows JTBD Screens](02_SUPPs/Shared_Foundations/SUPP-001%20-%20Shared%20Foundations%20-%20Persona%20Workflows%20JTBD%20Screens.md)
+**Full specification**: [SUPP-001 - Shared Foundations - Persona Workflows JTBD Screens](../02_SUPPs/Shared_Foundations/SUPP-001%20-%20Shared%20Foundations%20-%20Persona%20Workflows%20JTBD%20Screens.md)
 
 ### App A.02 --- SUPP-002: Shared Foundations - Core Domain Model and State Machines (v0.5)
 
-**Full specification**: [SUPP-002 - Shared Foundations - Core Domain Model and State Machines](02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md)
+**Full specification**: [SUPP-002 - Shared Foundations - Core Domain Model and State Machines](../02_SUPPs/Shared_Foundations/SUPP-002%20-%20Shared%20Foundations%20-%20Core%20Domain%20Model%20and%20State%20Machines.md)
 
 ### App A.03 --- SUPP-003: Shared Foundations - RBAC and Permissions Matrix (v0.7)
 
-**Full specification**: [SUPP-003 - Shared Foundations - RBAC and Permissions Matrix](02_SUPPs/Shared_Foundations/SUPP-003%20-%20Shared%20Foundations%20-%20RBAC%20and%20Permissions%20Matrix.md)
+**Full specification**: [SUPP-003 - Shared Foundations - RBAC and Permissions Matrix](../02_SUPPs/Shared_Foundations/SUPP-003%20-%20Shared%20Foundations%20-%20RBAC%20and%20Permissions%20Matrix.md)
 
 ### App A.04 --- SUPP-004: Shared Foundations - Notifications and Escalation Matrix (v0.5)
 
-**Full specification**: [SUPP-004 - Shared Foundations - Notifications and Escalation Matrix](02_SUPPs/Shared_Foundations/SUPP-004%20-%20Shared%20Foundations%20-%20Notifications%20and%20Escalation%20Matrix.md)
+**Full specification**: [SUPP-004 - Shared Foundations - Notifications and Escalation Matrix](../02_SUPPs/Shared_Foundations/SUPP-004%20-%20Shared%20Foundations%20-%20Notifications%20and%20Escalation%20Matrix.md)
 
 ### App A.05 --- SUPP-005: Shared Foundations - Exports Reports Output Contracts (v0.3)
 
-**Full specification**: [SUPP-005 - Shared Foundations - Exports Reports Output Contracts](02_SUPPs/Shared_Foundations/SUPP-005%20-%20Shared%20Foundations%20-%20Exports%20Reports%20Output%20Contracts.md)
+**Full specification**: [SUPP-005 - Shared Foundations - Exports Reports Output Contracts](../02_SUPPs/Shared_Foundations/SUPP-005%20-%20Shared%20Foundations%20-%20Exports%20Reports%20Output%20Contracts.md)
 
 ### App A.06 --- SUPP-006: Shared Foundations - Webhooks and Inbound API Event Contract (v0.6)
 
-**Full specification**: [SUPP-006 - Shared Foundations - Webhooks and Inbound API Event Contract](02_SUPPs/Shared_Foundations/SUPP-006%20-%20Shared%20Foundations%20-%20Webhooks%20and%20Inbound%20API%20Event%20Contract.md)
+**Full specification**: [SUPP-006 - Shared Foundations - Webhooks and Inbound API Event Contract](../02_SUPPs/Shared_Foundations/SUPP-006%20-%20Shared%20Foundations%20-%20Webhooks%20and%20Inbound%20API%20Event%20Contract.md)
 
 ### App A.07 --- SUPP-007: Shared Foundations - Completion Expiration Overrides (v0.4)
 
-**Full specification**: [SUPP-007 - Shared Foundations - Completion Expiration Overrides](02_SUPPs/Shared_Foundations/SUPP-007%20-%20Shared%20Foundations%20-%20Completion%20Expiration%20Overrides.md)
+**Full specification**: [SUPP-007 - Shared Foundations - Completion Expiration Overrides](../02_SUPPs/Shared_Foundations/SUPP-007%20-%20Shared%20Foundations%20-%20Completion%20Expiration%20Overrides.md)
 
 ### App A.08 --- SUPP-008: Shared Foundations - Data Retention Classification Policy Option A (v0.4)
 
-**Full specification**: [SUPP-008 - Shared Foundations - Data Retention Classification Policy Option A](02_SUPPs/Shared_Foundations/SUPP-008%20-%20Shared%20Foundations%20-%20Data%20Retention%20Classification%20Policy%20Option%20A.md)
+**Full specification**: [SUPP-008 - Shared Foundations - Data Retention Classification Policy Option A](../02_SUPPs/Shared_Foundations/SUPP-008%20-%20Shared%20Foundations%20-%20Data%20Retention%20Classification%20Policy%20Option%20A.md)
 
 ## Appendix B --- Brand Admin Module
 
 ### App B.01 --- SUPP-013: Brand Admin Module - Stores Regions Groups (v0.2)
 
-**Full specification**: [SUPP-013 - Brand Admin Module - Stores Regions Groups](02_SUPPs/Brand_Admin_Module/SUPP-013%20-%20Brand%20Admin%20Module%20-%20Stores%20Regions%20Groups.md)
+**Full specification**: [SUPP-013 - Brand Admin Module - Stores Regions Groups](../02_SUPPs/Brand_Admin_Module/SUPP-013%20-%20Brand%20Admin%20Module%20-%20Stores%20Regions%20Groups.md)
 
 ### App B.02 --- SUPP-014: Brand Admin Module - Survey Builder Layout Photo Rules (v0.4)
 
-**Full specification**: [SUPP-014 - Brand Admin Module - Survey Builder Layout Photo Rules](02_SUPPs/Brand_Admin_Module/SUPP-014%20-%20Brand%20Admin%20Module%20-%20Survey%20Builder%20Layout%20Photo%20Rules.md)
+**Full specification**: [SUPP-014 - Brand Admin Module - Survey Builder Layout Photo Rules](../02_SUPPs/Brand_Admin_Module/SUPP-014%20-%20Brand%20Admin%20Module%20-%20Survey%20Builder%20Layout%20Photo%20Rules.md)
 
 ### App B.03 --- SUPP-015: Brand Admin Module - Campaigns Kits Assignment (v0.5)
 
-**Full specification**: [SUPP-015 - Brand Admin Module - Campaigns Kits Assignment](02_SUPPs/Brand_Admin_Module/SUPP-015%20-%20Brand%20Admin%20Module%20-%20Campaigns%20Kits%20Assignment.md)
+**Full specification**: [SUPP-015 - Brand Admin Module - Campaigns Kits Assignment](../02_SUPPs/Brand_Admin_Module/SUPP-015%20-%20Brand%20Admin%20Module%20-%20Campaigns%20Kits%20Assignment.md)
 
 ### App B.04 --- SUPP-033: Brand Admin Module - Brand Takeout Export Package Scaffold (v0.1)
 
-**Full specification**: [SUPP-033 - Brand Admin Module - Brand Takeout Export Package Scaffold](02_SUPPs/Brand_Admin_Module/SUPP-033%20-%20Brand%20Admin%20Module%20-%20Brand%20Takeout%20Export%20Package%20Scaffold.md)
+**Full specification**: [SUPP-033 - Brand Admin Module - Brand Takeout Export Package Scaffold](../02_SUPPs/Brand_Admin_Module/SUPP-033%20-%20Brand%20Admin%20Module%20-%20Brand%20Takeout%20Export%20Package%20Scaffold.md)
 
 ## Appendix C --- PSP Operations Module
 
 ### App C.01 --- SUPP-016: PSP Operations Module - Orders Shipments Batches PSP Ops (v0.4)
 
-**Full specification**: [SUPP-016 - PSP Operations Module - Orders Shipments Batches PSP Ops](02_SUPPs/PSP_Operations_Module/SUPP-016%20-%20PSP%20Operations%20Module%20-%20Orders%20Shipments%20Batches%20PSP%20Ops.md)
+**Full specification**: [SUPP-016 - PSP Operations Module - Orders Shipments Batches PSP Ops](../02_SUPPs/PSP_Operations_Module/SUPP-016%20-%20PSP%20Operations%20Module%20-%20Orders%20Shipments%20Batches%20PSP%20Ops.md)
 
 ### App C.02 --- SUPP-018: PSP Operations Module - Verification Photo Review Retake (v0.3)
 
-**Full specification**: [SUPP-018 - PSP Operations Module - Verification Photo Review Retake](02_SUPPs/PSP_Operations_Module/SUPP-018%20-%20PSP%20Operations%20Module%20-%20Verification%20Photo%20Review%20Retake.md)
+**Full specification**: [SUPP-018 - PSP Operations Module - Verification Photo Review Retake](../02_SUPPs/PSP_Operations_Module/SUPP-018%20-%20PSP%20Operations%20Module%20-%20Verification%20Photo%20Review%20Retake.md)
 
 ### App C.03 --- SUPP-019: PSP Operations Module - Issues Reorders Expiration Deinstall (v0.3)
 
-**Full specification**: [SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall](02_SUPPs/PSP_Operations_Module/SUPP-019%20-%20PSP%20Operations%20Module%20-%20Issues%20Reorders%20Expiration%20Deinstall.md)
+**Full specification**: [SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall](../02_SUPPs/PSP_Operations_Module/SUPP-019%20-%20PSP%20Operations%20Module%20-%20Issues%20Reorders%20Expiration%20Deinstall.md)
 
 ## Appendix D --- Store Execution Module
 
 ### App D.01 --- SUPP-011: Store Execution Module - Offline and Sync Strategy (v0.3)
 
-**Full specification**: [SUPP-011 - Store Execution Module - Offline and Sync Strategy](02_SUPPs/Store_Execution_Module/SUPP-011%20-%20Store%20Execution%20Module%20-%20Offline%20and%20Sync%20Strategy.md)
+**Full specification**: [SUPP-011 - Store Execution Module - Offline and Sync Strategy](../02_SUPPs/Store_Execution_Module/SUPP-011%20-%20Store%20Execution%20Module%20-%20Offline%20and%20Sync%20Strategy.md)
 
 ### App D.02 --- SUPP-017: Store Execution Module - Store Execution Proof Capture (v0.3)
 
-**Full specification**: [SUPP-017 - Store Execution Module - Store Execution Proof Capture](02_SUPPs/Store_Execution_Module/SUPP-017%20-%20Store%20Execution%20Module%20-%20Store%20Execution%20Proof%20Capture.md)
+**Full specification**: [SUPP-017 - Store Execution Module - Store Execution Proof Capture](../02_SUPPs/Store_Execution_Module/SUPP-017%20-%20Store%20Execution%20Module%20-%20Store%20Execution%20Proof%20Capture.md)
 
 ## Appendix E --- Platform Ops Agent Harness
 
 ### App E.01 --- SUPP-012: Platform Ops - Agent Harness - Technology Selections ADR (v0.2)
 
-**Full specification**: [SUPP-012 - Platform Ops - Agent Harness - Technology Selections ADR](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Technology%20Selections%20ADR.md)
+**Full specification**: [SUPP-012 - Platform Ops - Agent Harness - Technology Selections ADR](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-012%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Technology%20Selections%20ADR.md)
 
 ### App E.02 --- SUPP-020: Platform Ops - Agent Harness - Build Contracts and Physical Schema (v0.2)
 
-**Full specification**: [SUPP-020 - Platform Ops - Agent Harness - Build Contracts and Physical Schema](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Build%20Contracts%20and%20Physical%20Schema.md)
+**Full specification**: [SUPP-020 - Platform Ops - Agent Harness - Build Contracts and Physical Schema](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-020%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Build%20Contracts%20and%20Physical%20Schema.md)
 
 ### App E.03 --- SUPP-021: Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan (v0.1)
 
-**Full specification**: [SUPP-021 - Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Repo%20CI%20and%20Vertical%20Slice%20Plan.md)
+**Full specification**: [SUPP-021 - Platform Ops - Agent Harness - Repo CI and Vertical Slice Plan](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-021%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Repo%20CI%20and%20Vertical%20Slice%20Plan.md)
 
 ### App E.04 --- SUPP-022: Platform Ops - Agent Harness - Branching FeatureFlags Release Workers (v0.1)
 
-**Full specification**: [SUPP-022 - Platform Ops - Agent Harness - Branching FeatureFlags Release Workers](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Branching%20FeatureFlags%20Release%20Workers.md)
+**Full specification**: [SUPP-022 - Platform Ops - Agent Harness - Branching FeatureFlags Release Workers](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-022%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Branching%20FeatureFlags%20Release%20Workers.md)
 
 ### App E.05 --- SUPP-023: Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX (v0.1)
 
-**Full specification**: [SUPP-023 - Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Feature%20Flags%20Data%20Model%20and%20Admin%20UX.md)
+**Full specification**: [SUPP-023 - Platform Ops - Agent Harness - Feature Flags Data Model and Admin UX](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-023%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Feature%20Flags%20Data%20Model%20and%20Admin%20UX.md)
 
 ### App E.06 --- SUPP-024: Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding (v0.1)
 
-**Full specification**: [SUPP-024 - Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Env%20Config%20Secrets%20Tenant%20Bootstrap%20Seeding.md)
+**Full specification**: [SUPP-024 - Platform Ops - Agent Harness - Env Config Secrets Tenant Bootstrap Seeding](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-024%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Env%20Config%20Secrets%20Tenant%20Bootstrap%20Seeding.md)
 
 ### App E.07 --- SUPP-025: Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets (v0.1)
 
-**Full specification**: [SUPP-025 - Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Staging%20Seed%20Scale%20Plan%20and%20Testing%20Targets.md)
+**Full specification**: [SUPP-025 - Platform Ops - Agent Harness - Staging Seed Scale Plan and Testing Targets](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-025%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Staging%20Seed%20Scale%20Plan%20and%20Testing%20Targets.md)
 
 ### App E.08 --- SUPP-026: Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain (v0.1)
 
-**Full specification**: [SUPP-026 - Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Local%20Dev%20Staging%20Parity%20and%20Toolchain.md)
+**Full specification**: [SUPP-026 - Platform Ops - Agent Harness - Local Dev Staging Parity and Toolchain](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-026%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Local%20Dev%20Staging%20Parity%20and%20Toolchain.md)
 
 ### App E.09 --- SUPP-027: Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay (v0.1)
 
-**Full specification**: [SUPP-027 - Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Notifications%20Webhooks%20Deliverability%20Retry%20and%20Replay.md)
+**Full specification**: [SUPP-027 - Platform Ops - Agent Harness - Notifications Webhooks Deliverability Retry and Replay](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-027%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Notifications%20Webhooks%20Deliverability%20Retry%20and%20Replay.md)
 
 ### App E.10 --- SUPP-029: Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation (v0.1)
 
-**Full specification**: [SUPP-029 - Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Observability%20Tracing%20Logging%20and%20Audit%20Correlation.md)
+**Full specification**: [SUPP-029 - Platform Ops - Agent Harness - Observability Tracing Logging and Audit Correlation](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-029%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Observability%20Tracing%20Logging%20and%20Audit%20Correlation.md)
 
 ### App E.11 --- SUPP-030: Platform Ops - Agent Harness - Admin Ops Console Minimum Screens (v0.2)
 
-**Full specification**: [SUPP-030 - Platform Ops - Agent Harness - Admin Ops Console Minimum Screens](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Admin%20Ops%20Console%20Minimum%20Screens.md)
+**Full specification**: [SUPP-030 - Platform Ops - Agent Harness - Admin Ops Console Minimum Screens](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-030%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Admin%20Ops%20Console%20Minimum%20Screens.md)
 
 ### App E.12 --- SUPP-031: Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process (v0.1)
 
-**Full specification**: [SUPP-031 - Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Supportability%20Policies%20Impersonation%20and%20Incident%20Process.md)
+**Full specification**: [SUPP-031 - Platform Ops - Agent Harness - Supportability Policies Impersonation and Incident Process](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-031%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Supportability%20Policies%20Impersonation%20and%20Incident%20Process.md)
 
 ### App E.13 --- SUPP-032: Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests (v0.1)
 
-**Full specification**: [SUPP-032 - Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20BreakGlass%20Retention%20Safety%20and%20Data%20Requests.md)
+**Full specification**: [SUPP-032 - Platform Ops - Agent Harness - BreakGlass Retention Safety and Data Requests](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-032%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20BreakGlass%20Retention%20Safety%20and%20Data%20Requests.md)
 
 ### App E.14 --- SUPP-034: Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency (v0.1)
 
-**Full specification**: [SUPP-034 - Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Rate%20Limits%20Upload%20Guards%20Export%20Throttle%20Webhook%20Concurrency.md)
+**Full specification**: [SUPP-034 - Platform Ops - Agent Harness - Rate Limits Upload Guards Export Throttle Webhook Concurrency](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-034%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Rate%20Limits%20Upload%20Guards%20Export%20Throttle%20Webhook%20Concurrency.md)
 
 ### App E.15 --- SUPP-035: Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums (v1.3)
 
-**Full specification**: [SUPP-035 - Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Field%20Level%20Data%20Model%20Tables%20Fields%20Enums.md)
+**Full specification**: [SUPP-035 - Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035%20-%20Platform%20Ops%20-%20Agent%20Harness%20-%20Field%20Level%20Data%20Model%20Tables%20Fields%20Enums.md)
 
 ### App E.16 --- SUPP-038: Platform Ops - Section 508 Accessibility Scaffold (v0.1)
 
-**Full specification**: [SUPP-038 - Platform Ops - Section 508 Accessibility Scaffold](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-038%20-%20Platform%20Ops%20-%20Section%20508%20Accessibility%20Scaffold.md)
+**Full specification**: [SUPP-038 - Platform Ops - Section 508 Accessibility Scaffold](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-038%20-%20Platform%20Ops%20-%20Section%20508%20Accessibility%20Scaffold.md)
 
 ### App E.17 --- SUPP-039: Platform Ops - Infrastructure Performance Security Requirements (v0.1)
 
-**Full specification**: [SUPP-039 - Platform Ops - Infrastructure Performance Security Requirements](02_SUPPs/Platform_Ops_Agent_Harness/SUPP-039%20-%20Platform%20Ops%20-%20Infrastructure%20Performance%20Security%20Requirements.md)
+**Full specification**: [SUPP-039 - Platform Ops - Infrastructure Performance Security Requirements](../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-039%20-%20Platform%20Ops%20-%20Infrastructure%20Performance%20Security%20Requirements.md)
 
 ## Appendix F --- Screens Interfaces
 
 ### App F.01 --- SUPP-036: Screens - Interfaces - Screens Onboarding and Store Foundation (v0.6)
 
-**Full specification**: [SUPP-036 - Screens - Interfaces - Screens Onboarding and Store Foundation](02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md)
+**Full specification**: [SUPP-036 - Screens - Interfaces - Screens Onboarding and Store Foundation](../02_SUPPs/Screens_Interfaces/SUPP-036%20-%20Screens%20-%20Interfaces%20-%20Screens%20Onboarding%20and%20Store%20Foundation.md)
 
 ### App F.02 --- SUPP-037: Screens - Interfaces - Screens SurveyBuilder and StoreSurveys (v1.0)
 
-**Full specification**: [SUPP-037 - Screens - Interfaces - Screens SurveyBuilder and StoreSurveys](02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md)
+**Full specification**: [SUPP-037 - Screens - Interfaces - Screens SurveyBuilder and StoreSurveys](../02_SUPPs/Screens_Interfaces/SUPP-037%20-%20Screens%20-%20Interfaces%20-%20Screens%20SurveyBuilder%20and%20StoreSurveys.md)
 
 NewPOPSys v1 --- Technology & Architecture Recommendation (v0.1)
 
