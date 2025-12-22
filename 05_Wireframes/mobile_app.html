@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Store App Mockup</title>
+    <title>Store Execution Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="theme-config.js"></script>
@@ -61,7 +61,7 @@
         .text-green-600, .text-green-500 { color: var(--accent) !important; }
         .bg-amber-500, .bg-yellow-500 { background-color: var(--accent) !important; }
 
-        /* Mobile simulator styles */
+        /* Base styles */
         body {
             background-color: #333;
             min-height: 100vh;
@@ -92,6 +92,7 @@
             padding: 20px;
         }
 
+        /* Device frame styles */
         #phone {
             width: 375px;
             height: 812px;
@@ -101,6 +102,130 @@
             position: relative;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
             border: 12px solid #1a1a1a;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile (iPhone 17) - Default */
+        body.device-mobile #phone {
+            width: 393px;
+            height: 852px;
+            border-radius: 47px;
+            border: 12px solid #1a1a1a;
+        }
+        body.device-mobile .phone-container {
+            background-color: #333;
+            padding: 20px;
+        }
+        body.device-mobile .safe-area-top {
+            height: 54px;
+        }
+        body.device-mobile .bottom-nav {
+            height: 84px;
+            padding-bottom: 24px;
+        }
+
+        /* Tablet (iPad) */
+        body.device-tablet #phone {
+            width: 820px;
+            height: 1180px;
+            border-radius: 24px;
+            border: 14px solid #1a1a1a;
+        }
+        body.device-tablet .phone-container {
+            background-color: #333;
+            padding: 20px;
+            min-height: calc(100vh - 50px);
+            overflow: auto;
+        }
+        body.device-tablet .safe-area-top {
+            height: 48px;
+            padding: 0 24px;
+        }
+        body.device-tablet .bottom-nav {
+            height: 70px;
+            padding-bottom: 12px;
+        }
+        body.device-tablet .card {
+            padding: 20px;
+        }
+        body.device-tablet h1 {
+            font-size: 2rem;
+        }
+        body.device-tablet .screen {
+            padding: 24px !important;
+            padding-bottom: 100px !important;
+        }
+
+        /* Desktop (Full Screen) */
+        body.device-desktop {
+            background-color: #f3f4f6;
+        }
+        body.device-desktop .phone-container {
+            background-color: transparent;
+            padding: 0;
+            min-height: auto;
+            display: block;
+        }
+        body.device-desktop #phone {
+            width: 100%;
+            height: auto;
+            min-height: calc(100vh - 50px);
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
+        body.device-desktop .safe-area-top {
+            height: 56px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 32px;
+            font-size: 16px;
+        }
+        body.device-desktop .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            padding-bottom: 8px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        body.device-desktop .screen {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px !important;
+            padding-bottom: 100px !important;
+            min-height: calc(100vh - 170px);
+        }
+        body.device-desktop .card {
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        body.device-desktop h1 {
+            font-size: 2.25rem;
+        }
+        body.device-desktop h2 {
+            font-size: 1.5rem;
+        }
+        body.device-desktop .nav-item {
+            font-size: 12px;
+            gap: 6px;
+        }
+        body.device-desktop .nav-item i {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Desktop grid layouts */
+        body.device-desktop .dashboard-campaigns {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 16px;
+        }
+        body.device-desktop .dashboard-campaigns .card {
+            margin-bottom: 0;
         }
 
         .screen {
@@ -341,6 +466,16 @@
         </a>
         <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+
+        <!-- Device View Selector -->
+        <div style="display: flex; align-items: center; gap: 8px; margin-left: 16px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <select id="device-selector" onchange="changeDevice(this.value)" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                <option value="mobile" selected style="color: #1d4ed8;">Mobile (iPhone 17)</option>
+                <option value="tablet" style="color: #1d4ed8;">Tablet (iPad)</option>
+                <option value="desktop" style="color: #1d4ed8;">Desktop (Full Screen)</option>
+            </select>
+        </div>
     </div>
 
     <div class="phone-container">
@@ -510,32 +645,34 @@ Helpful: For support requests">v1.35 (Pilot Build)</p>
 
             <h2 class="text-lg font-semibold text-gray-800 mb-3" data-tooltip="📋 CAMPAIGN SECTION HEADER\n📊 Data: Section title for active StoreAssignments\n⬅️ Depends: User authenticated, campaigns assigned\n➡️ Blocks: Campaign list section identification">Active Campaigns</h2>
 
-            <!-- Campaign Card: Receipt Phase -->
-            <div class="card cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Install phase access, CompletionSubmission">
-                <div class="flex justify-between items-start mb-2">
-                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔵 ACTION REQUIRED BADGE\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Shipment delivered, receipt not submitted\n➡️ Blocks: User must complete receipt survey">Action
-                        Required</span>
-                    <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing, task deadlines">Start: Dec 20</span>
+            <div class="dashboard-campaigns">
+                <!-- Campaign Card: Receipt Phase -->
+                <div class="card cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Install phase access, CompletionSubmission">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔵 ACTION REQUIRED BADGE\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Shipment delivered, receipt not submitted\n➡️ Blocks: User must complete receipt survey">Action
+                            Required</span>
+                        <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing, task deadlines">Start: Dec 20</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign created by Brand\n➡️ Blocks: StoreAssignment creation, order generation">Holiday Promo 2025</h3>
+                    <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DESCRIPTION\n📊 Data: KitDefinition.name, KitItem.name, KitItem.quantity\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: OrderLine generation, receipt checklist">Kit: Standard + Window Clings</p>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2" data-tooltip="📊 PROGRESS BAR\n📊 Data: COUNT(CompletionSubmission), COUNT(AssignmentItem)\n⬅️ Depends: Receipt and install surveys submitted\n➡️ Blocks: Visual completion indicator">
+                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span data-tooltip="📌 PHASE STATUS\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Install phase unlock">Receipt Pending</span>
+                        <span data-tooltip="✅ TASK COUNTER\n📊 Data: COUNT(CompletionSubmission WHERE status=COMPLETE)\n⬅️ Depends: Receipt and install surveys\n➡️ Blocks: Assignment completion status">1/5 Tasks</span>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign created by Brand\n➡️ Blocks: StoreAssignment creation, order generation">Holiday Promo 2025</h3>
-                <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DESCRIPTION\n📊 Data: KitDefinition.name, KitItem.name, KitItem.quantity\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: OrderLine generation, receipt checklist">Kit: Standard + Window Clings</p>
-                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2" data-tooltip="📊 PROGRESS BAR\n📊 Data: COUNT(CompletionSubmission), COUNT(AssignmentItem)\n⬅️ Depends: Receipt and install surveys submitted\n➡️ Blocks: Visual completion indicator">
-                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
-                </div>
-                <div class="flex justify-between text-xs text-gray-500">
-                    <span data-tooltip="📌 PHASE STATUS\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Install phase unlock">Receipt Pending</span>
-                    <span data-tooltip="✅ TASK COUNTER\n📊 Data: COUNT(CompletionSubmission WHERE status=COMPLETE)\n⬅️ Depends: Receipt and install surveys\n➡️ Blocks: Assignment completion status">1/5 Tasks</span>
-                </div>
-            </div>
 
-            <!-- Campaign Card: Install Phase -->
-            <div id="card-campaign-install" class="card opacity-60 grayscale" onclick="nav('screen-install')" data-tooltip="🔒 CAMPAIGN CARD - INSTALL PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, AssignmentItem.photoStatus\n⬅️ Depends: Receipt survey completed, ReceiveVerification approved\n➡️ Blocks: PhotoUpload creation, CompletionSubmission">
-                <div class="flex justify-between items-start mb-2 status-badge">
-                    <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔒 LOCKED STATUS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Receipt not completed\n➡️ Blocks: Install phase access">Locked</span>
-                    <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing">Start: Jan 05</span>
+                <!-- Campaign Card: Install Phase -->
+                <div id="card-campaign-install" class="card opacity-60 grayscale" onclick="nav('screen-install')" data-tooltip="🔒 CAMPAIGN CARD - INSTALL PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, AssignmentItem.photoStatus\n⬅️ Depends: Receipt survey completed, ReceiveVerification approved\n➡️ Blocks: PhotoUpload creation, CompletionSubmission">
+                    <div class="flex justify-between items-start mb-2 status-badge">
+                        <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔒 LOCKED STATUS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Receipt not completed\n➡️ Blocks: Install phase access">Locked</span>
+                        <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing">Start: Jan 05</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: StoreAssignment context">Holiday Promo 2025 (Install)</h3>
+                    <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DEFINITION\n📊 Data: KitDefinition.name, COUNT(KitItem)\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: AssignmentItem creation">Kit: Full Store Reset</p>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: StoreAssignment context">Holiday Promo 2025 (Install)</h3>
-                <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DEFINITION\n📊 Data: KitDefinition.name, COUNT(KitItem)\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: AssignmentItem creation">Kit: Full Store Reset</p>
             </div>
         </div>
 
@@ -894,6 +1031,22 @@ Purpose: Primary app navigation">
 
     <script>
         lucide.createIcons();
+
+        // Device switching
+        function changeDevice(device) {
+            document.body.classList.remove('device-mobile', 'device-tablet', 'device-desktop');
+            document.body.classList.add('device-' + device);
+            localStorage.setItem('storeAppDevice', device);
+            lucide.createIcons();
+        }
+
+        // Load saved device preference
+        (function() {
+            const savedDevice = localStorage.getItem('storeAppDevice') || 'mobile';
+            document.body.classList.add('device-' + savedDevice);
+            const selector = document.getElementById('device-selector');
+            if (selector) selector.value = savedDevice;
+        })();
 
         // State
         let receiptComplete = false;
