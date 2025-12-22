@@ -124,7 +124,7 @@
             padding-bottom: 24px;
         }
 
-        /* Tablet (iPad) */
+        /* Tablet Portrait (iPad) */
         body.device-tablet #phone {
             width: 820px;
             height: 1180px;
@@ -154,6 +154,80 @@
         body.device-tablet .screen {
             padding: 24px !important;
             padding-bottom: 100px !important;
+        }
+        body.device-tablet #screen-login .login-form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Tablet Landscape (iPad) - Similar to Desktop */
+        body.device-tablet-landscape {
+            background-color: #f3f4f6;
+        }
+        body.device-tablet-landscape .phone-container {
+            background-color: transparent;
+            padding: 0;
+            min-height: auto;
+            display: block;
+        }
+        body.device-tablet-landscape #phone {
+            width: 100%;
+            height: auto;
+            min-height: calc(100vh - 50px);
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
+        body.device-tablet-landscape .safe-area-top {
+            height: 56px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 32px;
+            font-size: 16px;
+        }
+        body.device-tablet-landscape .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            padding-bottom: 8px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        body.device-tablet-landscape .screen {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 32px !important;
+            padding-bottom: 100px !important;
+            min-height: calc(100vh - 170px);
+        }
+        body.device-tablet-landscape .card {
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        body.device-tablet-landscape h1 {
+            font-size: 2rem;
+        }
+        body.device-tablet-landscape h2 {
+            font-size: 1.25rem;
+        }
+        body.device-tablet-landscape .nav-item {
+            font-size: 12px;
+            gap: 6px;
+        }
+        body.device-tablet-landscape .dashboard-campaigns {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        body.device-tablet-landscape .dashboard-campaigns .card {
+            margin-bottom: 0;
+        }
+        body.device-tablet-landscape #screen-login .login-form-container {
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         /* Desktop (Full Screen) */
@@ -226,6 +300,10 @@
         }
         body.device-desktop .dashboard-campaigns .card {
             margin-bottom: 0;
+        }
+        body.device-desktop #screen-login .login-form-container {
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .screen {
@@ -472,7 +550,8 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
             <select id="device-selector" onchange="changeDevice(this.value)" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
                 <option value="mobile" selected style="color: #1d4ed8;">Mobile (iPhone 17)</option>
-                <option value="tablet" style="color: #1d4ed8;">Tablet (iPad)</option>
+                <option value="tablet" style="color: #1d4ed8;">Tablet Portrait (iPad)</option>
+                <option value="tablet-landscape" style="color: #1d4ed8;">Tablet Landscape (iPad)</option>
                 <option value="desktop" style="color: #1d4ed8;">Desktop (Full Screen)</option>
             </select>
         </div>
@@ -574,19 +653,19 @@ Feature: SUPP-036 Authentication
 Type: Store-based login
 Method: Store# + Access code
 Alternative: SSO for managers">
-            <div class="h-full flex flex-col justify-center">
+            <div class="h-full flex flex-col justify-center login-form-container">
                 <div class="mb-12 text-center" data-tooltip="🎨 APP BRANDING
 ━━━━━━━━━━━━━━━
 Section: App identity
 Shows: Logo and tagline
 Purpose: Brand recognition
 Design: Centered, clean layout">
-                    <div id="brand-logo" class="mb-4" style="display: flex; justify-content: center;" data-tooltip="🏢 BRAND LOGO
+                    <div id="brand-logo" class="mb-4 flex justify-center" data-tooltip="🏢 BRAND LOGO
 ━━━━━━━━━━━━━━━
 Purpose: Brand identity
 Dynamic: Changes with theme
 Contains: Logo with brand name">
-                        <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 48px; width: auto; display: block;">
+                        <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 48px; width: auto;">
                     </div>
                     <p class="text-gray-500" data-tooltip="📝 APP TAGLINE
 ━━━━━━━━━━━━━━━
@@ -1034,7 +1113,7 @@ Purpose: Primary app navigation">
 
         // Device switching
         function changeDevice(device) {
-            document.body.classList.remove('device-mobile', 'device-tablet', 'device-desktop');
+            document.body.classList.remove('device-mobile', 'device-tablet', 'device-tablet-landscape', 'device-desktop');
             document.body.classList.add('device-' + device);
             localStorage.setItem('storeAppDevice', device);
             lucide.createIcons();
