@@ -39,7 +39,7 @@ function initDocModal() {
         <div class="absolute inset-4 md:inset-8 lg:inset-12 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
             <div class="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
                 <h3 id="doc-modal-title" class="font-semibold text-gray-900 truncate">Loading...</h3>
-                <button onclick="closeDocModal()" class="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+                <button onclick="closeDocModal()" class="p-2 hover:bg-gray-200 rounded-lg transition-colors text-gray-700">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -123,6 +123,24 @@ function initDocModal() {
             return;
         }
 
+        // Handle YAML files
+        if (hrefWithoutHash.endsWith('.yaml') || hrefWithoutHash.endsWith('.yml')) {
+            e.preventDefault();
+            const title = link.textContent?.trim() || hrefWithoutHash.split('/').pop();
+
+            const isInsideModal = link.closest('#doc-modal-content');
+            let resolvedUrl;
+
+            if (isInsideModal && currentDocBaseUrl) {
+                resolvedUrl = new URL(href, currentDocBaseUrl).href;
+            } else {
+                resolvedUrl = link.href;
+            }
+
+            openDocModal(resolvedUrl, title, 'yaml');
+            return;
+        }
+
         // Handle SVG diagrams
         if (hrefWithoutHash.endsWith('.svg')) {
             e.preventDefault();
@@ -201,6 +219,26 @@ function openDocModal(url, title, type = 'markdown') {
                 </object>
             </div>`;
         content.classList.remove('prose');
+    } else if (type === 'yaml') {
+        // Fetch and display YAML as code
+        content.classList.add('prose');
+        fetch(baseUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load YAML file');
+                return response.text();
+            })
+            .then(yaml => {
+                // Escape HTML entities for safe display
+                const escaped = yaml.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                content.innerHTML = `<pre style="background: #1f2937; color: #e5e7eb; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.5;"><code>${escaped}</code></pre>`;
+            })
+            .catch(err => {
+                content.innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-lg">
+                    <p class="font-semibold">Could not load YAML file</p>
+                    <p class="text-sm mt-1">${err.message}</p>
+                    <a href="${url}" target="_blank" class="text-blue-600 text-sm mt-2 inline-block">Open directly →</a>
+                </div>`;
+            });
     } else {
         // Fetch and render markdown
         content.classList.add('prose');
