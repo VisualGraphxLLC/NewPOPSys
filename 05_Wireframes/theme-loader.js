@@ -955,12 +955,24 @@
             brandOptions += `<option value="${key}" ${selected} style="color: #333;">${brand.name || brand.shortName}</option>`;
         });
 
+        // Common dropdown style
+        const dropdownStyle = `
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 500;
+        `;
+
         // Create controls container
         const container = document.createElement('div');
         container.style.cssText = `
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             margin-left: 24px;
             padding-left: 24px;
             border-left: 1px solid rgba(255,255,255,0.3);
@@ -969,29 +981,11 @@
         container.innerHTML = `
             <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="font-size: 11px; opacity: 0.8;">Brand:</span>
-                <select id="theme-select" style="
-                    background: rgba(255,255,255,0.2);
-                    border: 1px solid rgba(255,255,255,0.4);
-                    color: white;
-                    padding: 3px 6px;
-                    border-radius: 4px;
-                    font-size: 11px;
-                    cursor: pointer;
-                    font-weight: 600;
-                ">${brandOptions}</select>
+                <select id="theme-select" style="${dropdownStyle}">${brandOptions}</select>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="font-size: 11px; opacity: 0.8;">Mode:</span>
-                <select id="appearance-select" style="
-                    background: rgba(255,255,255,0.2);
-                    border: 1px solid rgba(255,255,255,0.4);
-                    color: white;
-                    padding: 3px 6px;
-                    border-radius: 4px;
-                    font-size: 11px;
-                    cursor: pointer;
-                    font-weight: 600;
-                ">
+                <select id="appearance-select" style="${dropdownStyle}">
                     <option value="light" ${savedAppearance === 'light' ? 'selected' : ''} style="color: #333;">Light</option>
                     <option value="dark" ${savedAppearance === 'dark' ? 'selected' : ''} style="color: #333;">Dark</option>
                     <option value="high-contrast" ${savedAppearance === 'high-contrast' ? 'selected' : ''} style="color: #333;">High Contrast</option>
@@ -1016,6 +1010,7 @@
         const config = getConfig();
         const savedTheme = localStorage.getItem('selectedTheme') || 'default';
         const savedAppearance = localStorage.getItem('appearanceMode') || 'light';
+        const savedDevice = localStorage.getItem('storeAppDevice') || 'mobile';
 
         // Build compact brand options
         let brandOptions = '';
@@ -1025,29 +1020,25 @@
             brandOptions += `<option value="${key}" ${selected} style="color: #333;">${brand.shortName || brand.name}</option>`;
         });
 
-        // Create compact controls - just dropdowns without labels
+        // Common dropdown style
+        const dropdownStyle = `
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 500;
+        `;
+
+        // Create compact controls container
         const container = document.createElement('div');
-        container.style.cssText = 'display: flex; align-items: center; gap: 6px;';
+        container.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-left: 16px;';
 
         container.innerHTML = `
-            <select id="theme-select" style="
-                background: rgba(255,255,255,0.2);
-                border: 1px solid rgba(255,255,255,0.4);
-                color: white;
-                padding: 2px 4px;
-                border-radius: 4px;
-                font-size: 10px;
-                cursor: pointer;
-            ">${brandOptions}</select>
-            <select id="appearance-select" style="
-                background: rgba(255,255,255,0.2);
-                border: 1px solid rgba(255,255,255,0.4);
-                color: white;
-                padding: 2px 4px;
-                border-radius: 4px;
-                font-size: 10px;
-                cursor: pointer;
-            ">
+            <select id="theme-select" style="${dropdownStyle}">${brandOptions}</select>
+            <select id="appearance-select" style="${dropdownStyle}">
                 <option value="light" ${savedAppearance === 'light' ? 'selected' : ''} style="color: #333;">Light</option>
                 <option value="dark" ${savedAppearance === 'dark' ? 'selected' : ''} style="color: #333;">Dark</option>
                 <option value="high-contrast" ${savedAppearance === 'high-contrast' ? 'selected' : ''} style="color: #333;">High Contrast</option>
@@ -1066,6 +1057,13 @@
             applyAppearance(this.value);
             updateMobilePhoneTheme();
         });
+
+        // Sync device selector if it exists (added in HTML)
+        const deviceSelector = document.getElementById('device-selector');
+        if (deviceSelector) {
+            deviceSelector.style.cssText = dropdownStyle;
+            deviceSelector.value = savedDevice;
+        }
 
         // Apply initial theme to phone content
         updateMobilePhoneTheme();

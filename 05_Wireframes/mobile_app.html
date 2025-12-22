@@ -546,13 +546,13 @@
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
 
         <!-- Device View Selector -->
-        <div style="display: flex; align-items: center; gap: 8px; margin-left: 16px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            <select id="device-selector" onchange="changeDevice(this.value)" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-                <option value="mobile" selected style="color: #1d4ed8;">Mobile (iPhone 17)</option>
-                <option value="tablet" style="color: #1d4ed8;">Tablet Portrait (iPad)</option>
-                <option value="tablet-landscape" style="color: #1d4ed8;">Tablet Landscape (iPad)</option>
-                <option value="desktop" style="color: #1d4ed8;">Desktop (Full Screen)</option>
+        <div style="display: flex; align-items: center; gap: 6px; margin-left: 8px;">
+            <span style="font-size: 11px; opacity: 0.8;">View:</span>
+            <select id="device-selector" onchange="changeDevice(this.value)">
+                <option value="mobile" selected style="color: #333;">Mobile</option>
+                <option value="tablet" style="color: #333;">Tablet</option>
+                <option value="tablet-landscape" style="color: #333;">Tablet Landscape</option>
+                <option value="desktop" style="color: #333;">Desktop</option>
             </select>
         </div>
     </div>
