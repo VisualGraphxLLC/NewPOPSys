@@ -25,24 +25,18 @@ The Procurement Marketplace transforms PopSystem from a software platform into e
 | **Competitive Moat** | Aggregated buying power is defensible; competitors can't replicate overnight |
 
 **The Ecosystem Flywheel**:
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│     More PSPs ──────────► More Buying Power                        │
-│         ▲                        │                                  │
-│         │                        ▼                                  │
-│         │                  Better Pricing                           │
-│         │                        │                                  │
-│         │                        ▼                                  │
-│    Platform                More Distributor                         │
-│    Stickiness              Participation                            │
-│         ▲                        │                                  │
-│         │                        ▼                                  │
-│         │                  Better Selection                         │
-│         │                        │                                  │
-│         └────────────────────────┘                                  │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    A[More PSPs] --> B[More Buying Power]
+    B --> C[Better Pricing]
+    C --> D[More Distributor Participation]
+    D --> E[Better Selection]
+    E --> F[Platform Stickiness]
+    F --> A
+
+    style A fill:#4caf50,color:#fff
+    style C fill:#2196f3,color:#fff
+    style E fill:#ff9800,color:#fff
 ```
 
 ---
@@ -72,20 +66,20 @@ The Procurement Marketplace transforms PopSystem from a software platform into e
 | **Payment Terms** | Small PSPs get worse credit terms | Constant |
 
 **Current Workflow**:
-```
-Production Schedule → Manual Inventory Check → Contact Distributor(s)
-         │                                              │
-         ▼                                              ▼
-    Rush if Short ─────────────────────► Receive Quote(s)
-                                                │
-                                                ▼
-                                          Place Order
-                                                │
-                                                ▼
-                                        Receive Delivery
-                                                │
-                                                ▼
-                                     Manually Update Inventory
+```mermaid
+flowchart LR
+    A[Production Schedule] --> B[Manual Inventory Check]
+    B --> C[Contact Distributors]
+    A --> D{Short?}
+    D -->|Yes| E[Rush Order]
+    E --> F[Receive Quotes]
+    C --> F
+    F --> G[Place Order]
+    G --> H[Receive Delivery]
+    H --> I[Manually Update Inventory]
+
+    style E fill:#f44336,color:#fff
+    style I fill:#ff9800,color:#fff
 ```
 
 **Data Gaps**:
@@ -101,35 +95,43 @@ Production Schedule → Manual Inventory Check → Contact Distributor(s)
 ### Integrated Supply Chain Ecosystem
 
 **Target Architecture**:
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     PopSystem Procurement Hub                        │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐          │
-│  │ Manufacturers│───►│ Distributors │───►│   PopSystem  │          │
-│  │              │    │              │    │  Procurement │          │
-│  │  • 3M        │    │  • FDC       │    │     Hub      │          │
-│  │  • Avery     │    │  • Grimco    │    │              │          │
-│  │  • HP        │    │  • Nazdar    │    │  Aggregated  │          │
-│  │  • Roland    │    │  • Spandex   │    │   Catalog    │          │
-│  │  • Mimaki    │    │  • Regional  │    │   Pricing    │          │
-│  └──────────────┘    └──────────────┘    │   Ordering   │          │
-│                                          └──────┬───────┘          │
-│                                                 │                   │
-│                                                 ▼                   │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │                        PSP Network                            │  │
-│  │                                                               │  │
-│  │   ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐        │  │
-│  │   │  PSP A  │  │  PSP B  │  │  PSP C  │  │  PSP D  │  ...   │  │
-│  │   │ MIS/ERP │  │ MIS/ERP │  │ MIS/ERP │  │ MIS/ERP │        │  │
-│  │   └─────────┘  └─────────┘  └─────────┘  └─────────┘        │  │
-│  │                                                               │  │
-│  │   Integrated Ordering • JIT Inventory • Aggregated Pricing   │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Manufacturers["Manufacturers"]
+        M1[3M]
+        M2[Avery]
+        M3[HP]
+        M4[Roland]
+        M5[Mimaki]
+    end
+
+    subgraph Distributors["Distributors"]
+        D1[FDC]
+        D2[Grimco]
+        D3[Nazdar]
+        D4[Spandex]
+        D5[Regional]
+    end
+
+    subgraph Hub["PopSystem Procurement Hub"]
+        H1[Aggregated Catalog]
+        H2[Pricing Engine]
+        H3[Order Management]
+    end
+
+    subgraph PSPs["PSP Network"]
+        P1[PSP A<br>MIS/ERP]
+        P2[PSP B<br>MIS/ERP]
+        P3[PSP C<br>MIS/ERP]
+        P4[PSP D<br>MIS/ERP]
+    end
+
+    Manufacturers --> Distributors
+    Distributors --> Hub
+    Hub --> PSPs
+
+    style Hub fill:#4caf50,color:#fff
+    style PSPs fill:#2196f3,color:#fff
 ```
 
 ### Value Proposition by Stakeholder
@@ -507,33 +509,35 @@ flowchart LR
 | **Purchase Financing** | Equipment/large orders | Growing PSPs | Interest margin |
 
 **Payment Flow**:
+```mermaid
+flowchart LR
+    subgraph Day0["Day 0"]
+        A[PSP Orders Materials]
+    end
+
+    subgraph Day3["Day 3"]
+        B[PopSystem Pays Distributor]
+        C[Distributor Paid Immediately]
+    end
+
+    subgraph Day30["Day 30/60"]
+        D[PSP Pays PopSystem]
+    end
+
+    A --> B
+    B --> C
+    A -.->|Net-30/60| D
+
+    style A fill:#2196f3,color:#fff
+    style B fill:#4caf50,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#ff9800,color:#fff
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│  PSP Orders          PopSystem Pays         Distributor Paid   │
-│  Materials           Distributor            Immediately         │
-│      │                    │                      │              │
-│      ▼                    ▼                      ▼              │
-│  ┌───────┐           ┌───────┐             ┌───────┐           │
-│  │ Day 0 │──────────►│ Day 3 │────────────►│ Day 3 │           │
-│  └───────┘           └───────┘             └───────┘           │
-│                                                                 │
-│      │                                                          │
-│      ▼                                                          │
-│  PSP Pays PopSystem                                             │
-│  (Net-30 or Net-60)                                            │
-│      │                                                          │
-│      ▼                                                          │
-│  ┌────────┐                                                     │
-│  │Day 30/60│                                                    │
-│  └────────┘                                                     │
-│                                                                 │
-│  PopSystem earns: Float interest + transaction fee             │
-│  PSP gets: Better terms than negotiating alone                 │
-│  Distributor gets: Guaranteed payment, no credit risk          │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+**Value Exchange**:
+- **PopSystem earns**: Float interest + transaction fee
+- **PSP gets**: Better terms than negotiating alone
+- **Distributor gets**: Guaranteed payment, no credit risk
 
 ---
 
@@ -564,26 +568,39 @@ flowchart LR
 ### Two-Sided Marketplace Dynamics
 
 **Supply Side (Distributors/Manufacturers)**:
-```
-More distributors → Better selection → More PSPs join
-      ↑                                      │
-      └──────────────────────────────────────┘
-                   More volume
+```mermaid
+flowchart LR
+    A[More Distributors] --> B[Better Selection]
+    B --> C[More PSPs Join]
+    C --> D[More Volume]
+    D --> A
+
+    style A fill:#4caf50,color:#fff
+    style C fill:#2196f3,color:#fff
 ```
 
 **Demand Side (PSPs)**:
-```
-More PSPs → More volume → Better pricing → More PSPs join
-     ↑                                          │
-     └──────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    A[More PSPs] --> B[More Volume]
+    B --> C[Better Pricing]
+    C --> D[More PSPs Join]
+    D --> A
+
+    style A fill:#2196f3,color:#fff
+    style C fill:#4caf50,color:#fff
 ```
 
 **Cross-Side Effects**:
-```
-More PSPs ────────────────► Distributors want access
-    ▲                              │
-    │                              ▼
-More distributors ◄──────── Better selection for PSPs
+```mermaid
+flowchart TB
+    A[More PSPs] --> B[Distributors Want Access]
+    B --> C[More Distributors]
+    C --> D[Better Selection for PSPs]
+    D --> A
+
+    style A fill:#2196f3,color:#fff
+    style C fill:#4caf50,color:#fff
 ```
 
 ### Competitive Moat Strength

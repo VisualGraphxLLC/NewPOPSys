@@ -1222,27 +1222,19 @@ Workflow v4.0 supports:
 
 ### Compatibility Testing Matrix
 
-```
-┌───────────────┬──────┬──────┬──────┬──────┬──────┐
-│               │ v2.0 │ v2.5 │ v3.0 │ v3.5 │ v4.0 │
-├───────────────┼──────┼──────┼──────┼──────┼──────┤
-│ Core v4.0     │  ?   │  ?   │  ✓   │  ✓   │  ✓   │
-├───────────────┼──────┼──────┼──────┼──────┼──────┤
-│ DAM v4.0      │  ✓   │  ✓   │  ✓   │  ✓   │  ✓   │
-├───────────────┼──────┼──────┼──────┼──────┼──────┤
-│ Designer v4.0 │  ✗   │  ✗   │  ✓   │  ✓   │  ✓   │
-├───────────────┼──────┼──────┼──────┼──────┼──────┤
-│ AI-Data v4.0  │  ✗   │  ✗   │  ✗   │  ✗   │  ✓   │
-└───────────────┴──────┴──────┴──────┴──────┴──────┘
+| Module | v2.0 | v2.5 | v3.0 | v3.5 | v4.0 |
+|--------|------|------|------|------|------|
+| **Core v4.0** | ? | ? | ✓ | ✓ | ✓ |
+| **DAM v4.0** | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Designer v4.0** | ✗ | ✗ | ✓ | ✓ | ✓ |
+| **AI-Data v4.0** | ✗ | ✗ | ✗ | ✗ | ✓ |
 
-Legend:
-✓ = Fully supported & tested
-? = Supported but not recommended
-✗ = Not supported
+**Legend:**
+- ✓ = Fully supported & tested
+- ? = Supported but not recommended
+- ✗ = Not supported
 
-Rows: Module versions
-Columns: Dependent module versions
-```
+*Rows: Module versions | Columns: Dependent module versions*
 
 ---
 
@@ -1286,50 +1278,53 @@ Non-Breaking Changes:
 
 #### Breaking Change Process
 
+```mermaid
+flowchart LR
+    subgraph P1["Phase 1: Proposal<br>(T-6 months)"]
+        A1[Document proposed change]
+        A2[Identify affected modules]
+        A3[Estimate migration effort]
+        A4[Review & approve/reject]
+    end
+
+    subgraph P2["Phase 2: Announcement<br>(T-5 months)"]
+        B1[Publish deprecation notice]
+        B2[Update documentation]
+        B3[Notify customers]
+        B4[Provide migration guide]
+    end
+
+    subgraph P3["Phase 3: Dual Support<br>(T-4 to T-1 months)"]
+        C1[Implement new version]
+        C2[Support both versions]
+        C3[Add deprecation warnings]
+        C4[Monitor adoption]
+    end
+
+    subgraph P4["Phase 4: Breaking Change<br>(T)"]
+        D1[Release breaking change]
+        D2[Remove old version support]
+        D3[Monitor for issues]
+        D4[Provide emergency support]
+    end
+
+    subgraph P5["Phase 5: Cleanup<br>(T+1 month)"]
+        E1[Remove deprecated code]
+        E2[Update documentation]
+        E3[Conduct post-mortem]
+        E4[Document lessons learned]
+    end
+
+    P1 --> P2 --> P3 --> P4 --> P5
+
+    style P1 fill:#e3f2fd
+    style P2 fill:#fff3e0
+    style P3 fill:#e8f5e9
+    style P4 fill:#ffebee
+    style P5 fill:#f3e5f5
 ```
-Phase 1: Proposal (T-6 months)
-┌──────────────────────────────────────┐
-│ 1. Document proposed change          │
-│ 2. Identify affected modules         │
-│ 3. Estimate migration effort         │
-│ 4. Review with architecture team     │
-│ 5. Approve or reject                 │
-└──────────────────────────────────────┘
 
-Phase 2: Announcement (T-5 months)
-┌──────────────────────────────────────┐
-│ 1. Publish deprecation notice        │
-│ 2. Update documentation              │
-│ 3. Notify affected customers         │
-│ 4. Provide migration guide           │
-└──────────────────────────────────────┘
-
-Phase 3: Dual Support (T-4 to T-1 months)
-┌──────────────────────────────────────┐
-│ 1. Implement new version             │
-│ 2. Support both old and new versions │
-│ 3. Add deprecation warnings          │
-│ 4. Monitor adoption of new version   │
-└──────────────────────────────────────┘
-
-Phase 4: Breaking Change (T)
-┌──────────────────────────────────────┐
-│ 1. Release breaking change           │
-│ 2. Remove old version support        │
-│ 3. Monitor for issues                │
-│ 4. Provide emergency support         │
-└──────────────────────────────────────┘
-
-Phase 5: Cleanup (T+1 month)
-┌──────────────────────────────────────┐
-│ 1. Remove deprecated code            │
-│ 2. Update all documentation          │
-│ 3. Conduct post-mortem               │
-│ 4. Document lessons learned          │
-└──────────────────────────────────────┘
-
-Minimum Timeline: 6 months from proposal to breaking change
-```
+**Minimum Timeline:** 6 months from proposal to breaking change
 
 ### Breaking Change Examples
 

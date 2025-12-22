@@ -86,22 +86,19 @@ The Orchestrator Agent serves as the central coordination point:
 
 ### Orchestration Workflow
 
-```
-1. Receive High-Level Objective
-   ↓
-2. Analyze Cross-Pillar Dependencies
-   ↓
-3. Generate Task Graph
-   ↓
-4. Assign Tasks to Pillar Agents
-   ↓
-5. Monitor Execution
-   ↓
-6. Handle Escalations
-   ↓
-7. Validate Integration
-   ↓
-8. Report Completion
+```mermaid
+flowchart TB
+    A[1. Receive High-Level Objective] --> B[2. Analyze Cross-Pillar Dependencies]
+    B --> C[3. Generate Task Graph]
+    C --> D[4. Assign Tasks to Pillar Agents]
+    D --> E[5. Monitor Execution]
+    E --> F[6. Handle Escalations]
+    F --> G[7. Validate Integration]
+    G --> H[8. Report Completion]
+
+    style A fill:#4caf50,color:#fff
+    style D fill:#2196f3,color:#fff
+    style H fill:#ff9800,color:#fff
 ```
 
 ### Communication Protocol
@@ -159,26 +156,26 @@ Agents must escalate to humans when:
 
 ### Escalation Workflow
 
-```
-Agent Detects Trigger
-   ↓
-Log Escalation Event
-   ↓
-Notify Orchestrator
-   ↓
-Orchestrator Assesses Severity
-   ↓
-[Critical] → Immediate Slack/Email Alert
-[High]     → Add to Review Queue (4hr SLA)
-[Medium]   → Daily Digest Summary
-   ↓
-Human Reviews Context
-   ↓
-Human Provides Decision/Guidance
-   ↓
-Agent Resumes Work
-   ↓
-Log Resolution & Update Knowledge Base
+```mermaid
+flowchart TB
+    A[Agent Detects Trigger] --> B[Log Escalation Event]
+    B --> C[Notify Orchestrator]
+    C --> D[Orchestrator Assesses Severity]
+    D --> E{Severity Level}
+    E -->|Critical| F[Immediate Slack/Email Alert]
+    E -->|High| G[Add to Review Queue<br>4hr SLA]
+    E -->|Medium| H[Daily Digest Summary]
+    F --> I[Human Reviews Context]
+    G --> I
+    H --> I
+    I --> J[Human Provides Decision/Guidance]
+    J --> K[Agent Resumes Work]
+    K --> L[Log Resolution & Update Knowledge Base]
+
+    style A fill:#4caf50,color:#fff
+    style E fill:#ff9800,color:#fff
+    style F fill:#f44336,color:#fff
+    style L fill:#2196f3,color:#fff
 ```
 
 ## Quality Gates
