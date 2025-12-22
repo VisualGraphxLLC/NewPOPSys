@@ -181,62 +181,34 @@ flowchart TB
 **What It Does**: Aggregates product offerings from multiple distributors into a single, searchable catalog within the MIS/ERP system.
 
 **Catalog Structure**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ PopSystem Materials Catalog                              🔍     │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│ Categories:                                                     │
-│ ├── Substrates                                                  │
-│ │   ├── Vinyl (cast, calendered, specialty)                   │
-│ │   ├── Banner Materials                                       │
-│ │   ├── Rigid Boards (PVC, acrylic, foam, corrugated)         │
-│ │   ├── Paper/Cardstock                                        │
-│ │   └── Specialty (fabric, mesh, reflective)                  │
-│ ├── Inks & Consumables                                         │
-│ │   ├── Latex Inks                                             │
-│ │   ├── UV Inks                                                │
-│ │   ├── Solvent/Eco-Solvent                                   │
-│ │   └── Printer Supplies                                       │
-│ ├── Laminates & Finishes                                       │
-│ │   ├── Overlaminates                                          │
-│ │   ├── Mounting Adhesives                                     │
-│ │   └── Protective Coatings                                    │
-│ ├── Hardware & Mounting                                         │
-│ │   ├── Frames & Standoffs                                     │
-│ │   ├── Hanging Systems                                        │
-│ │   └── Installation Supplies                                  │
-│ └── Equipment & Parts                                           │
-│     ├── Replacement Parts                                       │
-│     ├── Maintenance Supplies                                    │
-│     └── Small Equipment                                         │
-│                                                                 │
-│ Featured: [HP Latex Ink Set] [3M IJ40C Vinyl] [Drytac Polar]   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
 
-**Product Comparison**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ Product Comparison: 54" White Gloss Vinyl                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│ Product             Distributor   Price/Roll  Lead Time  Rating │
-│ ─────────────────────────────────────────────────────────────── │
-│ 3M IJ40C-10         FDC Graphics    $342      2 days     ★★★★★ │
-│ Avery MPI 1005      Grimco          $318      3 days     ★★★★☆ │
-│ Oracal 3651         Spandex         $295      2 days     ★★★★☆ │
-│ HP PVC-Free         HP Direct       $385      5 days     ★★★★★ │
-│ Generic Economy     RegionalCo      $245      1 day      ★★★☆☆ │
-│                                                                 │
-│ 💡 AI Recommendation: Avery MPI 1005                           │
-│    Best price-performance for your typical jobs                 │
-│    Your historical quality score: 97.2%                         │
-│                                                                 │
-│ [Add to Cart] [Set as Default] [View Specs] [Quality History]  │
-└─────────────────────────────────────────────────────────────────┘
-```
+<!-- TODO: Add mockup image: catalog-structure.png -->
+
+| Category | Subcategories |
+|----------|---------------|
+| **Substrates** | Vinyl (cast, calendered, specialty), Banner Materials, Rigid Boards (PVC, acrylic, foam, corrugated), Paper/Cardstock, Specialty (fabric, mesh, reflective) |
+| **Inks & Consumables** | Latex Inks, UV Inks, Solvent/Eco-Solvent, Printer Supplies |
+| **Laminates & Finishes** | Overlaminates, Mounting Adhesives, Protective Coatings |
+| **Hardware & Mounting** | Frames & Standoffs, Hanging Systems, Installation Supplies |
+| **Equipment & Parts** | Replacement Parts, Maintenance Supplies, Small Equipment |
+
+**Featured Products**: HP Latex Ink Set, 3M IJ40C Vinyl, Drytac Polar
+
+**Product Comparison** *(Example: 54" White Gloss Vinyl)*:
+
+<!-- TODO: Add mockup image: product-comparison.png -->
+
+| Product | Distributor | Price/Roll | Lead Time | Rating |
+|---------|-------------|------------|-----------|--------|
+| 3M IJ40C-10 | FDC Graphics | $342 | 2 days | 5/5 |
+| Avery MPI 1005 | Grimco | $318 | 3 days | 4/5 |
+| Oracal 3651 | Spandex | $295 | 2 days | 4/5 |
+| HP PVC-Free | HP Direct | $385 | 5 days | 5/5 |
+| Generic Economy | RegionalCo | $245 | 1 day | 3/5 |
+
+**AI Recommendation**: Avery MPI 1005 - Best price-performance for typical jobs (historical quality score: 97.2%)
+
+**Actions**: Add to Cart, Set as Default, View Specs, Quality History
 
 ---
 
@@ -274,32 +246,24 @@ flowchart TB
 | >$10M | List - 30%+ | **PopSystem at scale** |
 
 **Pricing Dashboard (PSP View)**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ Your Procurement Savings - November 2026                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│ Your Volume This Month:           $12,450                       │
-│ Your Individual Tier Would Be:    Tier 1 (5% discount)          │
-│ PopSystem Network Tier:           Tier 4 (25% discount)         │
-│                                                                 │
-│ YOUR SAVINGS THIS MONTH:                                        │
-│ ┌─────────────────────────────────────────────────────────────┐ │
-│ │                                                             │ │
-│ │   Without PopSystem:    $12,450 × (1 - 5%)  = $11,828      │ │
-│ │   With PopSystem:       $12,450 × (1 - 25%) = $9,338       │ │
-│ │                                                             │ │
-│ │   💰 Your Savings:      $2,490 (20% additional)            │ │
-│ │                                                             │ │
-│ └─────────────────────────────────────────────────────────────┘ │
-│                                                                 │
-│ Year-to-Date Savings: $24,830                                   │
-│ Projected Annual Savings: $29,880                               │
-│                                                                 │
-│ Network Status: 847 PSPs | $4.2M monthly volume                │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+<!-- TODO: Add mockup image: pricing-dashboard.png -->
+
+| Metric | Value |
+|--------|-------|
+| Your Volume This Month | $12,450 |
+| Your Individual Tier Would Be | Tier 1 (5% discount) |
+| PopSystem Network Tier | Tier 4 (25% discount) |
+
+**Savings Calculation**:
+- Without PopSystem: $12,450 × (1 - 5%) = $11,828
+- With PopSystem: $12,450 × (1 - 25%) = $9,338
+- **Your Savings**: $2,490 (20% additional)
+
+**Summary**:
+- Year-to-Date Savings: $24,830
+- Projected Annual Savings: $29,880
+- Network Status: 847 PSPs | $4.2M monthly volume
 
 ---
 
@@ -336,44 +300,35 @@ flowchart LR
     style Order fill:#ff9800,color:#fff
 ```
 
-**Order Interface (Within MIS)**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ Job #4521 - Nike Summer Campaign                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│ BILL OF MATERIALS                                               │
-│ ┌─────────────────────────────────────────────────────────────┐ │
-│ │ Material              Needed   In Stock   To Order   Status │ │
-│ │ ───────────────────────────────────────────────────────────│ │
-│ │ 54" White Gloss Vinyl   450sf    120sf     330sf    ⚠️ Low │ │
-│ │ 3M 8518 Laminate        450sf    500sf       -      ✅ OK  │ │
-│ │ HP Latex Cyan 3L          2L      1.5L     0.5L    ⚠️ Low │ │
-│ │ Mounting Adhesive        10rl     12rl       -      ✅ OK  │ │
-│ └─────────────────────────────────────────────────────────────┘ │
-│                                                                 │
-│ 🛒 AUTO-ORDER RECOMMENDATION                                    │
-│ ┌─────────────────────────────────────────────────────────────┐ │
-│ │                                                             │ │
-│ │ 54" White Gloss Vinyl - Avery MPI 1005                     │ │
-│ │ Quantity: 1 roll (500 sf) - covers this job + safety stock │ │
-│ │ Price: $318.00 (PopSystem Tier 4)                          │ │
-│ │ Delivery: Dec 24 (2 days) from Grimco                      │ │
-│ │                                                             │ │
-│ │ HP Latex Cyan 3L                                            │ │
-│ │ Quantity: 1 unit (3L)                                       │ │
-│ │ Price: $142.00 (PopSystem Tier 4)                          │ │
-│ │ Delivery: Dec 24 (2 days) from FDC                         │ │
-│ │                                                             │ │
-│ │ 💡 Combine with 2 other orders shipping today = FREE ship  │ │
-│ │                                                             │ │
-│ │ Total: $460.00                                              │ │
-│ │                                                             │ │
-│ │ [Order Now] [Modify Quantities] [Choose Different Product] │ │
-│ └─────────────────────────────────────────────────────────────┘ │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+**Order Interface (Within MIS)** *(Example: Job #4521 - Nike Summer Campaign)*:
+
+<!-- TODO: Add mockup image: order-interface.png -->
+
+**Bill of Materials**:
+
+| Material | Needed | In Stock | To Order | Status |
+|----------|--------|----------|----------|--------|
+| 54" White Gloss Vinyl | 450sf | 120sf | 330sf | Low |
+| 3M 8518 Laminate | 450sf | 500sf | - | OK |
+| HP Latex Cyan 3L | 2L | 1.5L | 0.5L | Low |
+| Mounting Adhesive | 10rl | 12rl | - | OK |
+
+**Auto-Order Recommendation**:
+
+| Item | Details |
+|------|---------|
+| 54" White Gloss Vinyl - Avery MPI 1005 | Qty: 1 roll (500 sf) - covers job + safety stock |
+| | Price: $318.00 (PopSystem Tier 4) |
+| | Delivery: Dec 24 (2 days) from Grimco |
+| HP Latex Cyan 3L | Qty: 1 unit (3L) |
+| | Price: $142.00 (PopSystem Tier 4) |
+| | Delivery: Dec 24 (2 days) from FDC |
+
+**Optimization**: Combine with 2 other orders shipping today = FREE shipping
+
+**Total**: $460.00
+
+**Actions**: Order Now, Modify Quantities, Choose Different Product
 
 ---
 
@@ -391,45 +346,38 @@ flowchart LR
 | **Expiry Management** | Tracks shelf life, prioritizes older stock | Reduce spoilage |
 
 **Inventory Intelligence Dashboard**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ Smart Inventory Management                                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│ INVENTORY HEALTH                                                │
-│ ████████████████████████████░░ 87% Optimized                   │
-│                                                                 │
-│ UPCOMING DEMAND (Next 14 Days)                                  │
-│ ┌─────────────────────────────────────────────────────────────┐ │
-│ │ Material              On Hand   Needed   Gap     Action     │ │
-│ │ ─────────────────────────────────────────────────────────── │ │
-│ │ 54" White Gloss       120 sf    580 sf   460 sf  🔴 Order  │ │
-│ │ 48" Clear Vinyl       200 sf    150 sf     -     ✅ OK     │ │
-│ │ PVC Board 3mm          45 sh     60 sh    15 sh  🟡 Soon   │ │
-│ │ HP Latex Ink Set      1.5 set   2 sets   0.5 set 🟡 Soon   │ │
-│ │ Mounting Adhesive      12 rl     8 rl      -     ✅ OK     │ │
-│ └─────────────────────────────────────────────────────────────┘ │
-│                                                                 │
-│ 🤖 AI RECOMMENDATIONS                                           │
-│                                                                 │
-│ 1. Order 54" White Gloss NOW                                    │
-│    Lead time: 2 days | You need it by: Dec 26                  │
-│    Recommended qty: 2 rolls (1000 sf)                          │
-│    Reason: Covers demand + builds safety stock                 │
-│    [Auto-Order] [Adjust]                                        │
-│                                                                 │
-│ 2. PVC Board order can wait until Dec 26                       │
-│    Combining with another order saves $45 shipping             │
-│    [Schedule for Dec 26] [Order Now Anyway]                    │
-│                                                                 │
-│ 💰 OPTIMIZATION SAVINGS THIS MONTH                              │
-│ • Avoided 3 stockouts:                    $450 rush avoided    │
-│ • Batch shipping consolidation:           $180 saved           │
-│ • Volume break optimization:              $340 saved           │
-│ • Total:                                  $970 saved           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+<!-- TODO: Add mockup image: inventory-dashboard.png -->
+
+**Inventory Health**: 87% Optimized
+
+**Upcoming Demand (Next 14 Days)**:
+
+| Material | On Hand | Needed | Gap | Action |
+|----------|---------|--------|-----|--------|
+| 54" White Gloss | 120 sf | 580 sf | 460 sf | Order Now |
+| 48" Clear Vinyl | 200 sf | 150 sf | - | OK |
+| PVC Board 3mm | 45 sh | 60 sh | 15 sh | Order Soon |
+| HP Latex Ink Set | 1.5 set | 2 sets | 0.5 set | Order Soon |
+| Mounting Adhesive | 12 rl | 8 rl | - | OK |
+
+**AI Recommendations**:
+
+1. **Order 54" White Gloss NOW**
+   - Lead time: 2 days | Needed by: Dec 26
+   - Recommended qty: 2 rolls (1000 sf)
+   - Reason: Covers demand + builds safety stock
+
+2. **PVC Board order can wait until Dec 26**
+   - Combining with another order saves $45 shipping
+
+**Optimization Savings This Month**:
+| Savings Type | Amount |
+|--------------|--------|
+| Avoided 3 stockouts | $450 rush avoided |
+| Batch shipping consolidation | $180 saved |
+| Volume break optimization | $340 saved |
+| **Total** | **$970 saved** |
 
 ---
 
@@ -452,47 +400,42 @@ flowchart LR
 ```
 
 **Defect-Material Correlation Report**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ Material Quality Analysis - November 2026                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│ DEFECT CORRELATION BY MATERIAL LOT                              │
-│                                                                 │
-│ ⚠️ ALERT: Elevated defect rate detected                        │
-│                                                                 │
-│ Material: Avery MPI 1005 White Gloss                            │
-│ Lot #: AVY-2026-1847                                            │
-│ Received: Nov 12, 2026                                          │
-│ Distributor: Grimco                                             │
-│                                                                 │
-│ Jobs Using This Lot: 23                                         │
-│ Defect Rate: 8.7% (vs. 2.1% historical average)                │
-│                                                                 │
-│ Defect Pattern:                                                 │
-│ • Ink adhesion failure on 2 jobs                               │
-│ • Color inconsistency on 3 jobs                                │
-│ • Premature laminate lift on 1 job                             │
-│                                                                 │
-│ AI Analysis: Pattern consistent with material batch issue       │
-│ Recommendation: Quarantine remaining stock, contact supplier    │
-│                                                                 │
-│ Remaining Inventory: 245 sf from this lot                       │
-│                                                                 │
-│ [Quarantine Lot] [File Supplier Claim] [View Affected Jobs]    │
-│                                                                 │
-│ ───────────────────────────────────────────────────────────────│
-│                                                                 │
-│ SUPPLIER QUALITY SCORECARD                                      │
-│                                                                 │
-│ Supplier         Jobs    Defect Rate   Trend    Score          │
-│ Grimco           342       2.4%         →       ★★★★☆ (87)     │
-│ FDC Graphics     256       1.8%         ↘       ★★★★★ (94)     │
-│ Spandex          189       3.1%         ↗       ★★★★☆ (82)     │
-│ HP Direct         87       0.9%         →       ★★★★★ (98)     │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+
+<!-- TODO: Add mockup image: defect-correlation-report.png -->
+
+**Alert**: Elevated defect rate detected
+
+| Field | Value |
+|-------|-------|
+| Material | Avery MPI 1005 White Gloss |
+| Lot # | AVY-2026-1847 |
+| Received | Nov 12, 2026 |
+| Distributor | Grimco |
+| Jobs Using This Lot | 23 |
+| Defect Rate | 8.7% (vs. 2.1% historical average) |
+| Remaining Inventory | 245 sf from this lot |
+
+**Defect Pattern**:
+- Ink adhesion failure on 2 jobs
+- Color inconsistency on 3 jobs
+- Premature laminate lift on 1 job
+
+**AI Analysis**: Pattern consistent with material batch issue
+
+**Recommendation**: Quarantine remaining stock, contact supplier
+
+**Actions**: Quarantine Lot, File Supplier Claim, View Affected Jobs
+
+---
+
+**Supplier Quality Scorecard**:
+
+| Supplier | Jobs | Defect Rate | Trend | Score |
+|----------|------|-------------|-------|-------|
+| Grimco | 342 | 2.4% | Stable | 87/100 |
+| FDC Graphics | 256 | 1.8% | Improving | 94/100 |
+| Spandex | 189 | 3.1% | Declining | 82/100 |
+| HP Direct | 87 | 0.9% | Stable | 98/100 |
 
 ---
 
