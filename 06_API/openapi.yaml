@@ -43,6 +43,12 @@ tags:
     description: Webhook management and event subscriptions
   - name: Health
     description: API health and status checks
+  - name: Surveys
+    description: Survey templates, versions, and response management
+  - name: Store Layouts
+    description: Store layout and location slot management
+  - name: Photo Rules
+    description: Photo capture rules and requirements
 
 paths:
   # ===========================================
@@ -423,6 +429,705 @@ paths:
         - ApiKeyAuth: []
 
   # ===========================================
+  # SURVEYS API (Brand Admin)
+  # ===========================================
+
+  /surveys/templates:
+    get:
+      operationId: listSurveyTemplates
+      summary: List survey templates
+      description: List all survey templates for the authenticated brand.
+      tags:
+        - Surveys
+      parameters:
+        - name: type
+          in: query
+          description: Filter by survey type
+          schema:
+            $ref: '#/components/schemas/SurveyType'
+        - name: isActive
+          in: query
+          description: Filter by active status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of survey templates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SurveyTemplate'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+
+    post:
+      operationId: createSurveyTemplate
+      summary: Create survey template
+      description: Create a new survey template for the brand.
+      tags:
+        - Surveys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyTemplateCreateRequest'
+      responses:
+        '201':
+          description: Survey template created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+
+  /surveys/templates/{templateId}:
+    get:
+      operationId: getSurveyTemplate
+      summary: Get survey template
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/TemplateIdPath'
+      responses:
+        '200':
+          description: Survey template details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    patch:
+      operationId: updateSurveyTemplate
+      summary: Update survey template
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/TemplateIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyTemplateUpdateRequest'
+      responses:
+        '200':
+          description: Survey template updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    delete:
+      operationId: deleteSurveyTemplate
+      summary: Delete survey template
+      description: Soft delete a survey template. Cannot delete if used in active campaigns.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/TemplateIdPath'
+      responses:
+        '204':
+          description: Survey template deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Cannot delete template in use by active campaigns
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - ApiKeyAuth: []
+
+  /surveys/templates/{templateId}/versions:
+    get:
+      operationId: listSurveyVersions
+      summary: List survey versions
+      description: List all versions of a survey template.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/TemplateIdPath'
+      responses:
+        '200':
+          description: List of survey versions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SurveyVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    post:
+      operationId: createSurveyVersion
+      summary: Create survey version
+      description: Create a new draft version of a survey template.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/TemplateIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyVersionCreateRequest'
+      responses:
+        '201':
+          description: Survey version created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  /surveys/versions/{versionId}/publish:
+    post:
+      operationId: publishSurveyVersion
+      summary: Publish survey version
+      description: |
+        Publish a survey version, making it immutable and available for campaigns.
+        Once published, the definition cannot be modified.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/VersionIdPath'
+      responses:
+        '200':
+          description: Survey version published
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Version already published
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - ApiKeyAuth: []
+
+  /surveys/responses:
+    get:
+      operationId: listSurveyResponses
+      summary: List survey responses
+      description: List survey responses with filtering options.
+      tags:
+        - Surveys
+      parameters:
+        - name: campaignId
+          in: query
+          description: Filter by campaign
+          schema:
+            type: string
+            format: uuid
+        - name: storeId
+          in: query
+          description: Filter by store
+          schema:
+            type: string
+            format: uuid
+        - name: surveyType
+          in: query
+          description: Filter by survey type
+          schema:
+            $ref: '#/components/schemas/SurveyType'
+        - name: status
+          in: query
+          description: Filter by response status
+          schema:
+            $ref: '#/components/schemas/SurveyResponseStatus'
+        - name: submittedAfter
+          in: query
+          description: Filter responses submitted after this date
+          schema:
+            type: string
+            format: date-time
+        - name: submittedBefore
+          in: query
+          description: Filter responses submitted before this date
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: List of survey responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SurveyResponseSummary'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+
+  /surveys/responses/{responseId}:
+    get:
+      operationId: getSurveyResponse
+      summary: Get survey response details
+      description: Get detailed survey response including all answers and photos.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/ResponseIdPath'
+      responses:
+        '200':
+          description: Survey response details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponseDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    patch:
+      operationId: editSurveyResponse
+      summary: Edit survey response
+      description: |
+        Edit a survey response on behalf of a store. Creates an audit record.
+        Only brand admins can edit responses.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/ResponseIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyResponseEditRequest'
+      responses:
+        '200':
+          description: Survey response updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponseDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  /surveys/responses/{responseId}/edits:
+    get:
+      operationId: getSurveyResponseEditHistory
+      summary: Get survey response edit history
+      description: Get audit trail of all edits made to a survey response.
+      tags:
+        - Surveys
+      parameters:
+        - $ref: '#/components/parameters/ResponseIdPath'
+      responses:
+        '200':
+          description: Edit history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SurveyResponseEdit'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  # ===========================================
+  # STORE LAYOUTS API
+  # ===========================================
+
+  /stores/{storeId}/layouts:
+    get:
+      operationId: getStoreLayouts
+      summary: Get store layout history
+      description: Get all layout versions for a store.
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/StoreIdPath'
+      responses:
+        '200':
+          description: Store layout versions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StoreLayout'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    post:
+      operationId: createStoreLayout
+      summary: Create store layout
+      description: Create a new layout version for a store.
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/StoreIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreLayoutCreateRequest'
+      responses:
+        '201':
+          description: Store layout created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreLayout'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  /stores/{storeId}/layouts/current:
+    get:
+      operationId: getCurrentStoreLayout
+      summary: Get current store layout
+      description: Get the current active layout for a store including all location slots.
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/StoreIdPath'
+      responses:
+        '200':
+          description: Current store layout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreLayoutDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  /layouts/{layoutId}/slots:
+    get:
+      operationId: getLocationSlots
+      summary: Get location slots
+      description: Get all location slots for a store layout.
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/LayoutIdPath'
+      responses:
+        '200':
+          description: Location slots
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LocationSlot'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    post:
+      operationId: createLocationSlot
+      summary: Create location slot
+      description: Add a new location slot to a store layout.
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/LayoutIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationSlotCreateRequest'
+      responses:
+        '201':
+          description: Location slot created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationSlot'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  /layouts/slots/{slotId}:
+    patch:
+      operationId: updateLocationSlot
+      summary: Update location slot
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/SlotIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationSlotUpdateRequest'
+      responses:
+        '200':
+          description: Location slot updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationSlot'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    delete:
+      operationId: deleteLocationSlot
+      summary: Delete location slot
+      tags:
+        - Store Layouts
+      parameters:
+        - $ref: '#/components/parameters/SlotIdPath'
+      responses:
+        '204':
+          description: Location slot deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  # ===========================================
+  # PHOTO RULES API
+  # ===========================================
+
+  /photo-rules:
+    get:
+      operationId: listPhotoRules
+      summary: List photo rules
+      description: List all photo rules for the brand.
+      tags:
+        - Photo Rules
+      parameters:
+        - name: isActive
+          in: query
+          description: Filter by active status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of photo rules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PhotoRule'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+
+    post:
+      operationId: createPhotoRule
+      summary: Create photo rule
+      description: Create a new photo capture rule.
+      tags:
+        - Photo Rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoRuleCreateRequest'
+      responses:
+        '201':
+          description: Photo rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoRule'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+
+  /photo-rules/{ruleId}:
+    get:
+      operationId: getPhotoRule
+      summary: Get photo rule
+      tags:
+        - Photo Rules
+      parameters:
+        - $ref: '#/components/parameters/RuleIdPath'
+      responses:
+        '200':
+          description: Photo rule details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoRule'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    patch:
+      operationId: updatePhotoRule
+      summary: Update photo rule
+      tags:
+        - Photo Rules
+      parameters:
+        - $ref: '#/components/parameters/RuleIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoRuleUpdateRequest'
+      responses:
+        '200':
+          description: Photo rule updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoRule'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    delete:
+      operationId: deletePhotoRule
+      summary: Delete photo rule
+      tags:
+        - Photo Rules
+      parameters:
+        - $ref: '#/components/parameters/RuleIdPath'
+      responses:
+        '204':
+          description: Photo rule deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Cannot delete rule in use
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - ApiKeyAuth: []
+
+  # ===========================================
   # HEALTH CHECK
   # ===========================================
 
@@ -508,6 +1213,69 @@ components:
         minLength: 16
         maxLength: 64
         example: "ord-ack-550e8400-e29b-41d4-a716-446655440000"
+
+    TemplateIdPath:
+      name: templateId
+      in: path
+      required: true
+      description: Survey template UUID
+      schema:
+        type: string
+        format: uuid
+
+    VersionIdPath:
+      name: versionId
+      in: path
+      required: true
+      description: Survey version UUID
+      schema:
+        type: string
+        format: uuid
+
+    ResponseIdPath:
+      name: responseId
+      in: path
+      required: true
+      description: Survey response UUID
+      schema:
+        type: string
+        format: uuid
+
+    StoreIdPath:
+      name: storeId
+      in: path
+      required: true
+      description: Store UUID
+      schema:
+        type: string
+        format: uuid
+
+    LayoutIdPath:
+      name: layoutId
+      in: path
+      required: true
+      description: Store layout UUID
+      schema:
+        type: string
+        format: uuid
+
+    SlotIdPath:
+      name: slotId
+      in: path
+      required: true
+      description: Location slot UUID
+      schema:
+        type: string
+        format: uuid
+
+    RuleIdPath:
+      name: ruleId
+      in: path
+      required: true
+      description: Photo rule UUID
+      schema:
+        type: string
+        format: uuid
 
   # ===========================================
   # SCHEMAS - Requests
@@ -1172,6 +1940,525 @@ components:
           type: integer
         totalPages:
           type: integer
+
+    # ===========================================
+    # SCHEMAS - Surveys
+    # ===========================================
+
+    SurveyType:
+      type: string
+      enum:
+        - RECEIPT
+        - INSTALL
+        - AUDIT
+        - CUSTOM
+      description: |
+        Survey type categories:
+        - `RECEIPT` - Kit receipt verification
+        - `INSTALL` - Installation photo proof
+        - `AUDIT` - Compliance audit
+        - `CUSTOM` - Brand-specific survey
+
+    SurveyResponseStatus:
+      type: string
+      enum:
+        - IN_PROGRESS
+        - SUBMITTED
+        - NEEDS_REVIEW
+        - APPROVED
+        - REJECTED
+
+    SurveyFieldType:
+      type: string
+      enum:
+        - TEXT
+        - TEXTAREA
+        - NUMBER
+        - DROPDOWN
+        - CHECKBOX
+        - RADIO
+        - DATE
+        - DATETIME
+        - PHOTO
+        - SIGNATURE
+        - SECTION
+        - REPEATABLE
+
+    SlotType:
+      type: string
+      enum:
+        - WINDOW
+        - DOOR
+        - SHELF
+        - COOLER
+        - FREEZER
+        - END_CAP
+        - COUNTER
+        - FLOOR
+        - CEILING
+        - WALL
+        - OTHER
+
+    SurveyTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        brandId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        surveyType:
+          $ref: '#/components/schemas/SurveyType'
+        isActive:
+          type: boolean
+        currentVersionNumber:
+          type: integer
+          nullable: true
+        usedInCampaigns:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    SurveyTemplateCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 1000
+        surveyType:
+          $ref: '#/components/schemas/SurveyType'
+      required:
+        - name
+        - surveyType
+
+    SurveyTemplateUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 1000
+        isActive:
+          type: boolean
+
+    SurveyVersion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        surveyTemplateId:
+          type: string
+          format: uuid
+        versionNumber:
+          type: integer
+        definitionJson:
+          type: object
+          description: Complete survey definition including fields and logic
+        publishedAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    SurveyVersionCreateRequest:
+      type: object
+      properties:
+        definitionJson:
+          type: object
+          description: Survey definition with fields, validation, and conditional logic
+      required:
+        - definitionJson
+
+    SurveyResponseSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        storeAssignmentId:
+          type: string
+          format: uuid
+        surveyVersionId:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/SurveyResponseStatus'
+        submittedAt:
+          type: string
+          format: date-time
+          nullable: true
+        submittedByUserId:
+          type: string
+          format: uuid
+          nullable: true
+        store:
+          $ref: '#/components/schemas/StoreRef'
+        campaign:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        surveyType:
+          $ref: '#/components/schemas/SurveyType'
+
+    SurveyResponseDetail:
+      allOf:
+        - $ref: '#/components/schemas/SurveyResponseSummary'
+        - type: object
+          properties:
+            responseJson:
+              type: object
+              description: All survey answers keyed by field_id
+            deviceInfo:
+              type: object
+              description: Device metadata from submission
+              nullable: true
+            locationLat:
+              type: number
+              format: double
+              nullable: true
+            locationLng:
+              type: number
+              format: double
+              nullable: true
+            completionTimeSeconds:
+              type: integer
+              nullable: true
+            photos:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  fieldId:
+                    type: string
+                  s3Url:
+                    type: string
+                    format: uri
+                  createdAt:
+                    type: string
+                    format: date-time
+
+    SurveyResponseEditRequest:
+      type: object
+      properties:
+        editReason:
+          type: string
+          description: Required reason for the edit (for audit)
+          maxLength: 500
+        edits:
+          type: array
+          items:
+            type: object
+            properties:
+              fieldId:
+                type: string
+              newValue:
+                type: object
+            required:
+              - fieldId
+              - newValue
+      required:
+        - editReason
+        - edits
+
+    SurveyResponseEdit:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fieldId:
+          type: string
+        oldValue:
+          type: object
+        newValue:
+          type: object
+        editReason:
+          type: string
+        editedByUserId:
+          type: string
+          format: uuid
+        editedByUserName:
+          type: string
+        editedAt:
+          type: string
+          format: date-time
+
+    # ===========================================
+    # SCHEMAS - Store Layouts
+    # ===========================================
+
+    StoreLayout:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        storeId:
+          type: string
+          format: uuid
+        version:
+          type: integer
+        isCurrent:
+          type: boolean
+        slotCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    StoreLayoutDetail:
+      allOf:
+        - $ref: '#/components/schemas/StoreLayout'
+        - type: object
+          properties:
+            layoutJson:
+              type: object
+              nullable: true
+            slots:
+              type: array
+              items:
+                $ref: '#/components/schemas/LocationSlot'
+
+    StoreLayoutCreateRequest:
+      type: object
+      properties:
+        layoutJson:
+          type: object
+          description: Optional layout metadata
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationSlotCreateRequest'
+          description: Initial slots to create with the layout
+
+    LocationSlot:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        storeLayoutId:
+          type: string
+          format: uuid
+        slotName:
+          type: string
+        slotType:
+          $ref: '#/components/schemas/SlotType'
+        description:
+          type: string
+          nullable: true
+        sortOrder:
+          type: integer
+        dimensions:
+          type: object
+          properties:
+            width:
+              type: number
+            height:
+              type: number
+            unit:
+              type: string
+              enum: [inches, cm]
+          nullable: true
+        photoRuleId:
+          type: string
+          format: uuid
+          nullable: true
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    LocationSlotCreateRequest:
+      type: object
+      properties:
+        slotName:
+          type: string
+          maxLength: 100
+        slotType:
+          $ref: '#/components/schemas/SlotType'
+        description:
+          type: string
+          maxLength: 500
+        sortOrder:
+          type: integer
+          default: 0
+        dimensions:
+          type: object
+          properties:
+            width:
+              type: number
+            height:
+              type: number
+            unit:
+              type: string
+              enum: [inches, cm]
+        photoRuleId:
+          type: string
+          format: uuid
+      required:
+        - slotName
+        - slotType
+
+    LocationSlotUpdateRequest:
+      type: object
+      properties:
+        slotName:
+          type: string
+          maxLength: 100
+        slotType:
+          $ref: '#/components/schemas/SlotType'
+        description:
+          type: string
+          maxLength: 500
+        sortOrder:
+          type: integer
+        dimensions:
+          type: object
+        photoRuleId:
+          type: string
+          format: uuid
+        isActive:
+          type: boolean
+
+    # ===========================================
+    # SCHEMAS - Photo Rules
+    # ===========================================
+
+    PhotoRule:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        brandId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        minPhotos:
+          type: integer
+        maxPhotos:
+          type: integer
+        requireFlash:
+          type: boolean
+        minResolution:
+          type: integer
+          nullable: true
+        ghostImageUrl:
+          type: string
+          format: uri
+          nullable: true
+        instructions:
+          type: string
+          nullable: true
+        allowedSources:
+          type: array
+          items:
+            type: string
+            enum: [CAMERA, GALLERY]
+        isActive:
+          type: boolean
+        usedInCount:
+          type: integer
+          description: Number of items/fields using this rule
+        createdAt:
+          type: string
+          format: date-time
+
+    PhotoRuleCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        minPhotos:
+          type: integer
+          minimum: 0
+          default: 1
+        maxPhotos:
+          type: integer
+          minimum: 1
+          default: 5
+        requireFlash:
+          type: boolean
+          default: false
+        minResolution:
+          type: integer
+          description: Minimum resolution in pixels (e.g., 1920 for 1920x1080)
+        ghostImageUrl:
+          type: string
+          format: uri
+        instructions:
+          type: string
+          maxLength: 1000
+        allowedSources:
+          type: array
+          items:
+            type: string
+            enum: [CAMERA, GALLERY]
+          default: [CAMERA, GALLERY]
+      required:
+        - name
+
+    PhotoRuleUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        minPhotos:
+          type: integer
+          minimum: 0
+        maxPhotos:
+          type: integer
+          minimum: 1
+        requireFlash:
+          type: boolean
+        minResolution:
+          type: integer
+        ghostImageUrl:
+          type: string
+          format: uri
+        instructions:
+          type: string
+          maxLength: 1000
+        allowedSources:
+          type: array
+          items:
+            type: string
+            enum: [CAMERA, GALLERY]
+        isActive:
+          type: boolean
 
   # ===========================================
   # RESPONSES

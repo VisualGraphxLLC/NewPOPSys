@@ -1,6 +1,6 @@
 # NewPOPSys v1 — Wireframes
 
-> **Updated**: 2025-12-19
+> **Updated**: 2025-12-23
 > **Launch**: Open `index.html` in a browser
 
 ---
@@ -20,6 +20,7 @@ Interactive HTML wireframes demonstrating key workflows from the SOW. Built with
 | [store_portal.html](store_portal.html) | Store Manager | SUPP-017, SUPP-001 | Dashboard, Campaign History, Photo Gallery, Team, Reports |
 | [admin_portal.html](admin_portal.html) | Brand Admin | SUPP-014, SUPP-015 | Campaign Creation, Store Selection, Kit Assignment, Dashboards |
 | [psp_ops.html](psp_ops.html) | PSP Operations | SUPP-018, SUPP-019 | Verification Queue, Photo Review, Issue Management, Reorder Approval |
+| [store_surveys.html](store_surveys.html) | Surveys & Layouts | SUPP-014, SUPP-037 | Survey Builder, Store Layouts, Photo Rules, Survey Responses |
 
 ---
 
@@ -58,8 +59,8 @@ Interactive HTML wireframes demonstrating key workflows from the SOW. Built with
 | Kit Assignment | ✅ Complete | Item list, slot mapping |
 | Campaign Dashboard | ✅ Complete | Store progress table, phase bars |
 | Store Detail Modal | ✅ Complete | Status, photos, actions |
-| Survey Builder | 🟡 Basic | Field palette, canvas, preview |
-| Photo Rules | 🟡 Basic | CRUD form |
+| Survey Builder | ✅ Complete | See store_surveys.html for full implementation |
+| Photo Rules | ✅ Complete | See store_surveys.html for full implementation |
 | Store Import | 🟡 Basic | Upload, mapping, validation preview |
 | Geography Tree | 🟡 Basic | Region/District hierarchy |
 
@@ -75,6 +76,19 @@ Interactive HTML wireframes demonstrating key workflows from the SOW. Built with
 | Order List | 🟡 Basic | Table with status badges |
 | Shipment Tracking | 🟡 Basic | Tracking number, carrier, status |
 
+### Store Surveys & Layouts (`store_surveys.html`)
+
+| Screen | Status | Notes |
+|--------|--------|-------|
+| Survey Template List | ✅ Complete | Type badges, version, field count, status |
+| Survey Builder Canvas | ✅ Complete | Drag-drop fields, conditional logic, preview |
+| Field Properties Panel | ✅ Complete | Validation, visibility rules, photo rules |
+| Store Layout List | ✅ Complete | Store search, region filter, slot counts |
+| Store Layout Editor | ✅ Complete | Slot grid, add/edit/delete, slot types |
+| Survey Responses List | ✅ Complete | Filters, status, pagination |
+| Survey Response Detail | ✅ Complete | Answers, photos, edit audit, issue creation |
+| Photo Rules | ✅ Complete | Rule cards, min/max, flash, ghost image |
+
 ---
 
 ## Known Gaps
@@ -86,6 +100,9 @@ Interactive HTML wireframes demonstrating key workflows from the SOW. Built with
 | User management (invite/edit) | Medium | Add RBAC screens to admin_portal.html |
 | Audit log viewer | Low | Add to admin_portal.html |
 | Batch management (PSP) | Medium | Add to psp_ops.html |
+| ~~Survey Builder~~ | ~~High~~ | ✅ RESOLVED - Added to store_surveys.html |
+| ~~Store Layout Builder~~ | ~~High~~ | ✅ RESOLVED - Added to store_surveys.html |
+| ~~Survey Responses Viewer~~ | ~~Medium~~ | ✅ RESOLVED - Added to store_surveys.html |
 
 ---
 
