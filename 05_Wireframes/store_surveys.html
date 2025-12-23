@@ -292,8 +292,8 @@ Blocks: User awareness of pending items">
         <div id="view-survey-builder" class="view block">
             <div class="flex justify-between items-center mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Survey Builder</h1>
-                    <p class="text-sm text-gray-500 mt-1">Create and manage survey templates for store data collection</p>
+                    <h1 class="text-2xl font-bold text-gray-900">Layout Survey Builder</h1>
+                    <p class="text-sm text-gray-500 mt-1">Build store layout surveys with default and custom versions per store type</p>
                 </div>
                 <div class="flex gap-2">
                     <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
@@ -335,8 +335,12 @@ Blocks: SurveyVersion creation">
 Data: SurveyTemplate.name
 Blocks: Survey identification">Name</th>
                             <th class="px-6 py-3 has-tooltip" data-tooltip="SURVEY TYPE
-Data: SurveyTemplate.type (RECEIPT, INSTALL, CUSTOM)
+Data: SurveyTemplate.survey_type (LAYOUT, CAMPAIGN, EXCEPTION)
 Blocks: Survey workflow assignment">Type</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="STORE TYPE
+Data: SurveyTemplate.store_type_id
+Default: NULL means applies to all store types
+Custom: Specific store type variants">Store Type</th>
                             <th class="px-6 py-3 has-tooltip" data-tooltip="CURRENT VERSION
 Data: MAX(SurveyVersion.version_number) WHERE published_at IS NOT NULL
 Blocks: Version tracking">Version</th>
@@ -353,19 +357,21 @@ Blocks: Template availability">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="RECEIPT SURVEY TEMPLATE
-Name: Standard Receipt Survey
-Type: RECEIPT (kit verification)
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip bg-teal-50"
+                            data-tooltip="DEFAULT LAYOUT SURVEY
+Name: Default Store Layout Survey
+Type: LAYOUT (store layout definition)
+Store Type: All (default)
 Version: 2.1 (published)
-Fields: 8 form fields
-Used in: 12 campaigns
+Fields: 12 form fields
+Used in: 247 stores
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Standard Receipt Survey</td>
-                            <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">Receipt</span></td>
+                            <td class="px-6 py-4 font-medium text-gray-900"><span class="text-teal-600">*</span> Default Store Layout Survey</td>
+                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span></td>
+                            <td class="px-6 py-4 text-gray-500"><span class="text-teal-600 font-medium">All (Default)</span></td>
                             <td class="px-6 py-4 text-gray-500">v2.1</td>
-                            <td class="px-6 py-4 text-gray-500">8</td>
-                            <td class="px-6 py-4 text-gray-500">12 campaigns</td>
+                            <td class="px-6 py-4 text-gray-500">12</td>
+                            <td class="px-6 py-4 text-gray-500">247 stores</td>
                             <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
@@ -376,18 +382,68 @@ Click: Open in builder">
                             </td>
                         </tr>
                         <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="INSTALL SURVEY TEMPLATE
-Name: Photo Installation Survey
-Type: INSTALL (photo verification)
-Version: 3.0 (published)
-Fields: 15 form fields
-Used in: 24 campaigns
+                            data-tooltip="LAYOUT SURVEY - KIOSK
+Name: Kiosk Layout Survey
+Type: LAYOUT (store layout definition)
+Store Type: Kiosk - custom variant
+Version: 1.2 (published)
+Fields: 6 form fields
+Used in: 45 stores
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Photo Installation Survey</td>
-                            <td class="px-6 py-4"><span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold">Install</span></td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Kiosk Layout Survey</td>
+                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span></td>
+                            <td class="px-6 py-4 text-gray-500">Kiosk</td>
+                            <td class="px-6 py-4 text-gray-500">v1.2</td>
+                            <td class="px-6 py-4 text-gray-500">6</td>
+                            <td class="px-6 py-4 text-gray-500">45 stores</td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4">
+                                <div class="flex gap-2">
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
+                            data-tooltip="CAMPAIGN UNIVERSAL SURVEY
+Name: Universal Campaign Survey
+Type: CAMPAIGN (used for all campaigns)
+Store Type: N/A
+Version: 3.0 (published)
+Fields: 8 form fields
+Used in: All active campaigns
+Click: Open in builder">
+                            <td class="px-6 py-4 font-medium text-gray-900">Universal Campaign Survey</td>
+                            <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">Campaign</span></td>
+                            <td class="px-6 py-4 text-gray-400">—</td>
                             <td class="px-6 py-4 text-gray-500">v3.0</td>
-                            <td class="px-6 py-4 text-gray-500">15</td>
-                            <td class="px-6 py-4 text-gray-500">24 campaigns</td>
+                            <td class="px-6 py-4 text-gray-500">8</td>
+                            <td class="px-6 py-4 text-gray-500">All campaigns</td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4">
+                                <div class="flex gap-2">
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
+                            data-tooltip="EXCEPTION SURVEY
+Name: Exception Reporting Survey
+Type: EXCEPTION (fixed exception process)
+Store Type: N/A
+Version: 1.0 (published)
+Fields: 5 form fields
+Used in: All exception reports
+Click: Open in builder">
+                            <td class="px-6 py-4 font-medium text-gray-900">Exception Reporting Survey</td>
+                            <td class="px-6 py-4"><span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-bold">Exception</span></td>
+                            <td class="px-6 py-4 text-gray-400">—</td>
+                            <td class="px-6 py-4 text-gray-500">v1.0</td>
+                            <td class="px-6 py-4 text-gray-500">5</td>
+                            <td class="px-6 py-4 text-gray-500">All exceptions</td>
                             <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
@@ -398,17 +454,19 @@ Click: Open in builder">
                             </td>
                         </tr>
                         <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip"
-                            data-tooltip="DRAFT SURVEY TEMPLATE
-Name: Holiday Promo Survey
-Type: CUSTOM (brand-specific)
+                            data-tooltip="DRAFT LAYOUT SURVEY
+Name: Mall Layout Survey
+Type: LAYOUT (store layout definition)
+Store Type: Mall Location
 Version: DRAFT (not published)
-Fields: 6 form fields
+Fields: 10 form fields
 Status: Editing in progress
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Holiday Promo Survey</td>
-                            <td class="px-6 py-4"><span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-bold">Custom</span></td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Mall Location Layout</td>
+                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span></td>
+                            <td class="px-6 py-4 text-gray-500">Mall Location</td>
                             <td class="px-6 py-4 text-gray-500"><span class="text-amber-600">Draft</span></td>
-                            <td class="px-6 py-4 text-gray-500">6</td>
+                            <td class="px-6 py-4 text-gray-500">10</td>
                             <td class="px-6 py-4 text-gray-500">-</td>
                             <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Draft</span></td>
                             <td class="px-6 py-4">
@@ -895,14 +953,30 @@ Data: layout_json, location_slots">
                     </div>
 
                     <div class="p-6">
-                        <!-- Slot Type Legend -->
-                        <div class="flex gap-4 mb-4 text-xs">
-                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-blue-500 rounded"></span> Window</span>
-                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-500 rounded"></span> Shelf</span>
-                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-purple-500 rounded"></span> Cooler</span>
-                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-amber-500 rounded"></span> Door</span>
-                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-pink-500 rounded"></span> End Cap</span>
-                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-500 rounded"></span> Other</span>
+                        <!-- Slot Type Legend (Brand-Configurable) -->
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex gap-4 text-xs has-tooltip" data-tooltip="SLOT TYPES
+Brand-configurable slot types
+Examples by industry:
+• Retail: Window, Shelf, Cooler, Door, End Cap
+• Hospital: Lobby, Exam Room, Nurses Station
+• Food Truck: Exterior, Menu Board, Window
+• Medical: Reception, Waiting Area, Checkout
+Click gear icon to manage slot types">
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-blue-500 rounded"></span> Window Display</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-500 rounded"></span> Shelf Unit</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-purple-500 rounded"></span> Cooler</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-amber-500 rounded"></span> Door Panel</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-pink-500 rounded"></span> End Cap</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-500 rounded"></span> Other</span>
+                            </div>
+                            <button class="text-xs text-gray-500 hover:text-teal-600 flex items-center gap-1 has-tooltip"
+                                data-tooltip="MANAGE SLOT TYPES
+Action: Configure brand slot types
+Add custom types for your industry
+Examples: Exam Room, Truck Side, Reception">
+                                <i data-lucide="settings" class="w-3 h-3"></i> Manage Types
+                            </button>
                         </div>
 
                         <!-- Location Slots Grid -->
@@ -910,19 +984,27 @@ Data: layout_json, location_slots">
                             <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition has-tooltip"
                                 data-tooltip="LOCATION SLOT
 Slot: Front Window Left
-Type: WINDOW
+Type: Window Display (brand-configured)
 Sort Order: 1
 Dimensions: 48x72 inches
-Used in: 3 active campaigns">
+Attachments: 2 photos, 1 template, 1 mockup
+Used in: 3 active campaigns
+Click: View/edit slot details & attachments">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-blue-500 rounded"></span>
                                     <div class="flex gap-1">
+                                        <button class="p-1 hover:bg-gray-100 rounded" title="Attachments"><i data-lucide="paperclip" class="w-3 h-3 text-teal-500"></i></button>
                                         <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
                                         <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Front Window Left</div>
-                                <div class="text-xs text-gray-500">WINDOW | 48x72"</div>
+                                <div class="text-xs text-gray-500">Window Display | 48x72"</div>
+                                <div class="flex gap-1 mt-2">
+                                    <span class="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-xs" title="Reference Photos">2 <i data-lucide="image" class="w-2 h-2 inline"></i></span>
+                                    <span class="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded text-xs" title="Artwork Template">1 <i data-lucide="file-image" class="w-2 h-2 inline"></i></span>
+                                    <span class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-xs" title="Mockup">1 <i data-lucide="layout" class="w-2 h-2 inline"></i></span>
+                                </div>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition has-tooltip"
                                 data-tooltip="LOCATION SLOT

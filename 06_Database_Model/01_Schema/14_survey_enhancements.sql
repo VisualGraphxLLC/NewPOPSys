@@ -23,14 +23,20 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Add survey_type to survey_templates for categorization
 -- ---------------------------------------------------------------------------
 ALTER TABLE survey_templates
-    ADD COLUMN IF NOT EXISTS survey_type TEXT NOT NULL DEFAULT 'CUSTOM',
+    ADD COLUMN IF NOT EXISTS survey_type TEXT NOT NULL DEFAULT 'LAYOUT',
     ADD COLUMN IF NOT EXISTS created_by_user_id UUID,
+    ADD COLUMN IF NOT EXISTS store_type_id UUID,
+    ADD COLUMN IF NOT EXISTS is_default BOOLEAN NOT NULL DEFAULT FALSE,
     ADD CONSTRAINT chk_survey_templates_type
-        CHECK (survey_type IN ('RECEIPT', 'INSTALL', 'AUDIT', 'CUSTOM')),
+        CHECK (survey_type IN ('LAYOUT', 'CAMPAIGN', 'EXCEPTION')),
     ADD CONSTRAINT fk_survey_templates_creator
-        FOREIGN KEY (created_by_user_id) REFERENCES users(id) ON DELETE SET NULL;
+        FOREIGN KEY (created_by_user_id) REFERENCES users(id) ON DELETE SET NULL,
+    ADD CONSTRAINT fk_survey_templates_store_type
+        FOREIGN KEY (store_type_id) REFERENCES store_types(id) ON DELETE SET NULL;
 
-COMMENT ON COLUMN survey_templates.survey_type IS 'Survey category: RECEIPT (kit verification), INSTALL (photo proof), AUDIT (compliance check), CUSTOM (brand-specific)';
+COMMENT ON COLUMN survey_templates.survey_type IS 'Survey category: LAYOUT (store layout definition), CAMPAIGN (campaign-specific universal survey), EXCEPTION (fixed exception reporting)';
+COMMENT ON COLUMN survey_templates.store_type_id IS 'Optional store type for custom layout surveys (NULL = default for all store types)';
+COMMENT ON COLUMN survey_templates.is_default IS 'Whether this is the default layout survey for the brand';
 COMMENT ON COLUMN survey_templates.created_by_user_id IS 'User who created this template';
 
 -- ---------------------------------------------------------------------------
@@ -156,22 +162,96 @@ COMMENT ON COLUMN layout_templates.template_json IS 'JSON array of slot definiti
 COMMENT ON COLUMN layout_templates.is_default IS 'Whether this is the default template for new stores';
 
 -- ---------------------------------------------------------------------------
--- Add slot_type enumeration and additional metadata to location_slots
+-- TABLE: slot_types
+-- Purpose: Brand-configurable slot types (extensible for different industries)
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS slot_types (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    brand_id UUID NOT NULL,
+    code TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    icon TEXT,
+    color TEXT,
+    sort_order INT NOT NULL DEFAULT 0,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ,
+
+    CONSTRAINT fk_slot_types_brand FOREIGN KEY (brand_id)
+        REFERENCES brands(id) ON DELETE CASCADE,
+    CONSTRAINT uq_slot_types_brand_code UNIQUE (brand_id, code)
+);
+
+COMMENT ON TABLE slot_types IS 'Brand-configurable slot types for different industries (retail, hospital, food truck, medical office, etc.)';
+COMMENT ON COLUMN slot_types.code IS 'Unique code within brand (e.g., WINDOW, EXAM_ROOM, TRUCK_SIDE)';
+COMMENT ON COLUMN slot_types.name IS 'Display name (e.g., Window Display, Exam Room, Truck Side Panel)';
+COMMENT ON COLUMN slot_types.icon IS 'Optional icon identifier for UI display';
+COMMENT ON COLUMN slot_types.color IS 'Optional color hex code for UI display';
+
+-- Default retail slot types (can be seeded per brand or copied from template)
+-- Example industry types:
+-- RETAIL: WINDOW, DOOR, SHELF, COOLER, FREEZER, END_CAP, COUNTER, FLOOR, CEILING, WALL
+-- HOSPITAL: LOBBY, WAITING_ROOM, EXAM_ROOM, HALLWAY, NURSES_STATION, PHARMACY
+-- FOOD_TRUCK: EXTERIOR_FRONT, EXTERIOR_SIDE, EXTERIOR_BACK, MENU_BOARD, WINDOW
+-- MEDICAL_OFFICE: RECEPTION, WAITING_AREA, EXAM_ROOM, CONSULTATION, CHECKOUT
+
+-- ---------------------------------------------------------------------------
+-- Update location_slots to reference slot_types table
 -- ---------------------------------------------------------------------------
 ALTER TABLE location_slots
+    ADD COLUMN IF NOT EXISTS slot_type_id UUID,
     ADD COLUMN IF NOT EXISTS description TEXT,
     ADD COLUMN IF NOT EXISTS photo_rule_id UUID,
     ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    ADD CONSTRAINT fk_location_slots_slot_type FOREIGN KEY (slot_type_id)
+        REFERENCES slot_types(id) ON DELETE SET NULL,
     ADD CONSTRAINT fk_location_slots_photo_rule FOREIGN KEY (photo_rule_id)
-        REFERENCES photo_rules(id) ON DELETE SET NULL,
-    ADD CONSTRAINT chk_location_slots_type CHECK (slot_type IN (
-        'WINDOW', 'DOOR', 'SHELF', 'COOLER', 'FREEZER',
-        'END_CAP', 'COUNTER', 'FLOOR', 'CEILING', 'WALL', 'OTHER'
-    ));
+        REFERENCES photo_rules(id) ON DELETE SET NULL;
 
+COMMENT ON COLUMN location_slots.slot_type_id IS 'Reference to brand-configurable slot type';
 COMMENT ON COLUMN location_slots.description IS 'Detailed description or instructions for this slot';
 COMMENT ON COLUMN location_slots.photo_rule_id IS 'Default photo rule for this slot type';
 COMMENT ON COLUMN location_slots.is_active IS 'Whether this slot is currently active';
+
+-- ---------------------------------------------------------------------------
+-- TABLE: location_slot_attachments
+-- Purpose: Attachments for location slots (photos, templates, mockups)
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS location_slot_attachments (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    location_slot_id UUID NOT NULL,
+    attachment_type TEXT NOT NULL,
+    file_url TEXT NOT NULL,
+    file_name TEXT NOT NULL,
+    file_size_bytes INT,
+    mime_type TEXT,
+    title TEXT,
+    description TEXT,
+    sort_order INT NOT NULL DEFAULT 0,
+    uploaded_by_user_id UUID,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ,
+
+    CONSTRAINT fk_location_slot_attachments_slot FOREIGN KEY (location_slot_id)
+        REFERENCES location_slots(id) ON DELETE CASCADE,
+    CONSTRAINT fk_location_slot_attachments_uploader FOREIGN KEY (uploaded_by_user_id)
+        REFERENCES users(id) ON DELETE SET NULL,
+    CONSTRAINT chk_location_slot_attachments_type CHECK (attachment_type IN (
+        'REFERENCE_PHOTO',   -- Reference photo showing expected installation
+        'ARTWORK_TEMPLATE',  -- Artwork template for designers
+        'MOCKUP',            -- Brand approval mockup / install guide
+        'PLANOGRAM'          -- Planogram or layout diagram
+    ))
+);
+
+COMMENT ON TABLE location_slot_attachments IS 'Attachments for location slots including reference photos, artwork templates, and mockups';
+COMMENT ON COLUMN location_slot_attachments.attachment_type IS 'Type: REFERENCE_PHOTO (expected install), ARTWORK_TEMPLATE (for designers), MOCKUP (brand approval/install guide), PLANOGRAM';
+COMMENT ON COLUMN location_slot_attachments.file_url IS 'URL to the attachment file in cloud storage';
+COMMENT ON COLUMN location_slot_attachments.title IS 'Display title for the attachment';
+COMMENT ON COLUMN location_slot_attachments.description IS 'Description or instructions for this attachment';
 
 -- ===========================================================================
 -- SECTION 4: PHOTO RULES ENHANCEMENTS
@@ -211,6 +291,21 @@ CREATE INDEX IF NOT EXISTS idx_store_survey_responses_status ON store_survey_res
 CREATE INDEX IF NOT EXISTS idx_layout_templates_brand ON layout_templates(brand_id) WHERE deleted_at IS NULL;
 CREATE INDEX IF NOT EXISTS idx_layout_templates_default ON layout_templates(brand_id, is_default) WHERE deleted_at IS NULL AND is_default = TRUE;
 
+-- Location slot attachments
+CREATE INDEX IF NOT EXISTS idx_location_slot_attachments_slot ON location_slot_attachments(location_slot_id) WHERE deleted_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_location_slot_attachments_type ON location_slot_attachments(attachment_type) WHERE deleted_at IS NULL;
+
+-- Slot types
+CREATE INDEX IF NOT EXISTS idx_slot_types_brand ON slot_types(brand_id) WHERE deleted_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_slot_types_brand_active ON slot_types(brand_id, is_active) WHERE deleted_at IS NULL;
+
+-- Location slots slot type
+CREATE INDEX IF NOT EXISTS idx_location_slots_slot_type ON location_slots(slot_type_id) WHERE deleted_at IS NULL;
+
+-- Survey templates store type
+CREATE INDEX IF NOT EXISTS idx_survey_templates_store_type ON survey_templates(store_type_id) WHERE deleted_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_survey_templates_default ON survey_templates(brand_id, is_default) WHERE deleted_at IS NULL AND is_default = TRUE;
+
 -- ===========================================================================
 -- SECTION 6: TRIGGERS
 -- ===========================================================================
@@ -223,6 +318,12 @@ CREATE TRIGGER update_survey_response_edits_updated_at BEFORE UPDATE ON survey_r
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_layout_templates_updated_at BEFORE UPDATE ON layout_templates
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_location_slot_attachments_updated_at BEFORE UPDATE ON location_slot_attachments
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_slot_types_updated_at BEFORE UPDATE ON slot_types
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- ===========================================================================
