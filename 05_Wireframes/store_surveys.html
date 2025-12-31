@@ -485,15 +485,15 @@ Click: Open in builder">
                         </tr>
                         <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="EXCEPTION SURVEY
 Name: Exception Reporting Survey
-Type: EXCEPTION (fixed exception process)
-Store Type: N/A
+Usage: Triggered by Receipt Checklist
+Function: Handles Missing/Damaged Split
 Version: 1.0 (published)
 Fields: 5 form fields
 Used in: All exception reports
 Click: Open in builder">
                             <td class="px-6 py-4 font-medium text-gray-900">Exception Reporting Survey</td>
                             <td class="px-6 py-4"><span
-                                    class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-bold">Exception</span>
+                                    class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Exception</span>
                             </td>
                             <td class="px-6 py-4 text-gray-400">—</td>
                             <td class="px-6 py-4 text-gray-500">v1.0</td>
@@ -513,17 +513,17 @@ Click: Open in builder">
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="DRAFT LAYOUT SURVEY
+                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="DRAFT CANVAS SURVEY
 Name: Mall Layout Survey
-Type: LAYOUT (store layout definition)
-Store Type: Mall Location
+Usage: One-time Physical Setup
+Function: Custom Mall Canvas
 Version: DRAFT (not published)
 Fields: 10 form fields
 Status: Editing in progress
 Click: Open in builder">
                             <td class="px-6 py-4 font-medium text-gray-900">Mall Location Layout</td>
                             <td class="px-6 py-4"><span
-                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span>
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
                             </td>
                             <td class="px-6 py-4 text-gray-500">Mall Location</td>
                             <td class="px-6 py-4 text-gray-500"><span class="text-amber-600">Draft</span></td>
@@ -551,9 +551,11 @@ Click: Open in builder">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
                     <div class="flex items-center gap-3">
-                        <span class="font-bold text-gray-700">Editing: Standard Receipt Survey</span>
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">v2.1
-                            Published</span>
+                        <span class="font-bold text-gray-700">Editing: Campaign Operational Layer (Receipt &
+                            Install)</span>
+                        <span
+                            class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-black uppercase tracking-tighter">Layer
+                            Template</span>
                         <span class="text-gray-400 text-sm">|</span>
                         <span class="text-amber-600 text-sm font-medium">Unsaved changes</span>
                     </div>
@@ -685,14 +687,23 @@ Helps organize long surveys">
                                 <i data-lucide="minus" class="w-4 h-4 text-gray-500"></i>
                                 <span class="text-sm font-medium text-gray-700">Section Header</span>
                             </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="REPEATABLE SECTION
-Type: Dynamic field group
-Use for: item checklists
-Creates: repeatable_sections table
-Each item gets instance">
-                                <i data-lucide="layers" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Repeatable Section</span>
+                            <div class="field-item bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                data-tooltip="ITEM CHECKLIST (CAMPAIGN)
+Type: Dynamic Multi-Checkbox
+Function: Maps to Kit Items
+Usage: Receipt verification
+Store: Order split logic">
+                                <i data-lucide="package-check" class="w-4 h-4 text-blue-600"></i>
+                                <span class="text-sm font-bold text-blue-700">Item Checklist</span>
+                            </div>
+                            <div class="field-item bg-teal-50 border border-teal-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                data-tooltip="HOTSPOT CAPTURE (LAYOUT)
+Type: Layout-Bound Photo
+Function: Maps to Location IDs
+Usage: Compliance proof
+Store: Master Layout Truth">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-teal-600"></i>
+                                <span class="text-sm font-bold text-teal-700">Hotspot Capture</span>
                             </div>
                         </div>
                     </div>
@@ -700,13 +711,14 @@ Each item gets instance">
                     <!-- Survey Canvas -->
                     <div class="flex-1 p-6">
                         <div class="max-w-xl mx-auto space-y-4">
-                            <!-- Section: Kit Verification -->
-                            <div class="canvas-field selected rounded-lg p-4 cursor-pointer"
+                            <!-- Section: Stage 1: Receipt Verification (Logistics) -->
+                            <div class="canvas-field selected rounded-lg p-4 cursor-pointer border-l-4 border-blue-500"
                                 onclick="selectField(this)">
                                 <div class="flex items-center justify-between mb-2">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-teal-600 font-medium">SECTION</span>
+                                        <span class="text-xs text-blue-600 font-bold uppercase tracking-widest">Item
+                                            Checklist</span>
                                     </div>
                                     <div class="flex gap-1">
                                         <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
@@ -715,48 +727,38 @@ Each item gets instance">
                                                 class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
-                                <div class="font-medium text-gray-900 text-lg">Kit Verification</div>
-                                <div class="text-sm text-gray-500">Verify all items received in the shipment</div>
-                            </div>
+                                <div class="font-bold text-gray-900">Stage 1: Receipt Checklist</div>
+                                <div class="text-xs text-gray-500 mb-4 font-medium italic">Dynamically populates from
+                                    Campaign Kit Items</div>
 
-                            <!-- Field: All Items Received -->
-                            <div class="canvas-field rounded-lg p-4 cursor-pointer" onclick="selectField(this)">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-purple-600 font-medium">RADIO</span>
-                                        <span class="text-xs text-red-500">*Required</span>
-                                    </div>
-                                    <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
-                                                class="w-3 h-3 text-gray-400"></i></button>
+                                <div class="space-y-2 opacity-60">
+                                    <div
+                                        class="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-100">
+                                        <span class="text-sm font-medium">[Item Name]</span>
+                                        <div class="flex gap-2">
+                                            <span
+                                                class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded">RECVD</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded">EXCPT</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="font-medium text-gray-700 mb-2">Did you receive all items listed on the
-                                    packing slip?</div>
-                                <div class="flex gap-4">
-                                    <label class="flex items-center gap-2">
-                                        <input type="radio" name="all_items" class="text-teal-600">
-                                        <span class="text-sm text-gray-600">Yes</span>
-                                    </label>
-                                    <label class="flex items-center gap-2">
-                                        <input type="radio" name="all_items" class="text-teal-600">
-                                        <span class="text-sm text-gray-600">No</span>
-                                    </label>
+                                <div
+                                    class="mt-4 p-3 bg-blue-50 border border-blue-100 rounded text-[11px] text-blue-700">
+                                    <i data-lucide="split" class="w-3 h-3 inline mr-1"></i>
+                                    <strong>Split Order Logic</strong>: Exceptions automatically trigger a Supplemental
+                                    Order and block this item's Install Task.
                                 </div>
                             </div>
 
-                            <!-- Field: Missing Items (Conditional) -->
-                            <div class="canvas-field rounded-lg p-4 cursor-pointer border-l-4 border-amber-400"
+                            <!-- Section: Stage 2: Visual truth (Installation) -->
+                            <div class="canvas-field rounded-lg p-4 cursor-pointer border-l-4 border-teal-500"
                                 onclick="selectField(this)">
                                 <div class="flex items-center justify-between mb-2">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-blue-600 font-medium">TEXTAREA</span>
-                                        <span
-                                            class="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">Conditional</span>
+                                        <span class="text-xs text-teal-600 font-bold uppercase tracking-widest">Hotspot
+                                            Capture</span>
                                     </div>
                                     <div class="flex gap-1">
                                         <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
@@ -765,35 +767,16 @@ Each item gets instance">
                                                 class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
-                                <div class="font-medium text-gray-700 mb-2">Which items are missing or damaged?</div>
-                                <div class="text-xs text-amber-600 mb-2">Shown when: "all_items" = No</div>
-                                <textarea class="w-full border border-gray-200 rounded-lg p-2 text-sm h-20"
-                                    placeholder="List missing or damaged items..."></textarea>
-                            </div>
+                                <div class="font-bold text-gray-900">Stage 2: Compliance Proof (Photos)</div>
+                                <div class="text-xs text-gray-500 mb-4 font-medium italic">Binds photo tasks to Master
+                                    Layout Hotspots</div>
 
-                            <!-- Field: Package Condition -->
-                            <div class="canvas-field rounded-lg p-4 cursor-pointer" onclick="selectField(this)">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-green-600 font-medium">DROPDOWN</span>
-                                        <span class="text-xs text-red-500">*Required</span>
-                                    </div>
-                                    <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                    </div>
+                                <div
+                                    class="border-2 border-dashed border-teal-100 rounded-lg p-6 flex flex-col items-center justify-center bg-teal-50/30">
+                                    <i data-lucide="map-pin" class="w-8 h-8 text-teal-300 mb-2"></i>
+                                    <span class="text-xs text-teal-600 font-bold uppercase">Linked to Layout
+                                        Hotspots</span>
                                 </div>
-                                <div class="font-medium text-gray-700 mb-2">Package condition on arrival</div>
-                                <select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-                                    <option>Select condition...</option>
-                                    <option>Excellent - No damage</option>
-                                    <option>Good - Minor scuffs</option>
-                                    <option>Fair - Some damage</option>
-                                    <option>Poor - Significant damage</option>
-                                </select>
                             </div>
 
                             <!-- Field: Package Photo -->
