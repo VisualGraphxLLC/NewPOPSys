@@ -1512,27 +1512,42 @@ Higher: More operational challenges">Issues</th>
 
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <!-- Layout Map -->
-                <div
-                    class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-200 p-8 h-[700px] relative overflow-hidden flex items-center justify-center">
-                    <!-- Mock Floor Plan SVG -->
-                    <div class="w-[600px] h-[500px] bg-gray-50 border-4 border-gray-200 rounded-3xl relative p-8">
+                <!-- Layout Map -->
+                <div class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-200 p-8 h-[700px] relative overflow-hidden flex items-center justify-center"
+                    style="background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 20px 20px;">
+                    <!-- Visual Floor Plan -->
+                    <div
+                        class="relative bg-white shadow-xl rounded-sm border-2 border-gray-200 w-[600px] h-[500px] p-6">
+                        <!-- Structural Elements -->
                         <div
-                            class="absolute top-0 left-0 w-1/4 h-1/4 border-r-4 border-b-4 border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-300 uppercase">
-                            Storage</div>
-                        <div
-                            class="absolute top-0 right-0 w-1/4 h-1/4 border-l-4 border-b-4 border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-300 uppercase">
-                            Office</div>
-                        <div
-                            class="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-8 border-t-4 border-gray-300 bg-white flex items-center justify-center text-xs font-bold uppercase">
+                            class="absolute inset-x-0 bottom-0 h-4 border-t-2 border-gray-300 bg-gray-50 flex items-center justify-center text-[10px] font-bold uppercase">
                             Entrance</div>
 
+                        <!-- Shelving Units (Walls/Fixtures) -->
+                        <div
+                            class="absolute top-20 left-20 w-8 h-48 bg-gray-100 border border-gray-300 rounded opacity-60 flex items-center justify-center">
+                            <span class="rotate-90 text-[8px] text-gray-400 font-bold uppercase">Aisle A</span>
+                        </div>
+                        <div
+                            class="absolute top-20 left-48 w-8 h-48 bg-gray-100 border border-gray-300 rounded opacity-60 flex items-center justify-center">
+                            <span class="rotate-90 text-[8px] text-gray-400 font-bold uppercase">Aisle B</span>
+                        </div>
+
+                        <!-- Checkout Area -->
+                        <div
+                            class="absolute bottom-10 left-10 w-32 h-16 bg-blue-50 border border-blue-100 rounded-lg flex items-center justify-center gap-2">
+                            <i data-lucide="credit-card" class="w-3 h-3 text-blue-300"></i>
+                            <span class="text-[8px] font-bold text-blue-400 uppercase">Checkout</span>
+                        </div>
+
                         <!-- Hotspots -->
-                        <div class="absolute top-12 left-1/4 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs cursor-pointer shadow-lg has-tooltip"
-                            data-tooltip="Window Cling (APPROVED)">1</div>
-                        <div class="absolute top-1/2 right-1/4 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs cursor-pointer shadow-lg has-tooltip"
-                            data-tooltip="End Cap (APPROVED)">2</div>
-                        <div class="absolute bottom-24 left-1/2 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs cursor-pointer animate-pulse shadow-lg has-tooltip"
-                            data-tooltip="Check-out Sign (RETAKE NEEDED)">3</div>
+                        <div class="absolute top-10 left-10 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-help has-tooltip"
+                            data-tooltip="POINT #1: Entrance Window\nStatus: APPROVED\nLast Photo: Dec 20, 2025">1</div>
+                        <div class="absolute top-1/2 left-1/2 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-help has-tooltip"
+                            data-tooltip="POINT #2: Aisle B End-cap\nStatus: APPROVED">2</div>
+                        <div class="absolute bottom-20 right-20 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs animate-pulse shadow-lg cursor-help has-tooltip"
+                            data-tooltip="POINT #3: Side Table\nStatus: RETAKE NEEDED\nReason: Blurry / Obstructed">3
+                        </div>
                     </div>
                 </div>
 
