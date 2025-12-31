@@ -1541,11 +1541,14 @@ Higher: More operational challenges">Issues</th>
                         </div>
 
                         <!-- Hotspots -->
-                        <div class="absolute top-10 left-10 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-help has-tooltip"
+                        <div onclick="openHotSpotDetail('1', 'Entrance Window')"
+                            class="absolute top-10 left-10 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-110 transition-transform has-tooltip"
                             data-tooltip="POINT #1: Entrance Window\nStatus: APPROVED\nLast Photo: Dec 20, 2025">1</div>
-                        <div class="absolute top-1/2 left-1/2 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-help has-tooltip"
+                        <div onclick="openHotSpotDetail('2', 'Aisle B End-cap')"
+                            class="absolute top-1/2 left-1/2 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-110 transition-transform has-tooltip"
                             data-tooltip="POINT #2: Aisle B End-cap\nStatus: APPROVED">2</div>
-                        <div class="absolute bottom-20 right-20 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs animate-pulse shadow-lg cursor-help has-tooltip"
+                        <div onclick="openHotSpotDetail('3', 'Side Table')"
+                            class="absolute bottom-20 right-20 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs animate-pulse shadow-lg cursor-pointer hover:scale-110 transition-transform has-tooltip"
                             data-tooltip="POINT #3: Side Table\nStatus: RETAKE NEEDED\nReason: Blurry / Obstructed">3
                         </div>
                     </div>
@@ -1593,6 +1596,85 @@ Higher: More operational challenges">Issues</th>
             </div>
         </div>
 
+        <!-- HotSpot Details Modal (Simulation) -->
+        <div id="hotspot-modal"
+            class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[2000] hidden items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden">
+                <div class="flex items-center justify-between p-6 border-b border-slate-100">
+                    <div>
+                        <h3 id="modal-point-title" class="text-xl font-bold text-slate-900 uppercase tracking-tight">
+                            Point Detail</h3>
+                        <p id="modal-point-subtitle" class="text-sm text-slate-500 font-medium italic">Store #1044 •
+                            Seattle Flagship</p>
+                    </div>
+                    <button onclick="closeModal()"
+                        class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Planogram (Target) -->
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span
+                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Target
+                                Planogram</span>
+                            <span
+                                class="text-[10px] bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded leading-none">REFERENCE</span>
+                        </div>
+                        <div
+                            class="aspect-video bg-slate-50 border border-slate-200 rounded-xl overflow-hidden relative group">
+                            <img id="modal-planogram-img"
+                                src="https://images.unsplash.com/photo-1534452286302-3f538743ae2f?auto=format&fit=crop&q=80&w=800"
+                                class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Actual Photo (Submission) -->
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span
+                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Actual
+                                Submission</span>
+                            <span id="modal-status-badge"
+                                class="text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded uppercase leading-none">Verified</span>
+                        </div>
+                        <div
+                            class="aspect-video bg-slate-50 border border-slate-200 rounded-xl overflow-hidden relative shadow-lg">
+                            <img id="modal-actual-img"
+                                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800"
+                                class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-6 flex items-center justify-between border-t border-slate-100">
+                    <div class="flex items-center gap-6">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase block leading-none mb-1">Last
+                                Submission</span>
+                            <span class="text-xs font-bold text-slate-700">Dec 20, 2025</span>
+                        </div>
+                        <div class="h-8 w-px bg-slate-200"></div>
+                        <div>
+                            <span
+                                class="text-[10px] font-bold text-slate-400 uppercase block leading-none mb-1">Compliance</span>
+                            <span id="modal-compliance-text" class="text-xs font-bold text-green-600">95% Match</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold hover:bg-slate-100">View
+                            History</button>
+                        <button
+                            class="px-4 py-2 bg-purple-600 text-white rounded-lg text-xs font-bold hover:bg-purple-700">Retake
+                            Photo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1602,16 +1684,22 @@ Higher: More operational challenges">Issues</th>
         // Simple navigation
         function nav(viewId) {
             // Hide all views
-            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('block');
+                v.classList.add('hidden');
+            });
             // Show target view
-            document.getElementById(viewId).classList.remove('hidden');
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
 
             // Update nav links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
             });
 
-            // Map view to link
             const linkMap = {
                 'view-dashboard': 'link-dashboard',
                 'view-campaigns': 'link-campaigns',
@@ -1624,11 +1712,46 @@ Higher: More operational challenges">Issues</th>
 
             if (linkMap[viewId]) {
                 const activeLink = document.getElementById(linkMap[viewId]);
-                activeLink.classList.add('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
+                if (activeLink) {
+                    activeLink.classList.add('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
+                }
             }
 
             // Re-initialize icons for new view
             lucide.createIcons();
+        }
+
+        function openHotSpotDetail(pointId, name) {
+            const modal = document.getElementById('hotspot-modal');
+            const title = document.getElementById('modal-point-title');
+            const subtitle = document.getElementById('modal-point-subtitle');
+            const compliance = document.getElementById('modal-compliance-text');
+            const badge = document.getElementById('modal-status-badge');
+
+            title.innerText = `POINT #${pointId}: ${name}`;
+            subtitle.innerText = `Store #1044 • Seattle Flagship • v2.4 Layout`;
+
+            if (pointId === '3') {
+                compliance.innerText = "Re-take Needed";
+                compliance.className = "text-xs font-bold text-red-600";
+                badge.innerText = "Action Required";
+                badge.className = "text-[10px] bg-yellow-100 text-yellow-700 font-bold px-2 py-0.5 rounded uppercase leading-none";
+            } else {
+                compliance.innerText = "95% Match Confidence";
+                compliance.className = "text-xs font-bold text-green-600";
+                badge.innerText = "Approved";
+                badge.className = "text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded uppercase leading-none";
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('hotspot-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
     </script>
 
