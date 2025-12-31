@@ -357,87 +357,67 @@
             lucide.createIcons();
         }
 
-        <!-- HotSpot Visual Preview (Floating) -->
-        <div id="point-preview" class="fixed hidden z-[3000] w-64 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden pointer-events-none transition-all duration-200 scale-95 opacity-0">
-            <div class="relative aspect-video bg-slate-100">
-                <img id="preview-img" src="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div class="absolute bottom-3 left-3">
-                    <div id="preview-label" class="text-[10px] font-bold text-white uppercase tracking-wider mb-1">Point #1</div>
-                    <div id="preview-desc" class="text-[11px] text-white/90 font-medium leading-none">Main Entrance Window</div>
-                </div>
-            </div>
-            <div class="p-3 flex items-center justify-between bg-white">
-                <div id="preview-status" class="flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-tighter">
-                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                    Verified
-                </div>
-                <span id="preview-date" class="text-[9px] text-slate-400 font-bold">DEC 20, 2025</span>
-            </div>
-        </div>
+        function showPointPreview(e, id) {
+            if (isShowingSticky) return;
+            updatePreview(e, id);
+        }
 
-        <script>
-            function showPointPreview(e, id) {
-                if (isShowingSticky) return;
+        let isShowingSticky = false;
+        function togglePointPreview(e, id) {
+            isShowingSticky = !isShowingSticky;
+            if (isShowingSticky) {
                 updatePreview(e, id);
+                document.getElementById('point-preview').classList.remove('pointer-events-none');
+            } else {
+                hidePointPreview();
             }
+        }
 
-            let isShowingSticky = false;
-            function togglePointPreview(e, id) {
-                isShowingSticky = !isShowingSticky;
-                if (isShowingSticky) {
-                    updatePreview(e, id);
-                    document.getElementById('point-preview').classList.remove('pointer-events-none');
-                } else {
-                    hidePointPreview();
+        function updatePreview(e, id) {
+            const preview = document.getElementById('point-preview');
+            const img = document.getElementById('preview-img');
+            const label = document.getElementById('preview-label');
+            const desc = document.getElementById('preview-desc');
+            const status = document.getElementById('preview-status');
+
+            const data = {
+                '1': { label: 'Point #1', desc: 'Main Entrance Window', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=400', color: 'green' },
+                '2': { label: 'Point #2', desc: 'Aisle B End-cap', img: 'https://images.unsplash.com/photo-1534452286302-3f538743ae2f?auto=format&fit=crop&q=80&w=400', color: 'green' },
+                '3': { label: 'Point #3', desc: 'Side Table', img: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&q=80&w=400', color: 'red' }
+            };
+
+            const item = data[id] || { label: 'New Point', desc: 'Custom Slot', img: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=400', color: 'green' };
+            img.src = item.img;
+            label.innerText = item.label;
+            desc.innerText = item.desc;
+            status.innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-${item.color}-500"></div> ${item.color === 'green' ? 'Verified' : 'Action Req.'}`;
+            status.className = `flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-tighter text-${item.color}-600`;
+
+            preview.classList.remove('hidden');
+
+            // Position logic
+            const rect = e.target.getBoundingClientRect();
+            preview.style.left = (rect.left + 30) + 'px';
+            preview.style.top = (rect.top - 50) + 'px';
+
+            requestAnimationFrame(() => {
+                preview.classList.remove('scale-95', 'opacity-0');
+                preview.classList.add('scale-100', 'opacity-100');
+            });
+        }
+
+        function hidePointPreview() {
+            if (isShowingSticky) return;
+            const preview = document.getElementById('point-preview');
+            preview.classList.add('scale-95', 'opacity-0');
+            preview.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                if (preview.classList.contains('opacity-0')) {
+                    preview.classList.add('hidden');
+                    preview.classList.add('pointer-events-none');
                 }
-            }
-
-            function updatePreview(e, id) {
-                const preview = document.getElementById('point-preview');
-                const img = document.getElementById('preview-img');
-                const label = document.getElementById('preview-label');
-                const desc = document.getElementById('preview-desc');
-                const status = document.getElementById('preview-status');
-                
-                const data = {
-                    '1': { label: 'Point #1', desc: 'Main Entrance Window', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=400', color: 'green' },
-                    '2': { label: 'Point #2', desc: 'Aisle B End-cap', img: 'https://images.unsplash.com/photo-1534452286302-3f538743ae2f?auto=format&fit=crop&q=80&w=400', color: 'green' },
-                    '3': { label: 'Point #3', desc: 'Side Table', img: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&q=80&w=400', color: 'red' }
-                };
-
-                const item = data[id] || { label: 'New Point', desc: 'Custom Slot', img: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=400', color: 'green' };
-                img.src = item.img;
-                label.innerText = item.label;
-                desc.innerText = item.desc;
-                status.innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-${item.color}-500"></div> ${item.color === 'green' ? 'Verified' : 'Action Req.'}`;
-                status.className = `flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-tighter text-${item.color}-600`;
-
-                preview.classList.remove('hidden');
-                
-                // Position logic
-                const rect = e.target.getBoundingClientRect();
-                preview.style.left = (rect.left + 30) + 'px';
-                preview.style.top = (rect.top - 50) + 'px';
-                
-                requestAnimationFrame(() => {
-                    preview.classList.remove('scale-95', 'opacity-0');
-                    preview.classList.add('scale-100', 'opacity-100');
-                });
-            }
-
-            function hidePointPreview() {
-                if (isShowingSticky) return;
-                const preview = document.getElementById('point-preview');
-                preview.classList.add('scale-95', 'opacity-0');
-                preview.classList.remove('scale-100', 'opacity-100');
-                setTimeout(() => {
-                    if (preview.classList.contains('opacity-0')) {
-                        preview.classList.add('hidden');
-                        preview.classList.add('pointer-events-none');
-                    }
-                }, 200);
-            }
+            }, 200);
+        }
 
         function setupDraggable(el) {
             el.addEventListener('mousedown', (e) => {
