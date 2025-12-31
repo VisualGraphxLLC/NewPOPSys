@@ -1,6 +1,6 @@
-# MASTER SOW v1.37 (Compiled)
+# MASTER SOW v1.38 (Compiled)
 
-**Date**: 2025-12-20
+**Date**: 2025-12-31
 
 This is the single master document for v1 scope, technical direction, delivery approach, and acceptance. Module-level implementation details are defined in the attached Supplemental Specifications (SUPPs).
 
