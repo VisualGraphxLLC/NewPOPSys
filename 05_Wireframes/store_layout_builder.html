@@ -230,7 +230,8 @@
                     </div>
                     <p class="text-[9px] text-blue-600 leading-relaxed">Placement points are inherited from the brand's
                         <strong>Master Layout</strong>. Adjusting them here creates a <strong>Store
-                            Specialization</strong>.</p>
+                            Specialization</strong>.
+                    </p>
                 </div>
             </div>
 
@@ -248,6 +249,163 @@
 
     <script>
         lucide.createIcons();
+
+        // State Management
+        let selectedItem = null;
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        const canvas = document.querySelector('.grid-canvas > div');
+
+        // Initialize points with some metadata
+        document.querySelectorAll('.canvas-item').forEach((item, index) => {
+            if (!item.dataset.name) {
+                if (item.classList.contains('bg-purple-600')) {
+                    item.dataset.name = "Placement Point #" + item.innerText.trim();
+                    item.dataset.type = "point";
+                } else if (item.innerText.includes('Aisle')) {
+                    item.dataset.name = item.innerText.trim();
+                    item.dataset.type = "fixture";
+                } else {
+                    item.dataset.name = "Checkout Counter";
+                    item.dataset.type = "fixture";
+                }
+            }
+            setupDraggable(item);
+        });
+
+        function setupDraggable(el) {
+            el.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                selectItem(el);
+
+                isDragging = true;
+                const rect = el.getBoundingClientRect();
+                dragOffset.x = e.clientX - rect.left;
+                dragOffset.y = e.clientY - rect.top;
+
+                el.style.zIndex = 1000;
+            });
+        }
+
+        function selectItem(el) {
+            if (selectedItem) selectedItem.classList.remove('selected');
+            selectedItem = el;
+            selectedItem.classList.add('selected');
+
+            // Update Sidebar
+            document.querySelector('aside:last-child h3').innerText = el.dataset.name || "Element Details";
+            document.querySelector('aside:last-child p.italic').innerText = "Configure properties for " + (el.dataset.name || "this element");
+
+            const nameInput = document.querySelector('input[type="text"]');
+            if (nameInput) nameInput.value = el.dataset.name || "";
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging || !selectedItem) return;
+
+            const canvasRect = canvas.getBoundingClientRect();
+            let x = e.clientX - canvasRect.left - dragOffset.x;
+            let y = e.clientY - canvasRect.top - dragOffset.y;
+
+            // Snap to grid (20px)
+            x = Math.round(x / 20) * 20;
+            y = Math.round(y / 20) * 20;
+
+            // Constrain to canvas
+            x = Math.max(0, Math.min(x, canvasRect.width - selectedItem.offsetWidth));
+            y = Math.max(0, Math.min(y, canvasRect.height - selectedItem.offsetHeight));
+
+            selectedItem.style.left = x + 'px';
+            selectedItem.style.top = y + 'px';
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging && selectedItem) {
+                selectedItem.style.zIndex = selectedItem.dataset.type === 'point' ? 20 : 10;
+            }
+            isDragging = false;
+        });
+
+        // Add Placement Point functionality
+        document.querySelector('.bg-purple-50').addEventListener('click', () => {
+            const nextId = document.querySelectorAll('.bg-purple-600').length + 1;
+            const newPoint = document.createElement('div');
+            newPoint.className = 'canvas-item absolute top-10 left-10 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-purple-200 z-20';
+            newPoint.innerText = nextId;
+            newPoint.dataset.name = "Placement Point #" + nextId;
+            newPoint.dataset.type = "point";
+
+            canvas.appendChild(newPoint);
+            setupDraggable(newPoint);
+            selectItem(newPoint);
+
+            showToast("New Placement Point added to canvas");
+        });
+
+        // Toolbox simulation
+        document.querySelectorAll('.toolbox-item').forEach(tool => {
+            tool.addEventListener('click', () => {
+                const name = tool.querySelector('span').innerText;
+                const type = name.toLowerCase().includes('wall') ? 'structural' : 'fixture';
+
+                const newItem = document.createElement('div');
+                newItem.className = 'canvas-item absolute top-20 left-20 border border-slate-300 rounded flex items-center justify-center';
+
+                if (name === 'Wall Block') {
+                    newItem.classList.add('w-8', 'h-24', 'bg-slate-800', 'opacity-80');
+                } else if (name === 'Entrance') {
+                    newItem.classList.add('w-20', 'h-4', 'bg-white', 'border-2', 'border-slate-800');
+                } else if (name === 'Checkout Area') {
+                    newItem.classList.add('w-32', 'h-16', 'bg-blue-50', 'border-blue-200');
+                    newItem.innerHTML = '<span class="text-[8px] font-bold text-blue-400 uppercase">Checkout</span>';
+                } else {
+                    newItem.classList.add('w-12', 'h-48', 'bg-slate-100');
+                    newItem.innerHTML = '<span class="rotate-90 text-[10px] text-slate-400 font-bold uppercase tracking-widest">Fixture</span>';
+                }
+
+                newItem.dataset.name = name;
+                newItem.dataset.type = type;
+
+                canvas.appendChild(newItem);
+                setupDraggable(newItem);
+                selectItem(newItem);
+
+                showToast("Added " + name + " to layout");
+            });
+        });
+
+        // Save simulation
+        document.querySelector('button.bg-purple-600').addEventListener('click', () => {
+            const btn = document.querySelector('button.bg-purple-600');
+            const originalText = btn.innerText;
+            btn.innerText = "Saving...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+                showToast("Store layout saved successfully!");
+
+                // Animation effect
+                canvas.parentElement.classList.add('ring-4', 'ring-green-400', 'transition-all', 'duration-500');
+                setTimeout(() => canvas.parentElement.classList.remove('ring-4', 'ring-green-400'), 1000);
+            }, 800);
+        });
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-xl text-sm font-bold shadow-2xl z-[10000] flex items-center gap-3 animate-bounce';
+            toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i> ${message}`;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.classList.remove('animate-bounce');
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 2500);
+        }
     </script>
 </body>
 
