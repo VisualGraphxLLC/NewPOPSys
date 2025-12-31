@@ -1541,18 +1541,23 @@ Higher: More operational challenges">Issues</th>
                             <span class="text-[8px] font-bold text-blue-400 uppercase">Checkout</span>
                         </div>
 
-                        <!-- Hotspots -->
+                        <!-- Hotspots: Status Aware -->
+                        <!-- 1: Verified (Compliance Green) -->
                         <div onmouseenter="showPointPreview(event, '1')" onmouseleave="hidePointPreview()"
                             onclick="togglePointPreview(event, '1')"
-                            class="absolute top-10 left-10 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
+                            class="absolute top-10 left-10 w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
                             1</div>
+
+                        <!-- 2: Ready for Install (Awaiting Installation Survey) -->
                         <div onmouseenter="showPointPreview(event, '2')" onmouseleave="hidePointPreview()"
                             onclick="togglePointPreview(event, '2')"
-                            class="absolute top-1/2 left-1/2 w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
+                            class="absolute top-1/2 left-1/2 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-125 transition-transform z-30 border-2 border-white">
                             2</div>
+
+                        <!-- 3: Exception Reported (Missing/Awaiting Supplemental Order) -->
                         <div onmouseenter="showPointPreview(event, '3')" onmouseleave="hidePointPreview()"
                             onclick="togglePointPreview(event, '3')"
-                            class="absolute bottom-20 right-20 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs animate-pulse shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
+                            class="absolute bottom-20 right-20 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xs animate-pulse shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
                             3
                         </div>
                     </div>
@@ -1563,36 +1568,38 @@ Higher: More operational challenges">Issues</th>
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                         <h3 class="font-bold text-gray-900 mb-4 text-sm">Location Points</h3>
                         <div class="space-y-3">
-                            <div class="p-3 border rounded-lg bg-teal-50 border-teal-200 flex items-center gap-3">
+                            <div class="p-3 border rounded-lg bg-green-50 border-green-200 flex items-center gap-3">
                                 <div
-                                    class="w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
                                     1</div>
                                 <div class="flex-1">
                                     <div class="text-xs font-bold text-gray-900">Main Window</div>
-                                    <div class="text-[10px] text-teal-700 font-bold uppercase">Verified</div>
+                                    <div class="text-[10px] text-green-700 font-bold uppercase tracking-tight">Verified
+                                        (Compliant)</div>
                                 </div>
-                                <i data-lucide="check-circle" size="14" class="text-teal-600"></i>
+                                <i data-lucide="check-circle" size="14" class="text-green-600"></i>
                             </div>
                             <div class="p-3 border rounded-lg bg-teal-50 border-teal-200 flex items-center gap-3">
                                 <div
-                                    class="w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    class="w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
                                     2</div>
                                 <div class="flex-1">
                                     <div class="text-xs font-bold text-gray-900">End-Cap Box</div>
-                                    <div class="text-[10px] text-teal-700 font-bold uppercase">Verified</div>
+                                    <div class="text-[10px] text-teal-700 font-bold uppercase tracking-tight">Ready for
+                                        Install</div>
                                 </div>
-                                <i data-lucide="check-circle" size="14" class="text-teal-600"></i>
+                                <i data-lucide="chevron-right" size="14" class="text-teal-600"></i>
                             </div>
-                            <div class="p-3 border rounded-lg bg-yellow-50 border-yellow-200 flex items-center gap-3">
+                            <div class="p-3 border rounded-lg bg-orange-50 border-orange-200 flex items-center gap-3">
                                 <div
-                                    class="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    class="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
                                     3</div>
                                 <div class="flex-1">
                                     <div class="text-xs font-bold text-gray-900">Side Table</div>
-                                    <div class="text-[10px] text-yellow-700 font-bold uppercase text-xs">Issue: Retake
-                                        Needed</div>
+                                    <div class="text-[10px] text-orange-700 font-bold uppercase tracking-tight italic">
+                                        Waiting for Re-shipment</div>
                                 </div>
-                                <i data-lucide="alert-circle" size="14" class="text-yellow-600"></i>
+                                <i data-lucide="package" size="14" class="text-orange-600"></i>
                             </div>
                         </div>
                     </div>

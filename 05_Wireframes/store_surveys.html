@@ -18,30 +18,35 @@
             --accent: #f59e0b;
             --text-on-primary: #ffffff;
         }
+
         [data-theme="shelfsync"] {
             --primary: #00ABB9;
             --primary-light: #14b8a6;
             --primary-dark: #012D3A;
             --accent: #FCD732;
         }
+
         [data-theme="merchpulse"] {
             --primary: #7C3AED;
             --primary-light: #8b5cf6;
             --primary-dark: #5B21B6;
             --accent: #F59E0B;
         }
+
         [data-theme="fieldforge"] {
             --primary: #3B82F6;
             --primary-light: #60a5fa;
             --primary-dark: #1E40AF;
             --accent: #10B981;
         }
+
         [data-theme="nexova"] {
             --primary: #06B6D4;
             --primary-light: #22D3EE;
             --primary-dark: #0F172A;
             --accent: #06B6D4;
         }
+
         [data-theme="prism"] {
             --primary: #14B8A6;
             --primary-light: #2DD4BF;
@@ -50,27 +55,66 @@
         }
 
         /* Apply theme colors - Primary */
-        .bg-teal-600, .bg-teal-700, .bg-teal-800 { background-color: var(--primary) !important; }
-        .hover\:bg-teal-700:hover { background-color: var(--primary-dark) !important; }
-        .text-teal-600, .text-teal-700 { color: var(--primary) !important; }
-        .border-teal-600, .border-teal-500 { border-color: var(--primary) !important; }
-        .bg-teal-100, .bg-teal-50 { background-color: color-mix(in srgb, var(--primary) 15%, white) !important; }
-        .ring-teal-500 { --tw-ring-color: var(--primary) !important; }
+        .bg-teal-600,
+        .bg-teal-700,
+        .bg-teal-800 {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-teal-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .text-teal-600,
+        .text-teal-700 {
+            color: var(--primary) !important;
+        }
+
+        .border-teal-600,
+        .border-teal-500 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-teal-100,
+        .bg-teal-50 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
+        .ring-teal-500 {
+            --tw-ring-color: var(--primary) !important;
+        }
+
         /* Accent colors */
-        .bg-amber-500, .bg-orange-500 { background-color: var(--accent) !important; }
-        .bg-blue-600 { background-color: var(--primary-light) !important; }
-        .bg-green-600, .bg-green-500 { background-color: var(--accent) !important; }
-        .text-amber-600, .text-orange-600 { color: var(--accent) !important; }
+        .bg-amber-500,
+        .bg-orange-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .bg-green-600,
+        .bg-green-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .text-amber-600,
+        .text-orange-600 {
+            color: var(--accent) !important;
+        }
 
         /* Tooltip Styles - Only active when body has .tooltips-enabled */
         .tooltips-enabled [data-tooltip] {
             position: relative;
             cursor: help;
         }
+
         .tooltips-enabled .has-tooltip {
             outline: 2px dashed #14b8a6;
             outline-offset: 2px;
         }
+
         .tooltip-help-banner {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
@@ -82,9 +126,10 @@
             align-items: center;
             gap: 16px;
         }
+
         .tooltip-toggle {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
             padding: 4px 12px;
             border-radius: 4px;
@@ -92,9 +137,11 @@
             font-size: 12px;
             font-weight: 600;
         }
+
         .tooltip-toggle:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
+
         .tooltip-toggle.active {
             background: white;
             color: #0d9488;
@@ -105,31 +152,38 @@
             cursor: grab;
             transition: all 0.2s;
         }
+
         .field-item:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         .field-item:active {
             cursor: grabbing;
         }
+
         .drop-zone {
             min-height: 100px;
             border: 2px dashed #e5e7eb;
             border-radius: 8px;
             transition: all 0.2s;
         }
+
         .drop-zone.drag-over {
             border-color: var(--primary);
             background: color-mix(in srgb, var(--primary) 5%, white);
         }
+
         .canvas-field {
             border: 1px solid #e5e7eb;
             background: white;
             transition: all 0.2s;
         }
+
         .canvas-field:hover {
             border-color: var(--primary);
         }
+
         .canvas-field.selected {
             border-color: var(--primary);
             box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
@@ -137,14 +191,14 @@
     </style>
     <script>
         // Tooltip positioning and toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Initialize Lucide icons
             lucide.createIcons();
 
             // Toggle functionality
             const toggle = document.getElementById('tooltip-toggle');
             if (toggle) {
-                toggle.addEventListener('click', function() {
+                toggle.addEventListener('click', function () {
                     document.body.classList.toggle('tooltips-enabled');
                     this.classList.toggle('active');
                     this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
@@ -153,7 +207,7 @@
 
             // Dynamic tooltip positioning
             document.querySelectorAll('[data-tooltip]').forEach(el => {
-                el.addEventListener('mouseenter', function(e) {
+                el.addEventListener('mouseenter', function (e) {
                     if (!document.body.classList.contains('tooltips-enabled')) return;
 
                     // Remove any existing tooltip
@@ -202,7 +256,7 @@
                     tooltip.style.left = left + 'px';
                 });
 
-                el.addEventListener('mouseleave', function() {
+                el.addEventListener('mouseleave', function () {
                     const tooltip = document.querySelector('.dynamic-tooltip');
                     if (tooltip) tooltip.remove();
                 });
@@ -239,8 +293,12 @@
 
     <!-- Tooltip Help Banner -->
     <div class="tooltip-help-banner">
-        <a href="index.html" style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <a href="index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
             Index
         </a>
         <span style="margin-left: 8px;">Store Surveys & Layout Builder - Brand Admin & Store Level Views</span>
@@ -249,8 +307,7 @@
 
     <!-- Top Navigation -->
     <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-4 cursor-pointer has-tooltip"
-            data-tooltip="BRAND ADMIN PORTAL
+        <div class="flex items-center gap-4 cursor-pointer has-tooltip" data-tooltip="BRAND ADMIN PORTAL
 Brand: Acme Corporation
 Data: Brand.id, Brand.name
 Depends: User.brandId from JWT
@@ -265,7 +322,8 @@ Blocks: All brand-scoped operations">
         </div>
         <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
             <a href="#" id="link-survey-builder" onclick="nav('view-survey-builder')"
-                class="nav-link hover:text-teal-600 active-nav text-teal-600 border-b-2 border-teal-600 h-16 flex items-center">Survey Builder</a>
+                class="nav-link hover:text-teal-600 active-nav text-teal-600 border-b-2 border-teal-600 h-16 flex items-center">Survey
+                Builder</a>
             <a href="#" id="link-store-layouts" onclick="nav('view-store-layouts')"
                 class="nav-link hover:text-teal-600 h-16 flex items-center">Store Layouts</a>
             <a href="#" id="link-survey-responses" onclick="nav('view-survey-responses')"
@@ -279,7 +337,9 @@ Blocks: User awareness of pending items">
                 <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
                     <i data-lucide="bell" class="w-4 h-4 text-gray-500"></i>
                 </div>
-                <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">3</div>
+                <div
+                    class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                    3</div>
             </div>
         </div>
     </nav>
@@ -293,17 +353,20 @@ Blocks: User awareness of pending items">
             <div class="flex justify-between items-center mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">Layout Survey Builder</h1>
-                    <p class="text-sm text-gray-500 mt-1">Build store layout surveys with default and custom versions per store type</p>
+                    <p class="text-sm text-gray-500 mt-1">Build store layout surveys with default and custom versions
+                        per store type</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
                         data-tooltip="IMPORT TEMPLATE
 Action: Import survey from JSON/CSV
 Data: SurveyTemplate definition
 Blocks: Creates new SurveyTemplate">
                         <i data-lucide="upload" class="w-4 h-4"></i> Import
                     </button>
-                    <button class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
+                    <button
+                        class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
                         data-tooltip="CREATE SURVEY TEMPLATE
 Action: Create new SurveyTemplate
 Data: SurveyTemplate.id, brand_id, name
@@ -319,7 +382,8 @@ Blocks: SurveyVersion creation">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
                     <span class="font-bold text-gray-700">Survey Templates</span>
                     <div class="flex gap-2">
-                        <input type="text" placeholder="Search surveys..." class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-64">
+                        <input type="text" placeholder="Search surveys..."
+                            class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-64">
                         <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
                             <option>All Status</option>
                             <option>Active</option>
@@ -357,80 +421,69 @@ Blocks: Template availability">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip bg-teal-50"
-                            data-tooltip="DEFAULT LAYOUT SURVEY
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip bg-teal-50" data-tooltip="MASTER LAYOUT SURVEY
 Name: Default Store Layout Survey
-Type: LAYOUT (store layout definition)
-Store Type: All (default)
+Usage: Done ONCE (unless remodel)
+Function: Defines the 'Canvas' for all campaigns
 Version: 2.1 (published)
 Fields: 12 form fields
 Used in: 247 stores
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900"><span class="text-teal-600">*</span> Default Store Layout Survey</td>
-                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span></td>
-                            <td class="px-6 py-4 text-gray-500"><span class="text-teal-600 font-medium">All (Default)</span></td>
+                            <td class="px-6 py-4 font-medium text-gray-900"><span
+                                    class="text-teal-600 font-black">MASTER</span> Default Store Layout Survey</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500"><span class="text-teal-600 font-medium">All
+                                    (Default)</span></td>
                             <td class="px-6 py-4 text-gray-500">v2.1</td>
                             <td class="px-6 py-4 text-gray-500">12</td>
                             <td class="px-6 py-4 text-gray-500">247 stores</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="LAYOUT SURVEY - KIOSK
-Name: Kiosk Layout Survey
-Type: LAYOUT (store layout definition)
-Store Type: Kiosk - custom variant
-Version: 1.2 (published)
-Fields: 6 form fields
-Used in: 45 stores
-Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Kiosk Layout Survey</td>
-                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span></td>
-                            <td class="px-6 py-4 text-gray-500">Kiosk</td>
-                            <td class="px-6 py-4 text-gray-500">v1.2</td>
-                            <td class="px-6 py-4 text-gray-500">6</td>
-                            <td class="px-6 py-4 text-gray-500">45 stores</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="CAMPAIGN UNIVERSAL SURVEY
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="RECURRING CAMPAIGN SURVEY
 Name: Universal Campaign Survey
-Type: CAMPAIGN (used for all campaigns)
-Store Type: N/A
+Usage: Recurring for EVERY campaign
+Function: Operational 'Paint' (Receipt, Install, Compliance)
 Version: 3.0 (published)
 Fields: 8 form fields
 Used in: All active campaigns
 Click: Open in builder">
                             <td class="px-6 py-4 font-medium text-gray-900">Universal Campaign Survey</td>
-                            <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">Campaign</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Layer</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-400">—</td>
                             <td class="px-6 py-4 text-gray-500">v3.0</td>
                             <td class="px-6 py-4 text-gray-500">8</td>
                             <td class="px-6 py-4 text-gray-500">All campaigns</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="EXCEPTION SURVEY
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="EXCEPTION SURVEY
 Name: Exception Reporting Survey
 Type: EXCEPTION (fixed exception process)
 Store Type: N/A
@@ -439,22 +492,28 @@ Fields: 5 form fields
 Used in: All exception reports
 Click: Open in builder">
                             <td class="px-6 py-4 font-medium text-gray-900">Exception Reporting Survey</td>
-                            <td class="px-6 py-4"><span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-bold">Exception</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-bold">Exception</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-400">—</td>
                             <td class="px-6 py-4 text-gray-500">v1.0</td>
                             <td class="px-6 py-4 text-gray-500">5</td>
                             <td class="px-6 py-4 text-gray-500">All exceptions</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip"
-                            data-tooltip="DRAFT LAYOUT SURVEY
+                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="DRAFT LAYOUT SURVEY
 Name: Mall Layout Survey
 Type: LAYOUT (store layout definition)
 Store Type: Mall Location
@@ -463,17 +522,24 @@ Fields: 10 form fields
 Status: Editing in progress
 Click: Open in builder">
                             <td class="px-6 py-4 font-medium text-gray-900">Mall Location Layout</td>
-                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Layout</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Mall Location</td>
                             <td class="px-6 py-4 text-gray-500"><span class="text-amber-600">Draft</span></td>
                             <td class="px-6 py-4 text-gray-500">10</td>
                             <td class="px-6 py-4 text-gray-500">-</td>
-                            <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Draft</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Draft</span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -486,26 +552,30 @@ Click: Open in builder">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <span class="font-bold text-gray-700">Editing: Standard Receipt Survey</span>
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">v2.1 Published</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">v2.1
+                            Published</span>
                         <span class="text-gray-400 text-sm">|</span>
                         <span class="text-amber-600 text-sm font-medium">Unsaved changes</span>
                     </div>
                     <div class="flex gap-2">
-                        <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
+                        <button
+                            class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
                             data-tooltip="PREVIEW SURVEY
 Action: Open mobile preview modal
 Data: Current definition_json
 Blocks: Visual testing before publish">
                             <i data-lucide="eye" class="w-4 h-4 inline mr-1"></i> Preview
                         </button>
-                        <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
+                        <button
+                            class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
                             data-tooltip="SAVE DRAFT
 Action: Save to SurveyVersion (unpublished)
 Data: definition_json, version_number
 Blocks: Preserves work without publishing">
                             Save Draft
                         </button>
-                        <button class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 has-tooltip"
+                        <button
+                            class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 has-tooltip"
                             data-tooltip="PUBLISH VERSION
 Action: Set published_at = NOW()
 Data: SurveyVersion.published_at
@@ -520,8 +590,7 @@ WARNING: Creates immutable version">
                 <div class="flex">
                     <!-- Field Palette -->
                     <div class="w-64 border-r border-gray-100 p-4 bg-gray-50">
-                        <div class="font-medium text-gray-700 mb-3 has-tooltip"
-                            data-tooltip="FIELD PALETTE
+                        <div class="font-medium text-gray-700 mb-3 has-tooltip" data-tooltip="FIELD PALETTE
 Drag fields to canvas to add
 Field types: Text, Number, Select, etc.
 Each field has configurable options">Field Types</div>
@@ -632,15 +701,18 @@ Each item gets instance">
                     <div class="flex-1 p-6">
                         <div class="max-w-xl mx-auto space-y-4">
                             <!-- Section: Kit Verification -->
-                            <div class="canvas-field selected rounded-lg p-4 cursor-pointer" onclick="selectField(this)">
+                            <div class="canvas-field selected rounded-lg p-4 cursor-pointer"
+                                onclick="selectField(this)">
                                 <div class="flex items-center justify-between mb-2">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
                                         <span class="text-xs text-teal-600 font-medium">SECTION</span>
                                     </div>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-lg">Kit Verification</div>
@@ -656,11 +728,14 @@ Each item gets instance">
                                         <span class="text-xs text-red-500">*Required</span>
                                     </div>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
-                                <div class="font-medium text-gray-700 mb-2">Did you receive all items listed on the packing slip?</div>
+                                <div class="font-medium text-gray-700 mb-2">Did you receive all items listed on the
+                                    packing slip?</div>
                                 <div class="flex gap-4">
                                     <label class="flex items-center gap-2">
                                         <input type="radio" name="all_items" class="text-teal-600">
@@ -674,21 +749,26 @@ Each item gets instance">
                             </div>
 
                             <!-- Field: Missing Items (Conditional) -->
-                            <div class="canvas-field rounded-lg p-4 cursor-pointer border-l-4 border-amber-400" onclick="selectField(this)">
+                            <div class="canvas-field rounded-lg p-4 cursor-pointer border-l-4 border-amber-400"
+                                onclick="selectField(this)">
                                 <div class="flex items-center justify-between mb-2">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
                                         <span class="text-xs text-blue-600 font-medium">TEXTAREA</span>
-                                        <span class="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">Conditional</span>
+                                        <span
+                                            class="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">Conditional</span>
                                     </div>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-700 mb-2">Which items are missing or damaged?</div>
                                 <div class="text-xs text-amber-600 mb-2">Shown when: "all_items" = No</div>
-                                <textarea class="w-full border border-gray-200 rounded-lg p-2 text-sm h-20" placeholder="List missing or damaged items..."></textarea>
+                                <textarea class="w-full border border-gray-200 rounded-lg p-2 text-sm h-20"
+                                    placeholder="List missing or damaged items..."></textarea>
                             </div>
 
                             <!-- Field: Package Condition -->
@@ -700,8 +780,10 @@ Each item gets instance">
                                         <span class="text-xs text-red-500">*Required</span>
                                     </div>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-700 mb-2">Package condition on arrival</div>
@@ -722,8 +804,10 @@ Each item gets instance">
                                         <span class="text-xs text-pink-600 font-medium">PHOTO</span>
                                     </div>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-700 mb-2">Photo of packaging (if damaged)</div>
@@ -735,8 +819,7 @@ Each item gets instance">
                             </div>
 
                             <!-- Drop Zone -->
-                            <div class="drop-zone p-6 text-center has-tooltip"
-                                data-tooltip="DROP ZONE
+                            <div class="drop-zone p-6 text-center has-tooltip" data-tooltip="DROP ZONE
 Drag fields from palette here
 Fields added to definition_json
 Order determines display order">
@@ -752,15 +835,19 @@ Order determines display order">
                         <div class="space-y-4">
                             <div>
                                 <label class="text-xs text-gray-500 font-medium block mb-1">Field ID</label>
-                                <input type="text" value="kit_verification_section" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-100" readonly>
+                                <input type="text" value="kit_verification_section"
+                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-100"
+                                    readonly>
                             </div>
                             <div>
                                 <label class="text-xs text-gray-500 font-medium block mb-1">Label</label>
-                                <input type="text" value="Kit Verification" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+                                <input type="text" value="Kit Verification"
+                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
                             </div>
                             <div>
                                 <label class="text-xs text-gray-500 font-medium block mb-1">Description</label>
-                                <textarea class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm h-16">Verify all items received in the shipment</textarea>
+                                <textarea
+                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm h-16">Verify all items received in the shipment</textarea>
                             </div>
                             <div class="border-t border-gray-200 pt-4">
                                 <div class="font-medium text-gray-700 mb-3 text-sm">Visibility Rules</div>
@@ -770,18 +857,21 @@ Order determines display order">
                                         <span class="text-sm text-gray-600">Always visible</span>
                                     </label>
                                     <div class="text-xs text-gray-500 mt-2">Or show when:</div>
-                                    <select class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
+                                    <select
+                                        class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
                                         <option>Select field...</option>
                                         <option>all_items_received</option>
                                         <option>package_condition</option>
                                     </select>
                                     <div class="flex gap-2">
-                                        <select class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
+                                        <select
+                                            class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
                                             <option>equals</option>
                                             <option>not equals</option>
                                             <option>contains</option>
                                         </select>
-                                        <input type="text" placeholder="value" class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm">
+                                        <input type="text" placeholder="value"
+                                            class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm">
                                     </div>
                                 </div>
                             </div>
@@ -801,14 +891,16 @@ Order determines display order">
                     <p class="text-sm text-gray-500 mt-1">Manage store-specific location slots for POP placement</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
                         data-tooltip="IMPORT LAYOUTS
 Action: Bulk import store layouts from CSV
 Data: store_id, slot_name, slot_type
 Creates: StoreLayout, LocationSlot records">
                         <i data-lucide="upload" class="w-4 h-4"></i> Import
                     </button>
-                    <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
                         data-tooltip="EXPORT LAYOUTS
 Action: Export all layouts to CSV/Excel
 Data: All StoreLayout, LocationSlot data
@@ -824,8 +916,10 @@ Use: Backup or external analysis">
                     <div class="flex-1 min-w-64">
                         <label class="text-xs text-gray-500 font-medium block mb-1">Search Store</label>
                         <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" placeholder="Store number or name..." class="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm">
+                            <i data-lucide="search"
+                                class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" placeholder="Store number or name..."
+                                class="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm">
                         </div>
                     </div>
                     <div>
@@ -853,7 +947,8 @@ Use: Backup or external analysis">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Store List -->
                 <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="px-4 py-3 border-b border-gray-100 font-bold text-gray-700 flex justify-between items-center">
+                    <div
+                        class="px-4 py-3 border-b border-gray-100 font-bold text-gray-700 flex justify-between items-center">
                         <span>Stores (247)</span>
                         <span class="text-xs text-gray-400 font-normal">Click to edit layout</span>
                     </div>
@@ -870,12 +965,12 @@ Click: View/edit layout">
                                     <div class="font-medium text-gray-900">STR-001</div>
                                     <div class="text-sm text-gray-500">Downtown Main</div>
                                 </div>
-                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">12 slots</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">12
+                                    slots</span>
                             </div>
                             <div class="text-xs text-gray-400 mt-1">Updated: Dec 15</div>
                         </div>
-                        <div class="p-4 hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="STORE LAYOUT
+                        <div class="p-4 hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="STORE LAYOUT
 Store: STR-002 - Westside Mall
 Layout: Version 2 (current)
 Slots: 8 location slots defined
@@ -885,12 +980,12 @@ Status: Configured">
                                     <div class="font-medium text-gray-900">STR-002</div>
                                     <div class="text-sm text-gray-500">Westside Mall</div>
                                 </div>
-                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">8 slots</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">8
+                                    slots</span>
                             </div>
                             <div class="text-xs text-gray-400 mt-1">Updated: Dec 10</div>
                         </div>
-                        <div class="p-4 hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="STORE - NOT CONFIGURED
+                        <div class="p-4 hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="STORE - NOT CONFIGURED
 Store: STR-003 - Airport Terminal
 Layout: No layout defined
 Status: Needs configuration
@@ -900,7 +995,9 @@ Action: Click to create layout">
                                     <div class="font-medium text-gray-900">STR-003</div>
                                     <div class="text-sm text-gray-500">Airport Terminal</div>
                                 </div>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">No layout</span>
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">No
+                                    layout</span>
                             </div>
                             <div class="text-xs text-gray-400 mt-1">Created: Nov 20</div>
                         </div>
@@ -910,7 +1007,8 @@ Action: Click to create layout">
                                     <div class="font-medium text-gray-900">STR-004</div>
                                     <div class="text-sm text-gray-500">University Plaza</div>
                                 </div>
-                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">15 slots</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">15
+                                    slots</span>
                             </div>
                             <div class="text-xs text-gray-400 mt-1">Updated: Dec 12</div>
                         </div>
@@ -920,7 +1018,8 @@ Action: Click to create layout">
                                     <div class="font-medium text-gray-900">STR-005</div>
                                     <div class="text-sm text-gray-500">Harbor View</div>
                                 </div>
-                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">10 slots</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">10
+                                    slots</span>
                             </div>
                             <div class="text-xs text-gray-400 mt-1">Updated: Dec 8</div>
                         </div>
@@ -935,14 +1034,16 @@ Action: Click to create layout">
                             <span class="text-sm text-gray-500 ml-2">Layout Version 3</span>
                         </div>
                         <div class="flex gap-2">
-                            <button class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
+                            <button
+                                class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
                                 data-tooltip="VERSION HISTORY
 Action: View all layout versions
 Data: StoreLayout.version history
 Allows: Rollback to previous version">
                                 <i data-lucide="history" class="w-4 h-4 inline mr-1"></i> History
                             </button>
-                            <button class="bg-teal-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-teal-700 has-tooltip"
+                            <button
+                                class="bg-teal-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-teal-700 has-tooltip"
                                 data-tooltip="SAVE LAYOUT
 Action: Save changes to StoreLayout
 Creates: New version if modified
@@ -963,14 +1064,21 @@ Examples by industry:
 • Food Truck: Exterior, Menu Board, Window
 • Medical: Reception, Waiting Area, Checkout
 Click gear icon to manage slot types">
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-blue-500 rounded"></span> Window Display</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-500 rounded"></span> Shelf Unit</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-purple-500 rounded"></span> Cooler</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-amber-500 rounded"></span> Door Panel</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-pink-500 rounded"></span> End Cap</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-500 rounded"></span> Other</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-blue-500 rounded"></span>
+                                    Window Display</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-500 rounded"></span>
+                                    Shelf Unit</span>
+                                <span class="flex items-center gap-1"><span
+                                        class="w-3 h-3 bg-purple-500 rounded"></span> Cooler</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-amber-500 rounded"></span>
+                                    Door Panel</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-pink-500 rounded"></span>
+                                    End Cap</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-500 rounded"></span>
+                                    Other</span>
                             </div>
-                            <button class="text-xs text-gray-500 hover:text-teal-600 flex items-center gap-1 has-tooltip"
+                            <button
+                                class="text-xs text-gray-500 hover:text-teal-600 flex items-center gap-1 has-tooltip"
                                 data-tooltip="MANAGE SLOT TYPES
 Action: Configure brand slot types
 Add custom types for your industry
@@ -993,17 +1101,25 @@ Click: View/edit slot details & attachments">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-blue-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded" title="Attachments"><i data-lucide="paperclip" class="w-3 h-3 text-teal-500"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded" title="Attachments"><i
+                                                data-lucide="paperclip" class="w-3 h-3 text-teal-500"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Front Window Left</div>
                                 <div class="text-xs text-gray-500">Window Display | 48x72"</div>
                                 <div class="flex gap-1 mt-2">
-                                    <span class="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-xs" title="Reference Photos">2 <i data-lucide="image" class="w-2 h-2 inline"></i></span>
-                                    <span class="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded text-xs" title="Artwork Template">1 <i data-lucide="file-image" class="w-2 h-2 inline"></i></span>
-                                    <span class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-xs" title="Mockup">1 <i data-lucide="layout" class="w-2 h-2 inline"></i></span>
+                                    <span class="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-xs"
+                                        title="Reference Photos">2 <i data-lucide="image"
+                                            class="w-2 h-2 inline"></i></span>
+                                    <span class="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded text-xs"
+                                        title="Artwork Template">1 <i data-lucide="file-image"
+                                            class="w-2 h-2 inline"></i></span>
+                                    <span class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-xs"
+                                        title="Mockup">1 <i data-lucide="layout" class="w-2 h-2 inline"></i></span>
                                 </div>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition has-tooltip"
@@ -1015,8 +1131,10 @@ Dimensions: 48x72 inches">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-blue-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Front Window Right</div>
@@ -1031,63 +1149,80 @@ Dimensions: 24x36 inches">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-amber-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Entry Door</div>
                                 <div class="text-xs text-gray-500">DOOR | 24x36"</div>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
+                            <div
+                                class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-purple-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Beverage Cooler 1</div>
                                 <div class="text-xs text-gray-500">COOLER | 36x48"</div>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
+                            <div
+                                class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-purple-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Beverage Cooler 2</div>
                                 <div class="text-xs text-gray-500">COOLER | 36x48"</div>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
+                            <div
+                                class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-pink-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Aisle 1 End Cap</div>
                                 <div class="text-xs text-gray-500">END_CAP | 48x60"</div>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
+                            <div
+                                class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-pink-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Aisle 2 End Cap</div>
                                 <div class="text-xs text-gray-500">END_CAP | 48x60"</div>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
+                            <div
+                                class="border border-gray-200 rounded-lg p-4 hover:border-teal-500 cursor-pointer transition">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="w-3 h-3 bg-green-500 rounded"></span>
                                     <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit" class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2" class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="edit"
+                                                class="w-3 h-3 text-gray-400"></i></button>
+                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
                                 <div class="font-medium text-gray-900 text-sm">Checkout Shelf</div>
@@ -1112,14 +1247,12 @@ Data: slot_name, slot_type, dimensions">
                                     <span class="font-medium">12</span> location slots configured
                                 </div>
                                 <div class="flex gap-2">
-                                    <button class="text-sm text-gray-600 hover:text-gray-800 has-tooltip"
-                                        data-tooltip="COPY FROM TEMPLATE
+                                    <button class="text-sm text-gray-600 hover:text-gray-800 has-tooltip" data-tooltip="COPY FROM TEMPLATE
 Action: Copy slots from another store
 Helps: Quick setup for similar stores">
                                         <i data-lucide="copy" class="w-4 h-4 inline mr-1"></i> Copy from Template
                                     </button>
-                                    <button class="text-sm text-gray-600 hover:text-gray-800 has-tooltip"
-                                        data-tooltip="APPLY TO SIMILAR STORES
+                                    <button class="text-sm text-gray-600 hover:text-gray-800 has-tooltip" data-tooltip="APPLY TO SIMILAR STORES
 Action: Copy this layout to other stores
 Opens: Store selection modal
 Bulk: Create layouts for multiple stores">
@@ -1143,7 +1276,8 @@ Bulk: Create layouts for multiple stores">
                     <p class="text-sm text-gray-500 mt-1">View and manage store survey submissions</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
                         data-tooltip="EXPORT RESPONSES
 Action: Export to CSV/Excel
 Data: All filtered responses
@@ -1159,8 +1293,10 @@ Includes: Store info, answers, timestamps">
                     <div class="flex-1 min-w-64">
                         <label class="text-xs text-gray-500 font-medium block mb-1">Search</label>
                         <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" placeholder="Store number or campaign..." class="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm">
+                            <i data-lucide="search"
+                                class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" placeholder="Store number or campaign..."
+                                class="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm">
                         </div>
                     </div>
                     <div>
@@ -1203,8 +1339,7 @@ Includes: Store info, answers, timestamps">
 
             <!-- Response Stats -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="TOTAL RESPONSES
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="TOTAL RESPONSES
 Data: COUNT(StoreSurveyResponse)
 Filter: Current date range
 Includes: All survey types">
@@ -1212,8 +1347,7 @@ Includes: All survey types">
                     <div class="text-2xl font-bold text-gray-900">1,247</div>
                     <div class="text-xs text-green-600 mt-1">+23% vs last month</div>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="COMPLETION RATE
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="COMPLETION RATE
 Data: Submitted / Total Assigned
 Calculation: Responses with submitted_at
 Shows: Survey participation rate">
@@ -1221,8 +1355,7 @@ Shows: Survey participation rate">
                     <div class="text-2xl font-bold text-teal-600">94.2%</div>
                     <div class="text-xs text-green-600 mt-1">+2.1% improvement</div>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="ISSUES REPORTED
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="ISSUES REPORTED
 Data: COUNT(responses with issues)
 Shows: Kit problems identified
 Links to: IssueRequest records">
@@ -1230,8 +1363,7 @@ Links to: IssueRequest records">
                     <div class="text-2xl font-bold text-amber-600">47</div>
                     <div class="text-xs text-gray-500 mt-1">3.8% of responses</div>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="PENDING REVIEW
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="PENDING REVIEW
 Data: COUNT(needs brand review)
 Status: Responses with flagged items
 Action: Click to view pending">
@@ -1268,8 +1400,7 @@ Shows: Who completed survey">By</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="SURVEY RESPONSE - ISSUES
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="SURVEY RESPONSE - ISSUES
 Store: STR-001 Downtown Main
 Campaign: Summer Promo 2025
 Survey: Receipt Survey
@@ -1281,19 +1412,24 @@ Click: View response details">
                                 <div class="text-xs text-gray-500">Downtown Main</div>
                             </td>
                             <td class="px-6 py-4 text-gray-600">Summer Promo 2025</td>
-                            <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-bold">Receipt</span></td>
-                            <td class="px-6 py-4"><span class="bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-xs font-bold">Issues Reported</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-bold">Receipt</span>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-xs font-bold">Issues
+                                    Reported</span></td>
                             <td class="px-6 py-4 text-gray-500">2 hours ago</td>
                             <td class="px-6 py-4 text-gray-500">John D.</td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="SURVEY RESPONSE - SUBMITTED
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="SURVEY RESPONSE - SUBMITTED
 Store: STR-002 Westside Mall
 Campaign: Holiday Display
 Survey: Install Survey
@@ -1305,19 +1441,24 @@ Click: View response details">
                                 <div class="text-xs text-gray-500">Westside Mall</div>
                             </td>
                             <td class="px-6 py-4 text-gray-600">Holiday Display</td>
-                            <td class="px-6 py-4"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-bold">Install</span></td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Submitted</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-bold">Install</span>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Submitted</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">5 hours ago</td>
                             <td class="px-6 py-4 text-gray-500">Jane S.</td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip"
-                            data-tooltip="SURVEY RESPONSE - IN PROGRESS
+                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="SURVEY RESPONSE - IN PROGRESS
 Store: STR-004 University Plaza
 Campaign: Summer Promo 2025
 Survey: Receipt Survey
@@ -1329,14 +1470,20 @@ Click: View partial response">
                                 <div class="text-xs text-gray-500">University Plaza</div>
                             </td>
                             <td class="px-6 py-4 text-gray-600">Summer Promo 2025</td>
-                            <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-bold">Receipt</span></td>
-                            <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">In Progress</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-bold">Receipt</span>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">In
+                                    Progress</span></td>
                             <td class="px-6 py-4 text-gray-500">1 day ago</td>
                             <td class="px-6 py-4 text-gray-500">Mike J.</td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -1346,14 +1493,20 @@ Click: View partial response">
                                 <div class="text-xs text-gray-500">Harbor View</div>
                             </td>
                             <td class="px-6 py-4 text-gray-600">Back to School</td>
-                            <td class="px-6 py-4"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-bold">Install</span></td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Submitted</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-bold">Install</span>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Submitted</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">2 days ago</td>
                             <td class="px-6 py-4 text-gray-500">Lisa M.</td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
+                                            class="w-4 h-4"></i></button>
+                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
+                                            class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -1362,11 +1515,15 @@ Click: View partial response">
                 <div class="px-6 py-4 border-t border-gray-100 flex justify-between items-center">
                     <div class="text-sm text-gray-500">Showing 1-4 of 1,247 responses</div>
                     <div class="flex gap-1">
-                        <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">Previous</button>
+                        <button
+                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">Previous</button>
                         <button class="px-3 py-1 bg-teal-600 text-white rounded text-sm">1</button>
-                        <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">2</button>
-                        <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">3</button>
-                        <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">Next</button>
+                        <button
+                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">2</button>
+                        <button
+                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">3</button>
+                        <button
+                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">Next</button>
                     </div>
                 </div>
             </div>
@@ -1379,14 +1536,16 @@ Click: View partial response">
                         <span class="text-sm text-gray-500 ml-2">Receipt Survey v2.1</span>
                     </div>
                     <div class="flex gap-2">
-                        <button class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
+                        <button
+                            class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
                             data-tooltip="EDIT RESPONSE
 Action: Edit response on behalf of store
 Creates: response_edit_audit record
 Use: Fix errors, add missing data">
                             <i data-lucide="edit" class="w-4 h-4 inline mr-1"></i> Edit Response
                         </button>
-                        <button class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
+                        <button
+                            class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
                             data-tooltip="AUDIT HISTORY
 Action: View all edits to this response
 Data: response_edit_audits table
@@ -1401,26 +1560,25 @@ Shows: Who changed what and when">
                         <div>
                             <div class="font-medium text-gray-700 mb-4">Survey Responses</div>
                             <div class="space-y-4">
-                                <div class="border-b border-gray-100 pb-3 has-tooltip"
-                                    data-tooltip="FIELD RESPONSE
+                                <div class="border-b border-gray-100 pb-3 has-tooltip" data-tooltip="FIELD RESPONSE
 Field: all_items_received
 Type: RADIO (Yes/No)
 Value: No
 Triggers: Conditional fields">
-                                    <div class="text-xs text-gray-500 mb-1">Did you receive all items listed on the packing slip?</div>
+                                    <div class="text-xs text-gray-500 mb-1">Did you receive all items listed on the
+                                        packing slip?</div>
                                     <div class="font-medium text-red-600">No</div>
                                 </div>
-                                <div class="border-b border-gray-100 pb-3 has-tooltip"
-                                    data-tooltip="FIELD RESPONSE
+                                <div class="border-b border-gray-100 pb-3 has-tooltip" data-tooltip="FIELD RESPONSE
 Field: missing_items_description
 Type: TEXTAREA
 Conditional: Shown because all_items = No
 Value: Description of missing items">
                                     <div class="text-xs text-gray-500 mb-1">Which items are missing or damaged?</div>
-                                    <div class="font-medium text-gray-900">Missing: 2x Window Clings (Item #WC-2025-A). Box was opened and items were not inside.</div>
+                                    <div class="font-medium text-gray-900">Missing: 2x Window Clings (Item #WC-2025-A).
+                                        Box was opened and items were not inside.</div>
                                 </div>
-                                <div class="border-b border-gray-100 pb-3 has-tooltip"
-                                    data-tooltip="FIELD RESPONSE
+                                <div class="border-b border-gray-100 pb-3 has-tooltip" data-tooltip="FIELD RESPONSE
 Field: package_condition
 Type: DROPDOWN
 Value: Fair - Some damage
@@ -1430,7 +1588,8 @@ Links to: PhotoUpload evidence">
                                 </div>
                                 <div class="border-b border-gray-100 pb-3">
                                     <div class="text-xs text-gray-500 mb-1">Additional notes</div>
-                                    <div class="font-medium text-gray-900">Box appeared to have been opened and resealed. Tape was cut on one side.</div>
+                                    <div class="font-medium text-gray-900">Box appeared to have been opened and
+                                        resealed. Tape was cut on one side.</div>
                                 </div>
                             </div>
                         </div>
@@ -1475,8 +1634,7 @@ Click: View full size">
                             </div>
 
                             <!-- Issue Created Alert -->
-                            <div class="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 has-tooltip"
-                                data-tooltip="ISSUE CREATED
+                            <div class="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 has-tooltip" data-tooltip="ISSUE CREATED
 Action: Auto-created from survey response
 Type: MISSING items
 Status: OPEN - awaiting triage
@@ -1485,8 +1643,10 @@ Links to: IssueRequest record">
                                     <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600 mt-0.5"></i>
                                     <div>
                                         <div class="font-medium text-red-800">Issue Created</div>
-                                        <div class="text-sm text-red-700 mt-1">An issue request was automatically created for the missing items. View issue #ISS-2024-0547</div>
-                                        <button class="text-sm text-red-800 font-medium mt-2 hover:underline">View Issue Details →</button>
+                                        <div class="text-sm text-red-700 mt-1">An issue request was automatically
+                                            created for the missing items. View issue #ISS-2024-0547</div>
+                                        <button class="text-sm text-red-800 font-medium mt-2 hover:underline">View Issue
+                                            Details →</button>
                                     </div>
                                 </div>
                             </div>
@@ -1503,9 +1663,11 @@ Links to: IssueRequest record">
             <div class="flex justify-between items-center mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">Photo Rules</h1>
-                    <p class="text-sm text-gray-500 mt-1">Configure photo capture requirements for surveys and installations</p>
+                    <p class="text-sm text-gray-500 mt-1">Configure photo capture requirements for surveys and
+                        installations</p>
                 </div>
-                <button class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
+                <button
+                    class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
                     data-tooltip="CREATE PHOTO RULE
 Action: Create new PhotoRule
 Data: name, min/max photos, requirements
@@ -1530,7 +1692,8 @@ Used in: 8 campaigns">
                                 <div class="font-medium text-gray-900">Window Display Standard</div>
                                 <div class="text-sm text-gray-500 mt-1">For window poster installations</div>
                             </div>
-                            <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
+                            <span
+                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
                         </div>
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
@@ -1553,8 +1716,10 @@ Used in: 8 campaigns">
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                             <span class="text-xs text-gray-400">Used in 8 campaigns</span>
                             <div class="flex gap-2">
-                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                        class="w-4 h-4"></i></button>
+                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                        class="w-4 h-4"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1574,7 +1739,8 @@ Used in: 5 campaigns">
                                 <div class="font-medium text-gray-900">Cooler Door Verification</div>
                                 <div class="text-sm text-gray-500 mt-1">For cooler and freezer displays</div>
                             </div>
-                            <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
+                            <span
+                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
                         </div>
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
@@ -1597,8 +1763,10 @@ Used in: 5 campaigns">
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                             <span class="text-xs text-gray-400">Used in 5 campaigns</span>
                             <div class="flex gap-2">
-                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                        class="w-4 h-4"></i></button>
+                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                        class="w-4 h-4"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1618,7 +1786,8 @@ Use: Receipt survey damage documentation">
                                 <div class="font-medium text-gray-900">Package Damage Evidence</div>
                                 <div class="text-sm text-gray-500 mt-1">For documenting shipping damage</div>
                             </div>
-                            <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
+                            <span
+                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
                         </div>
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
@@ -1641,8 +1810,10 @@ Use: Receipt survey damage documentation">
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                             <span class="text-xs text-gray-400">Used in 12 campaigns</span>
                             <div class="flex gap-2">
-                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit" class="w-4 h-4"></i></button>
-                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                        class="w-4 h-4"></i></button>
+                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                        class="w-4 h-4"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1664,7 +1835,7 @@ Use: Assign to surveys/items">
 
     <!-- Initialize Lucide icons -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             lucide.createIcons();
         });
     </script>

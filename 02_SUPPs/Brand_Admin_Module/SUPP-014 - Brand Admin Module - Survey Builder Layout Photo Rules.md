@@ -14,6 +14,10 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
   Repeatable sections (v1)             YES --- repeatable blocks (e.g., Cooler #1..#N, Door #1..#N)
 
   Location slots architecture          Store Layout section (separate) referenced by surveys
+  
+  Layout Hierarchy                     **Base Map** (Physical Truth) vs. **Campaign Layers** (Operational Tasks)
+
+  Campaign-to-Layout Binding           Campaigns reference specific Location IDs to generate orders and compliance tasks
 
   Photo rules granularity              Both: campaign-wide defaults + per-item/per-location overrides
 
@@ -21,6 +25,19 @@ Revision note: This SUPP is a full replacement. It incorporates overlapping mate
 
   Survey response edits                Store user + Regional/Brand admins can edit on behalf of store (audit required)
   ----------------------------------------------------------------------------------------------------------------------
+
+# 0) The Layout-Driven Workflow
+The system treats the **Store Layout** as a static, physical "Canvas" and **Campaign Surveys** as recurring "Operational Layers".
+
+```mermaid
+graph TD
+    A[Brand: Selects Store Locations] --> B[System: Generates Kit Order]
+    B --> C[Store Portal: Receipt Survey]
+    C -- Damage/Missing --> D[Exception Survey: Split Order]
+    C -- Success --> E[Installation Survey: Click Hotspot > Take Photo]
+    E --> F[Brand Portal: Review & Accept]
+    F --> G[Visual Truth Map: Compliance Green]
+```
 
 # 1) Conceptual Data Model
 

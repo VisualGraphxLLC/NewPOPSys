@@ -47,7 +47,9 @@ Revision History (master document):
 
   v1.36                   2025-12-20              Production readiness review; SUPP versions aligned to current; file references updated to Markdown format.
 
-  v1.37                   2025-12-20              Fixed encoding issues; updated SUPP versions to current; replaced empty embeddings with file links; added missing SUPPs (038, 039).
+  v1.37                   2025-12-20              Fixed encoding issues; updated SUPP-versions to current; replaced empty embeddings with file links; added missing SUPPs (038, 039).
+
+  v1.38                   2025-12-31              Refined campaign lifecycle with Layout-Driven Automation; incorporated "Base Map vs Campaign Layers" and "Split Order" exception logic.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Document Metadata:

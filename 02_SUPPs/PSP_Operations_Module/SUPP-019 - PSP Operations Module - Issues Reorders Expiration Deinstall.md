@@ -24,19 +24,22 @@ Stores can report issues during **Receipt Survey** or **Install Survey**.
 
 ---
 
-## 2. Automated Reorder Workflow
+## 2. Automated Reorder Workflow (Split Logic)
 
-1.  **Submission**: Store submits `IssueRequest`.
-2.  **Approval** (Policy Check):
+1.  **Submission**: Store submits `IssueRequest` during Receipt Survey.
+2.  **Split Logic**: 
+    - **Original Order**: Correctly received items are marked `READY` and immediately unlock their corresponding **Installation Tasks** on the Layout Map.
+    - **Supplemental Order**: Missing/damaged items are moved to a new `StoreOrder` (type=SUPPLEMENTAL) within the same campaign.
+3.  **Approval** (Policy Check):
     - *Auto-Approve*: If < $X value and first request for store.
     - *Manual Review*: If > threshold or repeat offense (Route to PSP Ops).
-3.  **Generation**:
-    - On Approval, system creates `StoreOrder` (`type=REORDER`).
+4.  **Generation**:
+    - On Approval, the `SUPPLEMENTAL` order is finalized.
     - Links to original `assignmentId` and `issueRequestId`.
-    - Contains only the affected line items.
-4.  **Fulfillment**:
+5.  **Fulfillment**:
     - Pushed to PSP via API (SUPP-016).
-    - Tracking number sent to store (distinct from original).
+    - Tracking number sent to store.
+    - Upon delivery, these items unlock their remaining **Installation Tasks** on the Layout Map.
 
 ---
 

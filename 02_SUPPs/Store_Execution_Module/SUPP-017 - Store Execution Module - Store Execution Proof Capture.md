@@ -12,15 +12,18 @@ Define the mobile-first execution workflow for stores: The "Two-Stage" Survey Mo
 
 ---
 
-## 1. Mobile Journey Overview
+## 1. Mobile Journey Overview: Canvas & Layers
+
+The store user interacts with the **Static Layout Canvas** via recurring **Campaign Surveys**.
 
 1.  **Notification**: "New Campaign: Spring Promo. Shipment arriving soon."
 2.  **Stage 1: Receipt Survey** (Logistics)
     - Triggered when shipment is In Transit/Delivered.
     - Goal: Confirm inventory before install day.
+    - **Unlocking Logic**: Successfully receiving an item immediately unlocks its corresponding **Installation Task** on the Layout Map.
 3.  **Stage 2: Install Survey** (Execution)
     - Triggered on Campaign Start.
-    - Goal: Prove correct installation via photos.
+    - Goal: Prove correct installation via photos at specific **Location IDs**.
 4.  **Completion**: Attestation & Submit.
 
 ---
