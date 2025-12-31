@@ -18,30 +18,35 @@
             --accent: #f59e0b;
             --text-on-primary: #ffffff;
         }
+
         [data-theme="shelfsync"] {
             --primary: #00ABB9;
             --primary-light: #14b8a6;
             --primary-dark: #012D3A;
             --accent: #FCD732;
         }
+
         [data-theme="merchpulse"] {
             --primary: #7C3AED;
             --primary-light: #8b5cf6;
             --primary-dark: #5B21B6;
             --accent: #F59E0B;
         }
+
         [data-theme="fieldforge"] {
             --primary: #3B82F6;
             --primary-light: #60a5fa;
             --primary-dark: #1E40AF;
             --accent: #10B981;
         }
+
         [data-theme="nexova"] {
             --primary: #06B6D4;
             --primary-light: #22D3EE;
             --primary-dark: #0F172A;
             --accent: #06B6D4;
         }
+
         [data-theme="prism"] {
             --primary: #14B8A6;
             --primary-light: #2DD4BF;
@@ -50,26 +55,61 @@
         }
 
         /* Apply theme colors - Primary */
-        .bg-teal-600, .bg-teal-700, .bg-teal-800 { background-color: var(--primary) !important; }
-        .hover\:bg-teal-700:hover { background-color: var(--primary-dark) !important; }
-        .text-teal-600, .text-teal-700 { color: var(--primary) !important; }
-        .border-teal-600 { border-color: var(--primary) !important; }
-        .bg-teal-100, .bg-teal-50 { background-color: color-mix(in srgb, var(--primary) 15%, white) !important; }
+        .bg-teal-600,
+        .bg-teal-700,
+        .bg-teal-800 {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-teal-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .text-teal-600,
+        .text-teal-700 {
+            color: var(--primary) !important;
+        }
+
+        .border-teal-600 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-teal-100,
+        .bg-teal-50 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
         /* Accent colors */
-        .bg-amber-500, .bg-orange-500 { background-color: var(--accent) !important; }
-        .bg-blue-600 { background-color: var(--primary-light) !important; }
-        .bg-green-600, .bg-green-500 { background-color: var(--accent) !important; }
-        .text-amber-600, .text-orange-600 { color: var(--accent) !important; }
+        .bg-amber-500,
+        .bg-orange-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .bg-green-600,
+        .bg-green-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .text-amber-600,
+        .text-orange-600 {
+            color: var(--accent) !important;
+        }
 
         /* Tooltip Styles - Only active when body has .tooltips-enabled */
         .tooltips-enabled [data-tooltip] {
             position: relative;
             cursor: help;
         }
+
         .tooltips-enabled .has-tooltip {
             outline: 2px dashed #14b8a6;
             outline-offset: 2px;
         }
+
         .tooltip-help-banner {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
@@ -81,9 +121,10 @@
             align-items: center;
             gap: 16px;
         }
+
         .tooltip-toggle {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
             padding: 4px 12px;
             border-radius: 4px;
@@ -91,9 +132,11 @@
             font-size: 12px;
             font-weight: 600;
         }
+
         .tooltip-toggle:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
+
         .tooltip-toggle.active {
             background: white;
             color: #0d9488;
@@ -101,11 +144,11 @@
     </style>
     <script>
         // Tooltip positioning and toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Toggle functionality
             const toggle = document.getElementById('tooltip-toggle');
             if (toggle) {
-                toggle.addEventListener('click', function() {
+                toggle.addEventListener('click', function () {
                     document.body.classList.toggle('tooltips-enabled');
                     this.classList.toggle('active');
                     this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
@@ -114,7 +157,7 @@
 
             // Dynamic tooltip positioning
             document.querySelectorAll('[data-tooltip]').forEach(el => {
-                el.addEventListener('mouseenter', function(e) {
+                el.addEventListener('mouseenter', function (e) {
                     if (!document.body.classList.contains('tooltips-enabled')) return;
 
                     // Remove any existing tooltip
@@ -163,7 +206,7 @@
                     tooltip.style.left = left + 'px';
                 });
 
-                el.addEventListener('mouseleave', function() {
+                el.addEventListener('mouseleave', function () {
                     const tooltip = document.querySelector('.dynamic-tooltip');
                     if (tooltip) tooltip.remove();
                 });
@@ -176,11 +219,16 @@
 
     <!-- Tooltip Help Banner -->
     <div class="tooltip-help-banner">
-        <a href="index.html" style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <a href="index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
             Index
         </a>
-        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
     </div>
 
@@ -205,11 +253,18 @@
                 class="nav-link hover:text-teal-600 h-16 flex items-center">Photos</a>
             <a href="#" id="link-team" onclick="nav('view-team')"
                 class="nav-link hover:text-teal-600 h-16 flex items-center">Team</a>
+            <a href="#" id="link-surveys" onclick="nav('view-surveys')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Surveys</a>
+            <a href="#" id="link-layout" onclick="nav('view-layout')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Store Layout</a>
             <a href="#" id="link-reports" onclick="nav('view-reports')"
                 class="nav-link hover:text-teal-600 h-16 flex items-center">Reports</a>
-            <div class="relative has-tooltip" data-tooltip="🔔 NOTIFICATIONS\n📊 Data: COUNT(Notification WHERE readStatus=false AND User.id)\n⬅️ Depends: PhotoReview.status=REJECTED, RetakeRequest created\n➡️ Blocks: User awareness of retake requests">
+            <div class="relative has-tooltip"
+                data-tooltip="🔔 NOTIFICATIONS\n📊 Data: COUNT(Notification WHERE readStatus=false AND User.id)\n⬅️ Depends: PhotoReview.status=REJECTED, RetakeRequest created\n➡️ Blocks: User awareness of retake requests">
                 <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
-                <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">2</div>
+                <div
+                    class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                    2</div>
             </div>
         </div>
     </nav>
@@ -221,7 +276,8 @@
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-2xl font-bold text-gray-900">Store Dashboard</h1>
                 <div class="flex gap-2">
-                    <button class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
+                    <button
+                        class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
                         data-tooltip="📱 MOBILE APP LINK\n📊 Data: User.id, Store.id for deep link context\n⬅️ Depends: Mobile app installation on device\n➡️ Blocks: PhotoUpload, CompletionSubmission, ReceiveVerification">
                         <i data-lucide="smartphone" class="w-4 h-4"></i> Open Mobile App
                     </button>
@@ -260,7 +316,8 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                        data-tooltip="📋 ACTIVE CAMPAIGNS LIST\n📊 Data: StoreAssignment JOIN Campaign WHERE status NOT IN (COMPLETE) AND Store.id\n⬅️ Depends: Campaign published, Store in SelectionRecipe\n➡️ Blocks: Store execution workflow visibility">Active Campaigns</div>
+                        data-tooltip="📋 ACTIVE CAMPAIGNS LIST\n📊 Data: StoreAssignment JOIN Campaign WHERE status NOT IN (COMPLETE) AND Store.id\n⬅️ Depends: Campaign published, Store in SelectionRecipe\n➡️ Blocks: Store execution workflow visibility">
+                        Active Campaigns</div>
                     <div class="divide-y divide-gray-100">
                         <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-campaigns')"
                             data-tooltip="🎯 CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.endDate, COUNT(PhotoUpload)\n⬅️ Depends: Store assigned to campaign\n➡️ Blocks: PhotoUpload submission, campaign completion">
@@ -268,9 +325,11 @@
                                 <div>
                                     <div class="font-medium text-gray-900">Summer Promo 2025</div>
                                     <div class="text-sm text-red-600 mt-1 has-tooltip"
-                                        data-tooltip="🔴 PHOTO RETAKE ALERT\n📊 Data: PhotoReview.status=REJECTED, RetakeRequest.reason, LocationSlot.name\n⬅️ Depends: PhotoReview by PSP/Brand admin\n➡️ Blocks: StoreAssignment.status=COMPLETE until new PhotoUpload">⚠️ 1 photo needs retake</div>
+                                        data-tooltip="🔴 PHOTO RETAKE ALERT\n📊 Data: PhotoReview.status=REJECTED, RetakeRequest.reason, LocationSlot.name\n⬅️ Depends: PhotoReview by PSP/Brand admin\n➡️ Blocks: StoreAssignment.status=COMPLETE until new PhotoUpload">
+                                        ⚠️ 1 photo needs retake</div>
                                 </div>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="📊 INSTALLING STATUS\n📊 Data: StoreAssignment.executionStatus=IN_PROGRESS\n⬅️ Depends: ReceiveVerification completed\n➡️ Blocks: CompletionSubmission, PhotoUpload uploads">Installing</span>
                             </div>
                             <div class="flex items-center gap-4">
@@ -282,9 +341,11 @@
                                 </div>
                                 <span class="text-sm text-gray-500">80%</span>
                                 <span class="text-sm text-gray-400 has-tooltip"
-                                    data-tooltip="⏰ DUE DATE\n📊 Data: Campaign.endDate, DATEDIFF(Campaign.endDate, NOW())\n⬅️ Depends: Campaign.endDate set by brand\n➡️ Blocks: On-time completion tracking">Due: 5 days</span>
+                                    data-tooltip="⏰ DUE DATE\n📊 Data: Campaign.endDate, DATEDIFF(Campaign.endDate, NOW())\n⬅️ Depends: Campaign.endDate set by brand\n➡️ Blocks: On-time completion tracking">Due:
+                                    5 days</span>
                                 <button class="text-teal-600 font-medium text-sm has-tooltip"
-                                    data-tooltip="▶️ CONTINUE ACTION\n📊 Data: StoreAssignment.id, Campaign.id for deep link\n⬅️ Depends: Mobile app installed\n➡️ Blocks: PhotoUpload, CompletionSubmission actions">Continue →</button>
+                                    data-tooltip="▶️ CONTINUE ACTION\n📊 Data: StoreAssignment.id, Campaign.id for deep link\n⬅️ Depends: Mobile app installed\n➡️ Blocks: PhotoUpload, CompletionSubmission actions">Continue
+                                    →</button>
                             </div>
                         </div>
                         <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-campaigns')"
@@ -293,9 +354,11 @@
                                 <div>
                                     <div class="font-medium text-gray-900">Holiday Display</div>
                                     <div class="text-sm text-green-600 mt-1 has-tooltip"
-                                        data-tooltip="📦 DELIVERY NOTIFICATION\n📊 Data: Shipment.status=DELIVERED, ShipmentTracking.deliveredAt\n⬅️ Depends: Carrier webhook, StoreOrder fulfilled\n➡️ Blocks: ReceiveVerification becomes available">📦 Shipment delivered</div>
+                                        data-tooltip="📦 DELIVERY NOTIFICATION\n📊 Data: Shipment.status=DELIVERED, ShipmentTracking.deliveredAt\n⬅️ Depends: Carrier webhook, StoreOrder fulfilled\n➡️ Blocks: ReceiveVerification becomes available">
+                                        📦 Shipment delivered</div>
                                 </div>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="📊 RECEIVING STATUS\n📊 Data: StoreAssignment.executionStatus (state machine phase)\n⬅️ Depends: Shipment.status=DELIVERED\n➡️ Blocks: ReceiveVerification required before IN_PROGRESS">Receiving</span>
                             </div>
                             <div class="flex items-center gap-4">
@@ -307,7 +370,8 @@
                                 <span class="text-sm text-gray-500">20%</span>
                                 <span class="text-sm text-gray-400">Due: 12 days</span>
                                 <button class="text-teal-600 font-medium text-sm has-tooltip"
-                                    data-tooltip="▶️ START RECEIPT SURVEY\n📊 Data: StoreAssignment.id, KitDefinition items for checklist\n⬅️ Depends: Shipment.status=DELIVERED\n➡️ Blocks: ReceiveVerification creation, IssueReport if needed">Start →</button>
+                                    data-tooltip="▶️ START RECEIPT SURVEY\n📊 Data: StoreAssignment.id, KitDefinition items for checklist\n⬅️ Depends: Shipment.status=DELIVERED\n➡️ Blocks: ReceiveVerification creation, IssueReport if needed">Start
+                                    →</button>
                             </div>
                         </div>
                         <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-campaigns')"
@@ -316,9 +380,11 @@
                                 <div>
                                     <div class="font-medium text-gray-900">Back to School</div>
                                     <div class="text-sm text-gray-500 mt-1 has-tooltip"
-                                        data-tooltip="🚚 IN TRANSIT STATUS\n📊 Data: Shipment.status=IN_TRANSIT, ShipmentTracking.lastUpdate\n⬅️ Depends: Carrier API webhooks\n➡️ Blocks: Awaiting Shipment.status=DELIVERED">🚚 Shipment in transit</div>
+                                        data-tooltip="🚚 IN TRANSIT STATUS\n📊 Data: Shipment.status=IN_TRANSIT, ShipmentTracking.lastUpdate\n⬅️ Depends: Carrier API webhooks\n➡️ Blocks: Awaiting Shipment.status=DELIVERED">
+                                        🚚 Shipment in transit</div>
                                 </div>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="📊 AWAITING STATUS\n📊 Data: StoreAssignment.executionStatus (awaiting shipment)\n⬅️ Depends: StoreOrder.pspAcknowledgedAt confirmed\n➡️ Blocks: No action until Shipment.status=DELIVERED">Awaiting</span>
                             </div>
                             <div class="flex items-center gap-4">
@@ -342,7 +408,8 @@
                         <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 flex justify-between has-tooltip"
                             data-tooltip="📝 PENDING ACTIONS\n📊 Data: COUNT(RetakeRequest) + COUNT(Shipment WHERE status=DELIVERED AND no ReceiveVerification) + COUNT(LocationSlot WHERE PhotoUpload IS NULL)\n⬅️ Depends: PhotoReview, Shipment, StoreAssignment states\n➡️ Blocks: StoreAssignment.status=COMPLETE">
                             Pending Actions
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">5</span>
+                            <span
+                                class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">5</span>
                         </div>
                         <div class="p-4 space-y-3">
                             <div class="flex items-center gap-3 p-2 bg-red-50 rounded-lg has-tooltip"
@@ -378,13 +445,15 @@
                         </div>
                         <div class="px-6 py-3 border-t border-gray-100">
                             <button class="text-teal-600 text-sm font-medium has-tooltip"
-                                data-tooltip="📋 VIEW ALL TASKS\n📊 Data: All RetakeRequest, pending LocationSlot, unverified Shipment\n⬅️ Depends: Active StoreAssignments\n➡️ Blocks: Comprehensive task list view">View All Tasks →</button>
+                                data-tooltip="📋 VIEW ALL TASKS\n📊 Data: All RetakeRequest, pending LocationSlot, unverified Shipment\n⬅️ Depends: Active StoreAssignments\n➡️ Blocks: Comprehensive task list view">View
+                                All Tasks →</button>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                            data-tooltip="📜 RECENT ACTIVITY FEED\n📊 Data: AuditEvent WHERE Store.id ORDER BY createdAt DESC LIMIT 10\n⬅️ Depends: PhotoUpload, ReceiveVerification, Shipment events\n➡️ Blocks: Activity visibility and audit trail">Recent Activity</div>
+                            data-tooltip="📜 RECENT ACTIVITY FEED\n📊 Data: AuditEvent WHERE Store.id ORDER BY createdAt DESC LIMIT 10\n⬅️ Depends: PhotoUpload, ReceiveVerification, Shipment events\n➡️ Blocks: Activity visibility and audit trail">
+                            Recent Activity</div>
                         <div class="p-4 space-y-4">
                             <div class="flex gap-3 has-tooltip"
                                 data-tooltip="✅ PHOTO APPROVED EVENT\n📊 Data: AuditEvent.action=PHOTO_APPROVED, PhotoUpload.id, LocationSlot.name, User.actorType\n⬅️ Depends: PhotoReview.status=APPROVED decision\n➡️ Blocks: LocationSlot completion, progress tracking">
@@ -418,32 +487,47 @@
             <!-- Team Status (Manager Only) -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="👥 TEAM STATUS (Manager Only)\n📊 Data: User JOIN Membership WHERE Store.id AND Role.permissions\n⬅️ Depends: User authentication, Membership.role=MANAGER\n➡️ Blocks: Team activity metrics, photo attribution">Team Status</div>
+                    data-tooltip="👥 TEAM STATUS (Manager Only)\n📊 Data: User JOIN Membership WHERE Store.id AND Role.permissions\n⬅️ Depends: User authentication, Membership.role=MANAGER\n➡️ Blocks: Team activity metrics, photo attribution">
+                    Team Status</div>
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="👤 TEAM MEMBER\n📊 Data: User.name\n⬅️ Depends: User registration\n➡️ Blocks: Activity attribution">Team Member</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="🔑 USER ROLE\n📊 Data: Membership.role (MANAGER or USER)\n⬅️ Depends: Role assignment\n➡️ Blocks: Permission grants">Role</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="⏰ LAST ACTIVITY\n📊 Data: User.lastActivityAt\n⬅️ Depends: User actions logged\n➡️ Blocks: Activity monitoring">Last Active</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="📷 PHOTOS UPLOADED\n📊 Data: COUNT(PhotoUpload WHERE uploadedBy=User.id AND createdAt >= 30_DAYS_AGO)\n⬅️ Depends: PhotoUpload.uploadedBy\n➡️ Blocks: Contribution metrics">Photos (30d)</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="👤 TEAM MEMBER\n📊 Data: User.name\n⬅️ Depends: User registration\n➡️ Blocks: Activity attribution">
+                                Team Member</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="🔑 USER ROLE\n📊 Data: Membership.role (MANAGER or USER)\n⬅️ Depends: Role assignment\n➡️ Blocks: Permission grants">
+                                Role</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="⏰ LAST ACTIVITY\n📊 Data: User.lastActivityAt\n⬅️ Depends: User actions logged\n➡️ Blocks: Activity monitoring">
+                                Last Active</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📷 PHOTOS UPLOADED\n📊 Data: COUNT(PhotoUpload WHERE uploadedBy=User.id AND createdAt >= 30_DAYS_AGO)\n⬅️ Depends: PhotoUpload.uploadedBy\n➡️ Blocks: Contribution metrics">
+                                Photos (30d)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">Jane Smith (You)</td>
-                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Manager</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Manager</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Now</td>
                             <td class="px-6 py-4">12</td>
                         </tr>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">John Doe</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Yesterday</td>
                             <td class="px-6 py-4">24</td>
                         </tr>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">Mike Johnson</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Dec 12</td>
                             <td class="px-6 py-4">8</td>
                         </tr>
@@ -456,7 +540,8 @@
         <div id="view-campaigns" class="view hidden">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Campaign History</h1>
-                <button class="bg-white border text-gray-600 px-3 py-2 rounded text-sm flex items-center gap-2 has-tooltip"
+                <button
+                    class="bg-white border text-gray-600 px-3 py-2 rounded text-sm flex items-center gap-2 has-tooltip"
                     data-tooltip="📥 EXPORT CAMPAIGNS\n📊 Data: StoreAssignment, Campaign, PhotoUpload counts, completion metrics\n⬅️ Depends: Active filter selections\n➡️ Blocks: Download CSV/XLSX/PDF report">
                     <i data-lucide="download" class="w-4 h-4"></i> Export
                 </button>
@@ -465,9 +550,11 @@
             <!-- Status Tabs -->
             <div class="flex gap-4 mb-6">
                 <button class="px-4 py-2 bg-teal-100 text-teal-800 rounded-lg font-medium text-sm has-tooltip"
-                    data-tooltip="🔵 ACTIVE FILTER\n📊 Data: COUNT(StoreAssignment WHERE executionStatus IN (IN_PROGRESS, SUBMITTED_FOR_REVIEW, REWORK_REQUESTED))\n⬅️ Depends: StoreAssignment state machine\n➡️ Blocks: Filter view to active campaigns only">Active (3)</button>
+                    data-tooltip="🔵 ACTIVE FILTER\n📊 Data: COUNT(StoreAssignment WHERE executionStatus IN (IN_PROGRESS, SUBMITTED_FOR_REVIEW, REWORK_REQUESTED))\n⬅️ Depends: StoreAssignment state machine\n➡️ Blocks: Filter view to active campaigns only">Active
+                    (3)</button>
                 <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
-                    data-tooltip="✅ COMPLETED FILTER\n📊 Data: COUNT(StoreAssignment WHERE executionStatus=COMPLETE)\n⬅️ Depends: All PhotoReview.status=APPROVED\n➡️ Blocks: Filter view to completed campaigns only">Completed (47)</button>
+                    data-tooltip="✅ COMPLETED FILTER\n📊 Data: COUNT(StoreAssignment WHERE executionStatus=COMPLETE)\n⬅️ Depends: All PhotoReview.status=APPROVED\n➡️ Blocks: Filter view to completed campaigns only">Completed
+                    (47)</button>
                 <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
                     data-tooltip="📋 ALL CAMPAIGNS\n📊 Data: COUNT(StoreAssignment) all statuses\n⬅️ Depends: StoreAssignment records exist\n➡️ Blocks: Show complete campaign history">All</button>
             </div>
@@ -477,22 +564,27 @@
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
                             <th class="px-6 py-3 w-8 has-tooltip"
-                                data-tooltip="🔽 EXPAND/COLLAPSE\n📊 Data: UI state toggle\n⬅️ Depends: Row click event\n➡️ Blocks: Extended details panel visibility"></th>
+                                data-tooltip="🔽 EXPAND/COLLAPSE\n📊 Data: UI state toggle\n⬅️ Depends: Row click event\n➡️ Blocks: Extended details panel visibility">
+                            </th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Brand admin campaign creation\n➡️ Blocks: Campaign identification">Campaign</th>
+                                data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Brand admin campaign creation\n➡️ Blocks: Campaign identification">
+                                Campaign</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📊 CAMPAIGN STATUS\n📊 Data: StoreAssignment.executionStatus (state machine)\n⬅️ Depends: Workflow progression\n➡️ Blocks: Status-based filtering and actions">Status</th>
+                                data-tooltip="📊 CAMPAIGN STATUS\n📊 Data: StoreAssignment.executionStatus (state machine)\n⬅️ Depends: Workflow progression\n➡️ Blocks: Status-based filtering and actions">
+                                Status</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📈 PROGRESS\n📊 Data: COUNT(PhotoReview WHERE status=APPROVED) / COUNT(LocationSlot)\n⬅️ Depends: PhotoUpload, PhotoReview\n➡️ Blocks: Completion percentage tracking">Progress</th>
+                                data-tooltip="📈 PROGRESS\n📊 Data: COUNT(PhotoReview WHERE status=APPROVED) / COUNT(LocationSlot)\n⬅️ Depends: PhotoUpload, PhotoReview\n➡️ Blocks: Completion percentage tracking">
+                                Progress</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📅 CAMPAIGN DATES\n📊 Data: Campaign.startDate, Campaign.endDate\n⬅️ Depends: Brand sets campaign window\n➡️ Blocks: Deadline and urgency calculations">Dates</th>
+                                data-tooltip="📅 CAMPAIGN DATES\n📊 Data: Campaign.startDate, Campaign.endDate\n⬅️ Depends: Brand sets campaign window\n➡️ Blocks: Deadline and urgency calculations">
+                                Dates</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="✅ COMPLETION INFO\n📊 Data: StoreAssignment.completedAt, Campaign.endDate comparison\n⬅️ Depends: CompletionSubmission approved\n➡️ Blocks: On-time compliance tracking">Completed</th>
+                                data-tooltip="✅ COMPLETION INFO\n📊 Data: StoreAssignment.completedAt, Campaign.endDate comparison\n⬅️ Depends: CompletionSubmission approved\n➡️ Blocks: On-time compliance tracking">
+                                Completed</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="🎯 ACTIVE CAMPAIGN ROW
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🎯 ACTIVE CAMPAIGN ROW
 ━━━━━━━━━━━━━━━━━━━━
 Campaign: Summer Promo 2025
 Status: Installing (80% complete)
@@ -500,7 +592,9 @@ Action: Click to view details
 Alerts: 1 photo retake required">
                             <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
                             <td class="px-6 py-4 font-medium text-gray-900">Summer Promo 2025</td>
-                            <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Installing</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Installing</span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     <div class="w-24 bg-gray-200 rounded-full h-2">
@@ -512,8 +606,7 @@ Alerts: 1 photo retake required">
                             <td class="px-6 py-4 text-gray-500">Jun 15 - Jul 15</td>
                             <td class="px-6 py-4 text-gray-400">-</td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="🎯 ACTIVE CAMPAIGN ROW
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🎯 ACTIVE CAMPAIGN ROW
 ━━━━━━━━━━━━━━━━━━━━
 Campaign: Holiday Display
 Status: Receiving (shipment delivered)
@@ -521,7 +614,9 @@ Action: Click to view and start receipt survey
 Next: Verify kit contents">
                             <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
                             <td class="px-6 py-4 font-medium text-gray-900">Holiday Display</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Receiving</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Receiving</span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     <div class="w-24 bg-gray-200 rounded-full h-2">
@@ -533,8 +628,7 @@ Next: Verify kit contents">
                             <td class="px-6 py-4 text-gray-500">Nov 20 - Dec 31</td>
                             <td class="px-6 py-4 text-gray-400">-</td>
                         </tr>
-                        <tr class="bg-gray-50 has-tooltip"
-                            data-tooltip="✅ COMPLETED CAMPAIGN (EXPANDED)
+                        <tr class="bg-gray-50 has-tooltip" data-tooltip="✅ COMPLETED CAMPAIGN (EXPANDED)
 ━━━━━━━━━━━━━━━━━━━━
 Campaign: Spring Sale 2025
 Status: Complete (on-time)
@@ -543,8 +637,9 @@ Click: Collapse details panel
 Details: Shown below this row">
                             <td class="px-6 py-4"><i data-lucide="chevron-down" class="w-4 h-4 text-gray-600"></i></td>
                             <td class="px-6 py-4 font-medium text-gray-900">Spring Sale 2025</td>
-                            <td class="px-6 py-4"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
-                                data-tooltip="✅ COMPLETE STATUS
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="✅ COMPLETE STATUS
 ━━━━━━━━━━━━━━━━━━━━
 Status: StoreAssignment.status = COMPLETE
 Completed: All items installed and approved
@@ -559,8 +654,7 @@ Issues: None">✓ Complete</span></td>
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-gray-500">Mar 1 - Apr 15</td>
-                            <td class="px-6 py-4 text-green-600 has-tooltip"
-                                data-tooltip="✅ ON-TIME COMPLETION
+                            <td class="px-6 py-4 text-green-600 has-tooltip" data-tooltip="✅ ON-TIME COMPLETION
 ━━━━━━━━━━━━━━━━━━━━
 Completed: Apr 5, 2025
 Deadline: Apr 15, 2025
@@ -571,8 +665,7 @@ Impact: Positive compliance contribution">Apr 5 ✓ On Time</td>
                             <td colspan="6" class="px-6 py-4">
                                 <div class="ml-6 p-4 bg-white rounded-lg border border-gray-200">
                                     <div class="grid grid-cols-4 gap-4 mb-4">
-                                        <div class="has-tooltip"
-                                            data-tooltip="✅ COMPLETION DATE
+                                        <div class="has-tooltip" data-tooltip="✅ COMPLETION DATE
 ━━━━━━━━━━━━━━━━━━━━
 Data: StoreAssignment.completed_at
 Status: On-time (10 days early)
@@ -581,8 +674,7 @@ Deadline: Apr 15, 2025">
                                             <div class="font-medium">Apr 5, 2025</div>
                                             <div class="text-xs text-green-600">On Time ✓</div>
                                         </div>
-                                        <div class="has-tooltip"
-                                            data-tooltip="📦 ITEMS INSTALLED
+                                        <div class="has-tooltip" data-tooltip="📦 ITEMS INSTALLED
 ━━━━━━━━━━━━━━━━━━━━
 Data: AssignmentItem completion count
 Calculation: completed / total
@@ -591,8 +683,7 @@ Status: 100% installed">
                                             <div class="text-xs text-gray-500">Items Installed</div>
                                             <div class="font-medium">4 of 4</div>
                                         </div>
-                                        <div class="has-tooltip"
-                                            data-tooltip="📷 PHOTO APPROVALS
+                                        <div class="has-tooltip" data-tooltip="📷 PHOTO APPROVALS
 ━━━━━━━━━━━━━━━━━━━━
 Data: PhotoUpload.review_status = APPROVED
 Count: All required photos approved
@@ -601,8 +692,7 @@ Quality: Passed quality checks">
                                             <div class="text-xs text-gray-500">Photos</div>
                                             <div class="font-medium">8 approved</div>
                                         </div>
-                                        <div class="has-tooltip"
-                                            data-tooltip="⚠️ ISSUES REPORTED
+                                        <div class="has-tooltip" data-tooltip="⚠️ ISSUES REPORTED
 ━━━━━━━━━━━━━━━━━━━━
 Data: IssueRequest count for campaign
 Types: Missing, damaged, wrong items
@@ -613,16 +703,15 @@ Count: None for this campaign">
                                         </div>
                                     </div>
                                     <div class="flex gap-2">
-                                        <button onclick="nav('view-photos')" class="text-teal-600 text-sm font-medium has-tooltip"
-                                            data-tooltip="📷 VIEW PHOTOS
+                                        <button onclick="nav('view-photos')"
+                                            class="text-teal-600 text-sm font-medium has-tooltip" data-tooltip="📷 VIEW PHOTOS
 ━━━━━━━━━━━━━━━━━━━━
 Action: Navigate to photo gallery
 Filter: Pre-filtered to this campaign
 Shows: All approved install photos
 Click: View photo details">View Photos →</button>
                                         <span class="text-gray-300">|</span>
-                                        <button class="text-teal-600 text-sm font-medium has-tooltip"
-                                            data-tooltip="📋 VIEW DETAILS
+                                        <button class="text-teal-600 text-sm font-medium has-tooltip" data-tooltip="📋 VIEW DETAILS
 ━━━━━━━━━━━━━━━━━━━━
 Action: Show campaign detail view
 Data: Full assignment breakdown
@@ -635,7 +724,9 @@ Export: Available from detail view">View Details →</button>
                         <tr class="hover:bg-gray-50 cursor-pointer">
                             <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
                             <td class="px-6 py-4 font-medium text-gray-900">Winter Promo 2024</td>
-                            <td class="px-6 py-4"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">✓ Complete</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">✓
+                                    Complete</span></td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     <div class="w-24 bg-gray-200 rounded-full h-2">
@@ -658,9 +749,11 @@ Export: Available from detail view">View Details →</button>
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">Photo Gallery</h1>
                     <div class="text-sm text-gray-500 mt-1 has-tooltip"
-                        data-tooltip="📊 PHOTO STATUS SUMMARY\n📊 Data: COUNT(PhotoReview) by status (APPROVED, PENDING, REJECTED) WHERE Store.id\n⬅️ Depends: PhotoUpload, PhotoReview records\n➡️ Blocks: Photo quality metrics visibility">Approved: 45 | Pending: 3 | Rejected: 2</div>
+                        data-tooltip="📊 PHOTO STATUS SUMMARY\n📊 Data: COUNT(PhotoReview) by status (APPROVED, PENDING, REJECTED) WHERE Store.id\n⬅️ Depends: PhotoUpload, PhotoReview records\n➡️ Blocks: Photo quality metrics visibility">
+                        Approved: 45 | Pending: 3 | Rejected: 2</div>
                 </div>
-                <button class="bg-white border text-gray-600 px-3 py-2 rounded text-sm flex items-center gap-2 has-tooltip"
+                <button
+                    class="bg-white border text-gray-600 px-3 py-2 rounded text-sm flex items-center gap-2 has-tooltip"
                     data-tooltip="📥 DOWNLOAD ALL PHOTOS\n📊 Data: PhotoUpload.mediaUrl (respecting filters)\n⬅️ Depends: PhotoUpload records, S3 media storage\n➡️ Blocks: ZIP download of photo files">
                     <i data-lucide="download" class="w-4 h-4"></i> Download All
                 </button>
@@ -689,8 +782,10 @@ Export: Available from detail view">View Details →</button>
                 </select>
                 <div class="flex border border-gray-200 rounded-lg overflow-hidden has-tooltip"
                     data-tooltip="👁️ VIEW MODE TOGGLE\n📊 Data: User preference state (grid/list)\n⬅️ Depends: User selection\n➡️ Blocks: Photo display layout mode">
-                    <button class="px-3 py-2 bg-teal-100 text-teal-800"><i data-lucide="grid" class="w-4 h-4"></i></button>
-                    <button class="px-3 py-2 text-gray-500 hover:bg-gray-50"><i data-lucide="list" class="w-4 h-4"></i></button>
+                    <button class="px-3 py-2 bg-teal-100 text-teal-800"><i data-lucide="grid"
+                            class="w-4 h-4"></i></button>
+                    <button class="px-3 py-2 text-gray-500 hover:bg-gray-50"><i data-lucide="list"
+                            class="w-4 h-4"></i></button>
                 </div>
             </div>
 
@@ -727,7 +822,8 @@ Click: View full-size + details">
                         <div class="absolute inset-0 flex items-center justify-center text-gray-400">
                             <i data-lucide="image" class="w-12 h-12"></i>
                         </div>
-                        <div class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                             <i data-lucide="check" class="w-4 h-4 text-white"></i>
                         </div>
                     </div>
@@ -770,17 +866,20 @@ Click: View full-size + details">
                     <div class="p-3">
                         <div class="text-sm font-medium text-gray-900 truncate">Window Poster</div>
                         <div class="text-xs text-red-600 has-tooltip"
-                            data-tooltip="🔴 REJECTION REASON\n📊 Data: RetakeRequest.reason (enum), PhotoReview.comments\n⬅️ Depends: Admin PhotoReview decision\n➡️ Blocks: Guides store retake action">Wrong Angle</div>
+                            data-tooltip="🔴 REJECTION REASON\n📊 Data: RetakeRequest.reason (enum), PhotoReview.comments\n⬅️ Depends: Admin PhotoReview decision\n➡️ Blocks: Guides store retake action">
+                            Wrong Angle</div>
                         <div class="text-xs text-gray-400 mt-1">Jun 10 • John D.</div>
                     </div>
                 </div>
                 <!-- More photo cards -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition">
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition">
                     <div class="aspect-square bg-gray-100 relative">
                         <div class="absolute inset-0 flex items-center justify-center text-gray-400">
                             <i data-lucide="image" class="w-12 h-12"></i>
                         </div>
-                        <div class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                             <i data-lucide="check" class="w-4 h-4 text-white"></i>
                         </div>
                     </div>
@@ -790,12 +889,14 @@ Click: View full-size + details">
                         <div class="text-xs text-gray-400 mt-1">Apr 2 • Jane S.</div>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition">
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition">
                     <div class="aspect-square bg-gray-100 relative">
                         <div class="absolute inset-0 flex items-center justify-center text-gray-400">
                             <i data-lucide="image" class="w-12 h-12"></i>
                         </div>
-                        <div class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                             <i data-lucide="check" class="w-4 h-4 text-white"></i>
                         </div>
                     </div>
@@ -808,8 +909,7 @@ Click: View full-size + details">
             </div>
 
             <div class="mt-6 text-center">
-                <button class="text-teal-600 font-medium has-tooltip"
-                    data-tooltip="📄 LOAD MORE PHOTOS
+                <button class="text-teal-600 font-medium has-tooltip" data-tooltip="📄 LOAD MORE PHOTOS
 ━━━━━━━━━━━━━━━━━━━━
 Action: Paginate next batch
 Size: 24 photos per page
@@ -822,7 +922,8 @@ Performance: Lazy-loaded for speed">Load More Photos</button>
         <div id="view-team" class="view hidden">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Team Management</h1>
-                <button class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
+                <button
+                    class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
                     data-tooltip="➕ INVITE TEAM MEMBER\n📊 Data: Creates User, Membership records with Role assignment\n⬅️ Depends: Membership.role=MANAGER permission, email service\n➡️ Blocks: User registration, team member access">
                     <i data-lucide="user-plus" class="w-4 h-4"></i> Invite Member
                 </button>
@@ -831,25 +932,30 @@ Performance: Lazy-loaded for speed">Load More Photos</button>
             <!-- Active Members -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
                 <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="👥 ACTIVE TEAM MEMBERS\n📊 Data: COUNT(User JOIN Membership WHERE Store.id AND User.status=ACTIVE)\n⬅️ Depends: User invitation accepted, Membership created\n➡️ Blocks: Team roster, activity attribution">Active Members (4)</div>
+                    data-tooltip="👥 ACTIVE TEAM MEMBERS\n📊 Data: COUNT(User JOIN Membership WHERE Store.id AND User.status=ACTIVE)\n⬅️ Depends: User invitation accepted, Membership created\n➡️ Blocks: Team roster, activity attribution">
+                    Active Members (4)</div>
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="👤 USER NAME\n📊 Data: User.name\n⬅️ Depends: User registration\n➡️ Blocks: User identification in UI">Name</th>
+                                data-tooltip="👤 USER NAME\n📊 Data: User.name\n⬅️ Depends: User registration\n➡️ Blocks: User identification in UI">
+                                Name</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📧 EMAIL ADDRESS\n📊 Data: User.email (unique)\n⬅️ Depends: User registration, email verification\n➡️ Blocks: Login authentication, notifications">Email</th>
+                                data-tooltip="📧 EMAIL ADDRESS\n📊 Data: User.email (unique)\n⬅️ Depends: User registration, email verification\n➡️ Blocks: Login authentication, notifications">
+                                Email</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="🔑 USER ROLE\n📊 Data: Membership.role (MANAGER or USER)\n⬅️ Depends: Role assignment on invitation\n➡️ Blocks: Permission grants per RBAC matrix">Role</th>
+                                data-tooltip="🔑 USER ROLE\n📊 Data: Membership.role (MANAGER or USER)\n⬅️ Depends: Role assignment on invitation\n➡️ Blocks: Permission grants per RBAC matrix">
+                                Role</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⏰ LAST ACTIVITY\n📊 Data: User.lastActivityAt\n⬅️ Depends: User login and actions tracked\n➡️ Blocks: Activity monitoring, engagement tracking">Last Active</th>
+                                data-tooltip="⏰ LAST ACTIVITY\n📊 Data: User.lastActivityAt\n⬅️ Depends: User login and actions tracked\n➡️ Blocks: Activity monitoring, engagement tracking">
+                                Last Active</th>
                             <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⚙️ ACTIONS\n📊 Data: Membership update, AuditEvent logged\n⬅️ Depends: Manager role permission\n➡️ Blocks: Role changes, deactivation">Actions</th>
+                                data-tooltip="⚙️ ACTIONS\n📊 Data: Membership update, AuditEvent logged\n⬅️ Depends: Manager role permission\n➡️ Blocks: Role changes, deactivation">
+                                Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 has-tooltip"
-                            data-tooltip="👤 CURRENT USER (MANAGER)
+                        <tr class="hover:bg-gray-50 has-tooltip" data-tooltip="👤 CURRENT USER (MANAGER)
 ━━━━━━━━━━━━━━━━━━━━
 User: You (logged in user)
 Role: Manager
@@ -857,8 +963,9 @@ Permissions: Full store access
 Cannot: Edit own account from this view">
                             <td class="px-6 py-4 font-medium text-gray-900">Jane Smith (You)</td>
                             <td class="px-6 py-4 text-gray-500">jane@store.com</td>
-                            <td class="px-6 py-4"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
-                                data-tooltip="👑 MANAGER ROLE
+                            <td class="px-6 py-4"><span
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="👑 MANAGER ROLE
 ━━━━━━━━━━━━━━━━━━━━
 Permissions: Full store access
 Can: Invite members, assign roles
@@ -868,8 +975,7 @@ Limit: 1-2 managers per store">Manager</span></td>
                             <td class="px-6 py-4 text-gray-500">Now</td>
                             <td class="px-6 py-4 text-gray-400">-</td>
                         </tr>
-                        <tr class="hover:bg-gray-50 has-tooltip"
-                            data-tooltip="👤 TEAM MEMBER
+                        <tr class="hover:bg-gray-50 has-tooltip" data-tooltip="👤 TEAM MEMBER
 ━━━━━━━━━━━━━━━━━━━━
 User: John Doe
 Role: User (standard permissions)
@@ -877,8 +983,9 @@ Activity: Last active yesterday
 Action: Click Edit to modify role/status">
                             <td class="px-6 py-4 font-medium text-gray-900">John Doe</td>
                             <td class="px-6 py-4 text-gray-500">john@store.com</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
-                                data-tooltip="👤 USER ROLE
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="👤 USER ROLE
 ━━━━━━━━━━━━━━━━━━━━
 Permissions: Photo capture + view
 Can: Upload photos via mobile app
@@ -886,8 +993,7 @@ Can: Complete receipt surveys
 Cannot: Invite members, view reports
 Default: Role for store staff">User</span></td>
                             <td class="px-6 py-4 text-gray-500">Yesterday</td>
-                            <td class="px-6 py-4"><button class="text-teal-600 font-medium has-tooltip"
-                                data-tooltip="✏️ EDIT USER
+                            <td class="px-6 py-4"><button class="text-teal-600 font-medium has-tooltip" data-tooltip="✏️ EDIT USER
 ━━━━━━━━━━━━━━━━━━━━
 Action: Modify user settings
 Options: Change role, deactivate
@@ -897,14 +1003,18 @@ Audit: Change logged to AuditEvent">Edit</button></td>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">Mike Johnson</td>
                             <td class="px-6 py-4 text-gray-500">mike@store.com</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Dec 12</td>
                             <td class="px-6 py-4"><button class="text-teal-600 font-medium">Edit</button></td>
                         </tr>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">Sarah Wilson</td>
                             <td class="px-6 py-4 text-gray-500">sarah@store.com</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Dec 10</td>
                             <td class="px-6 py-4"><button class="text-teal-600 font-medium">Edit</button></td>
                         </tr>
@@ -914,8 +1024,7 @@ Audit: Change logged to AuditEvent">Edit</button></td>
 
             <!-- Pending Invitations -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="📨 PENDING INVITATIONS
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📨 PENDING INVITATIONS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Sent but not accepted invites
 Data: Invitation WHERE status = PENDING
@@ -924,34 +1033,29 @@ Action: Resend or cancel invitation">Pending Invitations (1)</div>
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📧 INVITED EMAIL
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📧 INVITED EMAIL
 ━━━━━━━━━━━━━━━━━━━━
 Data: Invitation.email
 Status: Email sent, awaiting acceptance
 Link: Unique invitation token sent">Email</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="🔑 INVITED ROLE
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🔑 INVITED ROLE
 ━━━━━━━━━━━━━━━━━━━━
 Data: Invitation.role
 Assigned: Upon acceptance
 Manager: Requires approval
 User: Auto-approved">Role</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📅 INVITATION SENT
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📅 INVITATION SENT
 ━━━━━━━━━━━━━━━━━━━━
 Data: Invitation.created_at
 Sent: Invitation email dispatched
 Tracking: Email delivery confirmed">Invited</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⏰ EXPIRATION DATE
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⏰ EXPIRATION DATE
 ━━━━━━━━━━━━━━━━━━━━
 Data: Invitation.expires_at
 Duration: 7 days from sent
 Auto: Cleanup on expiry
 Resend: Extends expiry">Expires</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⚙️ INVITATION ACTIONS
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚙️ INVITATION ACTIONS
 ━━━━━━━━━━━━━━━━━━━━
 Resend: Send new invitation email
 Cancel: Invalidate invitation link
@@ -959,8 +1063,7 @@ Access: Manager only">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 has-tooltip"
-                            data-tooltip="📨 PENDING INVITATION
+                        <tr class="hover:bg-gray-50 has-tooltip" data-tooltip="📨 PENDING INVITATION
 ━━━━━━━━━━━━━━━━━━━━
 Email: newmember@store.com
 Role: User (upon acceptance)
@@ -968,19 +1071,19 @@ Sent: Dec 15
 Expires: Dec 22 (7 days)
 Actions: Resend or cancel invitation">
                             <td class="px-6 py-4 text-gray-900">newmember@store.com</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
                             <td class="px-6 py-4 text-gray-500">Dec 15</td>
                             <td class="px-6 py-4 text-gray-500">Dec 22</td>
                             <td class="px-6 py-4">
-                                <button class="text-teal-600 font-medium mr-3 has-tooltip"
-                                    data-tooltip="📧 RESEND INVITATION
+                                <button class="text-teal-600 font-medium mr-3 has-tooltip" data-tooltip="📧 RESEND INVITATION
 ━━━━━━━━━━━━━━━━━━━━
 Action: Send new invitation email
 Effect: Extends expiry by 7 days
 Use: If original email not received
 Delivery: Via SUPP-027 email service">Resend</button>
-                                <button class="text-red-600 font-medium has-tooltip"
-                                    data-tooltip="❌ CANCEL INVITATION
+                                <button class="text-red-600 font-medium has-tooltip" data-tooltip="❌ CANCEL INVITATION
 ━━━━━━━━━━━━━━━━━━━━
 Action: Invalidate invitation link
 Effect: User cannot accept
@@ -994,8 +1097,7 @@ Reversible: Can re-invite later">Cancel</button>
 
             <!-- Team Activity -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="📊 TEAM ACTIVITY METRICS
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📊 TEAM ACTIVITY METRICS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Individual contribution tracking
 Period: Last 30 days
@@ -1005,35 +1107,30 @@ Access: Manager only view">Team Activity (Last 30 Days)</div>
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="👤 TEAM MEMBER
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="👤 TEAM MEMBER
 ━━━━━━━━━━━━━━━━━━━━
 Data: User.name
 Filter: Active members only
 Period: Last 30 days activity">Member</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📷 PHOTOS UPLOADED
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📷 PHOTOS UPLOADED
 ━━━━━━━━━━━━━━━━━━━━
 Data: COUNT(PhotoUpload) by user
 Period: Last 30 days
 Includes: All statuses
 Attribution: uploaded_by field">Photos</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📦 RECEIPT SURVEYS
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📦 RECEIPT SURVEYS
 ━━━━━━━━━━━━━━━━━━━━
 Data: COUNT(ReceiveVerification) by user
 Period: Last 30 days
 Action: Receipt confirmations completed
 Stage: Stage 1 of two-stage model">Receipts</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="✅ INSTALL COMPLETIONS
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="✅ INSTALL COMPLETIONS
 ━━━━━━━━━━━━━━━━━━━━
 Data: COUNT(CompletionSubmission) by user
 Period: Last 30 days
 Action: Full campaign completions
 Stage: Stage 2 of two-stage model">Installs</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⚠️ ISSUES REPORTED
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚠️ ISSUES REPORTED
 ━━━━━━━━━━━━━━━━━━━━
 Data: COUNT(IssueReport) by user
 Period: Last 30 days
@@ -1158,7 +1255,8 @@ Period: Selected date range">Team</button>
                 <!-- Trend Chart Placeholder -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                        data-tooltip="📈 PERFORMANCE TREND CHART\n📊 Data: Time-series compliance rate from StoreAssignment metrics\n⬅️ Depends: Historical StoreAssignment.completedAt data\n➡️ Blocks: Trend visualization, period comparisons">Performance Trend</div>
+                        data-tooltip="📈 PERFORMANCE TREND CHART\n📊 Data: Time-series compliance rate from StoreAssignment metrics\n⬅️ Depends: Historical StoreAssignment.completedAt data\n➡️ Blocks: Trend visualization, period comparisons">
+                        Performance Trend</div>
                     <div class="p-6">
                         <div class="h-48 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400">
                             <div class="text-center">
@@ -1172,7 +1270,8 @@ Period: Selected date range">Team</button>
                 <!-- Rejection Reasons -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                        data-tooltip="🔴 REJECTION REASONS BREAKDOWN\n📊 Data: COUNT(RetakeRequest.reason) grouped by reason enum, percentage distribution\n⬅️ Depends: PhotoReview.status=REJECTED, RetakeRequest records\n➡️ Blocks: Quality improvement insights">Photo Rejection Reasons</div>
+                        data-tooltip="🔴 REJECTION REASONS BREAKDOWN\n📊 Data: COUNT(RetakeRequest.reason) grouped by reason enum, percentage distribution\n⬅️ Depends: PhotoReview.status=REJECTED, RetakeRequest records\n➡️ Blocks: Quality improvement insights">
+                        Photo Rejection Reasons</div>
                     <div class="p-6">
                         <div class="space-y-3">
                             <div class="flex items-center gap-3 has-tooltip"
@@ -1181,8 +1280,7 @@ Period: Selected date range">Team</button>
                                 <div class="flex-1">Wrong Angle</div>
                                 <div class="font-medium">45%</div>
                             </div>
-                            <div class="flex items-center gap-3 has-tooltip"
-                                data-tooltip="🟠 TOO DARK (30%)
+                            <div class="flex items-center gap-3 has-tooltip" data-tooltip="🟠 TOO DARK (30%)
 ━━━━━━━━━━━━━━━━━━━━
 Reason: Insufficient lighting in photo
 Impact: Second most common issue
@@ -1192,8 +1290,7 @@ Data: PhotoReview.rejection_reason = TOO_DARK">
                                 <div class="flex-1">Too Dark</div>
                                 <div class="font-medium">30%</div>
                             </div>
-                            <div class="flex items-center gap-3 has-tooltip"
-                                data-tooltip="🟡 BLURRY (15%)
+                            <div class="flex items-center gap-3 has-tooltip" data-tooltip="🟡 BLURRY (15%)
 ━━━━━━━━━━━━━━━━━━━━
 Reason: Photo out of focus
 Impact: Third most common issue
@@ -1203,8 +1300,7 @@ Data: PhotoReview.rejection_reason = BLURRY">
                                 <div class="flex-1">Blurry</div>
                                 <div class="font-medium">15%</div>
                             </div>
-                            <div class="flex items-center gap-3 has-tooltip"
-                                data-tooltip="⚪ OTHER REASONS (10%)
+                            <div class="flex items-center gap-3 has-tooltip" data-tooltip="⚪ OTHER REASONS (10%)
 ━━━━━━━━━━━━━━━━━━━━
 Reason: Miscellaneous rejection causes
 Includes: Damaged, wrong placement, etc.
@@ -1221,11 +1317,11 @@ Data: PhotoReview.rejection_reason = OTHER">
             <!-- Team Contribution -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
                 <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="👥 TEAM CONTRIBUTION CHART\n📊 Data: SUM(PhotoUpload + ReceiveVerification + CompletionSubmission) per User, percentage distribution\n⬅️ Depends: User.uploadedBy attribution on all actions\n➡️ Blocks: Team performance visibility">Team Contribution</div>
+                    data-tooltip="👥 TEAM CONTRIBUTION CHART\n📊 Data: SUM(PhotoUpload + ReceiveVerification + CompletionSubmission) per User, percentage distribution\n⬅️ Depends: User.uploadedBy attribution on all actions\n➡️ Blocks: Team performance visibility">
+                    Team Contribution</div>
                 <div class="p-6">
                     <div class="space-y-4">
-                        <div class="flex items-center gap-4 has-tooltip"
-                            data-tooltip="👤 JANE S. CONTRIBUTION (35%)
+                        <div class="flex items-center gap-4 has-tooltip" data-tooltip="👤 JANE S. CONTRIBUTION (35%)
 ━━━━━━━━━━━━━━━━━━━━
 Member: Jane S. (Manager)
 Share: 35% of team activities
@@ -1264,8 +1360,7 @@ Period: Selected date range">
 
             <!-- Recent Campaigns Table -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="📊 CAMPAIGN PERFORMANCE TABLE
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📊 CAMPAIGN PERFORMANCE TABLE
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Per-campaign summary metrics
 Data: Completed campaigns only
@@ -1275,33 +1370,28 @@ Sort: Most recent first">Campaign Performance</div>
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📋 CAMPAIGN NAME
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📋 CAMPAIGN NAME
 ━━━━━━━━━━━━━━━━━━━━
 Data: Campaign.name
 Filter: Completed campaigns
 Period: Selected date range">Campaign</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="✅ COMPLETION STATUS
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="✅ COMPLETION STATUS
 ━━━━━━━━━━━━━━━━━━━━
 Data: StoreAssignment.status = COMPLETE
 Yes: Campaign completed
 No: Incomplete or cancelled">Completed</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⏰ ON-TIME STATUS
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⏰ ON-TIME STATUS
 ━━━━━━━━━━━━━━━━━━━━
 Calculation: completed_at <= install_end_date
 Yes: Completed before deadline
 Late: Completed after deadline
 Impact: Affects compliance rate">On-Time</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="📷 PHOTO COUNT
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📷 PHOTO COUNT
 ━━━━━━━━━━━━━━━━━━━━
 Data: COUNT(PhotoUpload) for campaign
 Status: Approved photos only
 Quality: Passed admin review">Photos</th>
-                            <th class="px-6 py-3 has-tooltip"
-                                data-tooltip="⚠️ ISSUE COUNT
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚠️ ISSUE COUNT
 ━━━━━━━━━━━━━━━━━━━━
 Data: COUNT(IssueRequest) for campaign
 Types: Missing, damaged items
@@ -1343,6 +1433,151 @@ Higher: More operational challenges">Issues</th>
             </div>
         </div>
 
+        <!-- VIEW: SURVEYS (Store Level) -->
+        <div id="view-surveys" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Survey History & Workflows</h1>
+                    <p class="text-sm text-gray-500 mt-1">Review submitted surveys and complete pending workflow
+                        requirements</p>
+                </div>
+                <button
+                    class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2">
+                    <i data-lucide="plus" size="18"></i> New Exception Survey
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500 font-bold uppercase text-[10px]">
+                        <tr>
+                            <th class="px-6 py-4">Survey Type</th>
+                            <th class="px-6 py-4">Related To</th>
+                            <th class="px-6 py-4">Submitted By</th>
+                            <th class="px-6 py-4">Date</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Store Layout Survey</div>
+                                <div class="text-[10px] text-gray-400 font-mono">LTS-Q1-2025</div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600">Quarterly Reset</td>
+                            <td class="px-6 py-4 text-gray-600">Jane Smith</td>
+                            <td class="px-6 py-4 text-gray-600">Dec 15, 2025</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-[10px] font-bold">APPROVED</span>
+                            </td>
+                            <td class="px-6 py-4 text-teal-600 font-bold cursor-pointer hover:underline">View Results
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Damaged Kit Exception</div>
+                                <div class="text-[10px] text-gray-400 font-mono">EXC-88219</div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600">Holiday Display</td>
+                            <td class="px-6 py-4 text-gray-600">John Doe</td>
+                            <td class="px-6 py-4 text-gray-600">Dec 18, 2025</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-[10px] font-bold">IN
+                                    REVIEW</span></td>
+                            <td class="px-6 py-4 text-teal-600 font-bold cursor-pointer hover:underline">Track Progress
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: STORE LAYOUT VIEWER -->
+        <div id="view-layout" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Interactive Store Layout</h1>
+                    <p class="text-sm text-gray-500 mt-1">Visual map of kit placements and photo verification points</p>
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="bg-white border text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2">
+                        <i data-lucide="printer" size="18"></i> Print Map
+                    </button>
+                    <button class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700">Update
+                        Layout</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Layout Map -->
+                <div
+                    class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-200 p-8 h-[700px] relative overflow-hidden flex items-center justify-center">
+                    <!-- Mock Floor Plan SVG -->
+                    <div class="w-[600px] h-[500px] bg-gray-50 border-4 border-gray-200 rounded-3xl relative p-8">
+                        <div
+                            class="absolute top-0 left-0 w-1/4 h-1/4 border-r-4 border-b-4 border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-300 uppercase">
+                            Storage</div>
+                        <div
+                            class="absolute top-0 right-0 w-1/4 h-1/4 border-l-4 border-b-4 border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-300 uppercase">
+                            Office</div>
+                        <div
+                            class="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-8 border-t-4 border-gray-300 bg-white flex items-center justify-center text-xs font-bold uppercase">
+                            Entrance</div>
+
+                        <!-- Hotspots -->
+                        <div class="absolute top-12 left-1/4 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs cursor-pointer shadow-lg has-tooltip"
+                            data-tooltip="Window Cling (APPROVED)">1</div>
+                        <div class="absolute top-1/2 right-1/4 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs cursor-pointer shadow-lg has-tooltip"
+                            data-tooltip="End Cap (APPROVED)">2</div>
+                        <div class="absolute bottom-24 left-1/2 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs cursor-pointer animate-pulse shadow-lg has-tooltip"
+                            data-tooltip="Check-out Sign (RETAKE NEEDED)">3</div>
+                    </div>
+                </div>
+
+                <!-- Point Details (Sidebar) -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <h3 class="font-bold text-gray-900 mb-4 text-sm">Location Points</h3>
+                        <div class="space-y-3">
+                            <div class="p-3 border rounded-lg bg-teal-50 border-teal-200 flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    1</div>
+                                <div class="flex-1">
+                                    <div class="text-xs font-bold text-gray-900">Main Window</div>
+                                    <div class="text-[10px] text-teal-700 font-bold uppercase">Verified</div>
+                                </div>
+                                <i data-lucide="check-circle" size="14" class="text-teal-600"></i>
+                            </div>
+                            <div class="p-3 border rounded-lg bg-teal-50 border-teal-200 flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    2</div>
+                                <div class="flex-1">
+                                    <div class="text-xs font-bold text-gray-900">End-Cap Box</div>
+                                    <div class="text-[10px] text-teal-700 font-bold uppercase">Verified</div>
+                                </div>
+                                <i data-lucide="check-circle" size="14" class="text-teal-600"></i>
+                            </div>
+                            <div class="p-3 border rounded-lg bg-yellow-50 border-yellow-200 flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    3</div>
+                                <div class="flex-1">
+                                    <div class="text-xs font-bold text-gray-900">Side Table</div>
+                                    <div class="text-[10px] text-yellow-700 font-bold uppercase text-xs">Issue: Retake
+                                        Needed</div>
+                                </div>
+                                <i data-lucide="alert-circle" size="14" class="text-yellow-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1367,6 +1602,8 @@ Higher: More operational challenges">Issues</th>
                 'view-campaigns': 'link-campaigns',
                 'view-photos': 'link-photos',
                 'view-team': 'link-team',
+                'view-surveys': 'link-surveys',
+                'view-layout': 'link-layout',
                 'view-reports': 'link-reports'
             };
 

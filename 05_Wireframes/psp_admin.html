@@ -17,64 +17,107 @@
             --primary-dark: #ca8a04;
             --accent: #4f46e5;
         }
+
         [data-theme="shelfsync"] {
             --primary: #00ABB9;
             --primary-light: #14b8a6;
             --primary-dark: #012D3A;
             --accent: #FCD732;
         }
+
         [data-theme="merchpulse"] {
             --primary: #7C3AED;
             --primary-light: #8b5cf6;
             --primary-dark: #5B21B6;
             --accent: #F59E0B;
         }
+
         [data-theme="fieldforge"] {
             --primary: #3B82F6;
             --primary-light: #60a5fa;
             --primary-dark: #1E40AF;
             --accent: #10B981;
         }
+
         [data-theme="nexova"] {
             --primary: #06B6D4;
             --primary-light: #22D3EE;
             --primary-dark: #0F172A;
             --accent: #06B6D4;
         }
+
         [data-theme="prism"] {
             --primary: #14B8A6;
             --primary-light: #2DD4BF;
             --primary-dark: #18181B;
             --accent: #14B8A6;
         }
+
         /* Apply theme colors - Primary (header/nav) */
-        .bg-yellow-800, .bg-yellow-700, .bg-yellow-600, .bg-yellow-500 {
+        .bg-yellow-800,
+        .bg-yellow-700,
+        .bg-yellow-600,
+        .bg-yellow-500 {
             background-color: var(--primary-dark) !important;
         }
-        .hover\:bg-yellow-900:hover, .hover\:bg-yellow-700:hover {
+
+        .hover\:bg-yellow-900:hover,
+        .hover\:bg-yellow-700:hover {
             background-color: var(--primary) !important;
         }
-        .text-yellow-500, .text-yellow-400, .text-yellow-100 { color: var(--primary-light) !important; }
-        .hover\:text-yellow-100:hover { color: var(--accent) !important; }
-        .border-yellow-700, .border-yellow-600, .border-yellow-500, .border-yellow-400 {
+
+        .text-yellow-500,
+        .text-yellow-400,
+        .text-yellow-100 {
+            color: var(--primary-light) !important;
+        }
+
+        .hover\:text-yellow-100:hover {
+            color: var(--accent) !important;
+        }
+
+        .border-yellow-700,
+        .border-yellow-600,
+        .border-yellow-500,
+        .border-yellow-400 {
             border-color: var(--primary) !important;
         }
 
         /* Apply theme colors - Accent (buttons) */
-        .bg-purple-600, .bg-indigo-600 { background-color: var(--accent) !important; }
-        .hover\:bg-purple-700:hover, .hover\:bg-indigo-700:hover {
+        .bg-purple-600,
+        .bg-indigo-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-purple-700:hover,
+        .hover\:bg-indigo-700:hover {
             background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
         }
-        .bg-blue-600 { background-color: var(--primary-light) !important; }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
         .hover\:bg-blue-700:hover {
             background-color: var(--primary) !important;
         }
-        .bg-green-600 { background-color: var(--accent) !important; }
+
+        .bg-green-600 {
+            background-color: var(--accent) !important;
+        }
+
         .hover\:bg-green-700:hover {
             background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
         }
-        .text-purple-600, .text-indigo-600 { color: var(--accent) !important; }
-        .text-blue-600 { color: var(--primary-light) !important; }
+
+        .text-purple-600,
+        .text-indigo-600 {
+            color: var(--accent) !important;
+        }
+
+        .text-blue-600 {
+            color: var(--primary-light) !important;
+        }
 
         .active-nav {
             color: var(--primary-light) !important;
@@ -90,10 +133,12 @@
             position: relative;
             cursor: help;
         }
+
         .tooltips-enabled .has-tooltip {
             outline: 2px dashed #eab308;
             outline-offset: 2px;
         }
+
         .tooltip-help-banner {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
@@ -105,9 +150,10 @@
             align-items: center;
             gap: 16px;
         }
+
         .tooltip-toggle {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
             padding: 4px 12px;
             border-radius: 4px;
@@ -115,19 +161,21 @@
             font-size: 12px;
             font-weight: 600;
         }
+
         .tooltip-toggle:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
+
         .tooltip-toggle.active {
             background: white;
             color: #ca8a04;
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const toggle = document.getElementById('tooltip-toggle');
             if (toggle) {
-                toggle.addEventListener('click', function() {
+                toggle.addEventListener('click', function () {
                     document.body.classList.toggle('tooltips-enabled');
                     this.classList.toggle('active');
                     this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
@@ -135,7 +183,7 @@
             }
 
             document.querySelectorAll('[data-tooltip]').forEach(el => {
-                el.addEventListener('mouseenter', function(e) {
+                el.addEventListener('mouseenter', function (e) {
                     if (!document.body.classList.contains('tooltips-enabled')) return;
                     const existing = document.querySelector('.dynamic-tooltip');
                     if (existing) existing.remove();
@@ -176,7 +224,7 @@
                     tooltip.style.left = left + 'px';
                 });
 
-                el.addEventListener('mouseleave', function() {
+                el.addEventListener('mouseleave', function () {
                     const tooltip = document.querySelector('.dynamic-tooltip');
                     if (tooltip) tooltip.remove();
                 });
@@ -189,19 +237,23 @@
 
     <!-- Tooltip Help Banner -->
     <div class="tooltip-help-banner">
-        <a href="index.html" style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <a href="index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
             Index
         </a>
-        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
     </div>
 
     <!-- Top Navigation -->
     <nav
         class="bg-yellow-600 border-b border-yellow-700 h-16 flex items-center px-4 justify-between sticky top-0 z-50 text-white shadow-md">
-        <div class="flex items-center gap-4 cursor-pointer has-tooltip" onclick="nav('view-dashboard')"
-            data-tooltip="⚙️ PSP ADMIN PORTAL
+        <div class="flex items-center gap-4 cursor-pointer has-tooltip" onclick="nav('view-dashboard')" data-tooltip="⚙️ PSP ADMIN PORTAL
 ━━━━━━━━━━━━━━━━━━━━
 Module: Platform Administration
 Users: Platform Admin, PSP Admin
@@ -220,38 +272,37 @@ Feature: PSP tenant overview
 Data: Brand count, user count, stats
 Access: Platform Admin, PSP Admin">Dashboard</a>
             <a href="#" id="link-brands" onclick="nav('view-brands')"
-                class="nav-link hover:text-yellow-100 h-16 flex items-center text-yellow-100 has-tooltip"
-                data-tooltip="🏢 TENANT MANAGEMENT
+                class="nav-link hover:text-yellow-100 h-16 flex items-center text-yellow-100 has-tooltip" data-tooltip="🏢 TENANT MANAGEMENT
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Brand tenant config
 Data: Brand table, settings
 Actions: Onboard, configure, manage
 Ref: SUPP-003">Brands</a>
-            <a href="#" id="link-users" onclick="nav('view-users')"
+            <a href="#" id="link-survey-templates" onclick="nav('view-survey-templates')"
                 class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip"
-                data-tooltip="👥 USER MANAGEMENT
+                data-tooltip="📋 SURVEY TEMPLATES\n📊 Data: Global Survey Library, Template Assignment\n⬅️ Depends: Platform admin permissions\n➡️ Blocks: Brand-level survey availability">Survey
+                Templates</a>
+            <a href="#" id="link-users" onclick="nav('view-users')"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="👥 USER MANAGEMENT
 ━━━━━━━━━━━━━━━━━━━━
 Feature: User & role administration
 Data: User table, Role enum
 Actions: Invite, edit, deactivate
 Ref: SUPP-003 RBAC Matrix">Users</a>
             <a href="#" id="link-settings" onclick="nav('view-settings')"
-                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip"
-                data-tooltip="🔧 PSP SETTINGS
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="🔧 PSP SETTINGS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: PSP-level configuration
 Data: Tenant settings, integrations
 Access: Platform Admin, PSP Admin">Settings</a>
             <a href="#" id="link-exports" onclick="nav('view-exports')"
-                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip"
-                data-tooltip="📥 EXPORTS & REPORTS
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="📥 EXPORTS & REPORTS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Data export management
 Formats: CSV, XLSX, PDF, JSON, XML
 Ref: SUPP-005">Reports</a>
             <a href="#" id="link-audit" onclick="nav('view-audit')"
-                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip"
-                data-tooltip="🔍 SECURITY & AUDIT
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="🔍 SECURITY & AUDIT
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Audit log access
 Data: AuditEvent table
@@ -267,8 +318,7 @@ Ref: SUPP-029">Audit</a>
         <div id="view-dashboard" class="view hidden">
             <div class="flex justify-between items-end border-b pb-2 mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
-                        data-tooltip="📊 PSP TENANT OVERVIEW
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="📊 PSP TENANT OVERVIEW
 ━━━━━━━━━━━━━━━━━━━━
 Feature: High-level PSP metrics
 Data: Aggregated across all brands
@@ -290,8 +340,7 @@ Ref: SUPP-003">+ Onboard Brand</button>
 
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="🏢 ACTIVE BRANDS
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="🏢 ACTIVE BRANDS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Count of onboarded brands
 Data: Brand.status = ACTIVE
@@ -301,8 +350,7 @@ Shows: Active brand count">
                     <div class="text-3xl font-bold text-yellow-600">3</div>
                     <div class="text-xs text-gray-400 mt-2">Good2Go, RetailCo, StoreMax</div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="👥 TOTAL USERS
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="👥 TOTAL USERS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: User count across all brands
 Data: User table count
@@ -312,8 +360,7 @@ Scope: PSP tenant-wide">
                     <div class="text-3xl font-bold text-gray-900">247</div>
                     <div class="text-green-600 text-xs mt-2 font-medium">↑ 8 this month</div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="📢 ACTIVE CAMPAIGNS
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="📢 ACTIVE CAMPAIGNS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Running campaigns across brands
 Data: Campaign.status = PUBLISHED
@@ -323,8 +370,7 @@ Shows: Currently active campaigns">
                     <div class="text-3xl font-bold text-purple-600">7</div>
                     <div class="text-xs text-gray-400 mt-2">Across 3 brands</div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
-                    data-tooltip="📦 ORDERS (30d)
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="📦 ORDERS (30d)
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Order volume this month
 Data: Order table aggregation
@@ -338,8 +384,7 @@ Scope: Last 30 days">
 
             <!-- Recent Activity -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="📋 RECENT ACTIVITY
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📋 RECENT ACTIVITY
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Latest system events
 Data: AuditEvent table (recent)
@@ -412,8 +457,7 @@ Ref: SUPP-029">Recent Activity</div>
         <div id="view-brands" class="view hidden">
             <div class="flex justify-between items-end border-b pb-2 mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
-                        data-tooltip="🏢 BRAND TENANT MANAGEMENT
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="🏢 BRAND TENANT MANAGEMENT
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Brand configuration & onboarding
 Data: Brand table
@@ -469,8 +513,7 @@ Immutable">Onboarded</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="🏢 GOOD2GO
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🏢 GOOD2GO
 ━━━━━━━━━━━━━━━━━━━━
 Primary demo brand tenant
 Stores: 452 locations
@@ -478,24 +521,28 @@ Users: 87 active
 Click to configure settings">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-sm">G</div>
+                                    <div
+                                        class="w-8 h-8 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                                        G</div>
                                     <div>
                                         <div class="font-medium text-gray-900">Good2Go</div>
                                         <div class="text-xs text-gray-500">good2go.visualgraphx.com</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4 font-medium">452</td>
                             <td class="px-6 py-4">2</td>
                             <td class="px-6 py-4">87</td>
                             <td class="px-6 py-4">Mar 2025</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('brand-config-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Configure</button>
+                                <button onclick="showModal('brand-config-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Configure</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="🏢 RETAILCO
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🏢 RETAILCO
 ━━━━━━━━━━━━━━━━━━━━
 Large retail brand tenant
 Stores: 1,234 locations
@@ -503,24 +550,28 @@ Users: 142 active
 Click to configure settings">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm">R</div>
+                                    <div
+                                        class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                                        R</div>
                                     <div>
                                         <div class="font-medium text-gray-900">RetailCo</div>
                                         <div class="text-xs text-gray-500">retailco.visualgraphx.com</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4 font-medium">1,234</td>
                             <td class="px-6 py-4">3</td>
                             <td class="px-6 py-4">142</td>
                             <td class="px-6 py-4">Jan 2025</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('brand-config-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Configure</button>
+                                <button onclick="showModal('brand-config-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Configure</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="🏢 STOREMAX
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🏢 STOREMAX
 ━━━━━━━━━━━━━━━━━━━━
 Growing retail brand tenant
 Stores: 89 locations
@@ -528,20 +579,25 @@ Users: 18 active
 Click to configure settings">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
+                                    <div
+                                        class="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                                        S</div>
                                     <div>
                                         <div class="font-medium text-gray-900">StoreMax</div>
                                         <div class="text-xs text-gray-500">storemax.visualgraphx.com</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4 font-medium">89</td>
                             <td class="px-6 py-4">2</td>
                             <td class="px-6 py-4">18</td>
                             <td class="px-6 py-4">Oct 2025</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('brand-config-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Configure</button>
+                                <button onclick="showModal('brand-config-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Configure</button>
                             </td>
                         </tr>
                     </tbody>
@@ -553,8 +609,7 @@ Click to configure settings">
         <div id="view-users" class="view hidden">
             <div class="flex justify-between items-end border-b pb-2 mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
-                        data-tooltip="👥 USER MANAGEMENT
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="👥 USER MANAGEMENT
 ━━━━━━━━━━━━━━━━━━━━
 Feature: User & role administration
 Data: User table
@@ -563,7 +618,8 @@ Ref: SUPP-003 RBAC Matrix">User Management</h1>
                     <p class="text-sm text-gray-500">Invite and manage user access across all brands</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
                         data-tooltip="🔍 FILTER USERS
 ━━━━━━━━━━━━━━━━━━━━
 Filter by: Role, Brand, Status
@@ -619,8 +675,7 @@ Security: Identify inactive accounts">Last Active</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="👤 JOHN DAVIS
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 JOHN DAVIS
 ━━━━━━━━━━━━━━━━━━━━
 Role: Platform Admin (highest)
 Scope: All brands (PSP-wide)
@@ -629,7 +684,9 @@ Last seen: 5 min ago
 ⚡ Can impersonate other users">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">JD</div>
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        JD</div>
                                     <div>
                                         <div class="font-medium text-gray-900">John Davis</div>
                                         <div class="text-xs text-gray-500">john.davis@visualgraphx.com</div>
@@ -637,7 +694,8 @@ Last seen: 5 min ago
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="🔐 PLATFORM ADMIN
 ━━━━━━━━━━━━━━━━━━━━
 Highest privilege level
@@ -646,14 +704,16 @@ Scope: PSP tenant-wide
 Ref: SUPP-003">Platform Admin</span>
                             </td>
                             <td class="px-6 py-4 text-gray-500">Visual Graphx (All)</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4">5 min ago</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('user-edit-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="👤 MARIA SANTOS
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 MARIA SANTOS
 ━━━━━━━━━━━━━━━━━━━━
 Role: PSP Admin
 Scope: All brands (PSP-wide)
@@ -661,7 +721,9 @@ Status: Active
 Last seen: 2 hours ago">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">MS</div>
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        MS</div>
                                     <div>
                                         <div class="font-medium text-gray-900">Maria Santos</div>
                                         <div class="text-xs text-gray-500">maria@visualgraphx.com</div>
@@ -669,7 +731,8 @@ Last seen: 2 hours ago">
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="⚙️ PSP ADMIN
 ━━━━━━━━━━━━━━━━━━━━
 PSP administration privileges
@@ -678,14 +741,16 @@ Scope: PSP tenant (no impersonate)
 Ref: SUPP-003">PSP Admin</span>
                             </td>
                             <td class="px-6 py-4 text-gray-500">Visual Graphx (All)</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4">2 hours ago</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('user-edit-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="👤 SARAH CHEN
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 SARAH CHEN
 ━━━━━━━━━━━━━━━━━━━━
 Role: Brand Admin
 Scope: Good2Go only
@@ -693,7 +758,9 @@ Status: Active
 Last seen: 1 day ago">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">SC</div>
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        SC</div>
                                     <div>
                                         <div class="font-medium text-gray-900">Sarah Chen</div>
                                         <div class="text-xs text-gray-500">sarah.chen@good2go.com</div>
@@ -701,7 +768,8 @@ Last seen: 1 day ago">
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="📢 BRAND ADMIN
 ━━━━━━━━━━━━━━━━━━━━
 Brand-level administration
@@ -710,14 +778,16 @@ Scope: Single brand tenant
 Ref: SUPP-003">Brand Admin</span>
                             </td>
                             <td class="px-6 py-4 text-gray-500">Good2Go</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
                             <td class="px-6 py-4">1 day ago</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('user-edit-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 opacity-60 cursor-pointer has-tooltip"
-                            data-tooltip="👤 TOM WILSON
+                        <tr class="hover:bg-gray-50 opacity-60 cursor-pointer has-tooltip" data-tooltip="👤 TOM WILSON
 ━━━━━━━━━━━━━━━━━━━━
 Role: Campaign Manager
 Scope: RetailCo only
@@ -726,7 +796,9 @@ Last seen: 3 weeks ago
 ⚠️ Consider reactivating or removing">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">TW</div>
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        TW</div>
                                     <div>
                                         <div class="font-medium text-gray-900">Tom Wilson</div>
                                         <div class="text-xs text-gray-500">tom.wilson@retailco.com</div>
@@ -734,7 +806,8 @@ Last seen: 3 weeks ago
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="📋 CAMPAIGN MANAGER
 ━━━━━━━━━━━━━━━━━━━━
 Campaign management privileges
@@ -743,10 +816,13 @@ Scope: Assigned brand only
 Ref: SUPP-003">Campaign Manager</span>
                             </td>
                             <td class="px-6 py-4 text-gray-500">RetailCo</td>
-                            <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">Inactive</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">Inactive</span>
+                            </td>
                             <td class="px-6 py-4">3 weeks ago</td>
                             <td class="px-6 py-4">
-                                <button onclick="showModal('user-edit-modal')" class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
                             </td>
                         </tr>
                     </tbody>
@@ -769,8 +845,7 @@ Ref: SUPP-003">Campaign Manager</span>
         <div id="view-settings" class="view hidden">
             <div class="flex justify-between items-end border-b pb-2 mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
-                        data-tooltip="🔧 PSP SETTINGS
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="🔧 PSP SETTINGS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: PSP-level configuration
 Data: Tenant settings table
@@ -793,10 +868,12 @@ Access: Platform Admin, PSP Admin">PSP Settings</h1>
 Display name for PSP tenant
 Used in: UI headers, emails
 Editable: Platform Admin only">PSP Tenant Name</label>
-                                <input type="text" value="Visual Graphx" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                                <input type="text" value="Visual Graphx"
+                                    class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Default Timezone</label>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Default
+                                    Timezone</label>
                                 <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
                                     <option>America/Los_Angeles (PST/PDT)</option>
                                     <option>America/New_York (EST/EDT)</option>
@@ -806,15 +883,15 @@ Editable: Platform Admin only">PSP Tenant Name</label>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Email</label>
-                            <input type="email" value="support@visualgraphx.com" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                            <input type="email" value="support@visualgraphx.com"
+                                class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                         </div>
                     </div>
                 </div>
 
                 <!-- Integration Settings -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                        data-tooltip="🔌 INTEGRATION CONFIG
+                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="🔌 INTEGRATION CONFIG
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Webhook & API settings
 Data: Integration config table
@@ -829,7 +906,8 @@ Feature: Outbound event notifications
 Format: HTTPS URL required
 Events: Order updates, shipments
 Ref: SUPP-027">Webhook Endpoint URL</label>
-                            <input type="text" placeholder="https://your-mis.example.com/webhooks/newpopsys" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                            <input type="text" placeholder="https://your-mis.example.com/webhooks/newpopsys"
+                                class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -841,8 +919,10 @@ Scope: Integration User role
 Storage: Hashed, shown once
 Ref: SUPP-003">API Key</label>
                                 <div class="flex gap-2">
-                                    <input type="password" value="sk_live_xxxxxxxxxxxxxxxxxxxx" readonly class="flex-1 p-2 border rounded bg-gray-50 font-mono text-xs">
-                                    <button class="px-3 py-2 bg-gray-100 border rounded text-sm hover:bg-gray-200 has-tooltip"
+                                    <input type="password" value="sk_live_xxxxxxxxxxxxxxxxxxxx" readonly
+                                        class="flex-1 p-2 border rounded bg-gray-50 font-mono text-xs">
+                                    <button
+                                        class="px-3 py-2 bg-gray-100 border rounded text-sm hover:bg-gray-200 has-tooltip"
                                         data-tooltip="🔄 ROTATE API KEY
 ━━━━━━━━━━━━━━━━━━━━
 Action: Generate new API key
@@ -860,8 +940,10 @@ Purpose: Validates webhook origin
 Storage: Hashed, shown once
 Ref: SUPP-027">Webhook Secret</label>
                                 <div class="flex gap-2">
-                                    <input type="password" value="whsec_xxxxxxxxxxxxxxxxxxxx" readonly class="flex-1 p-2 border rounded bg-gray-50 font-mono text-xs">
-                                    <button class="px-3 py-2 bg-gray-100 border rounded text-sm hover:bg-gray-200 has-tooltip"
+                                    <input type="password" value="whsec_xxxxxxxxxxxxxxxxxxxx" readonly
+                                        class="flex-1 p-2 border rounded bg-gray-50 font-mono text-xs">
+                                    <button
+                                        class="px-3 py-2 bg-gray-100 border rounded text-sm hover:bg-gray-200 has-tooltip"
                                         data-tooltip="🔄 REGENERATE SECRET
 ━━━━━━━━━━━━━━━━━━━━
 Action: Generate new webhook secret
@@ -873,15 +955,15 @@ Audit: Logged in security events">Regenerate</button>
                         </div>
                         <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-700">
                             <i data-lucide="info" size="16" class="inline mr-1"></i>
-                            <strong>Integration Health:</strong> Last successful webhook delivery 5 minutes ago. API calls: 1,284 in last 24h.
+                            <strong>Integration Health:</strong> Last successful webhook delivery 5 minutes ago. API
+                            calls: 1,284 in last 24h.
                         </div>
                     </div>
                 </div>
 
                 <!-- Notification Settings -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                        data-tooltip="📧 NOTIFICATION CONFIG
+                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📧 NOTIFICATION CONFIG
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Email notification settings
 Channels: Email, In-App, Push (future)
@@ -889,15 +971,20 @@ Scope: PSP-wide defaults
 Ref: SUPP-004">Notification Settings</div>
                     <div class="p-6 space-y-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">SMTP Configuration</label>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">SMTP
+                                Configuration</label>
                             <div class="grid grid-cols-2 gap-4">
-                                <input type="text" placeholder="smtp.example.com" class="p-2 border rounded focus:ring-yellow-500 outline-none">
-                                <input type="number" placeholder="Port (587)" class="p-2 border rounded focus:ring-yellow-500 outline-none">
+                                <input type="text" placeholder="smtp.example.com"
+                                    class="p-2 border rounded focus:ring-yellow-500 outline-none">
+                                <input type="number" placeholder="Port (587)"
+                                    class="p-2 border rounded focus:ring-yellow-500 outline-none">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">From Email Address</label>
-                            <input type="email" value="noreply@visualgraphx.com" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">From Email
+                                Address</label>
+                            <input type="email" value="noreply@visualgraphx.com"
+                                class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                         </div>
                         <div class="flex items-center gap-2">
                             <input type="checkbox" id="enable-notifications" checked class="rounded">
@@ -914,7 +1001,8 @@ Ref: SUPP-004">Notification Settings</div>
 Action: Discard unsaved changes
 Reverts to last saved state
 No confirmation required">Cancel</button>
-                    <button class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold shadow-sm hover:bg-yellow-700 has-tooltip"
+                    <button
+                        class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold shadow-sm hover:bg-yellow-700 has-tooltip"
                         data-tooltip="💾 SAVE CHANGES
 ━━━━━━━━━━━━━━━━━━━━
 Action: Persist all settings
@@ -929,8 +1017,7 @@ Notification: Success toast shown">Save Changes</button>
         <div id="view-exports" class="view hidden">
             <div class="flex justify-between items-end border-b pb-2 mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
-                        data-tooltip="📥 EXPORTS & REPORTS
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="📥 EXPORTS & REPORTS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Data export management
 Formats: CSV, XLSX, PDF, JSON, XML
@@ -951,8 +1038,7 @@ Ref: SUPP-005">+ New Export</button>
             <!-- Export Templates -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow has-tooltip"
-                    onclick="showModal('export-create-modal')"
-                    data-tooltip="📊 CAMPAIGN SUMMARY
+                    onclick="showModal('export-create-modal')" data-tooltip="📊 CAMPAIGN SUMMARY
 ━━━━━━━━━━━━━━━━━━━━
 Export: Campaign progress & stats
 Fields: Status, completion %, issues
@@ -963,8 +1049,7 @@ Ref: SUPP-005">
                     <p class="text-xs text-gray-500">Progress, exceptions, policy settings</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow has-tooltip"
-                    onclick="showModal('export-create-modal')"
-                    data-tooltip="📦 STORE ORDERS
+                    onclick="showModal('export-create-modal')" data-tooltip="📦 STORE ORDERS
 ━━━━━━━━━━━━━━━━━━━━
 Export: Fulfillment-ready orders
 Fields: Order ID, store, items, status
@@ -975,8 +1060,7 @@ Ref: SUPP-005">
                     <p class="text-xs text-gray-500">Line-level order details</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow has-tooltip"
-                    onclick="showModal('export-create-modal')"
-                    data-tooltip="🚚 SHIPMENTS
+                    onclick="showModal('export-create-modal')" data-tooltip="🚚 SHIPMENTS
 ━━━━━━━━━━━━━━━━━━━━
 Export: Shipment tracking data
 Fields: Tracking #, carrier, status
@@ -987,8 +1071,7 @@ Ref: SUPP-005">
                     <p class="text-xs text-gray-500">Partial shipments, delivery confirmation</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow has-tooltip"
-                    onclick="showModal('export-create-modal')"
-                    data-tooltip="📸 EXECUTION & PROOF
+                    onclick="showModal('export-create-modal')" data-tooltip="📸 EXECUTION & PROOF
 ━━━━━━━━━━━━━━━━━━━━
 Export: Store execution data
 Fields: Item status, proof refs
@@ -999,8 +1082,7 @@ Ref: SUPP-005">
                     <p class="text-xs text-gray-500">Per-item status + proof references</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow has-tooltip"
-                    onclick="showModal('export-create-modal')"
-                    data-tooltip="✅ VERIFICATION
+                    onclick="showModal('export-create-modal')" data-tooltip="✅ VERIFICATION
 ━━━━━━━━━━━━━━━━━━━━
 Export: Photo review decisions
 Fields: Review status, reason codes
@@ -1011,8 +1093,7 @@ Ref: SUPP-005">
                     <p class="text-xs text-gray-500">Review decisions + reason codes</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow has-tooltip"
-                    onclick="showModal('export-create-modal')"
-                    data-tooltip="⚠️ ISSUES & REORDERS
+                    onclick="showModal('export-create-modal')" data-tooltip="⚠️ ISSUES & REORDERS
 ━━━━━━━━━━━━━━━━━━━━
 Export: Issue requests & approvals
 Fields: Issue type, evidence, status
@@ -1026,8 +1107,7 @@ Ref: SUPP-005">
 
             <!-- Recent Exports -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
-                    data-tooltip="📋 RECENT EXPORTS
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📋 RECENT EXPORTS
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Export job history
 Data: ExportJob table
@@ -1065,8 +1145,7 @@ Creator: User who initiated">Created</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="📊 CAMPAIGN SUMMARY EXPORT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="📊 CAMPAIGN SUMMARY EXPORT
 ━━━━━━━━━━━━━━━━━━━━
 Scope: Good2Go Holiday Promo 2025
 Format: Excel (XLSX)
@@ -1074,9 +1153,11 @@ Size: 2.4 MB • 1,842 rows
 Created by: John Davis">
                             <td class="px-6 py-4 font-medium">Campaign Summary</td>
                             <td class="px-6 py-4">Good2Go - Holiday Promo 2025</td>
-                            <td class="px-6 py-4"><span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">XLSX</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">XLSX</span></td>
                             <td class="px-6 py-4">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="✅ COMPLETED
 ━━━━━━━━━━━━━━━━━━━━
 Export job finished successfully
@@ -1095,8 +1176,7 @@ Expires: 5 days remaining
 Action: Click to download">Download</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="📦 STORE ORDERS EXPORT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="📦 STORE ORDERS EXPORT
 ━━━━━━━━━━━━━━━━━━━━
 Scope: All Brands - December 2025
 Format: CSV
@@ -1104,9 +1184,11 @@ Status: Still processing...
 ETA: ~5 minutes remaining">
                             <td class="px-6 py-4 font-medium">Store Orders</td>
                             <td class="px-6 py-4">All Brands (Dec 2025)</td>
-                            <td class="px-6 py-4"><span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">CSV</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">CSV</span></td>
                             <td class="px-6 py-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="⏳ PROCESSING
 ━━━━━━━━━━━━━━━━━━━━
 Export job running in background
@@ -1119,8 +1201,7 @@ Refresh: Page auto-updates">Processing</span>
                                 <span class="text-gray-400 text-xs">Pending...</span>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="📸 EXECUTION & PROOF EXPORT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="📸 EXECUTION & PROOF EXPORT
 ━━━━━━━━━━━━━━━━━━━━
 Scope: RetailCo New Year Reset
 Format: PDF (report with images)
@@ -1128,9 +1209,11 @@ Size: 18.2 MB
 Contains: 342 proof photos">
                             <td class="px-6 py-4 font-medium">Execution & Proof</td>
                             <td class="px-6 py-4">RetailCo - New Year Reset</td>
-                            <td class="px-6 py-4"><span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">PDF</span></td>
+                            <td class="px-6 py-4"><span
+                                    class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">PDF</span></td>
                             <td class="px-6 py-4">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
                                     data-tooltip="✅ COMPLETED
 ━━━━━━━━━━━━━━━━━━━━
 Export job finished successfully
@@ -1158,8 +1241,7 @@ Action: Click to download">Download</button>
         <div id="view-audit" class="view hidden">
             <div class="flex justify-between items-end border-b pb-2 mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
-                        data-tooltip="🔍 SECURITY & AUDIT LOG
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="🔍 SECURITY & AUDIT LOG
 ━━━━━━━━━━━━━━━━━━━━
 Feature: Immutable audit trail
 Data: AuditEvent table
@@ -1168,7 +1250,8 @@ Ref: SUPP-029">Security & Audit Log</h1>
                     <p class="text-sm text-gray-500">Immutable audit trail of all system events (SUPP-029)</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
                         data-tooltip="🔍 FILTER EVENTS
 ━━━━━━━━━━━━━━━━━━━━
 Filter by: User, event type, date
@@ -1176,7 +1259,8 @@ Search: Event ID, actor, entity
 Export: Audit log to CSV/JSON">
                         <i data-lucide="filter" size="16" class="inline"></i> Filter
                     </button>
-                    <button class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
+                    <button
+                        class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
                         data-tooltip="📥 EXPORT AUDIT LOG
 ━━━━━━━━━━━━━━━━━━━━
 Export audit events to file
@@ -1225,8 +1309,7 @@ Full: Click View JSON for complete">Details</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="👤 USER CREATED EVENT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 USER CREATED EVENT
 ━━━━━━━━━━━━━━━━━━━━
 Action: New user account created
 Actor: John Davis (Platform Admin)
@@ -1234,7 +1317,8 @@ Target: sarah.chen@good2go.com
 Role assigned: Brand Admin">
                             <td class="px-6 py-4 font-mono text-xs">2025-12-19 14:32:15</td>
                             <td class="px-6 py-4">
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">user.created</span>
+                                <span
+                                    class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">user.created</span>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm">John Davis</div>
@@ -1244,7 +1328,8 @@ Role assigned: Brand Admin">
                                 <div class="text-sm font-medium">User</div>
                                 <div class="text-xs text-gray-500 font-mono">usr_abc123</div>
                             </td>
-                            <td class="px-6 py-4 text-xs">Created user: sarah.chen@good2go.com (Brand Admin, Good2Go)</td>
+                            <td class="px-6 py-4 text-xs">Created user: sarah.chen@good2go.com (Brand Admin, Good2Go)
+                            </td>
                             <td class="px-6 py-4">
                                 <button class="text-yellow-600 hover:underline font-bold text-xs has-tooltip"
                                     data-tooltip="📄 VIEW FULL RECORD
@@ -1255,8 +1340,7 @@ Format: Pretty-printed JSON
 Copy: Available in modal">View JSON</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="⚙️ SETTINGS UPDATED EVENT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="⚙️ SETTINGS UPDATED EVENT
 ━━━━━━━━━━━━━━━━━━━━
 Action: Brand settings modified
 Actor: Maria Santos (PSP Admin)
@@ -1264,7 +1348,8 @@ Target: StoreMax brand tenant
 Change: Webhook endpoint URL">
                             <td class="px-6 py-4 font-mono text-xs">2025-12-19 09:15:42</td>
                             <td class="px-6 py-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">settings.updated</span>
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">settings.updated</span>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm">Maria Santos</div>
@@ -1284,8 +1369,7 @@ Includes: Old/new webhook URL values
 Format: Pretty-printed JSON">View JSON</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="📢 CAMPAIGN PUBLISHED EVENT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="📢 CAMPAIGN PUBLISHED EVENT
 ━━━━━━━━━━━━━━━━━━━━
 Action: Campaign went live
 Actor: Sarah Chen (Brand Admin)
@@ -1293,7 +1377,8 @@ Campaign: Spring Global Promo 2026
 Scope: 842 stores assigned">
                             <td class="px-6 py-4 font-mono text-xs">2025-12-18 16:48:03</td>
                             <td class="px-6 py-4">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">campaign.published</span>
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">campaign.published</span>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm">Sarah Chen</div>
@@ -1313,8 +1398,7 @@ Includes: Campaign config, store list
 Format: Pretty-printed JSON">View JSON</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="🔴 SECURITY EVENT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🔴 SECURITY EVENT
 ━━━━━━━━━━━━━━━━━━━━
 Action: Failed login attempt
 IP Address: 192.168.1.100
@@ -1323,7 +1407,8 @@ Reason: Invalid credentials
 ⚠️ May indicate attack attempt">
                             <td class="px-6 py-4 font-mono text-xs">2025-12-18 11:22:18</td>
                             <td class="px-6 py-4">
-                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">auth.login_failed</span>
+                                <span
+                                    class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">auth.login_failed</span>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm">Unknown</div>
@@ -1343,8 +1428,7 @@ Includes: IP, user agent, headers
 Format: Pretty-printed JSON">View JSON</button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip"
-                            data-tooltip="⚙️ SYSTEM EVENT
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="⚙️ SYSTEM EVENT
 ━━━━━━━━━━━━━━━━━━━━
 Action: Background job completed
 Actor: System (automated)
@@ -1352,7 +1436,8 @@ Result: Export file generated
 File: Campaign Summary (XLSX)">
                             <td class="px-6 py-4 font-mono text-xs">2025-12-17 13:05:29</td>
                             <td class="px-6 py-4">
-                                <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-bold">export.completed</span>
+                                <span
+                                    class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-bold">export.completed</span>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm">System</div>
@@ -1404,27 +1489,34 @@ Format: Pretty-printed JSON">View JSON</button>
             <div class="p-6 space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Brand Name</label>
-                    <input type="text" placeholder="e.g., Good2Go" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                    <input type="text" placeholder="e.g., Good2Go"
+                        class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Email</label>
-                    <input type="email" placeholder="admin@example.com" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                    <input type="email" placeholder="admin@example.com"
+                        class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Subdomain</label>
                     <div class="flex items-center gap-2">
-                        <input type="text" placeholder="brandname" class="flex-1 p-2 border rounded focus:ring-yellow-500 outline-none">
+                        <input type="text" placeholder="brandname"
+                            class="flex-1 p-2 border rounded focus:ring-yellow-500 outline-none">
                         <span class="text-sm text-gray-500">.visualgraphx.com</span>
                     </div>
                 </div>
                 <div class="bg-blue-50 border border-blue-200 p-3 rounded text-xs text-blue-700">
                     <i data-lucide="info" size="14" class="inline mr-1"></i>
-                    This will create a new brand tenant with default settings and send an invitation to the contact email.
+                    This will create a new brand tenant with default settings and send an invitation to the contact
+                    email.
                 </div>
             </div>
             <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-2">
-                <button onclick="closeModal('brand-onboard-modal')" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
-                <button onclick="closeModal('brand-onboard-modal')" class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Create Brand</button>
+                <button onclick="closeModal('brand-onboard-modal')"
+                    class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
+                <button onclick="closeModal('brand-onboard-modal')"
+                    class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Create
+                    Brand</button>
             </div>
         </div>
     </div>
@@ -1442,7 +1534,8 @@ Format: Pretty-printed JSON">View JSON</button>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Brand Name</label>
-                        <input type="text" value="Good2Go" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                        <input type="text" value="Good2Go"
+                            class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Subdomain</label>
@@ -1451,7 +1544,8 @@ Format: Pretty-printed JSON">View JSON</button>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Email</label>
-                    <input type="email" value="admin@good2go.com" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                    <input type="email" value="admin@good2go.com"
+                        class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Brand Status</label>
@@ -1467,8 +1561,11 @@ Format: Pretty-printed JSON">View JSON</button>
                 </div>
             </div>
             <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-2">
-                <button onclick="closeModal('brand-config-modal')" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
-                <button onclick="closeModal('brand-config-modal')" class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Save Changes</button>
+                <button onclick="closeModal('brand-config-modal')"
+                    class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
+                <button onclick="closeModal('brand-config-modal')"
+                    class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Save
+                    Changes</button>
             </div>
         </div>
     </div>
@@ -1485,7 +1582,8 @@ Format: Pretty-printed JSON">View JSON</button>
             <div class="p-6 space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
-                    <input type="email" placeholder="user@example.com" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                    <input type="email" placeholder="user@example.com"
+                        class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Role</label>
@@ -1515,8 +1613,11 @@ Format: Pretty-printed JSON">View JSON</button>
                 </div>
             </div>
             <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-2">
-                <button onclick="closeModal('user-invite-modal')" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
-                <button onclick="closeModal('user-invite-modal')" class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Send Invitation</button>
+                <button onclick="closeModal('user-invite-modal')"
+                    class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
+                <button onclick="closeModal('user-invite-modal')"
+                    class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Send
+                    Invitation</button>
             </div>
         </div>
     </div>
@@ -1534,16 +1635,19 @@ Format: Pretty-printed JSON">View JSON</button>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">First Name</label>
-                        <input type="text" value="John" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                        <input type="text" value="John"
+                            class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Last Name</label>
-                        <input type="text" value="Davis" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                        <input type="text" value="Davis"
+                            class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
-                    <input type="email" value="john.davis@visualgraphx.com" readonly class="w-full p-2 border rounded bg-gray-50">
+                    <input type="email" value="john.davis@visualgraphx.com" readonly
+                        class="w-full p-2 border rounded bg-gray-50">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Role</label>
@@ -1563,73 +1667,208 @@ Format: Pretty-printed JSON">View JSON</button>
                 </div>
             </div>
             <div class="px-6 py-4 border-t border-gray-200 flex justify-between">
-                <button class="px-4 py-2 bg-red-50 text-red-700 border border-red-200 rounded text-sm hover:bg-red-100">Deactivate User</button>
+                <button
+                    class="px-4 py-2 bg-red-50 text-red-700 border border-red-200 rounded text-sm hover:bg-red-100">Deactivate
+                    User</button>
                 <div class="flex gap-2">
-                    <button onclick="closeModal('user-edit-modal')" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
-                    <button onclick="closeModal('user-edit-modal')" class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Save Changes</button>
+                    <button onclick="closeModal('user-edit-modal')"
+                        class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
+                    <button onclick="closeModal('user-edit-modal')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Save
+                        Changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Export Create Modal -->
-    <div id="export-create-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4">
-            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                <h2 class="text-xl font-bold text-gray-900">Create New Export</h2>
-                <button onclick="closeModal('export-create-modal')" class="text-gray-400 hover:text-gray-600">
-                    <i data-lucide="x" size="24"></i>
-                </button>
+    <!-- VIEW: SURVEY TEMPLATES (Global library) -->
+    <div id="view-survey-templates" class="view hidden">
+        <div class="flex justify-between items-end border-b pb-2 mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Global Survey Templates</h1>
+                <p class="text-sm text-gray-500">Manage master survey templates and assign them to brand libraries</p>
             </div>
-            <div class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Export Type</label>
-                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
-                        <option>Campaign Summary</option>
-                        <option>Store Orders (Line-level)</option>
-                        <option>Shipments & Tracking</option>
-                        <option>Execution & Proof</option>
-                        <option>Verification & Retakes</option>
-                        <option>Issues & Reorders</option>
-                    </select>
+            <button class="bg-yellow-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-yellow-700">
+                + Create Master Template
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Template Library -->
+            <div class="lg:col-span-2 space-y-4">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500 uppercase text-[10px] font-bold">
+                            <tr>
+                                <th class="px-6 py-3">Template Name</th>
+                                <th class="px-6 py-3">Type</th>
+                                <th class="px-6 py-3">Assigned Brands</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50 cursor-pointer">
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900">Standard Retail Layout Survey</div>
+                                    <div class="text-[10px] text-gray-400">Master v3.0 • Includes 15 standard fields
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Store
+                                        Layout</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex -space-x-2">
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-purple-600 border-2 border-white text-white text-[8px] flex items-center justify-center font-bold">
+                                            G</div>
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-blue-600 border-2 border-white text-white text-[8px] flex items-center justify-center font-bold">
+                                            R</div>
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-green-600 border-2 border-white text-white text-[8px] flex items-center justify-center font-bold">
+                                            S</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-[10px] font-bold">LOCKED</span>
+                                </td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <button class="text-yellow-600 hover:underline text-xs font-bold">Edit
+                                        Master</button>
+                                    <button class="text-gray-400 hover:text-gray-600 text-xs font-bold">Push
+                                        Updates</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer">
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900">Express Kiosk Survey</div>
+                                    <div class="text-[10px] text-gray-400">Master v1.2 • Simplified for mall carts</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Store
+                                        Layout</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex -space-x-2">
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-purple-600 border-2 border-white text-white text-[8px] flex items-center justify-center font-bold">
+                                            G</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full text-[10px] font-bold">DRAFT</span>
+                                </td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <button class="text-yellow-600 hover:underline text-xs font-bold">Edit
+                                        Master</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer">
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900">Store Closure Exception</div>
+                                    <div class="text-[10px] text-gray-400">Master v1.0 • Process for unplanned closures
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Exception</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex -space-x-2">
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-purple-600 border-2 border-white text-white text-[8px] flex items-center justify-center font-bold">
+                                            G</div>
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-green-600 border-2 border-white text-white text-[8px] flex items-center justify-center font-bold">
+                                            S</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-[10px] font-bold">LOCKED</span>
+                                </td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <button class="text-yellow-600 hover:underline text-xs font-bold">Edit
+                                        Master</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Scope</label>
-                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
-                        <option>All Brands</option>
-                        <option>Good2Go</option>
-                        <option>RetailCo</option>
-                        <option>StoreMax</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Format</label>
-                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
-                        <option>XLSX (Excel)</option>
-                        <option>CSV</option>
-                        <option>PDF</option>
-                        <option>JSON</option>
-                        <option>XML</option>
-                    </select>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date Range Start</label>
-                        <input type="date" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+
+                <!-- Mini Builder Preview -->
+                <div
+                    class="bg-white rounded-xl border-2 border-dashed border-gray-200 p-8 flex flex-col items-center justify-center text-center">
+                    <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                        <i data-lucide="layout" class="text-gray-300 w-8 h-8"></i>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date Range End</label>
-                        <input type="date" class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
-                    </div>
-                </div>
-                <div class="bg-blue-50 border border-blue-200 p-3 rounded text-xs text-blue-700">
-                    <i data-lucide="info" size="14" class="inline mr-1"></i>
-                    Export will be generated asynchronously. Download link will be available when complete.
+                    <div class="text-gray-500 font-medium">Select a master template to edit its structure</div>
+                    <div class="text-xs text-gray-400 mt-2 max-w-sm">Changes made to master templates can be pushed to
+                        all brands currently using them.</div>
                 </div>
             </div>
-            <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-2">
-                <button onclick="closeModal('export-create-modal')" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
-                <button onclick="closeModal('export-create-modal')" class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Generate Export</button>
+
+            <!-- Brand Assignment Sidebar -->
+            <div class="lg:col-span-1 space-y-4">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+                    <h3 class="font-bold text-sm text-gray-700 mb-4 flex items-center gap-2">
+                        <i data-lucide="share-2" size="16" class="text-yellow-600"></i>
+                        Brand Availability
+                    </h3>
+                    <div class="flex gap-2 mb-4">
+                        <button onclick="document.querySelectorAll('.brand-check').forEach(c => c.checked = true)"
+                            class="text-[10px] font-bold text-yellow-700 hover:underline uppercase">Select All</button>
+                        <span class="text-gray-300">|</span>
+                        <button onclick="document.querySelectorAll('.brand-check').forEach(c => c.checked = false)"
+                            class="text-[10px] font-bold text-yellow-700 hover:underline uppercase">Deselect
+                            All</button>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-purple-600 rounded text-white text-[10px] flex items-center justify-center font-bold">
+                                    G</div>
+                                <span class="text-xs font-medium">Good2Go</span>
+                            </div>
+                            <input type="checkbox" checked class="brand-check rounded text-yellow-600">
+                        </label>
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-blue-600 rounded text-white text-[10px] flex items-center justify-center font-bold">
+                                    R</div>
+                                <span class="text-xs font-medium">RetailCo</span>
+                            </div>
+                            <input type="checkbox" checked class="brand-check rounded text-yellow-600">
+                        </label>
+                        <label class="flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-green-600 rounded text-white text-[10px] flex items-center justify-center font-bold">
+                                    S</div>
+                                <span class="text-xs font-medium">StoreMax</span>
+                            </div>
+                            <input type="checkbox" class="brand-check rounded text-yellow-600">
+                        </label>
+                    </div>
+                    <button
+                        class="w-full mt-4 py-2 bg-yellow-600 text-white rounded text-xs font-bold hover:bg-yellow-700">
+                        Save Assignments
+                    </button>
+                </div>
+
+                <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
+                    <h4 class="text-xs font-black text-yellow-800 uppercase mb-2">PSP Admin Guide</h4>
+                    <p class="text-[10px] text-yellow-700 leading-relaxed">
+                        Master templates serve as the baseline for brand-level surveys. When you update a master
+                        template, brands will receive a notification to "Sync to Master" or you can "Force Push" if the
+                        changes are mandatory compliance updates.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -1658,6 +1897,7 @@ Format: Pretty-printed JSON">View JSON</button>
             let linkId = '';
             if (viewId === 'view-dashboard') linkId = 'link-dashboard';
             if (viewId === 'view-brands') linkId = 'link-brands';
+            if (viewId === 'view-survey-templates') linkId = 'link-survey-templates';
             if (viewId === 'view-users') linkId = 'link-users';
             if (viewId === 'view-settings') linkId = 'link-settings';
             if (viewId === 'view-exports') linkId = 'link-exports';
