@@ -1,11 +1,11 @@
-﻿# M005 - Photo Capture Screen
+﻿# M005 - Compliance Attestation
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M005
-> **Route**: `/app/camera` (modal overlay)
+> **Route**: `/app/campaign/:id/attest`
 > **IEEE 830 Section**: 3.2.5 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ---
 
@@ -13,21 +13,22 @@
 
 ### 1.1 Purpose
 
-The Photo Capture screen provides a full-screen camera interface for capturing installation proof photos. It implements ghost image overlays for proper framing, quality validation before upload, and offline queueing for reliable photo submission in low-connectivity environments.
+The Compliance Attestation screen is the final legal and operational sign-off for a campaign installation. It requires the store manager or authorized personnel to certify that all materials have been installed according to brand standards, documented via photos, and that any issues have been reported. It features a digital signature capture for accountability.
 
 ### 1.2 Scope
 
 This specification covers:
-- Camera viewfinder with ghost image overlay
-- Photo quality validation (resolution check in v1)
-- Flash mode control (Auto/On/Off)
-- Photo review and confirmation
-- Background upload with retry logic
-- Offline photo queue management
+- 4-point compliance checklist verification
+- Final summary of installed items and captured photos
+- Digital signature pad for manager sign-off
+- Submission logic with validation for incomplete tasks
+- Role-based restriction (Manager only for final sign-off)
 
 ### 1.3 Screenshot Reference
 
-![Photo Capture Screen](../../screenshots/Mobile_App/mobile_app_photo_capture.png)
+| Mobile View | Tablet View | Desktop View |
+| :--- | :--- | :--- |
+| ![Mobile Attest](../../screenshots/Store_Execution/mobile_attestation.png) | ![Tablet Attest](../../screenshots/Store_Execution/tablet_attestation.png) | ![Desktop Attest](../../screenshots/Store_Execution/desktop_attestation.png) |
 
 ### 1.4 Source Documents
 

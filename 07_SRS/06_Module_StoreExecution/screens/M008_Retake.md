@@ -1,11 +1,11 @@
-﻿# M008 - Retake Flow Screen
+﻿# M008 - Photo Retake
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M008
 > **Route**: `/app/campaign/:id/retake`
 > **IEEE 830 Section**: 3.2.8 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ---
 
@@ -13,7 +13,7 @@
 
 ### 1.1 Purpose
 
-The Retake Flow screen guides store users through the process of recapturing rejected installation photos. It displays rejection reasons and admin feedback, provides side-by-side comparison between rejected and replacement photos, and manages the supersession workflow where new photos replace rejected ones.
+The Photo Retake screen guides store users through the process of recapturing rejected installation photos. It displays rejection reasons and admin feedback, provides side-by-side comparison between rejected and replacement photos, and manages the supersession workflow where new photos replace rejected ones.
 
 ### 1.2 Scope
 
@@ -23,12 +23,11 @@ This specification covers:
 - Camera integration for replacement photo capture
 - Side-by-side before/after comparison
 - Photo supersession workflow (old -> SUPERSEDED, new -> PENDING)
-- Multiple retake handling
-- Deep link support from push notifications
 
 ### 1.3 Screenshot Reference
 
-![Retake Flow Screen](../../screenshots/Mobile_App/mobile_app_task_detail.png)
+![Retake Flow Screen](../../screenshots/Store_Execution/mobile_photo_captured.png)
+*(Note: View shows the review state after capture; Tablet/Desktop modes scale responsively)*
 
 ### 1.4 Source Documents
 

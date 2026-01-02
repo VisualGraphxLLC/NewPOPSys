@@ -1,11 +1,11 @@
-﻿# M003 - Receipt Survey Screen
+﻿# M003 - Verify Receipt Checklist
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M003
 > **Route**: `/app/campaign/:id/receive`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ---
 
@@ -13,7 +13,7 @@
 
 ### 1.1 Purpose
 
-The Receipt Survey screen enables store personnel to verify and document the receipt of campaign materials. Users systematically confirm each item received, report discrepancies (missing, damaged, wrong items), and create issue requests when problems are identified. This screen is critical for inventory accuracy and triggering fulfillment issue resolution workflows.
+The Verify Receipt Checklist screen enables store personnel to verify and document the receipt of campaign materials. Users systematically confirm each item received, report discrepancies (missing, damaged, wrong items), and create issue requests when problems are identified. This screen is critical for inventory accuracy and triggering fulfillment issue resolution workflows.
 
 ### 1.2 Scope
 
@@ -26,8 +26,9 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Receipt Survey](../../screenshots/Mobile_App/mobile_app_scan.png)
-![Receipt Detail](../../screenshots/Mobile_App/mobile_app_scan_detail.png)
+| Mobile View | Tablet View | Desktop View |
+| :--- | :--- | :--- |
+| ![Mobile Receive](../../screenshots/Store_Execution/mobile_verify_receipt.png) | ![Tablet Receive](../../screenshots/Store_Execution/tablet_verify_receipt.png) | ![Desktop Receive](../../screenshots/Store_Execution/desktop_verify_receipt.png) |
 
 ### 1.4 Source Documents
 

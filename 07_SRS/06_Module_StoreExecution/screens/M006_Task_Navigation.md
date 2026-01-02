@@ -1,33 +1,33 @@
-﻿# M006 - Tasks List Screen
-
-> **Module**: MobilePWA (Store Execution)
-> **Screen ID**: M006
-> **Route**: `/app/tasks`
-> **IEEE 830 Section**: 3.2.6 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
-
----
-
-## 1. Screen Overview
-
-### 1.1 Purpose
-
-The Tasks List screen provides a consolidated view of all pending work items for the store user. Tasks are dynamically derived from entity states (not stored separately) and grouped by priority and due date. The screen includes attestation workflow for final campaign submission with signature capture.
-
-### 1.2 Scope
-
-This specification covers:
-- Task derivation from entity states
-- Task list display with filtering
-- Priority calculation and sorting
-- Task type navigation routing
-- Attestation screen with signature capture
-- Final submission workflow
-
-### 1.3 Screenshot Reference
-
-![Tasks Screen](../../screenshots/Mobile_App/mobile_app_tasks.png)
+﻿# M006 - Task Navigation
+ 
+ > **Module**: Store Execution (Mobile PWA)
+ > **Screen ID**: M006
+ > **Route**: `/app/tasks`
+ > **IEEE 830 Section**: 3.2.6 - User Interface Requirements
+ > **Version**: 1.1
+ > **Last Updated**: 2026-01-02
+ 
+ ---
+ 
+ ## 1. Screen Overview
+ 
+ ### 1.1 Purpose
+ 
+ The Task Navigation screen (formerly Tasks List) provides a consolidated view of all pending work items for the store user. Tasks are dynamically derived from entity states and grouped by phase (Receive, Install, Deinstall, Attest).
+ 
+ ### 1.2 Scope
+ 
+ This specification covers:
+ - Task derivation from entity states
+ - Task list display with filtering (Receive / Install / Deinstall)
+ - Priority calculation and sorting
+ - Attestation workflow entry points
+ 
+ ### 1.3 Screenshot Reference
+ 
+ | Mobile View | Tablet View | Desktop View |
+ | :--- | :--- | :--- |
+ | ![Mobile Tasks](../../screenshots/Store_Execution/mobile_tasks_receive.png) | ![Tablet Tasks](../../screenshots/Store_Execution/tablet_tasks_receive.png) | ![Desktop Tasks](../../screenshots/Store_Execution/desktop_tasks_receive.png) |
 
 ### 1.4 Source Documents
 

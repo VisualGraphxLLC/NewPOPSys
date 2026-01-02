@@ -1,11 +1,11 @@
-﻿# M004 - Install Survey Screen
+﻿# M004 - Installation Photos
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M004
 > **Route**: `/app/campaign/:id/install`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ---
 
@@ -13,7 +13,7 @@
 
 ### 1.1 Purpose
 
-The Install Survey screen guides store personnel through the physical installation of POP materials at designated locations within the store. Users navigate a location-based checklist, viewing where each item should be placed and capturing proof photos. The screen supports the store's layout with slot assignments and ghost image overlays for precise placement.
+The Installation Photos screen guides store personnel through the physical installation of POP materials at designated locations within the store. Users navigate a location-based checklist, viewing where each item should be placed and capturing proof photos. The screen supports the store's layout with slot assignments and ghost image overlays for precise placement.
 
 ### 1.2 Scope
 
@@ -27,8 +27,9 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Install Survey](../../screenshots/Mobile_App/mobile_app_tasks.png)
-![Task Detail](../../screenshots/Mobile_App/mobile_app_task_detail.png)
+| Mobile View | Tablet View | Desktop View |
+| :--- | :--- | :--- |
+| ![Mobile Install](../../screenshots/Store_Execution/mobile_install_photos.png) | ![Tablet Install](../../screenshots/Store_Execution/tablet_install_photos.png) | ![Desktop Install](../../screenshots/Store_Execution/desktop_install_photos.png) |
 
 ### 1.4 Source Documents
 

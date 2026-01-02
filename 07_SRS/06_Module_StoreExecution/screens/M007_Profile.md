@@ -1,11 +1,11 @@
 ﻿# M007 - Profile Screen
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M007
 > **Route**: `/app/profile`
 > **IEEE 830 Section**: 3.2.7 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ---
 
@@ -27,7 +27,8 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Profile Screen](../../screenshots/Mobile_App/mobile_app_profile.png)
+![Profile Screen](../../screenshots/Store_Execution/mobile_profile.png)
+*(Note: Tablet and Desktop views follow standard responsive scaling)*
 
 ### 1.4 Source Documents
 

@@ -1,11 +1,11 @@
 ﻿# M002 - Dashboard Screen
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M002
 > **Route**: `/app/dashboard`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ---
 
@@ -26,7 +26,9 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Dashboard Screen](../../screenshots/Mobile_App/mobile_app_dashboard.png)
+| Mobile View | Tablet View | Desktop View |
+| :--- | :--- | :--- |
+| ![Mobile Dashboard](../../screenshots/Store_Execution/mobile_dashboard.png) | ![Tablet Dashboard](../../screenshots/Store_Execution/tablet_dashboard.png) | ![Desktop Dashboard](../../screenshots/Store_Execution/desktop_dashboard.png) |
 
 ### 1.4 Source Documents
 
