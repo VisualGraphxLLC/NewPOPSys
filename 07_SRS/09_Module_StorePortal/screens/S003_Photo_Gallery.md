@@ -75,35 +75,33 @@ The Photo Gallery screen provides store personnel with a centralized view of all
 
 ### 3.1 Component Hierarchy
 
-```
-PhotoGalleryPage
-â”œâ”€â”€ PageHeader
-â”‚   â”œâ”€â”€ TitleSection ("Photo Gallery")
-â”‚   â””â”€â”€ StatusSummary (count by status)
-â”œâ”€â”€ FilterBar
-â”‚   â”œâ”€â”€ CampaignFilter (dropdown)
-â”‚   â”œâ”€â”€ StatusFilter (dropdown)
-â”‚   â”œâ”€â”€ DateRangeFilter (dropdown)
-â”‚   â”œâ”€â”€ ItemTypeFilter (multi-select)
-â”‚   â””â”€â”€ UploadedByFilter (dropdown) [Store Manager only]
-â”œâ”€â”€ ViewToggle
-â”‚   â”œâ”€â”€ GridViewButton
-â”‚   â””â”€â”€ ListViewButton
-â”œâ”€â”€ ActionBar
-â”‚   â””â”€â”€ BulkDownloadButton [Store Manager only]
-â”œâ”€â”€ ContentArea
-â”‚   â”œâ”€â”€ PhotoGrid (default view)
-â”‚   â”‚   â””â”€â”€ PhotoCard[] (repeating)
-â”‚   â””â”€â”€ PhotoList (alternate view)
-â”‚       â””â”€â”€ PhotoRow[] (repeating)
-â”œâ”€â”€ Pagination
-â”‚   â”œâ”€â”€ ResultCount
-â”‚   â””â”€â”€ LoadMoreButton
-â””â”€â”€ LightboxModal
-    â”œâ”€â”€ PhotoViewer
-    â”œâ”€â”€ PhotoInfoPanel
-    â””â”€â”€ NavigationControls
-```
+- **PhotoGalleryPage**
+    - **PageHeader**
+        - TitleSection ("Photo Gallery")
+        - StatusSummary (count by status)
+    - **FilterBar**
+        - CampaignFilter (dropdown)
+        - StatusFilter (dropdown)
+        - DateRangeFilter (dropdown)
+        - ItemTypeFilter (multi-select)
+        - UploadedByFilter (dropdown) [Store Manager only]
+    - **ViewToggle**
+        - GridViewButton
+        - ListViewButton
+    - **ActionBar**
+        - BulkDownloadButton [Store Manager only]
+    - **ContentArea**
+        - **PhotoGrid** (default view)
+            - PhotoCard[] (repeating)
+        - **PhotoList** (alternate view)
+            - PhotoRow[] (repeating)
+    - **Pagination**
+        - ResultCount
+        - LoadMoreButton
+    - **LightboxModal**
+        - PhotoViewer
+        - PhotoInfoPanel
+        - NavigationControls
 
 ### 3.2 Component Specifications
 
@@ -121,19 +119,16 @@ PhotoGalleryPage
 
 ### 3.3 Photo Card Layout
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                 â”‚
-â”‚    [Thumbnail]  â”‚
-â”‚                 â”‚
-â”‚       âœ“         â”‚  â† Status overlay
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Window Poster   â”‚  â† Item name
-â”‚ Summer Promo    â”‚  â† Campaign name
-â”‚ Jun 15, 2025    â”‚  â† Upload date
-â”‚ by John D.      â”‚  â† Uploader name
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+**Structure:**
+
+*   **Header (Thumbnail Area)**
+    *   Full-width image thumbnail
+    *   Status Icon Overlay (`âœ“` / `â Œ` / `â ³`)
+*   **Footer (Metadata)**
+    *   **Item Name**: (e.g., "Window Poster")
+    *   **Campaign**: (e.g., "Summer Promo")
+    *   **Date**: (e.g., "Jun 15, 2025")
+    *   **Uploader**: (e.g., "by John D.")
 
 ### 3.4 Status Overlay Specifications
 
@@ -333,22 +328,17 @@ LIMIT :limit OFFSET :offset
 
 ### 7.1 Photo Review Status States
 
-```
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚   PENDING   â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚
-              â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-              â–¼            â–¼            â”‚
-       â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”‚
-       â”‚ APPROVED â”‚  â”‚ REJECTED â”‚       â”‚
-       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜       â”‚
-                          â”‚             â”‚
-                          â–¼             â”‚
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”‚
-                    â”‚SUPERSEDEDâ”‚â†â”€â”€â”€â”€â”€â”€â”€â”˜
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                    (after retake)
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING
+    PENDING --> APPROVED: Photo approved
+    PENDING --> REJECTED: Photo rejected
+    
+    REJECTED --> SUPERSEDED: Retake uploaded
+    PENDING --> SUPERSEDED: New photo replaces
+    
+    APPROVED --> [*]
+    SUPERSEDED --> [*]
 ```
 
 ### 7.2 Status Transition Rules

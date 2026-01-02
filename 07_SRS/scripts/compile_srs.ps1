@@ -37,18 +37,18 @@ function Clean-AsciiArt {
     $Content = $Content -replace '[\u2190-\u21FF]+', ''
 
     # Remove standard ASCII wireframe boxes (lines with +, -, |, etc.)
-    # Remove lines that are primarily box characters
-    $Content = $Content -replace '(?m)^\s*[\+\-\|]+[\+\-\|\s]*$', ''
+    # DISABLED: These were too aggressive and were deleting Markdown tables
+    # $Content = $Content -replace '(?m)^\s*[\+\-\|]+[\+\-\|\s]*$', ''
     # Remove box corner/edge patterns
-    $Content = $Content -replace '(?m)^\s*\|[^\|]*\|\s*$', ''
+    # $Content = $Content -replace '(?m)^\s*\|[^\|]*\|\s*$', ''
     # Remove lines starting with | that look like box sides
-    $Content = $Content -replace '(?m)^\s*\|.*\|\s*$', ''
+    # $Content = $Content -replace '(?m)^\s*\|.*\|\s*$', ''
 
     # Remove entire ```wireframe``` or ```ascii``` code blocks
     $Content = $Content -replace '(?s)```(?:wireframe|ascii|text)?\r?\n[\s\S]*?(?:\+[-\+]+\+|[\u2500-\u257F])[\s\S]*?```', '[See screenshot for UI layout]'
 
-    # Remove standalone wireframe sections (multiple consecutive box lines)
-    $Content = $Content -replace '(?s)(\+[-\+]+\+[\s\S]*?)+\+[-\+]+\+', '[See screenshot for UI layout]'
+    # Remove standalone wireframe sections - DISABLED to protect tables
+    # $Content = $Content -replace '(?s)(\+[-\+]+\+[\s\S]*?)+\+[-\+]+\+', '[See screenshot for UI layout]'
 
     # Clean up resulting empty code blocks
     $Content = $Content -replace '(?s)```\s*```', ''

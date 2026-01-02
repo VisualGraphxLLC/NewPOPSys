@@ -1,3 +1,4 @@
+E:\Docker\PopSystem\SOW\07_SRS\03_System_Architecture\3.2_Application_Architecture.md
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,49 +18,94 @@
             --primary-dark: #1d4ed8;
             --accent: #f59e0b;
         }
+
         [data-theme="shelfsync"] {
             --primary: #00ABB9;
             --primary-light: #14b8a6;
             --primary-dark: #012D3A;
             --accent: #FCD732;
         }
+
         [data-theme="merchpulse"] {
             --primary: #7C3AED;
             --primary-light: #8b5cf6;
             --primary-dark: #5B21B6;
             --accent: #F59E0B;
         }
+
         [data-theme="fieldforge"] {
             --primary: #3B82F6;
             --primary-light: #60a5fa;
             --primary-dark: #1E40AF;
             --accent: #10B981;
         }
+
         [data-theme="nexova"] {
             --primary: #06B6D4;
             --primary-light: #22D3EE;
             --primary-dark: #0F172A;
             --accent: #06B6D4;
         }
+
         [data-theme="prism"] {
             --primary: #14B8A6;
             --primary-light: #2DD4BF;
             --primary-dark: #18181B;
             --accent: #14B8A6;
         }
+
         /* Apply theme colors - Primary */
-        .bg-blue-600, .bg-blue-700 { background-color: var(--primary) !important; }
-        .hover\:bg-blue-700:hover { background-color: var(--primary-dark) !important; }
-        .text-blue-600, .text-blue-700 { color: var(--primary) !important; }
-        .border-blue-600 { border-color: var(--primary) !important; }
-        .bg-blue-500, .bg-blue-400 { background-color: var(--primary-light) !important; }
-        .text-blue-500 { color: var(--primary-light) !important; }
-        .bg-blue-100, .bg-blue-50 { background-color: color-mix(in srgb, var(--primary) 15%, white) !important; }
+        .bg-blue-600,
+        .bg-blue-700 {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-blue-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .text-blue-600,
+        .text-blue-700 {
+            color: var(--primary) !important;
+        }
+
+        .border-blue-600 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-blue-500,
+        .bg-blue-400 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .text-blue-500 {
+            color: var(--primary-light) !important;
+        }
+
+        .bg-blue-100,
+        .bg-blue-50 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
         /* Accent colors */
-        .bg-green-600, .bg-green-500 { background-color: var(--accent) !important; }
-        .hover\:bg-green-700:hover { background-color: color-mix(in srgb, var(--accent) 85%, black) !important; }
-        .text-green-600, .text-green-500 { color: var(--accent) !important; }
-        .bg-amber-500, .bg-yellow-500 { background-color: var(--accent) !important; }
+        .bg-green-600,
+        .bg-green-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-green-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .text-green-600,
+        .text-green-500 {
+            color: var(--accent) !important;
+        }
+
+        .bg-amber-500,
+        .bg-yellow-500 {
+            background-color: var(--accent) !important;
+        }
 
         /* Signature Pad & Attestation Styles */
         .signature-pad {
@@ -74,11 +120,13 @@
             cursor: crosshair;
             transition: all 0.2s;
         }
+
         .signature-pad.signed {
             border-style: solid;
             border-color: #10b981;
             background: #f0fdf4;
         }
+
         .checkbox-item {
             display: flex;
             align-items: flex-start;
@@ -87,9 +135,11 @@
             border-radius: 8px;
             cursor: pointer;
         }
+
         .checkbox-item:hover {
             background: #f9fafb;
         }
+
         .checkbox-item input[type="checkbox"] {
             width: 20px;
             height: 20px;
@@ -139,6 +189,8 @@
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
             border: 12px solid #1a1a1a;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Mobile (iPhone 17) - Default */
@@ -148,22 +200,27 @@
             border-radius: 47px;
             border: 12px solid #1a1a1a;
         }
+
         body.device-mobile .phone-container {
             background-color: #333;
             padding: 20px;
         }
+
         body.device-mobile .safe-area-top {
             height: 54px;
         }
+
         body.device-mobile .bottom-nav {
             height: 84px;
             padding-bottom: 24px;
         }
+
         body.device-mobile .screen {
-            padding-bottom: 120px !important;
+            height: auto !important;
         }
+
         body.device-mobile .sticky-bottom-action {
-            bottom: 84px !important;
+            bottom: 0px !important;
         }
 
         /* Tablet Portrait (iPad) */
@@ -173,33 +230,41 @@
             border-radius: 24px;
             border: 14px solid #1a1a1a;
         }
+
         body.device-tablet .phone-container {
             background-color: #333;
             padding: 20px;
             min-height: calc(100vh - 50px);
             overflow: auto;
         }
+
         body.device-tablet .safe-area-top {
             height: 48px;
             padding: 0 24px;
         }
+
         body.device-tablet .bottom-nav {
             height: 70px;
             padding-bottom: 12px;
         }
+
         body.device-tablet .card {
             padding: 20px;
         }
+
         body.device-tablet h1 {
             font-size: 2rem;
         }
+
         body.device-tablet .screen {
+            height: auto !important;
             padding: 24px !important;
-            padding-bottom: 100px !important;
         }
+
         body.device-tablet .sticky-bottom-action {
-            bottom: 70px !important;
+            bottom: 0px !important;
         }
+
         body.device-tablet #screen-login .login-form-container {
             max-width: 400px;
             margin: 0 auto;
@@ -209,12 +274,14 @@
         body.device-tablet-landscape {
             background-color: #f3f4f6;
         }
+
         body.device-tablet-landscape .phone-container {
             background-color: transparent;
             padding: 0;
             min-height: auto;
             display: block;
         }
+
         body.device-tablet-landscape #phone {
             width: 100%;
             height: auto;
@@ -223,6 +290,7 @@
             border: none;
             box-shadow: none;
         }
+
         body.device-tablet-landscape .safe-area-top {
             height: 56px;
             background: white;
@@ -230,6 +298,7 @@
             padding: 0 32px;
             font-size: 16px;
         }
+
         body.device-tablet-landscape .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -239,8 +308,9 @@
             padding-bottom: 8px;
             background: white;
             border-top: 1px solid #e5e7eb;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         }
+
         body.device-tablet-landscape .screen {
             max-width: 1000px;
             margin: 0 auto;
@@ -248,28 +318,35 @@
             padding-bottom: 100px !important;
             min-height: calc(100vh - 170px);
         }
+
         body.device-tablet-landscape .card {
             padding: 24px;
             margin-bottom: 16px;
         }
+
         body.device-tablet-landscape h1 {
             font-size: 2rem;
         }
+
         body.device-tablet-landscape h2 {
             font-size: 1.25rem;
         }
+
         body.device-tablet-landscape .nav-item {
             font-size: 12px;
             gap: 6px;
         }
+
         body.device-tablet-landscape .dashboard-campaigns {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 16px;
         }
+
         body.device-tablet-landscape .dashboard-campaigns .card {
             margin-bottom: 0;
         }
+
         body.device-tablet-landscape #screen-login .login-form-container {
             max-width: 400px;
             margin: 0 auto;
@@ -279,12 +356,14 @@
         body.device-desktop {
             background-color: #f3f4f6;
         }
+
         body.device-desktop .phone-container {
             background-color: transparent;
             padding: 0;
             min-height: auto;
             display: block;
         }
+
         body.device-desktop #phone {
             width: 100%;
             height: auto;
@@ -293,6 +372,7 @@
             border: none;
             box-shadow: none;
         }
+
         body.device-desktop .safe-area-top {
             height: 56px;
             background: white;
@@ -300,6 +380,7 @@
             padding: 0 32px;
             font-size: 16px;
         }
+
         body.device-desktop .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -309,8 +390,9 @@
             padding-bottom: 8px;
             background: white;
             border-top: 1px solid #e5e7eb;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         }
+
         body.device-desktop .screen {
             max-width: 1200px;
             margin: 0 auto;
@@ -318,20 +400,25 @@
             padding-bottom: 100px !important;
             min-height: calc(100vh - 170px);
         }
+
         body.device-desktop .card {
             padding: 24px;
             margin-bottom: 16px;
         }
+
         body.device-desktop h1 {
             font-size: 2.25rem;
         }
+
         body.device-desktop h2 {
             font-size: 1.5rem;
         }
+
         body.device-desktop .nav-item {
             font-size: 12px;
             gap: 6px;
         }
+
         body.device-desktop .nav-item i {
             width: 24px;
             height: 24px;
@@ -343,9 +430,11 @@
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 16px;
         }
+
         body.device-desktop .dashboard-campaigns .card {
             margin-bottom: 0;
         }
+
         body.device-desktop #screen-login .login-form-container {
             max-width: 400px;
             margin: 0 auto;
@@ -353,7 +442,8 @@
 
         .screen {
             display: none;
-            height: 100%;
+            flex: 1;
+            min-height: 0;
             overflow-y: auto;
             background: #f3f4f6;
         }
@@ -365,8 +455,8 @@
         .safe-area-top {
             height: 44px;
             background: white;
-            position: sticky;
-            top: 0;
+            position: relative;
+            flex: 0 0 auto;
             z-index: 50;
             display: flex;
             justify-content: space-between;
@@ -377,8 +467,8 @@
         }
 
         .bottom-nav {
-            position: absolute;
-            bottom: 0;
+            position: relative;
+            flex: 0 0 auto;
             width: 100%;
             height: 80px;
             background: white;
@@ -387,6 +477,7 @@
             justify-content: space-around;
             align-items: center;
             padding-bottom: 20px;
+            z-index: 60;
         }
 
         .nav-item {
@@ -441,9 +532,10 @@
             outline: 2px dashed #3b82f6;
             outline-offset: 2px;
         }
+
         .tooltip-toggle {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
             padding: 4px 12px;
             border-radius: 4px;
@@ -451,9 +543,11 @@
             font-size: 12px;
             font-weight: 600;
         }
+
         .tooltip-toggle:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
+
         .tooltip-toggle.active {
             background: white;
             color: #1d4ed8;
@@ -461,8 +555,8 @@
 
         /* Offline Indicator Styles */
         .offline-banner {
-            position: sticky;
-            top: 44px;
+            position: relative;
+            flex: 0 0 auto;
             z-index: 40;
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
@@ -485,7 +579,7 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0, 0, 0, 0.1);
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 10px;
@@ -495,14 +589,16 @@
             display: inline-block;
             width: 12px;
             height: 12px;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .offline-icon {
@@ -518,10 +614,10 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const toggle = document.getElementById('tooltip-toggle');
             if (toggle) {
-                toggle.addEventListener('click', function() {
+                toggle.addEventListener('click', function () {
                     document.body.classList.toggle('tooltips-enabled');
                     this.classList.toggle('active');
                     this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
@@ -529,7 +625,7 @@
             }
 
             document.querySelectorAll('[data-tooltip]').forEach(el => {
-                el.addEventListener('mouseenter', function(e) {
+                el.addEventListener('mouseenter', function (e) {
                     if (!document.body.classList.contains('tooltips-enabled')) return;
                     const existing = document.querySelector('.dynamic-tooltip');
                     if (existing) existing.remove();
@@ -570,7 +666,7 @@
                     tooltip.style.left = left + 'px';
                 });
 
-                el.addEventListener('mouseleave', function() {
+                el.addEventListener('mouseleave', function () {
                     const tooltip = document.querySelector('.dynamic-tooltip');
                     if (tooltip) tooltip.remove();
                 });
@@ -583,11 +679,16 @@
 
     <!-- Tooltip Help Banner -->
     <div class="tooltip-help-banner">
-        <a href="index.html" style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <a href="index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
             Index
         </a>
-        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
 
         <!-- Device View Selector -->
@@ -603,868 +704,1042 @@
     </div>
 
     <div class="phone-container">
-    <div id="phone" data-tooltip="📱 MOBILE SIMULATOR
+        <div id="phone" data-tooltip="📱 MOBILE SIMULATOR
 ━━━━━━━━━━━━━━━
 Device: iPhone-style mockup
 Size: 375x812px (iPhone X)
 Purpose: Mobile app preview
 Contains: All app screens">
-        <!-- Status Bar Simulator -->
-        <div class="safe-area-top" data-tooltip="📱 STATUS BAR
+            <!-- Status Bar Simulator -->
+            <div class="safe-area-top" data-tooltip="📱 STATUS BAR
 ━━━━━━━━━━━━━━━
 Component: Mobile status bar
 Position: Sticky at top
 Shows: Time, WiFi, Battery
 Pattern: Standard iOS/Android">
-            <span data-tooltip="🕐 TIME
+                <span data-tooltip="🕐 TIME
 ━━━━━━━━━━━━━━━
 Display: Current time
 Format: 12-hour
 Static: For wireframe demo
 Real: Would show actual time">9:41</span>
-            <div class="flex gap-1" data-tooltip="📶 STATUS ICONS
+                <div class="flex gap-1" data-tooltip="📶 STATUS ICONS
 ━━━━━━━━━━━━━━━
 Shows: Connectivity indicators
 Icons: WiFi, Battery status
 Purpose: System status info
 Offline: WiFi may show offline state">
-                <i data-lucide="wifi" size="14" class="online-icon" data-tooltip="📶 WIFI ICON
+                    <i data-lucide="wifi" size="14" class="online-icon" data-tooltip="📶 WIFI ICON
 ━━━━━━━━━━━━━━━
 Status: Network connectivity
 Offline mode: Shows disconnected
 SUPP-011: Offline support
 Important: App works offline"></i>
-                <i data-lucide="wifi-off" size="14" class="offline-icon text-orange-400" data-tooltip="📶 OFFLINE ICON
+                    <i data-lucide="wifi-off" size="14" class="offline-icon text-orange-400" data-tooltip="📶 OFFLINE ICON
 ━━━━━━━━━━━━━━━
 Status: No network connection
 Mode: Offline operation active
 SUPP-011: Full offline support
 Note: Data queued for sync"></i>
-                <i data-lucide="battery" size="14" data-tooltip="🔋 BATTERY ICON
+                    <i data-lucide="battery" size="14" data-tooltip="🔋 BATTERY ICON
 ━━━━━━━━━━━━━━━
 Status: Device battery level
 Display: Visual indicator
 Note: System status
 Mobile: Standard UI element"></i>
+                </div>
             </div>
-        </div>
 
-        <!-- Offline Status Banner -->
-        <div class="offline-banner" data-tooltip="🔶 OFFLINE BANNER (SUPP-011)
+            <!-- Offline Status Banner -->
+            <div class="offline-banner" data-tooltip="🔶 OFFLINE BANNER (SUPP-011)
 ━━━━━━━━━━━━━━━
 Status: Working offline mode
 Feature: Local drafts + queue
 Shows: Last sync, pending count
 Auto-syncs: When connection returns">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="wifi-off" size="14" data-tooltip="📶 OFFLINE INDICATOR
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="wifi-off" size="14" data-tooltip="📶 OFFLINE INDICATOR
 ━━━━━━━━━━━━━━━
 Visual: WiFi disconnected icon
 Status: No network connection
 Mode: Offline operation enabled
 SUPP-011: PWA + IndexedDB"></i>
-                    <span class="font-semibold" data-tooltip="💬 OFFLINE MESSAGE
+                        <span class="font-semibold" data-tooltip="💬 OFFLINE MESSAGE
 ━━━━━━━━━━━━━━━
 Text: Working offline status
 Purpose: User awareness
 Note: Changes saved locally
 Auto-sync: When online returns">Working Offline</span>
-                </div>
-                <div class="flex items-center gap-3 text-xs">
-                    <span data-tooltip="🕐 LAST SYNC TIME
+                    </div>
+                    <div class="flex items-center gap-3 text-xs">
+                        <span data-tooltip="🕐 LAST SYNC TIME
 ━━━━━━━━━━━━━━━
 Data: Last successful sync timestamp
 Format: Relative time (2 min ago)
 Updates: On each successful sync
 Purpose: Trust + transparency">Last sync: 2 min ago</span>
-                    <span class="sync-badge" data-tooltip="📤 PENDING UPLOADS
+                        <span class="sync-badge" data-tooltip="📤 PENDING UPLOADS
 ━━━━━━━━━━━━━━━
 Count: Items in upload queue
 Types: Photos, surveys, drafts
 Storage: IndexedDB outbox
 Auto-upload: On reconnection">
-                        <i data-lucide="upload-cloud" size="10"></i>
-                        <span>3 pending</span>
-                    </span>
+                            <i data-lucide="upload-cloud" size="10"></i>
+                            <span>3 pending</span>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SCREEN: LOGIN (SUPP-036) -->
-        <div id="screen-login" class="screen active p-6 bg-white" data-tooltip="🔐 LOGIN SCREEN
+            <!-- SCREEN: LOGIN (SUPP-036) -->
+            <div id="screen-login" class="screen active p-6 bg-white" data-tooltip="🔐 LOGIN SCREEN
 ━━━━━━━━━━━━━━━
 Feature: SUPP-036 Authentication
 Type: Store-based login
 Method: Store# + Access code
 Alternative: SSO for managers">
-            <div class="h-full flex flex-col justify-center login-form-container">
-                <div class="mb-12 text-center" data-tooltip="🎨 APP BRANDING
+                <div class="h-full flex flex-col justify-center login-form-container">
+                    <div class="mb-12 text-center" data-tooltip="🎨 APP BRANDING
 ━━━━━━━━━━━━━━━
 Section: App identity
 Shows: Logo and tagline
 Purpose: Brand recognition
 Design: Centered, clean layout">
-                    <div id="brand-logo" class="mb-4 flex justify-center" data-tooltip="🏢 BRAND LOGO
+                        <div id="brand-logo" class="mb-4 flex justify-center" data-tooltip="🏢 BRAND LOGO
 ━━━━━━━━━━━━━━━
 Purpose: Brand identity
 Dynamic: Changes with theme
 Contains: Logo with brand name">
-                        <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 48px; width: auto;">
-                    </div>
-                    <p class="text-gray-500" data-tooltip="📝 APP TAGLINE
+                            <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 48px; width: auto;">
+                        </div>
+                        <p class="text-gray-500" data-tooltip="📝 APP TAGLINE
 ━━━━━━━━━━━━━━━
 Text: App description
 Purpose: Clarify app function
 Audience: Store users
 Context: Execution workflow">Store Execution Portal</p>
-                </div>
-                <div class="space-y-4" data-tooltip="📋 LOGIN FORM
+                    </div>
+                    <div class="space-y-4" data-tooltip="📋 LOGIN FORM
 ━━━━━━━━━━━━━━━
 Fields: Store# + Access code
 Submit: Sign In button
 Auth: SUPP-036 authentication
 Session: Creates JWT token">
-                    <div data-tooltip="🏪 STORE NUMBER FIELD\n📊 Data: Store.storeNumber, StoreIdAlias.externalId\n⬅️ Depends: None\n➡️ Blocks: Authentication, session creation">
-                        <label class="block text-sm font-medium text-gray-700 mb-1" data-tooltip="🏷️ FIELD LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User input guidance">Store Number</label>
-                        <input type="text" value="3044"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                            placeholder="e.g. 1024" data-tooltip="🏪 STORE NUMBER INPUT\n📊 Data: Store.storeNumber, StoreIdAlias.externalId\n⬅️ Depends: None\n➡️ Blocks: Dashboard access, campaign visibility">
-                    </div>
-                    <div data-tooltip="🔑 ACCESS CODE FIELD\n📊 Data: User.passwordHash, Store.accessCode\n⬅️ Depends: Store number validated\n➡️ Blocks: User session creation, JWT token">
-                        <label class="block text-sm font-medium text-gray-700 mb-1" data-tooltip="🏷️ FIELD LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User input guidance">Access Code</label>
-                        <input type="password" value="********"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" data-tooltip="🔒 PASSWORD INPUT\n📊 Data: User.passwordHash, Store.accessCode\n⬅️ Depends: Store number entered\n➡️ Blocks: Authentication, session start">
-                    </div>
-                    <button onclick="nav('screen-dashboard')" class="btn-primary cursor-pointer" data-tooltip="🚀 SIGN IN BUTTON\n📊 Data: User.id, Store.id, Membership.role\n⬅️ Depends: Store number + access code valid\n➡️ Blocks: Dashboard access, StoreAssignment visibility">Sign In</button>
-                    <p class="text-center text-xs text-gray-400 mt-4" data-tooltip="ℹ️ VERSION INFO
+                        <div
+                            data-tooltip="🏪 STORE NUMBER FIELD\n📊 Data: Store.storeNumber, StoreIdAlias.externalId\n⬅️ Depends: None\n➡️ Blocks: Authentication, session creation">
+                            <label class="block text-sm font-medium text-gray-700 mb-1"
+                                data-tooltip="🏷️ FIELD LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User input guidance">Store
+                                Number</label>
+                            <input type="text" value="3044"
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="e.g. 1024"
+                                data-tooltip="🏪 STORE NUMBER INPUT\n📊 Data: Store.storeNumber, StoreIdAlias.externalId\n⬅️ Depends: None\n➡️ Blocks: Dashboard access, campaign visibility">
+                        </div>
+                        <div
+                            data-tooltip="🔑 ACCESS CODE FIELD\n📊 Data: User.passwordHash, Store.accessCode\n⬅️ Depends: Store number validated\n➡️ Blocks: User session creation, JWT token">
+                            <label class="block text-sm font-medium text-gray-700 mb-1"
+                                data-tooltip="🏷️ FIELD LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User input guidance">Access
+                                Code</label>
+                            <input type="password" value="********"
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                                data-tooltip="🔒 PASSWORD INPUT\n📊 Data: User.passwordHash, Store.accessCode\n⬅️ Depends: Store number entered\n➡️ Blocks: Authentication, session start">
+                        </div>
+                        <button onclick="nav('screen-dashboard')" class="btn-primary cursor-pointer"
+                            data-tooltip="🚀 SIGN IN BUTTON\n📊 Data: User.id, Store.id, Membership.role\n⬅️ Depends: Store number + access code valid\n➡️ Blocks: Dashboard access, StoreAssignment visibility">Sign
+                            In</button>
+                        <p class="text-center text-xs text-gray-400 mt-4" data-tooltip="ℹ️ VERSION INFO
 ━━━━━━━━━━━━━━━
 Display: App version number
 Type: Pilot/Beta build
 Purpose: Issue tracking
 Helpful: For support requests">v1.35 (Pilot Build)</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SCREEN: DASHBOARD (Home) -->
-        <div id="screen-dashboard" class="screen p-4 pb-24">
-            <h1 class="text-2xl font-bold text-gray-900 mb-4" data-tooltip="🏪 STORE DASHBOARD HEADER\n📊 Data: Store.name, Store.storeNumber\n⬅️ Depends: User authenticated, session active\n➡️ Blocks: Store context for all campaigns">Good2Go #3044</h1>
-
-            <!-- Alert Banner -->
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r" data-tooltip="⚠️ SHIPMENT ALERT BANNER\n📊 Data: Shipment.deliveryStatus, ShipmentTracking.carrier, Shipment.estimatedDelivery\n⬅️ Depends: Shipment status updated via webhook\n➡️ Blocks: Receipt survey access enabled">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <i data-lucide="alert-triangle" class="text-yellow-400" size="20" data-tooltip="⚠️ ALERT INDICATOR ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual alert indicator"></i>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm text-yellow-700">
-                            Shipment arriving today via UPS.<br>
-                            <span class="font-bold cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="🔗 ACTION LINK\n📊 Data: Navigation to receipt screen\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Receipt survey screen access">Verify Receipt
-                                →</span>
-                        </p>
                     </div>
                 </div>
             </div>
 
-            <h2 class="text-lg font-semibold text-gray-800 mb-3" data-tooltip="📋 CAMPAIGN SECTION HEADER\n📊 Data: Section title for active StoreAssignments\n⬅️ Depends: User authenticated, campaigns assigned\n➡️ Blocks: Campaign list section identification">Active Campaigns</h2>
+            <!-- SCREEN: DASHBOARD (Home) -->
+            <div id="screen-dashboard" class="screen p-4 pb-24">
+                <h1 class="text-2xl font-bold text-gray-900 mb-4"
+                    data-tooltip="🏪 STORE DASHBOARD HEADER\n📊 Data: Store.name, Store.storeNumber\n⬅️ Depends: User authenticated, session active\n➡️ Blocks: Store context for all campaigns">
+                    Good2Go #3044</h1>
 
-            <div class="dashboard-campaigns">
-                <!-- Campaign Card: Receipt Phase - Links to Task Flow -->
-                <div class="card cursor-pointer" onclick="nav('screen-tasks')" data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Task list navigation, progressive workflow">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔵 ACTION REQUIRED BADGE\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Shipment delivered, receipt not submitted\n➡️ Blocks: User must complete receipt survey">Action
-                            Required</span>
-                        <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing, task deadlines">Start: Dec 20</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign created by Brand\n➡️ Blocks: StoreAssignment creation, order generation">Holiday Promo 2025</h3>
-                    <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DESCRIPTION\n📊 Data: KitDefinition.name, KitItem.name, KitItem.quantity\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: OrderLine generation, receipt checklist">Kit: Standard + Window Clings</p>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2" data-tooltip="📊 PROGRESS BAR\n📊 Data: COUNT(CompletionSubmission), COUNT(AssignmentItem)\n⬅️ Depends: Receipt and install surveys submitted\n➡️ Blocks: Visual completion indicator">
-                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-gray-500">
-                        <span data-tooltip="📌 PHASE STATUS\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Install phase unlock">Receipt Pending</span>
-                        <span data-tooltip="✅ TASK COUNTER\n📊 Data: COUNT(CompletionSubmission WHERE status=COMPLETE)\n⬅️ Depends: Receipt and install surveys\n➡️ Blocks: Assignment completion status">1/5 Tasks</span>
-                    </div>
-                </div>
-                <!-- Note: Install phase is shown as tasks within the task flow, not as a separate campaign card -->
-            </div>
-
-            <!-- Past Campaigns Section -->
-            <h2 class="text-lg font-semibold text-gray-800 mb-3 mt-6" data-tooltip="📋 PAST CAMPAIGNS HEADER\n📊 Data: Section title for completed StoreAssignments\n⬅️ Depends: User authenticated, campaigns completed\n➡️ Blocks: Historical campaign list">Past Campaigns</h2>
-
-            <div class="dashboard-campaigns">
-                <!-- Past Campaign Card: Completed -->
-                <div class="card opacity-50" data-tooltip="✅ COMPLETED CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus=COMPLETE, Campaign.endDate\n⬅️ Depends: All tasks completed, attestation submitted\n➡️ Blocks: Historical reference only">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="✅ COMPLETED BADGE\n📊 Data: StoreAssignment.executionStatus=COMPLETE\n⬅️ Depends: All tasks done\n➡️ Blocks: None - read only">Completed</span>
-                        <span class="text-xs text-gray-500" data-tooltip="📅 COMPLETION DATE\n📊 Data: StoreAssignment.completedAt\n⬅️ Depends: Attestation submitted\n➡️ Blocks: None">Nov 15, 2024</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: None - historical">Fall Refresh 2024</h3>
-                    <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT SUMMARY\n📊 Data: KitDefinition.name\n⬅️ Depends: Kit defined\n➡️ Blocks: None">Kit: Window Display</p>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
-                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-gray-500">
-                        <span>All Tasks Complete</span>
-                        <span>5/5 Tasks</span>
+                <!-- Alert Banner -->
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r"
+                    data-tooltip="⚠️ SHIPMENT ALERT BANNER\n📊 Data: Shipment.deliveryStatus, ShipmentTracking.carrier, Shipment.estimatedDelivery\n⬅️ Depends: Shipment status updated via webhook\n➡️ Blocks: Receipt survey access enabled">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="alert-triangle" class="text-yellow-400" size="20"
+                                data-tooltip="⚠️ ALERT INDICATOR ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual alert indicator"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">
+                                Shipment arriving today via UPS.<br>
+                                <span class="font-bold cursor-pointer" onclick="nav('screen-receipt')"
+                                    data-tooltip="🔗 ACTION LINK\n📊 Data: Navigation to receipt screen\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Receipt survey screen access">Verify
+                                    Receipt
+                                    →</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Past Campaign Card: Completed (Older) -->
-                <div class="card opacity-50" data-tooltip="✅ COMPLETED CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus=COMPLETE\n⬅️ Depends: All tasks completed\n➡️ Blocks: Historical reference only">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
-                        <span class="text-xs text-gray-500">Sep 20, 2024</span>
+                <h2 class="text-lg font-semibold text-gray-800 mb-3"
+                    data-tooltip="📋 CAMPAIGN SECTION HEADER\n📊 Data: Section title for active StoreAssignments\n⬅️ Depends: User authenticated, campaigns assigned\n➡️ Blocks: Campaign list section identification">
+                    Active Campaigns</h2>
+
+                <div class="dashboard-campaigns">
+                    <!-- Campaign Card: Receipt Phase - Links to Task Flow -->
+                    <div class="card cursor-pointer" onclick="nav('screen-tasks')"
+                        data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Task list navigation, progressive workflow">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+                                data-tooltip="🔵 ACTION REQUIRED BADGE\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Shipment delivered, receipt not submitted\n➡️ Blocks: User must complete receipt survey">Action
+                                Required</span>
+                            <span class="text-xs text-gray-500"
+                                data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing, task deadlines">Start:
+                                Dec 20</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900"
+                            data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign created by Brand\n➡️ Blocks: StoreAssignment creation, order generation">
+                            Holiday Promo 2025</h3>
+                        <p class="text-sm text-gray-600 mb-3"
+                            data-tooltip="📦 KIT DESCRIPTION\n📊 Data: KitDefinition.name, KitItem.name, KitItem.quantity\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: OrderLine generation, receipt checklist">
+                            Kit: Standard + Window Clings</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
+                            data-tooltip="📊 PROGRESS BAR\n📊 Data: COUNT(CompletionSubmission), COUNT(AssignmentItem)\n⬅️ Depends: Receipt and install surveys submitted\n➡️ Blocks: Visual completion indicator">
+                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span
+                                data-tooltip="📌 PHASE STATUS\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Install phase unlock">Receipt
+                                Pending</span>
+                            <span
+                                data-tooltip="✅ TASK COUNTER\n📊 Data: COUNT(CompletionSubmission WHERE status=COMPLETE)\n⬅️ Depends: Receipt and install surveys\n➡️ Blocks: Assignment completion status">1/5
+                                Tasks</span>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900">Back to School 2024</h3>
-                    <p class="text-sm text-gray-600 mb-3">Kit: Poster + Standee</p>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
-                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+                    <!-- Note: Install phase is shown as tasks within the task flow, not as a separate campaign card -->
+                </div>
+
+                <!-- Past Campaigns Section -->
+                <h2 class="text-lg font-semibold text-gray-800 mb-3 mt-6"
+                    data-tooltip="📋 PAST CAMPAIGNS HEADER\n📊 Data: Section title for completed StoreAssignments\n⬅️ Depends: User authenticated, campaigns completed\n➡️ Blocks: Historical campaign list">
+                    Past Campaigns</h2>
+
+                <div class="dashboard-campaigns">
+                    <!-- Past Campaign Card: Completed -->
+                    <div class="card opacity-50"
+                        data-tooltip="✅ COMPLETED CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus=COMPLETE, Campaign.endDate\n⬅️ Depends: All tasks completed, attestation submitted\n➡️ Blocks: Historical reference only">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+                                data-tooltip="✅ COMPLETED BADGE\n📊 Data: StoreAssignment.executionStatus=COMPLETE\n⬅️ Depends: All tasks done\n➡️ Blocks: None - read only">Completed</span>
+                            <span class="text-xs text-gray-500"
+                                data-tooltip="📅 COMPLETION DATE\n📊 Data: StoreAssignment.completedAt\n⬅️ Depends: Attestation submitted\n➡️ Blocks: None">Nov
+                                15, 2024</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900"
+                            data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: None - historical">
+                            Fall Refresh 2024</h3>
+                        <p class="text-sm text-gray-600 mb-3"
+                            data-tooltip="📦 KIT SUMMARY\n📊 Data: KitDefinition.name\n⬅️ Depends: Kit defined\n➡️ Blocks: None">
+                            Kit: Window Display</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>All Tasks Complete</span>
+                            <span>5/5 Tasks</span>
+                        </div>
                     </div>
-                    <div class="flex justify-between text-xs text-gray-500">
-                        <span>All Tasks Complete</span>
-                        <span>4/4 Tasks</span>
+
+                    <!-- Past Campaign Card: Completed (Older) -->
+                    <div class="card opacity-50"
+                        data-tooltip="✅ COMPLETED CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus=COMPLETE\n⬅️ Depends: All tasks completed\n➡️ Blocks: Historical reference only">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
+                            <span class="text-xs text-gray-500">Sep 20, 2024</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900">Back to School 2024</h3>
+                        <p class="text-sm text-gray-600 mb-3">Kit: Poster + Standee</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>All Tasks Complete</span>
+                            <span>4/4 Tasks</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SCREEN: RECEIPT SURVEY (SUPP-015 Stage 1) -->
-        <div id="screen-receipt" class="screen p-4 pb-24">
-            <div class="flex items-center mb-4">
-                <button onclick="nav('screen-dashboard')" class="p-2 -ml-2" data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to dashboard"><i data-lucide="arrow-left"></i></button>
-                <h1 class="text-lg font-bold ml-2" data-tooltip="📦 RECEIPT SURVEY HEADER\n📊 Data: StoreOrder.id, Shipment.id\n⬅️ Depends: Shipment delivered\n➡️ Blocks: ReceiveVerification workflow">Verify Receipt</h1>
-            </div>
-
-            <div class="bg-white p-4 rounded-lg shadow-sm mb-4" data-tooltip="🚚 SHIPMENT INFO CARD\n📊 Data: Shipment.trackingNumber, Shipment.carrier, Shipment.deliveryStatus\n⬅️ Depends: StoreOrder created, Shipment entity exists\n➡️ Blocks: Receipt verification access">
-                <div class="text-sm text-gray-500 mb-1" data-tooltip="📋 CAMPAIGN REFERENCE\n📊 Data: Campaign.name\n⬅️ Depends: Campaign active, StoreAssignment created\n➡️ Blocks: Context for receipt items">Holiday Promo 2025</div>
-                <div class="font-medium" data-tooltip="📦 TRACKING NUMBER\n📊 Data: ShipmentTracking.trackingNumber, ShipmentTracking.carrier\n⬅️ Depends: Shipment created by PSP\n➡️ Blocks: Carrier lookup, delivery tracking">Tracking: 1Z999AA10123456784</div>
-                <div class="text-green-600 text-sm font-semibold mt-1" data-tooltip="✅ DELIVERY STATUS\n📊 Data: Shipment.deliveryStatus, Shipment.deliveredAt\n⬅️ Depends: Carrier webhook update\n➡️ Blocks: Receipt survey enabled, ReceiveVerification">Delivered Today</div>
-            </div>
-
-            <h3 class="font-semibold text-gray-700 mb-3" data-tooltip="📝 CHECKLIST SECTION HEADER\n📊 Data: COUNT(OrderLine) for StoreOrder\n⬅️ Depends: StoreOrder created, OrderLines generated\n➡️ Blocks: Item verification checklist">Contents Checklist</h3>
-
-            <div class="space-y-3">
-                <!-- Item 1 -->
-                <div class="card flex items-center justify-between" data-tooltip="✅ RECEIPT ITEM CARD\n📊 Data: OrderLine.itemName, OrderLine.quantity, OrderLine.sku, KitItem.id\n⬅️ Depends: StoreOrder created, OrderLines generated\n➡️ Blocks: ReceiveVerification creation, issue reporting">
-                    <div>
-                        <div class="font-bold" data-tooltip="📦 ITEM NAME\n📊 Data: KitItem.name, OrderLine.itemName\n⬅️ Depends: Kit defined, OrderLine created\n➡️ Blocks: Item identification for verification">Window Cling (L)</div>
-                        <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS\n📊 Data: OrderLine.quantity, OrderLine.sku\n⬅️ Depends: Kit definition, PSP order\n➡️ Blocks: Quantity verification, SKU matching">Qty: 2 • SKU: WIN-001</div>
-                    </div>
-                    <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" data-tooltip="☑️ RECEIVED CHECKBOX\n📊 Data: ReceiveVerification.itemReceived, ReceiveVerification.orderLineId\n⬅️ Depends: Shipment delivered\n➡️ Blocks: IssueReport creation, receipt confirmation">
+            <!-- SCREEN: RECEIPT SURVEY (SUPP-015 Stage 1) -->
+            <div id="screen-receipt" class="screen p-4 pb-24">
+                <div class="flex items-center mb-4">
+                    <button onclick="nav('screen-dashboard')" class="p-2 -ml-2"
+                        data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to dashboard"><i
+                            data-lucide="arrow-left"></i></button>
+                    <h1 class="text-lg font-bold ml-2"
+                        data-tooltip="📦 RECEIPT SURVEY HEADER\n📊 Data: StoreOrder.id, Shipment.id\n⬅️ Depends: Shipment delivered\n➡️ Blocks: ReceiveVerification workflow">
+                        Verify Receipt</h1>
                 </div>
-                <!-- Item 2 -->
-                <div class="card flex items-center justify-between" data-tooltip="✅ KIT ITEM CHECKLIST
+
+                <div class="bg-white p-4 rounded-lg shadow-sm mb-4"
+                    data-tooltip="🚚 SHIPMENT INFO CARD\n📊 Data: Shipment.trackingNumber, Shipment.carrier, Shipment.deliveryStatus\n⬅️ Depends: StoreOrder created, Shipment entity exists\n➡️ Blocks: Receipt verification access">
+                    <div class="text-sm text-gray-500 mb-1"
+                        data-tooltip="📋 CAMPAIGN REFERENCE\n📊 Data: Campaign.name\n⬅️ Depends: Campaign active, StoreAssignment created\n➡️ Blocks: Context for receipt items">
+                        Holiday Promo 2025</div>
+                    <div class="font-medium"
+                        data-tooltip="📦 TRACKING NUMBER\n📊 Data: ShipmentTracking.trackingNumber, ShipmentTracking.carrier\n⬅️ Depends: Shipment created by PSP\n➡️ Blocks: Carrier lookup, delivery tracking">
+                        Tracking: 1Z999AA10123456784</div>
+                    <div class="text-green-600 text-sm font-semibold mt-1"
+                        data-tooltip="✅ DELIVERY STATUS\n📊 Data: Shipment.deliveryStatus, Shipment.deliveredAt\n⬅️ Depends: Carrier webhook update\n➡️ Blocks: Receipt survey enabled, ReceiveVerification">
+                        Delivered Today</div>
+                </div>
+
+                <h3 class="font-semibold text-gray-700 mb-3"
+                    data-tooltip="📝 CHECKLIST SECTION HEADER\n📊 Data: COUNT(OrderLine) for StoreOrder\n⬅️ Depends: StoreOrder created, OrderLines generated\n➡️ Blocks: Item verification checklist">
+                    Contents Checklist</h3>
+
+                <div class="space-y-3">
+                    <!-- Item 1 -->
+                    <div class="card flex items-center justify-between"
+                        data-tooltip="✅ RECEIPT ITEM CARD\n📊 Data: OrderLine.itemName, OrderLine.quantity, OrderLine.sku, KitItem.id\n⬅️ Depends: StoreOrder created, OrderLines generated\n➡️ Blocks: ReceiveVerification creation, issue reporting">
+                        <div>
+                            <div class="font-bold"
+                                data-tooltip="📦 ITEM NAME\n📊 Data: KitItem.name, OrderLine.itemName\n⬅️ Depends: Kit defined, OrderLine created\n➡️ Blocks: Item identification for verification">
+                                Window Cling (L)</div>
+                            <div class="text-xs text-gray-500"
+                                data-tooltip="🔢 ITEM DETAILS\n📊 Data: OrderLine.quantity, OrderLine.sku\n⬅️ Depends: Kit definition, PSP order\n➡️ Blocks: Quantity verification, SKU matching">
+                                Qty: 2 • SKU: WIN-001</div>
+                        </div>
+                        <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+                            data-tooltip="☑️ RECEIVED CHECKBOX\n📊 Data: ReceiveVerification.itemReceived, ReceiveVerification.orderLineId\n⬅️ Depends: Shipment delivered\n➡️ Blocks: IssueReport creation, receipt confirmation">
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="card flex items-center justify-between" data-tooltip="✅ KIT ITEM CHECKLIST
 ━━━━━━━━━━━━━━━
 Data: KitItem from Campaign
 Fields: name, quantity, sku
 Action: Checkbox = received
 If unchecked: Can report issue">
-                    <div>
-                        <div class="font-bold" data-tooltip="📦 ITEM NAME
+                        <div>
+                            <div class="font-bold" data-tooltip="📦 ITEM NAME
 ━━━━━━━━━━━━━━━
 Data: KitItem.name
 Source: Campaign kit definition
 Type: POP material identifier
 Maps to: OrderLine.item_name">Register Mat</div>
-                        <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS
+                            <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS
 ━━━━━━━━━━━━━━━
 Qty: Expected quantity to receive
 SKU: Product identifier for PSP
 Data: OrderLine.quantity + sku
 Verification: Match against shipment">Qty: 1 • SKU: MAT-004</div>
-                    </div>
-                    <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer" data-tooltip="☑️ RECEIVED CHECKBOX
+                        </div>
+                        <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+                            data-tooltip="☑️ RECEIVED CHECKBOX
 ━━━━━━━━━━━━━━━
 Action: Mark item as received
 Saves: ReceiveVerification record
 Unchecked: Enables issue reporting
 Required: All items before submit">
-                </div>
-                <!-- Item 3 (Issue) -->
-                <div class="card" data-tooltip="⚠️ ISSUE REPORTING CARD\n📊 Data: IssueReport.issueType, IssueReport.orderLineId, IssueReport.description\n⬅️ Depends: Item not received or damaged\n➡️ Blocks: Reorder creation, PSP review">
-                    <div class="flex items-center justify-between mb-2">
-                        <div>
-                            <div class="font-bold" data-tooltip="📦 ITEM NAME\n📊 Data: KitItem.name, OrderLine.itemName\n⬅️ Depends: Kit defined, OrderLine created\n➡️ Blocks: Item identification for issue report">Aisle Danglers</div>
-                            <div class="text-xs text-gray-500" data-tooltip="🔢 ITEM DETAILS\n📊 Data: OrderLine.quantity, OrderLine.sku\n⬅️ Depends: Kit definition, PSP order\n➡️ Blocks: Quantity verification, issue quantity">Qty: 5 • SKU: DNG-002</div>
-                        </div>
-                        <input type="checkbox" id="chk-dangle" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
-                            onchange="toggleIssue(this)" data-tooltip="☑️ RECEIVED CHECKBOX\n📊 Data: ReceiveVerification.itemReceived\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Issue panel display, IssueReport creation">
                     </div>
-                    <div id="issue-panel" class="hidden mt-2 pt-2 border-t border-gray-100">
-                        <button class="text-sm text-red-600 font-medium flex items-center gap-1 cursor-pointer"
-                            onclick="alert('Opens SUPP-019 Issue Report Flow')" data-tooltip="🚨 ISSUE REPORT BUTTON\n📊 Data: IssueReport.issueType, IssueLine.quantity, IssueReport.photoUrl\n⬅️ Depends: Checkbox unchecked, item missing/damaged\n➡️ Blocks: Reorder generation, PSP notification">
-                            <i data-lucide="alert-circle" size="14" data-tooltip="⚠️ ISSUE ICON
+                    <!-- Item 3 (Issue) -->
+                    <div class="card"
+                        data-tooltip="⚠️ ISSUE REPORTING CARD\n📊 Data: IssueReport.issueType, IssueReport.orderLineId, IssueReport.description\n⬅️ Depends: Item not received or damaged\n➡️ Blocks: Reorder creation, PSP review">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <div class="font-bold"
+                                    data-tooltip="📦 ITEM NAME\n📊 Data: KitItem.name, OrderLine.itemName\n⬅️ Depends: Kit defined, OrderLine created\n➡️ Blocks: Item identification for issue report">
+                                    Aisle Danglers</div>
+                                <div class="text-xs text-gray-500"
+                                    data-tooltip="🔢 ITEM DETAILS\n📊 Data: OrderLine.quantity, OrderLine.sku\n⬅️ Depends: Kit definition, PSP order\n➡️ Blocks: Quantity verification, issue quantity">
+                                    Qty: 5 • SKU: DNG-002</div>
+                            </div>
+                            <input type="checkbox" id="chk-dangle"
+                                class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+                                onchange="toggleIssue(this)"
+                                data-tooltip="☑️ RECEIVED CHECKBOX\n📊 Data: ReceiveVerification.itemReceived\n⬅️ Depends: Shipment delivered\n➡️ Blocks: Issue panel display, IssueReport creation">
+                        </div>
+                        <div id="issue-panel" class="hidden mt-2 pt-2 border-t border-gray-100">
+                            <button class="text-sm text-red-600 font-medium flex items-center gap-1 cursor-pointer"
+                                onclick="alert('Opens SUPP-019 Issue Report Flow')"
+                                data-tooltip="🚨 ISSUE REPORT BUTTON\n📊 Data: IssueReport.issueType, IssueLine.quantity, IssueReport.photoUrl\n⬅️ Depends: Checkbox unchecked, item missing/damaged\n➡️ Blocks: Reorder generation, PSP notification">
+                                <i data-lucide="alert-circle" size="14" data-tooltip="⚠️ ISSUE ICON
 ━━━━━━━━━━━━━━━
 Visual: Alert indicator
 Color: Red (problem state)
 Action: Clickable to report
 Flow: Goes to issue form"></i> Report Missing/Damaged
-                        </button>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="text-center mt-8">
-                <button onclick="completeReceipt()" class="btn-primary cursor-pointer" data-tooltip="✅ CONFIRM RECEIPT BUTTON\n📊 Data: ReceiveVerification.status, ReceiveVerification.submittedAt, StoreAssignment.executionStatus\n⬅️ Depends: All items checked or issues reported\n➡️ Blocks: Install phase access, PhotoUpload enabled">Confirm Receipt</button>
-                <p class="text-xs text-gray-400 mt-2" data-tooltip="ℹ️ HELP TEXT
+                <div class="text-center mt-8">
+                    <button onclick="completeReceipt()" class="btn-primary cursor-pointer"
+                        data-tooltip="✅ CONFIRM RECEIPT BUTTON\n📊 Data: ReceiveVerification.status, ReceiveVerification.submittedAt, StoreAssignment.executionStatus\n⬅️ Depends: All items checked or issues reported\n➡️ Blocks: Install phase access, PhotoUpload enabled">Confirm
+                        Receipt</button>
+                    <p class="text-xs text-gray-400 mt-2" data-tooltip="ℹ️ HELP TEXT
 ━━━━━━━━━━━━━━━
 Guidance: What happens next
 Info: Receipt → Install transition
 Context: Sequential workflow
 Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
-            </div>
-        </div>
-
-        <!-- SCREEN: INSTALL SURVEY (SUPP-017 / SUPP-015 Stage 2) -->
-        <div id="screen-install" class="screen p-4 pb-24">
-            <div class="flex items-center mb-4">
-                <button onclick="nav('screen-dashboard')" class="p-2 -ml-2" data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to dashboard"><i data-lucide="arrow-left"></i></button>
-                <h1 class="text-lg font-bold ml-2" data-tooltip="📷 INSTALL SURVEY HEADER\n📊 Data: StoreAssignment.id, COUNT(AssignmentItem)\n⬅️ Depends: Receipt verified, install phase unlocked\n➡️ Blocks: PhotoUpload workflow">Install Photos</h1>
+                </div>
             </div>
 
-            <div class="flex justify-between items-center mb-4" data-tooltip="📊 PROGRESS TRACKER\n📊 Data: COUNT(PhotoUpload WHERE status=UPLOADED), COUNT(AssignmentItem)\n⬅️ Depends: AssignmentItems created\n➡️ Blocks: Completion percentage calculation">
-                <span class="text-sm font-medium text-gray-600" data-tooltip="📊 PROGRESS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Progress section identification">Progress</span>
-                <span class="text-sm font-bold text-blue-600" data-tooltip="🔢 PROGRESS PERCENTAGE\n📊 Data: (COUNT(PhotoUpload) / COUNT(AssignmentItem)) * 100\n⬅️ Depends: Photos uploaded\n➡️ Blocks: Completion indicator, submit button enablement">33%</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-2 mb-6" data-tooltip="📊 PROGRESS BAR\n📊 Data: Visual of (PhotoUploads / AssignmentItems)\n⬅️ Depends: Photo count calculation\n➡️ Blocks: Visual completion feedback">
-                <div class="bg-blue-600 h-2 rounded-full" style="width: 33%"></div>
-            </div>
+            <!-- SCREEN: INSTALL SURVEY (SUPP-017 / SUPP-015 Stage 2) -->
+            <div id="screen-install" class="screen p-4 pb-24">
+                <div class="flex items-center mb-4">
+                    <button onclick="nav('screen-dashboard')" class="p-2 -ml-2"
+                        data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to dashboard"><i
+                            data-lucide="arrow-left"></i></button>
+                    <h1 class="text-lg font-bold ml-2"
+                        data-tooltip="📷 INSTALL SURVEY HEADER\n📊 Data: StoreAssignment.id, COUNT(AssignmentItem)\n⬅️ Depends: Receipt verified, install phase unlocked\n➡️ Blocks: PhotoUpload workflow">
+                        Install Photos</h1>
+                </div>
 
-            <!-- Group: Windows -->
-            <div class="mb-6">
-                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name, LocationSlot.id\n⬅️ Depends: StoreLayout defined\n➡️ Blocks: AssignmentItem grouping by location">Slot: Front Windows</h3>
+                <div class="flex justify-between items-center mb-4"
+                    data-tooltip="📊 PROGRESS TRACKER\n📊 Data: COUNT(PhotoUpload WHERE status=UPLOADED), COUNT(AssignmentItem)\n⬅️ Depends: AssignmentItems created\n➡️ Blocks: Completion percentage calculation">
+                    <span class="text-sm font-medium text-gray-600"
+                        data-tooltip="📊 PROGRESS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Progress section identification">Progress</span>
+                    <span class="text-sm font-bold text-blue-600"
+                        data-tooltip="🔢 PROGRESS PERCENTAGE\n📊 Data: (COUNT(PhotoUpload) / COUNT(AssignmentItem)) * 100\n⬅️ Depends: Photos uploaded\n➡️ Blocks: Completion indicator, submit button enablement">33%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-6"
+                    data-tooltip="📊 PROGRESS BAR\n📊 Data: Visual of (PhotoUploads / AssignmentItems)\n⬅️ Depends: Photo count calculation\n➡️ Blocks: Visual completion feedback">
+                    <div class="bg-blue-600 h-2 rounded-full" style="width: 33%"></div>
+                </div>
 
-                <div class="card" data-tooltip="✅ COMPLETED PHOTO CARD\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.uploadedAt, PhotoUpload.status, AssignmentItem.id\n⬅️ Depends: Photo captured, uploaded to storage\n➡️ Blocks: PhotoReview creation, PSP verification">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h4 class="font-bold" data-tooltip="📦 ASSIGNMENT ITEM NAME\n📊 Data: AssignmentItem.name, LocationSlot.name, KitItem.name\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Photo requirement identification">Window Cling (Left)</h4>
-                            <p class="text-xs text-gray-500" data-tooltip="📝 PHOTO GUIDANCE\n📊 Data: PhotoRule.instructions, PhotoRule.requirements\n⬅️ Depends: PhotoRule defined for location\n➡️ Blocks: User photo quality guidance">Must be centered at eye level.</p>
+                <!-- Group: Windows -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2"
+                        data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name, LocationSlot.id\n⬅️ Depends: StoreLayout defined\n➡️ Blocks: AssignmentItem grouping by location">
+                        Slot: Front Windows</h3>
+
+                    <div class="card"
+                        data-tooltip="✅ COMPLETED PHOTO CARD\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.uploadedAt, PhotoUpload.status, AssignmentItem.id\n⬅️ Depends: Photo captured, uploaded to storage\n➡️ Blocks: PhotoReview creation, PSP verification">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-bold"
+                                    data-tooltip="📦 ASSIGNMENT ITEM NAME\n📊 Data: AssignmentItem.name, LocationSlot.name, KitItem.name\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Photo requirement identification">
+                                    Window Cling (Left)</h4>
+                                <p class="text-xs text-gray-500"
+                                    data-tooltip="📝 PHOTO GUIDANCE\n📊 Data: PhotoRule.instructions, PhotoRule.requirements\n⬅️ Depends: PhotoRule defined for location\n➡️ Blocks: User photo quality guidance">
+                                    Must be centered at eye level.</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded"
+                                data-tooltip="✅ DONE BADGE\n📊 Data: PhotoUpload.status\n⬅️ Depends: Photo uploaded successfully\n➡️ Blocks: PhotoReview enabled, submission allowed">Done</span>
                         </div>
-                        <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded" data-tooltip="✅ DONE BADGE\n📊 Data: PhotoUpload.status\n⬅️ Depends: Photo uploaded successfully\n➡️ Blocks: PhotoReview enabled, submission allowed">Done</span>
+                        <div class="bg-gray-100 rounded h-32 flex items-center justify-center border-2 border-dashed border-gray-300"
+                            data-tooltip="🖼️ PHOTO PREVIEW\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.uploadedAt\n⬅️ Depends: Photo captured and uploaded\n➡️ Blocks: Full-size view, retake option">
+                            <img src="https://via.placeholder.com/300x150?text=Uploaded+Photo"
+                                class="h-full w-full object-cover rounded cursor-pointer"
+                                data-tooltip="🔍 PHOTO IMAGE\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.fileSize\n⬅️ Depends: Photo uploaded to cloud storage\n➡️ Blocks: Zoom view, PhotoReview access">
+                        </div>
                     </div>
-                    <div
-                        class="bg-gray-100 rounded h-32 flex items-center justify-center border-2 border-dashed border-gray-300" data-tooltip="🖼️ PHOTO PREVIEW\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.uploadedAt\n⬅️ Depends: Photo captured and uploaded\n➡️ Blocks: Full-size view, retake option">
-                        <img src="https://via.placeholder.com/300x150?text=Uploaded+Photo"
-                            class="h-full w-full object-cover rounded cursor-pointer" data-tooltip="🔍 PHOTO IMAGE\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.fileSize\n⬅️ Depends: Photo uploaded to cloud storage\n➡️ Blocks: Zoom view, PhotoReview access">
+
+                    <div class="card"
+                        data-tooltip="📷 PENDING PHOTO CARD\n📊 Data: AssignmentItem.id, AssignmentItem.photoStatus, PhotoRule.id\n⬅️ Depends: Receipt verified, AssignmentItem created\n➡️ Blocks: PhotoUpload creation required for submission">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-bold"
+                                    data-tooltip="📦 ASSIGNMENT ITEM NAME\n📊 Data: AssignmentItem.name, LocationSlot.name\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Photo requirement, slot assignment">
+                                    Window Cling (Right)</h4>
+                                <p class="text-xs text-gray-500"
+                                    data-tooltip="📝 PHOTO GUIDANCE\n📊 Data: PhotoRule.instructions, PhotoRule.requirements\n⬅️ Depends: PhotoRule defined for location\n➡️ Blocks: User photo capture guidance">
+                                    Capture from outside.</p>
+                            </div>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded"
+                                data-tooltip="⏳ PENDING BADGE\n📊 Data: AssignmentItem.photoStatus\n⬅️ Depends: AssignmentItem created\n➡️ Blocks: Photo capture required, submission blocked">Pending</span>
+                        </div>
+                        <button
+                            class="w-full h-32 bg-white border-2 border-dashed border-blue-300 rounded-lg flex flex-col items-center justify-center text-blue-500 gap-2 hover:bg-blue-50 transition cursor-pointer"
+                            onclick="this.classList.add('bg-gray-100'); this.innerHTML='<span class=\'text-green-600 font-bold\'>Photo Captured</span>'"
+                            data-tooltip="📸 CAPTURE BUTTON\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.capturedAt, AssignmentItem.id\n⬅️ Depends: Camera permission, device camera\n➡️ Blocks: PhotoUpload entity creation, review enabled">
+                            <i data-lucide="camera" size="24"
+                                data-tooltip="📷 CAMERA ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual indicator for photo action"></i>
+                            <span class="text-sm font-medium"
+                                data-tooltip="💬 CAPTURE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Tap
+                                to Capture</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="card" data-tooltip="📷 PENDING PHOTO CARD\n📊 Data: AssignmentItem.id, AssignmentItem.photoStatus, PhotoRule.id\n⬅️ Depends: Receipt verified, AssignmentItem created\n➡️ Blocks: PhotoUpload creation required for submission">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h4 class="font-bold" data-tooltip="📦 ASSIGNMENT ITEM NAME\n📊 Data: AssignmentItem.name, LocationSlot.name\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Photo requirement, slot assignment">Window Cling (Right)</h4>
-                            <p class="text-xs text-gray-500" data-tooltip="📝 PHOTO GUIDANCE\n📊 Data: PhotoRule.instructions, PhotoRule.requirements\n⬅️ Depends: PhotoRule defined for location\n➡️ Blocks: User photo capture guidance">Capture from outside.</p>
-                        </div>
-                        <span class="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded" data-tooltip="⏳ PENDING BADGE\n📊 Data: AssignmentItem.photoStatus\n⬅️ Depends: AssignmentItem created\n➡️ Blocks: Photo capture required, submission blocked">Pending</span>
+                <!-- Group: Register -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2"
+                        data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name\n⬅️ Depends: StoreLayout defined\n➡️ Blocks: Register area items grouping">
+                        Slot: Register</h3>
+                    <div class="card opacity-50"
+                        data-tooltip="🔒 LOCKED ITEM CARD\n📊 Data: AssignmentItem.id, AssignmentItem.photoStatus\n⬅️ Depends: Previous slot photos completed\n➡️ Blocks: Sequential photo workflow enforcement">
+                        <h4 class="font-bold"
+                            data-tooltip="📦 LOCKED ASSIGNMENT ITEM\n📊 Data: AssignmentItem.name\n⬅️ Depends: Prior slot completion\n➡️ Blocks: Photo capture for this item">
+                            Counter Mat</h4>
+                        <p class="text-xs text-gray-500"
+                            data-tooltip="⏳ DEPENDENCY MESSAGE\n📊 Data: UI status text\n⬅️ Depends: Previous photos incomplete\n➡️ Blocks: User awareness of workflow">
+                            Pending previous section...</p>
                     </div>
-                    <button
-                        class="w-full h-32 bg-white border-2 border-dashed border-blue-300 rounded-lg flex flex-col items-center justify-center text-blue-500 gap-2 hover:bg-blue-50 transition cursor-pointer"
-                        onclick="this.classList.add('bg-gray-100'); this.innerHTML='<span class=\'text-green-600 font-bold\'>Photo Captured</span>'"
-                        data-tooltip="📸 CAPTURE BUTTON\n📊 Data: PhotoUpload.imageUrl, PhotoUpload.capturedAt, AssignmentItem.id\n⬅️ Depends: Camera permission, device camera\n➡️ Blocks: PhotoUpload entity creation, review enabled">
-                        <i data-lucide="camera" size="24" data-tooltip="📷 CAMERA ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual indicator for photo action"></i>
-                        <span class="text-sm font-medium" data-tooltip="💬 CAPTURE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Tap to Capture</span>
+                </div>
+
+                <div class="pb-8">
+                    <button onclick="completeInstall()" class="btn-primary bg-green-600 cursor-pointer"
+                        data-tooltip="✅ COMPLETE INSTALLATION BUTTON\n📊 Data: CompletionSubmission.status, InstallVerification.status, StoreAssignment.executionStatus\n⬅️ Depends: All photos uploaded, PhotoUpload.status=UPLOADED\n➡️ Blocks: Attestation task unlock, PhotoReview queue">Complete
+                        Installation</button>
+                </div>
+            </div>
+
+            <!-- SCREEN: TASKS - Tabbed Progressive Workflow -->
+            <div id="screen-tasks" class="screen p-4 pb-24">
+                <!-- Campaign Header -->
+                <div class="mb-4"
+                    data-tooltip="📋 TASK WORKFLOW SCREEN\n━━━━━━━━━━━━━━━\nFeature: Progressive task tabs\nPattern: Complete one, unlock next\nUX: Tabs replace separate tasks">
+                    <h1 class="text-2xl font-bold">Holiday Promo 2025</h1>
+                    <p class="text-sm text-gray-500">Complete each step in sequence</p>
+                </div>
+
+                <!-- Progress Tabs -->
+                <div class="flex mb-4 bg-gray-100 rounded-lg p-1"
+                    data-tooltip="📊 PROGRESS TABS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Campaign assigned\n➡️ Blocks: Step-by-step progression">
+                    <button id="tab-receive" onclick="switchTaskTab('receive')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium bg-white shadow text-blue-600 cursor-pointer"
+                        data-tooltip="📦 RECEIVE TAB\n📊 Data: ReceiveVerification.status\n⬅️ Depends: Shipment exists\n➡️ Blocks: Install phase unlock">
+                        <i data-lucide="package" class="w-4 h-4 inline mr-1"></i>
+                        Receive
+                    </button>
+                    <button id="tab-install" onclick="switchTaskTab('install')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed"
+                        data-tooltip="🔧 INSTALL TAB (LOCKED)\n📊 Data: InstallVerification.status\n⬅️ Depends: Receipt verified\n➡️ Blocks: Attestation phase unlock">
+                        <i data-lucide="wrench" class="w-4 h-4 inline mr-1"></i>
+                        Install
+                    </button>
+                    <button id="tab-attest" onclick="switchTaskTab('attest')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed"
+                        data-tooltip="✅ ATTEST TAB (LOCKED)\n📊 Data: StoreAttestation.status\n⬅️ Depends: Install completed\n➡️ Blocks: Campaign completion">
+                        <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>
+                        Attest
+                    </button>
+                    <button id="tab-deinstall" onclick="switchTaskTab('deinstall')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed hidden"
+                        data-tooltip="🗑️ DEINSTALL TAB (LOCKED)\n📊 Data: DeinstallTask.status\n⬅️ Depends: Campaign in deinstall phase\n➡️ Blocks: Campaign archive">
+                        <i data-lucide="trash-2" class="w-4 h-4 inline mr-1"></i>
+                        Deinstall
                     </button>
                 </div>
-            </div>
 
-            <!-- Group: Register -->
-            <div class="mb-6">
-                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name\n⬅️ Depends: StoreLayout defined\n➡️ Blocks: Register area items grouping">Slot: Register</h3>
-                <div class="card opacity-50" data-tooltip="🔒 LOCKED ITEM CARD\n📊 Data: AssignmentItem.id, AssignmentItem.photoStatus\n⬅️ Depends: Previous slot photos completed\n➡️ Blocks: Sequential photo workflow enforcement">
-                    <h4 class="font-bold" data-tooltip="📦 LOCKED ASSIGNMENT ITEM\n📊 Data: AssignmentItem.name\n⬅️ Depends: Prior slot completion\n➡️ Blocks: Photo capture for this item">Counter Mat</h4>
-                    <p class="text-xs text-gray-500" data-tooltip="⏳ DEPENDENCY MESSAGE\n📊 Data: UI status text\n⬅️ Depends: Previous photos incomplete\n➡️ Blocks: User awareness of workflow">Pending previous section...</p>
-                </div>
-            </div>
-
-            <div class="pb-8">
-                <button onclick="completeInstall()"
-                    class="btn-primary bg-green-600 cursor-pointer" data-tooltip="✅ COMPLETE INSTALLATION BUTTON\n📊 Data: CompletionSubmission.status, InstallVerification.status, StoreAssignment.executionStatus\n⬅️ Depends: All photos uploaded, PhotoUpload.status=UPLOADED\n➡️ Blocks: Attestation task unlock, PhotoReview queue">Complete Installation</button>
-            </div>
-        </div>
-
-        <!-- SCREEN: TASKS - Tabbed Progressive Workflow -->
-        <div id="screen-tasks" class="screen p-4 pb-24">
-            <!-- Campaign Header -->
-            <div class="mb-4" data-tooltip="📋 TASK WORKFLOW SCREEN\n━━━━━━━━━━━━━━━\nFeature: Progressive task tabs\nPattern: Complete one, unlock next\nUX: Tabs replace separate tasks">
-                <h1 class="text-2xl font-bold">Holiday Promo 2025</h1>
-                <p class="text-sm text-gray-500">Complete each step in sequence</p>
-            </div>
-
-            <!-- Progress Tabs -->
-            <div class="flex mb-4 bg-gray-100 rounded-lg p-1" data-tooltip="📊 PROGRESS TABS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Campaign assigned\n➡️ Blocks: Step-by-step progression">
-                <button id="tab-receive" onclick="switchTaskTab('receive')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium bg-white shadow text-blue-600 cursor-pointer" data-tooltip="📦 RECEIVE TAB\n📊 Data: ReceiveVerification.status\n⬅️ Depends: Shipment exists\n➡️ Blocks: Install phase unlock">
-                    <i data-lucide="package" class="w-4 h-4 inline mr-1"></i>
-                    Receive
-                </button>
-                <button id="tab-install" onclick="switchTaskTab('install')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed" data-tooltip="🔧 INSTALL TAB (LOCKED)\n📊 Data: InstallVerification.status\n⬅️ Depends: Receipt verified\n➡️ Blocks: Attestation phase unlock">
-                    <i data-lucide="wrench" class="w-4 h-4 inline mr-1"></i>
-                    Install
-                </button>
-                <button id="tab-attest" onclick="switchTaskTab('attest')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed" data-tooltip="✅ ATTEST TAB (LOCKED)\n📊 Data: StoreAttestation.status\n⬅️ Depends: Install completed\n➡️ Blocks: Campaign completion">
-                    <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>
-                    Attest
-                </button>
-                <button id="tab-deinstall" onclick="switchTaskTab('deinstall')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed hidden" data-tooltip="🗑️ DEINSTALL TAB (LOCKED)\n📊 Data: DeinstallTask.status\n⬅️ Depends: Campaign in deinstall phase\n➡️ Blocks: Campaign archive">
-                    <i data-lucide="trash-2" class="w-4 h-4 inline mr-1"></i>
-                    Deinstall
-                </button>
-            </div>
-
-            <!-- Tab Content: Receive -->
-            <div id="task-tab-receive" class="task-tab-content">
-                <div class="card" data-tooltip="📦 RECEIVE TASK CONTENT\n📊 Data: ReceiveVerification entity\n⬅️ Depends: Shipment data\n➡️ Blocks: Receipt survey">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-blue-100 text-blue-600 rounded-full p-2">
-                            <i data-lucide="package" class="w-5 h-5"></i>
+                <!-- Tab Content: Receive -->
+                <div id="task-tab-receive" class="task-tab-content">
+                    <div class="card"
+                        data-tooltip="📦 RECEIVE TASK CONTENT\n📊 Data: ReceiveVerification entity\n⬅️ Depends: Shipment data\n➡️ Blocks: Receipt survey">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2">
+                                <i data-lucide="package" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Verify Shipment Receipt</h3>
+                                <p class="text-xs text-gray-500">Confirm materials arrived intact</p>
+                            </div>
+                            <span class="ml-auto bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">Due
+                                Today</span>
                         </div>
-                        <div>
-                            <h3 class="font-bold">Verify Shipment Receipt</h3>
-                            <p class="text-xs text-gray-500">Confirm materials arrived intact</p>
-                        </div>
-                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">Due Today</span>
-                    </div>
 
-                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
-                        <div class="text-sm font-medium mb-2">Shipment Contents:</div>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Window Clings (2)</li>
-                            <li>• Counter Display</li>
-                            <li>• Promotional Flyers (50)</li>
-                        </ul>
-                    </div>
-
-                    <button onclick="nav('screen-receipt')" class="btn-primary w-full cursor-pointer" data-tooltip="▶️ START BUTTON\n📊 Data: Navigates to receipt screen\n⬅️ Depends: Tab active\n➡️ Blocks: Receipt survey flow">
-                        Start Verification
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tab Content: Install (Initially Hidden) -->
-            <div id="task-tab-install" class="task-tab-content hidden">
-                <div id="install-content-locked" class="card bg-gray-50 opacity-60">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-gray-200 text-gray-400 rounded-full p-2">
-                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                            <div class="text-sm font-medium mb-2">Shipment Contents:</div>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Window Clings (2)</li>
+                                <li>• Counter Display</li>
+                                <li>• Promotional Flyers (50)</li>
+                            </ul>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-gray-400">Install Materials</h3>
-                            <p class="text-xs text-gray-400">Complete receipt verification first</p>
-                        </div>
+
+                        <button onclick="nav('screen-receipt')" class="btn-primary w-full cursor-pointer"
+                            data-tooltip="▶️ START BUTTON\n📊 Data: Navigates to receipt screen\n⬅️ Depends: Tab active\n➡️ Blocks: Receipt survey flow">
+                            Start Verification
+                        </button>
                     </div>
                 </div>
-                <div id="install-content-active" class="card hidden" data-tooltip="🔧 INSTALL TASK CONTENT\n📊 Data: InstallVerification entity\n⬅️ Depends: Receipt complete\n➡️ Blocks: Photo uploads">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-blue-100 text-blue-600 rounded-full p-2">
-                            <i data-lucide="wrench" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold">Install Materials</h3>
-                            <p class="text-xs text-gray-500">Place items and capture photos</p>
-                        </div>
-                        <span class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
-                    </div>
 
-                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
-                        <div class="text-sm font-medium mb-2">Installation Tasks:</div>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Window Cling (Left) - Photo required</li>
-                            <li>• Window Cling (Right) - Photo required</li>
-                            <li>• Counter Mat - Photo required</li>
-                        </ul>
-                    </div>
-
-                    <button onclick="nav('screen-install')" class="btn-primary w-full cursor-pointer" data-tooltip="▶️ START INSTALL\n📊 Data: Navigates to install screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Photo workflow">
-                        Start Installation
-                    </button>
-                </div>
-                <div id="install-content-complete" class="card bg-green-50 border-green-200 hidden">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-green-100 text-green-600 rounded-full p-2">
-                            <i data-lucide="check" class="w-5 h-5"></i>
+                <!-- Tab Content: Install (Initially Hidden) -->
+                <div id="task-tab-install" class="task-tab-content hidden">
+                    <div id="install-content-locked" class="card bg-gray-50 opacity-60">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-gray-200 text-gray-400 rounded-full p-2">
+                                <i data-lucide="lock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-400">Install Materials</h3>
+                                <p class="text-xs text-gray-400">Complete receipt verification first</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-green-700">Installation Complete</h3>
-                            <p class="text-xs text-green-600">All photos uploaded successfully</p>
+                    </div>
+                    <div id="install-content-active" class="card hidden"
+                        data-tooltip="🔧 INSTALL TASK CONTENT\n📊 Data: InstallVerification entity\n⬅️ Depends: Receipt complete\n➡️ Blocks: Photo uploads">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2">
+                                <i data-lucide="wrench" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Install Materials</h3>
+                                <p class="text-xs text-gray-500">Place items and capture photos</p>
+                            </div>
+                            <span
+                                class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                            <div class="text-sm font-medium mb-2">Installation Tasks:</div>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Window Cling (Left) - Photo required</li>
+                                <li>• Window Cling (Right) - Photo required</li>
+                                <li>• Counter Mat - Photo required</li>
+                            </ul>
+                        </div>
+
+                        <button onclick="nav('screen-install')" class="btn-primary w-full cursor-pointer"
+                            data-tooltip="▶️ START INSTALL\n📊 Data: Navigates to install screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Photo workflow">
+                            Start Installation
+                        </button>
+                    </div>
+                    <div id="install-content-complete" class="card bg-green-50 border-green-200 hidden">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-green-700">Installation Complete</h3>
+                                <p class="text-xs text-green-600">All photos uploaded successfully</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Tab Content: Attest (Initially Hidden) -->
-            <div id="task-tab-attest" class="task-tab-content hidden">
-                <div id="attest-content-locked" class="card bg-gray-50 opacity-60">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-gray-200 text-gray-400 rounded-full p-2">
-                            <i data-lucide="lock" class="w-5 h-5"></i>
+                <!-- Tab Content: Attest (Initially Hidden) -->
+                <div id="task-tab-attest" class="task-tab-content hidden">
+                    <div id="attest-content-locked" class="card bg-gray-50 opacity-60">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-gray-200 text-gray-400 rounded-full p-2">
+                                <i data-lucide="lock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-400">Attest Completion</h3>
+                                <p class="text-xs text-gray-400">Complete installation first</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-gray-400">Attest Completion</h3>
-                            <p class="text-xs text-gray-400">Complete installation first</p>
+                    </div>
+                    <div id="attest-content-active" class="card hidden"
+                        data-tooltip="✅ ATTEST TASK CONTENT\n📊 Data: StoreAttestation entity\n⬅️ Depends: Install complete\n➡️ Blocks: Final sign-off">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2">
+                                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Complete Attestation</h3>
+                                <p class="text-xs text-gray-500">Sign off on campaign completion</p>
+                            </div>
+                            <span
+                                class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                            <div class="flex gap-2">
+                                <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-600 flex-shrink-0"></i>
+                                <p class="text-xs text-yellow-800">By attesting, you confirm all materials were
+                                    installed correctly per guidelines.</p>
+                            </div>
+                        </div>
+
+                        <button onclick="nav('screen-attestation')" class="btn-primary w-full cursor-pointer"
+                            data-tooltip="▶️ START ATTESTATION\n📊 Data: Navigates to attestation screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Campaign completion">
+                            Complete Attestation
+                        </button>
+                    </div>
+                    <div id="attest-content-complete" class="card bg-green-50 border-green-200 hidden">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-green-700">Installation Complete!</h3>
+                                <p class="text-xs text-green-600">Attestation submitted successfully</p>
+                            </div>
+                        </div>
+                        <!-- Demo: Simulate campaign entering deinstall phase -->
+                        <button onclick="enterDeinstallPhase()"
+                            class="w-full py-2 px-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer"
+                            data-tooltip="🧪 DEMO: ENTER DEINSTALL PHASE\n📊 Simulates campaign period ending\n➡️ Shows Deinstall tab">
+                            <i data-lucide="calendar-x" class="w-4 h-4"></i>
+                            Demo: Campaign Ended → Start Deinstall
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Deinstall (Hidden by default - only shown when campaign in deinstall phase) -->
+                <div id="task-tab-deinstall" class="task-tab-content hidden">
+                    <div id="deinstall-content-locked" class="card bg-gray-50 opacity-60">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-gray-200 text-gray-400 rounded-full p-2">
+                                <i data-lucide="lock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-400">Deinstall Materials</h3>
+                                <p class="text-xs text-gray-400">Not available - Campaign still active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="deinstall-content-active" class="card hidden"
+                        data-tooltip="🗑️ DEINSTALL TASK CONTENT\n📊 Data: DeinstallTask entity\n⬅️ Depends: Campaign in deinstall phase\n➡️ Blocks: Deinstall attestation">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-orange-100 text-orange-600 rounded-full p-2">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Remove Campaign Materials</h3>
+                                <p class="text-xs text-gray-500">Campaign ended - deinstall required</p>
+                            </div>
+                            <span
+                                class="ml-auto bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded">Action
+                                Required</span>
+                        </div>
+
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+                            <div class="flex gap-2">
+                                <i data-lucide="calendar" class="w-4 h-4 text-orange-600 flex-shrink-0"></i>
+                                <p class="text-xs text-orange-800">Deinstall window: Complete by <strong>Jan 15,
+                                        2026</strong></p>
+                            </div>
+                        </div>
+
+                        <button onclick="nav('screen-deinstall')"
+                            class="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium cursor-pointer"
+                            data-tooltip="▶️ START DEINSTALL\n📊 Data: Navigates to deinstall screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Deinstall completion">
+                            Start Deinstall Process
+                        </button>
+                    </div>
+                    <div id="deinstall-content-complete" class="card bg-green-50 border-green-200 hidden">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-green-700">Deinstall Complete!</h3>
+                                <p class="text-xs text-green-600">Materials removed and attested</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="attest-content-active" class="card hidden" data-tooltip="✅ ATTEST TASK CONTENT\n📊 Data: StoreAttestation entity\n⬅️ Depends: Install complete\n➡️ Blocks: Final sign-off">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-blue-100 text-blue-600 rounded-full p-2">
-                            <i data-lucide="check-circle" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold">Complete Attestation</h3>
-                            <p class="text-xs text-gray-500">Sign off on campaign completion</p>
-                        </div>
-                        <span class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
-                    </div>
 
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-                        <div class="flex gap-2">
-                            <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-600 flex-shrink-0"></i>
-                            <p class="text-xs text-yellow-800">By attesting, you confirm all materials were installed correctly per guidelines.</p>
-                        </div>
-                    </div>
-
-                    <button onclick="nav('screen-attestation')" class="btn-primary w-full cursor-pointer" data-tooltip="▶️ START ATTESTATION\n📊 Data: Navigates to attestation screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Campaign completion">
-                        Complete Attestation
-                    </button>
-                </div>
-                <div id="attest-content-complete" class="card bg-green-50 border-green-200 hidden">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="bg-green-100 text-green-600 rounded-full p-2">
-                            <i data-lucide="check" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-green-700">Installation Complete!</h3>
-                            <p class="text-xs text-green-600">Attestation submitted successfully</p>
-                        </div>
-                    </div>
-                    <!-- Demo: Simulate campaign entering deinstall phase -->
-                    <button onclick="enterDeinstallPhase()" class="w-full py-2 px-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer" data-tooltip="🧪 DEMO: ENTER DEINSTALL PHASE\n📊 Simulates campaign period ending\n➡️ Shows Deinstall tab">
-                        <i data-lucide="calendar-x" class="w-4 h-4"></i>
-                        Demo: Campaign Ended → Start Deinstall
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tab Content: Deinstall (Hidden by default - only shown when campaign in deinstall phase) -->
-            <div id="task-tab-deinstall" class="task-tab-content hidden">
-                <div id="deinstall-content-locked" class="card bg-gray-50 opacity-60">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-gray-200 text-gray-400 rounded-full p-2">
-                            <i data-lucide="lock" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-400">Deinstall Materials</h3>
-                            <p class="text-xs text-gray-400">Not available - Campaign still active</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="deinstall-content-active" class="card hidden" data-tooltip="🗑️ DEINSTALL TASK CONTENT\n📊 Data: DeinstallTask entity\n⬅️ Depends: Campaign in deinstall phase\n➡️ Blocks: Deinstall attestation">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-orange-100 text-orange-600 rounded-full p-2">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold">Remove Campaign Materials</h3>
-                            <p class="text-xs text-gray-500">Campaign ended - deinstall required</p>
-                        </div>
-                        <span class="ml-auto bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded">Action Required</span>
-                    </div>
-
-                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
-                        <div class="flex gap-2">
-                            <i data-lucide="calendar" class="w-4 h-4 text-orange-600 flex-shrink-0"></i>
-                            <p class="text-xs text-orange-800">Deinstall window: Complete by <strong>Jan 15, 2026</strong></p>
-                        </div>
-                    </div>
-
-                    <button onclick="nav('screen-deinstall')" class="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium cursor-pointer" data-tooltip="▶️ START DEINSTALL\n📊 Data: Navigates to deinstall screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Deinstall completion">
-                        Start Deinstall Process
-                    </button>
-                </div>
-                <div id="deinstall-content-complete" class="card bg-green-50 border-green-200 hidden">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-green-100 text-green-600 rounded-full p-2">
-                            <i data-lucide="check" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-green-700">Deinstall Complete!</h3>
-                            <p class="text-xs text-green-600">Materials removed and attested</p>
+                <!-- Receive Tab - Completed State (Initially Hidden) -->
+                <div id="task-tab-receive-complete" class="hidden">
+                    <div class="card bg-green-50 border-green-200">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-green-700">Receipt Verified</h3>
+                                <p class="text-xs text-green-600">All items confirmed received</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Receive Tab - Completed State (Initially Hidden) -->
-            <div id="task-tab-receive-complete" class="hidden">
-                <div class="card bg-green-50 border-green-200">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-green-100 text-green-600 rounded-full p-2">
-                            <i data-lucide="check" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-green-700">Receipt Verified</h3>
-                            <p class="text-xs text-green-600">All items confirmed received</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SCREEN: SCANNER -->
-        <div id="screen-scan" class="screen p-4 pb-24">
-            <!-- State: Camera View -->
-            <div id="scan-state-camera" data-tooltip="📷 CAMERA SCREEN
+            <!-- SCREEN: SCANNER -->
+            <div id="screen-scan" class="screen p-4 pb-24">
+                <!-- State: Camera View -->
+                <div id="scan-state-camera" data-tooltip="📷 CAMERA SCREEN
 ━━━━━━━━━━━━━━━
 Feature: Photo capture interface
 Purpose: Quick scan/photo utility
 Context: Can use from nav bar
 State: Camera viewfinder active">
-                <div class="bg-black rounded-xl h-[460px] flex items-center justify-center relative mb-4" data-tooltip="📸 CAMERA VIEWFINDER
+                    <div class="bg-black rounded-xl h-[460px] flex items-center justify-center relative mb-4"
+                        data-tooltip="📸 CAMERA VIEWFINDER
 ━━━━━━━━━━━━━━━
 Component: Live camera preview
 Guide: Frame overlay for alignment
 API: Device camera access
 Offline: Full support (SUPP-011)">
-                    <div class="text-white text-center">
-                        <i data-lucide="camera" size="48" class="mx-auto mb-2" data-tooltip="📷 CAMERA ICON
+                        <div class="text-white text-center">
+                            <i data-lucide="camera" size="48" class="mx-auto mb-2" data-tooltip="📷 CAMERA ICON
 ━━━━━━━━━━━━━━━
 Visual: Camera placeholder
 State: Camera active/ready
 Real: Would show live feed
 Demo: Simulated viewfinder"></i>
-                        <p data-tooltip="💬 VIEWFINDER LABEL
+                            <p data-tooltip="💬 VIEWFINDER LABEL
 ━━━━━━━━━━━━━━━
 Text: Camera active indicator
 Real: Live camera preview shown
 Demo: Placeholder for wireframe
 Production: Native camera UI">Camera Viewfinder</p>
-                    </div>
-                    <div class="absolute inset-x-8 inset-y-32 border-2 border-white/50 rounded-lg" data-tooltip="🎯 FRAME GUIDE
+                        </div>
+                        <div class="absolute inset-x-8 inset-y-32 border-2 border-white/50 rounded-lg" data-tooltip="🎯 FRAME GUIDE
 ━━━━━━━━━━━━━━━
 Feature: Alignment overlay
 Purpose: Help user frame subject
 Optional: Ghost image from PhotoRule
 UX: Guides correct positioning"></div>
-                </div>
-                <button onclick="capturePhoto()" class="btn-primary w-full h-16 text-lg cursor-pointer" data-tooltip="📸 CAPTURE BUTTON
+                    </div>
+                    <button onclick="capturePhoto()" class="btn-primary w-full h-16 text-lg cursor-pointer"
+                        data-tooltip="📸 CAPTURE BUTTON
 ━━━━━━━━━━━━━━━
 Action: Take photo
 Stores: PhotoUpload entity
 Next: Review screen
 Flow: Capture → Review → Submit">Capture Photo</button>
-            </div>
+                </div>
 
-            <!-- State: Review Photo (Hidden initially) -->
-            <div id="scan-state-review" class="hidden" data-tooltip="🔍 REVIEW STATE
+                <!-- State: Review Photo (Hidden initially) -->
+                <div id="scan-state-review" class="hidden" data-tooltip="🔍 REVIEW STATE
 ━━━━━━━━━━━━━━━
 State: After photo captured
 Purpose: Review before submit
 Options: Accept or retake
 Next: Submit or back to camera">
-                <div
-                    class="bg-gray-900 rounded-xl h-[400px] flex items-center justify-center relative mb-4 overflow-hidden" data-tooltip="🖼️ PHOTO PREVIEW
+                    <div class="bg-gray-900 rounded-xl h-[400px] flex items-center justify-center relative mb-4 overflow-hidden"
+                        data-tooltip="🖼️ PHOTO PREVIEW
 ━━━━━━━━━━━━━━━
 Display: Captured photo review
 Purpose: Confirm quality
 Actions: Accept or retake
 Storage: Not yet uploaded">
-                    <img src="https://via.placeholder.com/400x600?text=Captured+Photo"
-                        class="w-full h-full object-cover opacity-80" data-tooltip="📷 CAPTURED IMAGE
+                        <img src="https://via.placeholder.com/400x600?text=Captured+Photo"
+                            class="w-full h-full object-cover opacity-80" data-tooltip="📷 CAPTURED IMAGE
 ━━━━━━━━━━━━━━━
 Data: Just captured photo
 Storage: Local (temp)
 Quality: Can be reviewed
 Decision: Keep or retake">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <i data-lucide="check-circle" class="text-white w-16 h-16" data-tooltip="✅ SUCCESS INDICATOR
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="check-circle" class="text-white w-16 h-16" data-tooltip="✅ SUCCESS INDICATOR
 ━━━━━━━━━━━━━━━
 Visual: Photo captured successfully
 State: Ready for review
 Next: User decides to keep/retake
 UX: Positive feedback"></i>
+                        </div>
                     </div>
-                </div>
-                <div class="space-y-3">
-                    <button onclick="submitPhoto()" class="btn-primary w-full bg-green-600 hover:bg-green-700 cursor-pointer" data-tooltip="✅ SUBMIT PHOTO
+                    <div class="space-y-3">
+                        <button onclick="submitPhoto()"
+                            class="btn-primary w-full bg-green-600 hover:bg-green-700 cursor-pointer" data-tooltip="✅ SUBMIT PHOTO
 ━━━━━━━━━━━━━━━
 Action: Accept and upload photo
 Updates: Task status to complete
 Storage: Upload to cloud
 Offline: Queues for sync (SUPP-011)">Use Photo
-                        &
-                        Submit
-                        Task</button>
-                    <button onclick="resetCamera()" class="w-full py-3 text-red-600 font-bold cursor-pointer" data-tooltip="🔄 RETAKE BUTTON
+                            &
+                            Submit
+                            Task</button>
+                        <button onclick="resetCamera()" class="w-full py-3 text-red-600 font-bold cursor-pointer"
+                            data-tooltip="🔄 RETAKE BUTTON
 ━━━━━━━━━━━━━━━
 Action: Discard photo, try again
 Returns: To camera viewfinder
 Deletes: Temp photo (not saved)
 UX: Quality control option">Retake</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SCREEN: PROFILE -->
-        <div id="screen-profile" class="screen p-4 pb-24">
-            <div class="text-center mb-8" data-tooltip="👤 PROFILE HEADER
+            <!-- SCREEN: PROFILE -->
+            <div id="screen-profile" class="screen p-4 pb-24">
+                <div class="text-center mb-8" data-tooltip="👤 PROFILE HEADER
 ━━━━━━━━━━━━━━━
 Feature: User profile section
 Data: User role + store info
 Context: Logged-in session
 Purpose: User orientation">
-                <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4" data-tooltip="👤 AVATAR
+                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4" data-tooltip="👤 AVATAR
 ━━━━━━━━━━━━━━━
 Component: User avatar placeholder
 Future: Could show initials/photo
 Data: User entity
 UX: Visual personalization"></div>
-                <h2 class="text-xl font-bold" data-tooltip="👤 USER ROLE\n📊 Data: User.role, Membership.role\n⬅️ Depends: User authenticated, Membership created\n➡️ Blocks: Permission level, UI features">Store Manager</h2>
-                <p class="text-gray-500" data-tooltip="🏪 STORE CONTEXT\n📊 Data: Store.storeNumber, Store.name\n⬅️ Depends: User logged in, Store validated\n➡️ Blocks: All store-specific data filtering">Store #1044</p>
-            </div>
-            <div class="bg-white rounded-lg shadow-sm border border-gray-100 divide-y" data-tooltip="⚙️ SETTINGS MENU
+                    <h2 class="text-xl font-bold"
+                        data-tooltip="👤 USER ROLE\n📊 Data: User.role, Membership.role\n⬅️ Depends: User authenticated, Membership created\n➡️ Blocks: Permission level, UI features">
+                        Store Manager</h2>
+                    <p class="text-gray-500"
+                        data-tooltip="🏪 STORE CONTEXT\n📊 Data: Store.storeNumber, Store.name\n⬅️ Depends: User logged in, Store validated\n➡️ Blocks: All store-specific data filtering">
+                        Store #1044</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 divide-y" data-tooltip="⚙️ SETTINGS MENU
 ━━━━━━━━━━━━━━━
 Component: Settings list
 Items: Account actions/options
 Pattern: Standard menu list
 Clickable: Each row is a link">
-                <div class="p-4 flex justify-between cursor-pointer" onclick="alert('Opens notifications screen')" data-tooltip="🔔 NOTIFICATIONS MENU ITEM\n📊 Data: COUNT(AuditEvent WHERE type=NOTIFICATION)\n⬅️ Depends: User authenticated, notification system\n➡️ Blocks: Notification list screen access">
-                    <span data-tooltip="🔔 NOTIFICATIONS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Menu item identification">Notifications</span>
-                    <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full" data-tooltip="🔴 UNREAD BADGE\n📊 Data: COUNT(AuditEvent WHERE read=false)\n⬅️ Depends: Notification events generated\n➡️ Blocks: User attention, unread count display">3</span>
-                </div>
-                <div class="p-4 flex justify-between cursor-pointer" onclick="alert('Opens help & support screen')" data-tooltip="❓ HELP & SUPPORT
+                    <div class="p-4 flex justify-between cursor-pointer" onclick="alert('Opens notifications screen')"
+                        data-tooltip="🔔 NOTIFICATIONS MENU ITEM\n📊 Data: COUNT(AuditEvent WHERE type=NOTIFICATION)\n⬅️ Depends: User authenticated, notification system\n➡️ Blocks: Notification list screen access">
+                        <span
+                            data-tooltip="🔔 NOTIFICATIONS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Menu item identification">Notifications</span>
+                        <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"
+                            data-tooltip="🔴 UNREAD BADGE\n📊 Data: COUNT(AuditEvent WHERE read=false)\n⬅️ Depends: Notification events generated\n➡️ Blocks: User attention, unread count display">3</span>
+                    </div>
+                    <div class="p-4 flex justify-between cursor-pointer" onclick="alert('Opens help & support screen')"
+                        data-tooltip="❓ HELP & SUPPORT
 ━━━━━━━━━━━━━━━
 Feature: Support resources
 Opens: Help center screen
 Contains: FAQs, contact info
 Purpose: User assistance">
-                    <span data-tooltip="❓ HELP LABEL
+                        <span data-tooltip="❓ HELP LABEL
 ━━━━━━━━━━━━━━━
 Text: Menu item label
 Action: Opens help center
 Shows: FAQs, guides, contact
 Access: Always available">Help & Support</span>
-                    <i data-lucide="chevron-right" size="16" class="text-gray-400" data-tooltip="➡️ NAVIGATION ARROW
+                        <i data-lucide="chevron-right" size="16" class="text-gray-400" data-tooltip="➡️ NAVIGATION ARROW
 ━━━━━━━━━━━━━━━
 Visual: Indicates clickable
 Pattern: Standard iOS/Android
 Action: Navigate to submenu
 UX: Affordance indicator"></i>
-                </div>
-                <div class="p-4 flex justify-between text-red-600 font-bold cursor-pointer" onclick="alert('Sign out - returns to login')" data-tooltip="🚪 SIGN OUT MENU ITEM\n📊 Data: User.sessionToken, User.lastLogoutAt\n⬅️ Depends: User authenticated\n➡️ Blocks: Session termination, login screen return">
-                    <span data-tooltip="🚪 SIGN OUT LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Sign Out</span>
+                    </div>
+                    <div class="p-4 flex justify-between text-red-600 font-bold cursor-pointer"
+                        onclick="alert('Sign out - returns to login')"
+                        data-tooltip="🚪 SIGN OUT MENU ITEM\n📊 Data: User.sessionToken, User.lastLogoutAt\n⬅️ Depends: User authenticated\n➡️ Blocks: Session termination, login screen return">
+                        <span
+                            data-tooltip="🚪 SIGN OUT LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Sign
+                            Out</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SCREEN: ATTESTATION -->
-        <div id="screen-attestation" class="screen p-4 pb-24" data-tooltip="📋 ATTESTATION SCREEN
+            <!-- SCREEN: ATTESTATION -->
+            <div id="screen-attestation" class="screen p-4 pb-24" data-tooltip="📋 ATTESTATION SCREEN
 ━━━━━━━━━━━━━━━
 Purpose: Final campaign sign-off
 Data: StoreAttestation entity
 Depends: All tasks complete
 Blocks: Campaign completion">
-            <div class="flex items-center gap-3 mb-6">
-                <button onclick="nav('screen-tasks')" class="p-2 -ml-2 hover:bg-gray-100 rounded-full" data-tooltip="⬅️ BACK BUTTON\nReturns to tasks list">
-                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
-                </button>
-                <h1 class="text-2xl font-bold" data-tooltip="📋 SCREEN TITLE\nAttestation sign-off header">Attest Completion</h1>
-            </div>
-
-            <!-- Campaign Context Card -->
-            <div class="card mb-4" data-tooltip="📊 CAMPAIGN CONTEXT CARD\n📊 Data: Campaign.name, Store.name, TaskCount, PhotoCount\n⬅️ Depends: StoreAssignment loaded\n➡️ Blocks: Context display">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <i data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i>
-                    </div>
-                    <div>
-                        <div class="font-bold text-lg" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name">Holiday Promo 2025</div>
-                        <div class="text-sm text-gray-500" data-tooltip="🏪 STORE NAME\n📊 Data: Store.name, Store.storeNumber">Store #4521 - Downtown</div>
-                    </div>
-                </div>
-                <div class="flex gap-4 text-sm">
-                    <div class="flex items-center gap-1 text-green-600" data-tooltip="✅ TASKS COMPLETED\n📊 Data: CompletedTaskCount / TotalTaskCount">
-                        <i data-lucide="check-circle" class="w-4 h-4"></i>
-                        <span>5/5 Tasks</span>
-                    </div>
-                    <div class="flex items-center gap-1 text-green-600" data-tooltip="📸 PHOTOS UPLOADED\n📊 Data: PhotoUpload.count">
-                        <i data-lucide="camera" class="w-4 h-4"></i>
-                        <span>8 Photos</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Attestation Checklist -->
-            <div id="attestation-checklist" class="card mb-4" data-tooltip="☑️ ATTESTATION CHECKLIST\n📊 Data: AttestationChecklist items\n⬅️ Depends: Form displayed\n➡️ Blocks: Submit enabled">
-                <h2 class="font-bold mb-4" data-tooltip="📋 SECTION HEADER">I confirm the following:</h2>
-
-                <label class="checkbox-item border-b" data-tooltip="☑️ MATERIALS CHECKBOX\n📊 Data: AttestationChecklist.materialsInstalled\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-materials" onchange="checkSubmitReady()">
-                    <div>
-                        <div class="font-medium">All materials have been installed</div>
-                        <div class="text-sm text-gray-500">Per the provided instructions and placement guide</div>
-                    </div>
-                </label>
-
-                <label class="checkbox-item border-b" data-tooltip="☑️ PHOTOS CHECKBOX\n📊 Data: AttestationChecklist.photosAccurate\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-photos" onchange="checkSubmitReady()">
-                    <div>
-                        <div class="font-medium">Photos accurately represent installation</div>
-                        <div class="text-sm text-gray-500">All required photos have been uploaded</div>
-                    </div>
-                </label>
-
-                <label class="checkbox-item border-b" data-tooltip="☑️ ISSUES CHECKBOX\n📊 Data: AttestationChecklist.issuesReported\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-issues" onchange="checkSubmitReady()">
-                    <div>
-                        <div class="font-medium">Any issues have been reported</div>
-                        <div class="text-sm text-gray-500">Or no issues were encountered during installation</div>
-                    </div>
-                </label>
-
-                <label class="checkbox-item" data-tooltip="☑️ COMPLIANCE CHECKBOX\n📊 Data: AttestationChecklist.brandCompliance\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-compliance" onchange="checkSubmitReady()">
-                    <div>
-                        <div class="font-medium">Installation meets brand compliance</div>
-                        <div class="text-sm text-gray-500">Materials are properly aligned and undamaged</div>
-                    </div>
-                </label>
-            </div>
-
-            <!-- Digital Signature -->
-            <div class="card mb-4" data-tooltip="✍️ DIGITAL SIGNATURE SECTION\n📊 Data: StoreAttestation.signature, StoreAttestation.signedAt\n⬅️ Depends: Checklist complete\n➡️ Blocks: Attestation submission">
-                <h2 class="font-bold mb-2" data-tooltip="📋 SECTION HEADER">Digital Signature</h2>
-                <p class="text-sm text-gray-500 mb-3" data-tooltip="📝 INSTRUCTION TEXT">Sign below to confirm your attestation</p>
-
-                <div id="signature-pad" class="signature-pad" onclick="simulateSign()" data-tooltip="✍️ SIGNATURE PAD\n📊 Data: StoreAttestation.signatureData (base64)\n⬅️ Depends: Touch/click input\n➡️ Blocks: Signature validation">
-                    <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
-                    <span class="text-gray-400 text-sm">Tap to sign</span>
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="nav('screen-tasks')" class="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+                        data-tooltip="⬅️ BACK BUTTON\nReturns to tasks list">
+                        <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                    </button>
+                    <h1 class="text-2xl font-bold" data-tooltip="📋 SCREEN TITLE\nAttestation sign-off header">Attest
+                        Completion</h1>
                 </div>
 
-                <button onclick="clearSignature()" class="text-sm text-blue-600 mt-2" data-tooltip="🗑️ CLEAR BUTTON\n📊 Data: Resets signatureData\n⬅️ Depends: Signature exists\n➡️ Blocks: Re-signing">Clear Signature</button>
-            </div>
-
-            <!-- Legal Notice -->
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6" data-tooltip="⚠️ LEGAL NOTICE\n📊 Data: Static legal text\n⬅️ Depends: None\n➡️ Blocks: User awareness">
-                <div class="flex gap-3">
-                    <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5"></i>
-                    <div class="text-sm text-yellow-800">
-                        <div class="font-bold mb-1">Legal Notice</div>
-                        By signing this attestation, you certify that all information provided is accurate and complete. False attestations may result in disciplinary action.
+                <!-- Campaign Context Card -->
+                <div class="card mb-4"
+                    data-tooltip="📊 CAMPAIGN CONTEXT CARD\n📊 Data: Campaign.name, Store.name, TaskCount, PhotoCount\n⬅️ Depends: StoreAssignment loaded\n➡️ Blocks: Context display">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name">
+                                Holiday Promo 2025</div>
+                            <div class="text-sm text-gray-500"
+                                data-tooltip="🏪 STORE NAME\n📊 Data: Store.name, Store.storeNumber">Store #4521 -
+                                Downtown</div>
+                        </div>
                     </div>
+                    <div class="flex gap-4 text-sm">
+                        <div class="flex items-center gap-1 text-green-600"
+                            data-tooltip="✅ TASKS COMPLETED\n📊 Data: CompletedTaskCount / TotalTaskCount">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            <span>5/5 Tasks</span>
+                        </div>
+                        <div class="flex items-center gap-1 text-green-600"
+                            data-tooltip="📸 PHOTOS UPLOADED\n📊 Data: PhotoUpload.count">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                            <span>8 Photos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attestation Checklist -->
+                <div id="attestation-checklist" class="card mb-4"
+                    data-tooltip="☑️ ATTESTATION CHECKLIST\n📊 Data: AttestationChecklist items\n⬅️ Depends: Form displayed\n➡️ Blocks: Submit enabled">
+                    <h2 class="font-bold mb-4" data-tooltip="📋 SECTION HEADER">I confirm the following:</h2>
+
+                    <label class="checkbox-item border-b"
+                        data-tooltip="☑️ MATERIALS CHECKBOX\n📊 Data: AttestationChecklist.materialsInstalled\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                        <input type="checkbox" id="chk-materials" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium">All materials have been installed</div>
+                            <div class="text-sm text-gray-500">Per the provided instructions and placement guide</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item border-b"
+                        data-tooltip="☑️ PHOTOS CHECKBOX\n📊 Data: AttestationChecklist.photosAccurate\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                        <input type="checkbox" id="chk-photos" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium">Photos accurately represent installation</div>
+                            <div class="text-sm text-gray-500">All required photos have been uploaded</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item border-b"
+                        data-tooltip="☑️ ISSUES CHECKBOX\n📊 Data: AttestationChecklist.issuesReported\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                        <input type="checkbox" id="chk-issues" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium">Any issues have been reported</div>
+                            <div class="text-sm text-gray-500">Or no issues were encountered during installation</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item"
+                        data-tooltip="☑️ COMPLIANCE CHECKBOX\n📊 Data: AttestationChecklist.brandCompliance\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                        <input type="checkbox" id="chk-compliance" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium">Installation meets brand compliance</div>
+                            <div class="text-sm text-gray-500">Materials are properly aligned and undamaged</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Digital Signature -->
+                <div class="card mb-4"
+                    data-tooltip="✍️ DIGITAL SIGNATURE SECTION\n📊 Data: StoreAttestation.signature, StoreAttestation.signedAt\n⬅️ Depends: Checklist complete\n➡️ Blocks: Attestation submission">
+                    <h2 class="font-bold mb-2" data-tooltip="📋 SECTION HEADER">Digital Signature</h2>
+                    <p class="text-sm text-gray-500 mb-3" data-tooltip="📝 INSTRUCTION TEXT">Sign below to confirm your
+                        attestation</p>
+
+                    <div id="signature-pad" class="signature-pad" onclick="simulateSign()"
+                        data-tooltip="✍️ SIGNATURE PAD\n📊 Data: StoreAttestation.signatureData (base64)\n⬅️ Depends: Touch/click input\n➡️ Blocks: Signature validation">
+                        <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                        <span class="text-gray-400 text-sm">Tap to sign</span>
+                    </div>
+
+                    <button onclick="clearSignature()" class="text-sm text-blue-600 mt-2"
+                        data-tooltip="🗑️ CLEAR BUTTON\n📊 Data: Resets signatureData\n⬅️ Depends: Signature exists\n➡️ Blocks: Re-signing">Clear
+                        Signature</button>
+                </div>
+
+                <!-- Legal Notice -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6"
+                    data-tooltip="⚠️ LEGAL NOTICE\n📊 Data: Static legal text\n⬅️ Depends: None\n➡️ Blocks: User awareness">
+                    <div class="flex gap-3">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5"></i>
+                        <div class="text-sm text-yellow-800">
+                            <div class="font-bold mb-1">Legal Notice</div>
+                            By signing this attestation, you certify that all information provided is accurate and
+                            complete. False attestations may result in disciplinary action.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button - Sticky at bottom of scroll container -->
+                <div class="sticky-bottom-action"
+                    style="position: sticky; bottom: 0; width: 100%; padding: 16px; background: linear-gradient(to top, #f3f4f6 90%, transparent); box-sizing: border-box; margin-top: auto;">
+                    <button id="attestation-submit" onclick="submitAttestation()" disabled
+                        class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed shadow-lg"
+                        data-tooltip="📤 SUBMIT BUTTON\n📊 Data: Creates StoreAttestation record\n⬅️ Depends: All checkboxes + signature\n➡️ Blocks: Campaign completion, success modal">
+                        Submit Attestation
+                    </button>
                 </div>
             </div>
 
-            <!-- Submit Button - Sticky at bottom of scroll container -->
-            <div class="sticky-bottom-action" style="position: sticky; bottom: 0; width: 100%; padding: 16px; background: linear-gradient(to top, #f3f4f6 90%, transparent); box-sizing: border-box; margin-top: auto;">
-                <button id="attestation-submit" onclick="submitAttestation()" disabled class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed shadow-lg" data-tooltip="📤 SUBMIT BUTTON\n📊 Data: Creates StoreAttestation record\n⬅️ Depends: All checkboxes + signature\n➡️ Blocks: Campaign completion, success modal">
-                    Submit Attestation
-                </button>
-            </div>
-        </div>
-
-        <!-- SCREEN: DEINSTALL - Material Removal Workflow -->
-        <div id="screen-deinstall" class="screen p-4 pb-24" data-tooltip="🗑️ DEINSTALL SURVEY SCREEN
+            <!-- SCREEN: DEINSTALL - Material Removal Workflow -->
+            <div id="screen-deinstall" class="screen p-4 pb-24" data-tooltip="🗑️ DEINSTALL SURVEY SCREEN
 ━━━━━━━━━━━━━━━
 Screen: Material Removal Evidence
 Purpose: Document campaign material removal
@@ -1487,323 +1762,392 @@ Trigger: Campaign enters deinstall phase
 - DeinstallAttestation (manager signature)
 - Campaign closure
 - Store compliance status">
-            <div class="flex items-center mb-4">
-                <button onclick="nav('screen-tasks')" class="p-2 -ml-2" data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to task list"><i data-lucide="arrow-left"></i></button>
-                <h1 class="text-lg font-bold ml-2" data-tooltip="🗑️ DEINSTALL SURVEY HEADER\n📊 Data: StoreAssignment.id, Campaign.name, Campaign.deinstallDeadline\n⬅️ Depends: Deinstall phase active\n➡️ Blocks: Material removal workflow">Remove Campaign Materials</h1>
-            </div>
-
-            <!-- Deadline Warning -->
-            <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4" data-tooltip="⏰ DEINSTALL DEADLINE WARNING\n📊 Data: Campaign.deinstallDeadline, DATEDIFF(deadline, NOW())\n⬅️ Depends: Campaign.deinstallWindow set\n➡️ Blocks: User urgency awareness, non-compliance prevention">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="clock" class="w-5 h-5 text-orange-600" data-tooltip="⏰ CLOCK ICON\n📊 Data: UI indicator\n⬅️ Depends: None\n➡️ Blocks: Visual deadline emphasis"></i>
-                    <div>
-                        <p class="text-sm font-medium text-orange-800" data-tooltip="📅 DEADLINE TEXT\n📊 Data: Campaign.deinstallDeadline formatted\n⬅️ Depends: Campaign configuration\n➡️ Blocks: Compliance tracking">Removal Deadline: <span class="font-bold">Jan 15, 2026</span></p>
-                        <p class="text-xs text-orange-600" data-tooltip="⚠️ DAYS REMAINING\n📊 Data: DATEDIFF(Campaign.deinstallDeadline, NOW())\n⬅️ Depends: Current date calculation\n➡️ Blocks: Urgency indicator">13 days remaining</p>
-                    </div>
+                <div class="flex items-center mb-4">
+                    <button onclick="nav('screen-tasks')" class="p-2 -ml-2"
+                        data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to task list"><i
+                            data-lucide="arrow-left"></i></button>
+                    <h1 class="text-lg font-bold ml-2"
+                        data-tooltip="🗑️ DEINSTALL SURVEY HEADER\n📊 Data: StoreAssignment.id, Campaign.name, Campaign.deinstallDeadline\n⬅️ Depends: Deinstall phase active\n➡️ Blocks: Material removal workflow">
+                        Remove Campaign Materials</h1>
                 </div>
-            </div>
 
-            <!-- Progress Tracker -->
-            <div class="flex justify-between items-center mb-4" data-tooltip="📊 REMOVAL PROGRESS\n📊 Data: COUNT(DeinstallEvidence WHERE status=COMPLETE), COUNT(AssignmentItem)\n⬅️ Depends: AssignmentItems from original install\n➡️ Blocks: Completion percentage, submit enablement">
-                <span class="text-sm font-medium text-gray-600" data-tooltip="📊 PROGRESS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Progress section identification">Removal Progress</span>
-                <span class="text-sm font-bold text-orange-600" data-tooltip="🔢 PROGRESS PERCENTAGE\n📊 Data: (COUNT(removed) / COUNT(total)) * 100\n⬅️ Depends: Items marked as removed\n➡️ Blocks: Completion indicator">25%</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-2 mb-6" data-tooltip="📊 PROGRESS BAR\n📊 Data: Visual of removal completion\n⬅️ Depends: Removal count calculation\n➡️ Blocks: Visual completion feedback">
-                <div class="bg-orange-500 h-2 rounded-full" style="width: 25%"></div>
-            </div>
-
-            <!-- Group: Windows (Removal) -->
-            <div class="mb-6">
-                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name (from original install)\n⬅️ Depends: StoreLayout, completed installation\n➡️ Blocks: Material removal by location">Slot: Front Windows</h3>
-
-                <!-- Removed Item with Photo -->
-                <div class="card border-l-4 border-green-500" data-tooltip="✅ REMOVED ITEM CARD\n📊 Data: DeinstallEvidence.imageUrl, DeinstallEvidence.removedAt, AssignmentItem.id\n⬅️ Depends: Material physically removed, photo captured\n➡️ Blocks: DeinstallVerification, compliance record">
-                    <div class="flex justify-between items-start mb-3">
+                <!-- Deadline Warning -->
+                <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4"
+                    data-tooltip="⏰ DEINSTALL DEADLINE WARNING\n📊 Data: Campaign.deinstallDeadline, DATEDIFF(deadline, NOW())\n⬅️ Depends: Campaign.deinstallWindow set\n➡️ Blocks: User urgency awareness, non-compliance prevention">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="clock" class="w-5 h-5 text-orange-600"
+                            data-tooltip="⏰ CLOCK ICON\n📊 Data: UI indicator\n⬅️ Depends: None\n➡️ Blocks: Visual deadline emphasis"></i>
                         <div>
-                            <h4 class="font-bold" data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name (from original install)\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Removal verification">Window Cling (Left)</h4>
-                            <p class="text-xs text-gray-500" data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal guidance">Peel carefully from corner. Dispose or return per brand policy.</p>
+                            <p class="text-sm font-medium text-orange-800"
+                                data-tooltip="📅 DEADLINE TEXT\n📊 Data: Campaign.deinstallDeadline formatted\n⬅️ Depends: Campaign configuration\n➡️ Blocks: Compliance tracking">
+                                Removal Deadline: <span class="font-bold">Jan 15, 2026</span></p>
+                            <p class="text-xs text-orange-600"
+                                data-tooltip="⚠️ DAYS REMAINING\n📊 Data: DATEDIFF(Campaign.deinstallDeadline, NOW())\n⬅️ Depends: Current date calculation\n➡️ Blocks: Urgency indicator">
+                                13 days remaining</p>
                         </div>
-                        <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded" data-tooltip="✅ REMOVED BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Removal confirmed\n➡️ Blocks: Item counted as complete">Removed</span>
-                    </div>
-                    <div class="bg-gray-100 rounded h-24 flex items-center justify-center border-2 border-dashed border-gray-300" data-tooltip="🖼️ REMOVAL EVIDENCE PHOTO\n📊 Data: DeinstallEvidence.imageUrl (showing empty location)\n⬅️ Depends: Photo captured of cleared slot\n➡️ Blocks: Verification review">
-                        <img src="https://via.placeholder.com/300x100?text=Empty+Window+Photo" class="h-full w-full object-cover rounded cursor-pointer" data-tooltip="🔍 EVIDENCE IMAGE\n📊 Data: DeinstallEvidence.imageUrl\n⬅️ Depends: Photo uploaded\n➡️ Blocks: Manager verification">
                     </div>
                 </div>
 
-                <!-- Pending Removal Item -->
-                <div class="card" data-tooltip="⏳ PENDING REMOVAL CARD\n📊 Data: AssignmentItem.id, DeinstallTask.status=PENDING\n⬅️ Depends: Material still installed\n➡️ Blocks: Deinstall completion">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h4 class="font-bold" data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name\n⬅️ Depends: Original installation record\n➡️ Blocks: Removal tracking">Window Cling (Right)</h4>
-                            <p class="text-xs text-gray-500" data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal">Peel carefully. Photo the empty window after removal.</p>
+                <!-- Progress Tracker -->
+                <div class="flex justify-between items-center mb-4"
+                    data-tooltip="📊 REMOVAL PROGRESS\n📊 Data: COUNT(DeinstallEvidence WHERE status=COMPLETE), COUNT(AssignmentItem)\n⬅️ Depends: AssignmentItems from original install\n➡️ Blocks: Completion percentage, submit enablement">
+                    <span class="text-sm font-medium text-gray-600"
+                        data-tooltip="📊 PROGRESS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Progress section identification">Removal
+                        Progress</span>
+                    <span class="text-sm font-bold text-orange-600"
+                        data-tooltip="🔢 PROGRESS PERCENTAGE\n📊 Data: (COUNT(removed) / COUNT(total)) * 100\n⬅️ Depends: Items marked as removed\n➡️ Blocks: Completion indicator">25%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-6"
+                    data-tooltip="📊 PROGRESS BAR\n📊 Data: Visual of removal completion\n⬅️ Depends: Removal count calculation\n➡️ Blocks: Visual completion feedback">
+                    <div class="bg-orange-500 h-2 rounded-full" style="width: 25%"></div>
+                </div>
+
+                <!-- Group: Windows (Removal) -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2"
+                        data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name (from original install)\n⬅️ Depends: StoreLayout, completed installation\n➡️ Blocks: Material removal by location">
+                        Slot: Front Windows</h3>
+
+                    <!-- Removed Item with Photo -->
+                    <div class="card border-l-4 border-green-500"
+                        data-tooltip="✅ REMOVED ITEM CARD\n📊 Data: DeinstallEvidence.imageUrl, DeinstallEvidence.removedAt, AssignmentItem.id\n⬅️ Depends: Material physically removed, photo captured\n➡️ Blocks: DeinstallVerification, compliance record">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-bold"
+                                    data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name (from original install)\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Removal verification">
+                                    Window Cling (Left)</h4>
+                                <p class="text-xs text-gray-500"
+                                    data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal guidance">
+                                    Peel carefully from corner. Dispose or return per brand policy.</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded"
+                                data-tooltip="✅ REMOVED BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Removal confirmed\n➡️ Blocks: Item counted as complete">Removed</span>
                         </div>
-                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded" data-tooltip="⏳ PENDING BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Item not yet removed\n➡️ Blocks: Removal action required">Pending</span>
+                        <div class="bg-gray-100 rounded h-24 flex items-center justify-center border-2 border-dashed border-gray-300"
+                            data-tooltip="🖼️ REMOVAL EVIDENCE PHOTO\n📊 Data: DeinstallEvidence.imageUrl (showing empty location)\n⬅️ Depends: Photo captured of cleared slot\n➡️ Blocks: Verification review">
+                            <img src="https://via.placeholder.com/300x100?text=Empty+Window+Photo"
+                                class="h-full w-full object-cover rounded cursor-pointer"
+                                data-tooltip="🔍 EVIDENCE IMAGE\n📊 Data: DeinstallEvidence.imageUrl\n⬅️ Depends: Photo uploaded\n➡️ Blocks: Manager verification">
+                        </div>
                     </div>
-                    <button
-                        class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
-                        onclick="this.classList.add('bg-green-100', 'border-green-300'); this.innerHTML='<span class=\'text-green-600 font-bold\'>✓ Removal Photo Captured</span>'"
-                        data-tooltip="📸 CAPTURE REMOVAL EVIDENCE\n📊 Data: DeinstallEvidence.imageUrl, DeinstallEvidence.capturedAt\n⬅️ Depends: Camera permission, material removed\n➡️ Blocks: DeinstallEvidence creation, completion">
-                        <i data-lucide="camera" size="24" data-tooltip="📷 CAMERA ICON\n📊 Data: UI element\n⬅️ Depends: None\n➡️ Blocks: Photo action indicator"></i>
-                        <span class="text-sm font-medium" data-tooltip="💬 CAPTURE LABEL\n📊 Data: UI text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Photo Empty Location</span>
+
+                    <!-- Pending Removal Item -->
+                    <div class="card"
+                        data-tooltip="⏳ PENDING REMOVAL CARD\n📊 Data: AssignmentItem.id, DeinstallTask.status=PENDING\n⬅️ Depends: Material still installed\n➡️ Blocks: Deinstall completion">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-bold"
+                                    data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name\n⬅️ Depends: Original installation record\n➡️ Blocks: Removal tracking">
+                                    Window Cling (Right)</h4>
+                                <p class="text-xs text-gray-500"
+                                    data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal">
+                                    Peel carefully. Photo the empty window after removal.</p>
+                            </div>
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded"
+                                data-tooltip="⏳ PENDING BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Item not yet removed\n➡️ Blocks: Removal action required">Pending</span>
+                        </div>
+                        <button
+                            class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
+                            onclick="this.classList.add('bg-green-100', 'border-green-300'); this.innerHTML='<span class=\'text-green-600 font-bold\'>✓ Removal Photo Captured</span>'"
+                            data-tooltip="📸 CAPTURE REMOVAL EVIDENCE\n📊 Data: DeinstallEvidence.imageUrl, DeinstallEvidence.capturedAt\n⬅️ Depends: Camera permission, material removed\n➡️ Blocks: DeinstallEvidence creation, completion">
+                            <i data-lucide="camera" size="24"
+                                data-tooltip="📷 CAMERA ICON\n📊 Data: UI element\n⬅️ Depends: None\n➡️ Blocks: Photo action indicator"></i>
+                            <span class="text-sm font-medium"
+                                data-tooltip="💬 CAPTURE LABEL\n📊 Data: UI text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Photo
+                                Empty Location</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Group: Register (Removal) -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2"
+                        data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name\n⬅️ Depends: StoreLayout\n➡️ Blocks: Register area removal">
+                        Slot: Register</h3>
+                    <div class="card"
+                        data-tooltip="⏳ PENDING REMOVAL CARD\n📊 Data: AssignmentItem.id\n⬅️ Depends: Material to be removed\n➡️ Blocks: Deinstall completion">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-bold"
+                                    data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name\n⬅️ Depends: Original installation\n➡️ Blocks: Removal tracking">
+                                    Counter Mat</h4>
+                                <p class="text-xs text-gray-500"
+                                    data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal">
+                                    Remove mat from counter. Photo empty counter surface.</p>
+                            </div>
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded"
+                                data-tooltip="⏳ PENDING BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Not yet removed\n➡️ Blocks: Action required">Pending</span>
+                        </div>
+                        <button
+                            class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
+                            onclick="this.classList.add('bg-green-100', 'border-green-300'); this.innerHTML='<span class=\'text-green-600 font-bold\'>✓ Removal Photo Captured</span>'"
+                            data-tooltip="📸 CAPTURE REMOVAL EVIDENCE\n📊 Data: DeinstallEvidence.imageUrl\n⬅️ Depends: Camera, material removed\n➡️ Blocks: Completion">
+                            <i data-lucide="camera" size="24"></i>
+                            <span class="text-sm font-medium">Photo Empty Location</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Disposal Instructions -->
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6"
+                    data-tooltip="♻️ DISPOSAL INSTRUCTIONS\n📊 Data: Brand.disposalPolicy, Campaign.disposalInstructions\n⬅️ Depends: Brand configuration\n➡️ Blocks: Proper material disposal compliance">
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="info" class="w-5 h-5 text-gray-500 mt-0.5"
+                            data-tooltip="ℹ️ INFO ICON\n📊 Data: UI element\n⬅️ Depends: None\n➡️ Blocks: Visual indicator"></i>
+                        <div>
+                            <p class="text-sm font-medium text-gray-700"
+                                data-tooltip="📝 DISPOSAL HEADER\n📊 Data: UI text\n⬅️ Depends: None\n➡️ Blocks: Instruction section">
+                                Material Disposal</p>
+                            <p class="text-xs text-gray-500"
+                                data-tooltip="📋 DISPOSAL POLICY\n📊 Data: Brand.disposalPolicy\n⬅️ Depends: Brand configuration\n➡️ Blocks: Compliance">
+                                Per brand policy: Recycle paper materials. Discard vinyl in regular trash. Contact PSP
+                                if materials should be returned.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Deinstall Button -->
+                <div class="pb-8">
+                    <button onclick="nav('screen-deinstall-attestation')"
+                        class="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold cursor-pointer transition"
+                        data-tooltip="✅ COMPLETE DEINSTALL BUTTON\n📊 Data: DeinstallTask.status → SUBMITTED, navigate to attestation\n⬅️ Depends: All removal photos captured (unless bypass_photos), all items marked removed\n➡️ Blocks: DeinstallAttestation screen, manager signature requirement">
+                        Complete Removal & Attest
                     </button>
+                    <p class="text-xs text-gray-500 text-center mt-2"
+                        data-tooltip="📝 ATTESTATION NOTE\n📊 Data: Brand.bypass_attestation setting\n⬅️ Depends: Brand configuration\n➡️ Blocks: User expectation setting">
+                        Manager signature required on next screen</p>
                 </div>
             </div>
 
-            <!-- Group: Register (Removal) -->
-            <div class="mb-6">
-                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name\n⬅️ Depends: StoreLayout\n➡️ Blocks: Register area removal">Slot: Register</h3>
-                <div class="card" data-tooltip="⏳ PENDING REMOVAL CARD\n📊 Data: AssignmentItem.id\n⬅️ Depends: Material to be removed\n➡️ Blocks: Deinstall completion">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h4 class="font-bold" data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name\n⬅️ Depends: Original installation\n➡️ Blocks: Removal tracking">Counter Mat</h4>
-                            <p class="text-xs text-gray-500" data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal">Remove mat from counter. Photo empty counter surface.</p>
-                        </div>
-                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded" data-tooltip="⏳ PENDING BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Not yet removed\n➡️ Blocks: Action required">Pending</span>
-                    </div>
-                    <button
-                        class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
-                        onclick="this.classList.add('bg-green-100', 'border-green-300'); this.innerHTML='<span class=\'text-green-600 font-bold\'>✓ Removal Photo Captured</span>'"
-                        data-tooltip="📸 CAPTURE REMOVAL EVIDENCE\n📊 Data: DeinstallEvidence.imageUrl\n⬅️ Depends: Camera, material removed\n➡️ Blocks: Completion">
-                        <i data-lucide="camera" size="24"></i>
-                        <span class="text-sm font-medium">Photo Empty Location</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Disposal Instructions -->
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6" data-tooltip="♻️ DISPOSAL INSTRUCTIONS\n📊 Data: Brand.disposalPolicy, Campaign.disposalInstructions\n⬅️ Depends: Brand configuration\n➡️ Blocks: Proper material disposal compliance">
-                <div class="flex items-start gap-2">
-                    <i data-lucide="info" class="w-5 h-5 text-gray-500 mt-0.5" data-tooltip="ℹ️ INFO ICON\n📊 Data: UI element\n⬅️ Depends: None\n➡️ Blocks: Visual indicator"></i>
-                    <div>
-                        <p class="text-sm font-medium text-gray-700" data-tooltip="📝 DISPOSAL HEADER\n📊 Data: UI text\n⬅️ Depends: None\n➡️ Blocks: Instruction section">Material Disposal</p>
-                        <p class="text-xs text-gray-500" data-tooltip="📋 DISPOSAL POLICY\n📊 Data: Brand.disposalPolicy\n⬅️ Depends: Brand configuration\n➡️ Blocks: Compliance">Per brand policy: Recycle paper materials. Discard vinyl in regular trash. Contact PSP if materials should be returned.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Complete Deinstall Button -->
-            <div class="pb-8">
-                <button onclick="nav('screen-deinstall-attestation')"
-                    class="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold cursor-pointer transition" data-tooltip="✅ COMPLETE DEINSTALL BUTTON\n📊 Data: DeinstallTask.status → SUBMITTED, navigate to attestation\n⬅️ Depends: All removal photos captured (unless bypass_photos), all items marked removed\n➡️ Blocks: DeinstallAttestation screen, manager signature requirement">
-                    Complete Removal & Attest
-                </button>
-                <p class="text-xs text-gray-500 text-center mt-2" data-tooltip="📝 ATTESTATION NOTE\n📊 Data: Brand.bypass_attestation setting\n⬅️ Depends: Brand configuration\n➡️ Blocks: User expectation setting">Manager signature required on next screen</p>
-            </div>
-        </div>
-
-        <!-- SCREEN: DEINSTALL ATTESTATION - Manager Sign-off for Removal -->
-        <div id="screen-deinstall-attestation" class="screen p-4 pb-24" data-tooltip="📋 DEINSTALL ATTESTATION SCREEN
+            <!-- SCREEN: DEINSTALL ATTESTATION - Manager Sign-off for Removal -->
+            <div id="screen-deinstall-attestation" class="screen p-4 pb-24" data-tooltip="📋 DEINSTALL ATTESTATION SCREEN
 ━━━━━━━━━━━━━━━
 Purpose: Manager sign-off confirming material removal
 Data: DeinstallAttestation entity
 Depends: DeinstallTask.status = SUBMITTED, all removal photos captured (unless bypass_photos)
 Blocks: Campaign deinstall completion, compliance tracking">
-            <div class="flex items-center gap-3 mb-6">
-                <button onclick="nav('screen-deinstall')" class="p-2 -ml-2 hover:bg-gray-100 rounded-full" data-tooltip="⬅️ BACK BUTTON
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="nav('screen-deinstall')" class="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+                        data-tooltip="⬅️ BACK BUTTON
 📊 Data: Navigation action
 ⬅️ Depends: User action
 ➡️ Blocks: Returns to deinstall task screen">
-                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
-                </button>
-                <h1 class="text-2xl font-bold" data-tooltip="📋 SCREEN TITLE
+                        <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                    </button>
+                    <h1 class="text-2xl font-bold" data-tooltip="📋 SCREEN TITLE
 📊 Data: UI header text
 ⬅️ Depends: None
 ➡️ Blocks: Screen identification">Confirm Removal</h1>
-            </div>
+                </div>
 
-            <!-- Campaign Context Card -->
-            <div class="card mb-4 border-l-4 border-orange-500" data-tooltip="📊 CAMPAIGN CONTEXT CARD
+                <!-- Campaign Context Card -->
+                <div class="card mb-4 border-l-4 border-orange-500" data-tooltip="📊 CAMPAIGN CONTEXT CARD
 📊 Data: Campaign.name, Store.name, RemovedItemCount, PhotoCount
 ⬅️ Depends: DeinstallTask loaded
 ➡️ Blocks: Context display">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <i data-lucide="trash-2" class="w-6 h-6 text-orange-600"></i>
-                    </div>
-                    <div>
-                        <div class="font-bold text-lg" data-tooltip="📋 CAMPAIGN NAME
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="trash-2" class="w-6 h-6 text-orange-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg" data-tooltip="📋 CAMPAIGN NAME
 📊 Data: Campaign.name">Holiday Promo 2025</div>
-                        <div class="text-sm text-gray-500" data-tooltip="🏪 STORE NAME
+                            <div class="text-sm text-gray-500" data-tooltip="🏪 STORE NAME
 📊 Data: Store.name, Store.storeNumber">Store #4521 - Downtown</div>
+                        </div>
                     </div>
-                </div>
-                <div class="flex gap-4 text-sm">
-                    <div class="flex items-center gap-1 text-green-600" data-tooltip="✅ ITEMS REMOVED
+                    <div class="flex gap-4 text-sm">
+                        <div class="flex items-center gap-1 text-green-600" data-tooltip="✅ ITEMS REMOVED
 📊 Data: RemovedItemCount / TotalItemCount">
-                        <i data-lucide="check-circle" class="w-4 h-4"></i>
-                        <span>4/4 Items Removed</span>
-                    </div>
-                    <div class="flex items-center gap-1 text-green-600" data-tooltip="📸 REMOVAL PHOTOS
+                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            <span>4/4 Items Removed</span>
+                        </div>
+                        <div class="flex items-center gap-1 text-green-600" data-tooltip="📸 REMOVAL PHOTOS
 📊 Data: RemovalPhoto.count">
-                        <i data-lucide="camera" class="w-4 h-4"></i>
-                        <span>4 Photos</span>
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                            <span>4 Photos</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Deinstall Attestation Checklist -->
-            <div id="deinstall-attestation-checklist" class="card mb-4" data-tooltip="☑️ DEINSTALL ATTESTATION CHECKLIST
+                <!-- Deinstall Attestation Checklist -->
+                <div id="deinstall-attestation-checklist" class="card mb-4" data-tooltip="☑️ DEINSTALL ATTESTATION CHECKLIST
 📊 Data: DeinstallAttestationChecklist items
 ⬅️ Depends: Form displayed
 ➡️ Blocks: Submit enabled">
-                <h2 class="font-bold mb-4" data-tooltip="📋 SECTION HEADER">I confirm the following:</h2>
+                    <h2 class="font-bold mb-4" data-tooltip="📋 SECTION HEADER">I confirm the following:</h2>
 
-                <label class="checkbox-item border-b" data-tooltip="☑️ MATERIALS REMOVED CHECKBOX
+                    <label class="checkbox-item border-b" data-tooltip="☑️ MATERIALS REMOVED CHECKBOX
 📊 Data: DeinstallAttestation.materialsRemoved
 ⬅️ Depends: User action
 ➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-deinstall-materials" onchange="checkDeinstallSubmitReady()">
-                    <div>
-                        <div class="font-medium">All campaign materials have been removed</div>
-                        <div class="text-sm text-gray-500">From all designated locations per the layout map</div>
-                    </div>
-                </label>
+                        <input type="checkbox" id="chk-deinstall-materials" onchange="checkDeinstallSubmitReady()">
+                        <div>
+                            <div class="font-medium">All campaign materials have been removed</div>
+                            <div class="text-sm text-gray-500">From all designated locations per the layout map</div>
+                        </div>
+                    </label>
 
-                <label class="checkbox-item border-b" data-tooltip="☑️ PHOTOS CHECKBOX
+                    <label class="checkbox-item border-b" data-tooltip="☑️ PHOTOS CHECKBOX
 📊 Data: DeinstallAttestation.photosAccurate
 ⬅️ Depends: User action
 ➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-deinstall-photos" onchange="checkDeinstallSubmitReady()">
-                    <div>
-                        <div class="font-medium">Photos show materials fully removed</div>
-                        <div class="text-sm text-gray-500">Empty locations documented where materials were displayed</div>
-                    </div>
-                </label>
+                        <input type="checkbox" id="chk-deinstall-photos" onchange="checkDeinstallSubmitReady()">
+                        <div>
+                            <div class="font-medium">Photos show materials fully removed</div>
+                            <div class="text-sm text-gray-500">Empty locations documented where materials were displayed
+                            </div>
+                        </div>
+                    </label>
 
-                <label class="checkbox-item border-b" data-tooltip="☑️ DISPOSAL CHECKBOX
+                    <label class="checkbox-item border-b" data-tooltip="☑️ DISPOSAL CHECKBOX
 📊 Data: DeinstallAttestation.disposalCompliant
 ⬅️ Depends: User action
 ➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-deinstall-disposal" onchange="checkDeinstallSubmitReady()">
-                    <div>
-                        <div class="font-medium">Materials disposed per brand policy</div>
-                        <div class="text-sm text-gray-500">Recycled or discarded as instructed</div>
-                    </div>
-                </label>
+                        <input type="checkbox" id="chk-deinstall-disposal" onchange="checkDeinstallSubmitReady()">
+                        <div>
+                            <div class="font-medium">Materials disposed per brand policy</div>
+                            <div class="text-sm text-gray-500">Recycled or discarded as instructed</div>
+                        </div>
+                    </label>
 
-                <label class="checkbox-item" data-tooltip="☑️ SURFACE CONDITION CHECKBOX
+                    <label class="checkbox-item" data-tooltip="☑️ SURFACE CONDITION CHECKBOX
 📊 Data: DeinstallAttestation.surfaceCondition
 ⬅️ Depends: User action
 ➡️ Blocks: Submit validation">
-                    <input type="checkbox" id="chk-deinstall-surface" onchange="checkDeinstallSubmitReady()">
-                    <div>
-                        <div class="font-medium">Surfaces are clean and undamaged</div>
-                        <div class="text-sm text-gray-500">No adhesive residue or damage from removal</div>
-                    </div>
-                </label>
-            </div>
+                        <input type="checkbox" id="chk-deinstall-surface" onchange="checkDeinstallSubmitReady()">
+                        <div>
+                            <div class="font-medium">Surfaces are clean and undamaged</div>
+                            <div class="text-sm text-gray-500">No adhesive residue or damage from removal</div>
+                        </div>
+                    </label>
+                </div>
 
-            <!-- Digital Signature for Deinstall -->
-            <div class="card mb-4" data-tooltip="✍️ DIGITAL SIGNATURE SECTION
+                <!-- Digital Signature for Deinstall -->
+                <div class="card mb-4" data-tooltip="✍️ DIGITAL SIGNATURE SECTION
 📊 Data: DeinstallAttestation.signature, DeinstallAttestation.signedAt
 ⬅️ Depends: Checklist complete
 ➡️ Blocks: Deinstall attestation submission">
-                <h2 class="font-bold mb-2" data-tooltip="📋 SECTION HEADER">Manager Signature</h2>
-                <p class="text-sm text-gray-500 mb-3" data-tooltip="📝 INSTRUCTION TEXT">Sign below to confirm complete removal</p>
+                    <h2 class="font-bold mb-2" data-tooltip="📋 SECTION HEADER">Manager Signature</h2>
+                    <p class="text-sm text-gray-500 mb-3" data-tooltip="📝 INSTRUCTION TEXT">Sign below to confirm
+                        complete removal</p>
 
-                <div id="deinstall-signature-pad" class="signature-pad" onclick="simulateDeinstallSign(this)" data-tooltip="✍️ SIGNATURE PAD
+                    <div id="deinstall-signature-pad" class="signature-pad" onclick="simulateDeinstallSign(this)"
+                        data-tooltip="✍️ SIGNATURE PAD
 📊 Data: DeinstallAttestation.signatureData (base64)
 ⬅️ Depends: Touch/click input
 ➡️ Blocks: Signature validation">
-                    <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
-                    <span class="text-gray-400 text-sm">Tap to sign</span>
+                        <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                        <span class="text-gray-400 text-sm">Tap to sign</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Submit Deinstall Attestation - Sticky at bottom of scroll container -->
-            <div class="sticky-bottom-action" style="position: sticky; bottom: 0; width: 100%; padding: 16px; background: linear-gradient(to top, #f3f4f6 90%, transparent); box-sizing: border-box; margin-top: auto;">
-                <button id="btn-submit-deinstall-attestation" disabled
-                    onclick="submitDeinstallAttestation()"
-                    class="w-full py-4 bg-gray-300 text-gray-500 rounded-lg font-bold opacity-50 cursor-not-allowed transition shadow-lg" data-tooltip="✅ SUBMIT DEINSTALL ATTESTATION BUTTON
+                <!-- Submit Deinstall Attestation - Sticky at bottom of scroll container -->
+                <div class="sticky-bottom-action"
+                    style="position: sticky; bottom: 0; width: 100%; padding: 16px; background: linear-gradient(to top, #f3f4f6 90%, transparent); box-sizing: border-box; margin-top: auto;">
+                    <button id="btn-submit-deinstall-attestation" disabled onclick="submitDeinstallAttestation()"
+                        class="w-full py-4 bg-gray-300 text-gray-500 rounded-lg font-bold opacity-50 cursor-not-allowed transition shadow-lg"
+                        data-tooltip="✅ SUBMIT DEINSTALL ATTESTATION BUTTON
 📊 Data: DeinstallAttestation.status → SUBMITTED, DeinstallAttestation.submittedAt = NOW()
 ⬅️ Depends: All checkboxes checked, signature captured
 ➡️ Blocks: DeinstallTask.status → VERIFIED, Campaign deinstall completion
 STATE: Disabled until all requirements met, then enabled with orange styling">
-                    Submit Deinstall Attestation
-                </button>
-                <p class="text-xs text-gray-500 text-center mt-2" data-tooltip="📝 LEGAL NOTE
+                        Submit Deinstall Attestation
+                    </button>
+                    <p class="text-xs text-gray-500 text-center mt-2" data-tooltip="📝 LEGAL NOTE
 📊 Data: UI static text
 ⬅️ Depends: None
-➡️ Blocks: User awareness of attestation meaning">By signing, I attest that all materials have been properly removed</p>
+➡️ Blocks: User awareness of attestation meaning">By signing, I attest that all materials have been properly removed
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <!-- SCREEN: DEINSTALL SUCCESS - Completion Confirmation -->
-        <div id="screen-deinstall-success" class="screen p-4 pb-24" data-tooltip="🎉 DEINSTALL SUCCESS SCREEN
+            <!-- SCREEN: DEINSTALL SUCCESS - Completion Confirmation -->
+            <div id="screen-deinstall-success" class="screen p-4 pb-24" data-tooltip="🎉 DEINSTALL SUCCESS SCREEN
 ━━━━━━━━━━━━━━━
 Purpose: Confirm deinstall completion to store
 Data: DeinstallTask final status
 Depends: DeinstallAttestation submitted
 Blocks: None (terminal state)">
-            <div class="flex flex-col items-center justify-center min-h-[60vh] text-center">
-                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6" data-tooltip="✅ SUCCESS ICON
+                <div class="flex flex-col items-center justify-center min-h-[60vh] text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6" data-tooltip="✅ SUCCESS ICON
 📊 Data: UI element
 ⬅️ Depends: None
 ➡️ Blocks: Visual confirmation">
-                    <i data-lucide="check-circle" class="w-12 h-12 text-green-600"></i>
-                </div>
-                <h1 class="text-2xl font-bold mb-2" data-tooltip="📋 SUCCESS TITLE
+                        <i data-lucide="check-circle" class="w-12 h-12 text-green-600"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold mb-2" data-tooltip="📋 SUCCESS TITLE
 📊 Data: UI text
 ⬅️ Depends: DeinstallAttestation.status = SUBMITTED
 ➡️ Blocks: User confirmation">Deinstall Complete!</h1>
-                <p class="text-gray-500 mb-6" data-tooltip="📝 SUCCESS MESSAGE
+                    <p class="text-gray-500 mb-6" data-tooltip="📝 SUCCESS MESSAGE
 📊 Data: UI text
 ⬅️ Depends: None
 ➡️ Blocks: User understanding">Campaign materials have been successfully removed and documented.</p>
 
-                <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 w-full max-w-sm" data-tooltip="📊 COMPLETION SUMMARY
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 w-full max-w-sm" data-tooltip="📊 COMPLETION SUMMARY
 📊 Data: DeinstallTask summary stats
 ⬅️ Depends: DeinstallTask data
 ➡️ Blocks: User information">
-                    <div class="font-bold text-orange-800 mb-2">Holiday Promo 2025</div>
-                    <div class="text-sm text-orange-700">
-                        <div class="flex justify-between mb-1">
-                            <span>Items Removed:</span>
-                            <span class="font-medium">4</span>
-                        </div>
-                        <div class="flex justify-between mb-1">
-                            <span>Photos Uploaded:</span>
-                            <span class="font-medium">4</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Completed:</span>
-                            <span class="font-medium">Jan 2, 2026</span>
+                        <div class="font-bold text-orange-800 mb-2">Holiday Promo 2025</div>
+                        <div class="text-sm text-orange-700">
+                            <div class="flex justify-between mb-1">
+                                <span>Items Removed:</span>
+                                <span class="font-medium">4</span>
+                            </div>
+                            <div class="flex justify-between mb-1">
+                                <span>Photos Uploaded:</span>
+                                <span class="font-medium">4</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Completed:</span>
+                                <span class="font-medium">Jan 2, 2026</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button onclick="nav('screen-dashboard')"
-                    class="w-full max-w-sm py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold cursor-pointer transition" data-tooltip="🏠 RETURN HOME BUTTON
+                    <button onclick="nav('screen-dashboard')"
+                        class="w-full max-w-sm py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold cursor-pointer transition"
+                        data-tooltip="🏠 RETURN HOME BUTTON
 📊 Data: Navigation action
 ⬅️ Depends: User action
 ➡️ Blocks: Navigate to dashboard">
-                    Return to Home
-                </button>
+                        Return to Home
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav" data-tooltip="📱 BOTTOM NAVIGATION
+            <!-- Bottom Navigation -->
+            <div class="bottom-nav" data-tooltip="📱 BOTTOM NAVIGATION
 ━━━━━━━━━━━━━━━
 Component: Main navigation bar
 Pattern: Standard mobile nav
 Position: Fixed at bottom
 Purpose: Primary app navigation">
-            <div id="nav-dashboard" class="nav-item active cursor-pointer" onclick="nav('screen-dashboard')" data-tooltip="🏠 HOME TAB\n📊 Data: Navigation state\n⬅️ Depends: User authenticated\n➡️ Blocks: Dashboard screen access, StoreAssignment list">
-                <i data-lucide="home" size="20" data-tooltip="🏠 HOME ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
-                <span data-tooltip="🏠 HOME LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Home</span>
-            </div>
-            <div id="nav-tasks" class="nav-item cursor-pointer" onclick="nav('screen-tasks')" data-tooltip="📋 TASKS TAB\n📊 Data: Navigation state, COUNT(StoreAssignment WHERE status!=COMPLETE)\n⬅️ Depends: User authenticated, StoreAssignments exist\n➡️ Blocks: Tasks list screen access">
-                <i data-lucide="list-checks" size="20" data-tooltip="📋 TASKS ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
-                <span data-tooltip="📋 TASKS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Tasks</span>
-            </div>
-            <!-- Scan removed from nav - photo capture is accessed through task flow only -->
-            <div id="nav-profile" class="nav-item cursor-pointer" onclick="nav('screen-profile')" data-tooltip="👤 PROFILE TAB\n📊 Data: Navigation state, User.id, COUNT(notifications unread)\n⬅️ Depends: User authenticated\n➡️ Blocks: Profile screen access, settings, notifications">
-                <i data-lucide="user" size="20" data-tooltip="👤 PROFILE ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
-                <span data-tooltip="👤 PROFILE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Profile</span>
+                <div id="nav-dashboard" class="nav-item active cursor-pointer" onclick="nav('screen-dashboard')"
+                    data-tooltip="🏠 HOME TAB\n📊 Data: Navigation state\n⬅️ Depends: User authenticated\n➡️ Blocks: Dashboard screen access, StoreAssignment list">
+                    <i data-lucide="home" size="20"
+                        data-tooltip="🏠 HOME ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                    <span
+                        data-tooltip="🏠 HOME LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Home</span>
+                </div>
+                <div id="nav-tasks" class="nav-item cursor-pointer" onclick="nav('screen-tasks')"
+                    data-tooltip="📋 TASKS TAB\n📊 Data: Navigation state, COUNT(StoreAssignment WHERE status!=COMPLETE)\n⬅️ Depends: User authenticated, StoreAssignments exist\n➡️ Blocks: Tasks list screen access">
+                    <i data-lucide="list-checks" size="20"
+                        data-tooltip="📋 TASKS ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                    <span
+                        data-tooltip="📋 TASKS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Tasks</span>
+                </div>
+                <!-- Scan removed from nav - photo capture is accessed through task flow only -->
+                <div id="nav-profile" class="nav-item cursor-pointer" onclick="nav('screen-profile')"
+                    data-tooltip="👤 PROFILE TAB\n📊 Data: Navigation state, User.id, COUNT(notifications unread)\n⬅️ Depends: User authenticated\n➡️ Blocks: Profile screen access, settings, notifications">
+                    <i data-lucide="user" size="20"
+                        data-tooltip="👤 PROFILE ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
+                    <span
+                        data-tooltip="👤 PROFILE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Profile</span>
+                </div>
             </div>
         </div>
-    </div>
     </div> <!-- end phone-container -->
 
     <script>
@@ -1818,7 +2162,7 @@ Purpose: Primary app navigation">
         }
 
         // Load saved device preference
-        (function() {
+        (function () {
             const savedDevice = localStorage.getItem('storeAppDevice') || 'mobile';
             document.body.classList.add('device-' + savedDevice);
             const selector = document.getElementById('device-selector');

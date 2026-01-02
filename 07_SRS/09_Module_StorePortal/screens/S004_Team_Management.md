@@ -78,47 +78,45 @@ The Team Management screen enables Store Managers to administer their store's te
 
 ### 3.1 Component Hierarchy
 
-```
-TeamManagementPage
-â”œâ”€â”€ PageHeader
-â”‚   â”œâ”€â”€ TitleSection ("Team Management")
-â”‚   â””â”€â”€ InviteMemberButton
-â”œâ”€â”€ ActiveMembersSection
-â”‚   â”œâ”€â”€ SectionHeader ("Active Members ({count})")
-â”‚   â””â”€â”€ MemberTable
-â”‚       â””â”€â”€ MemberRow[] (repeating)
-â”‚           â”œâ”€â”€ AvatarWithName
-â”‚           â”œâ”€â”€ EmailAddress
-â”‚           â”œâ”€â”€ RoleBadge
-â”‚           â”œâ”€â”€ StatusBadge
-â”‚           â”œâ”€â”€ LastActiveDate
-â”‚           â””â”€â”€ ActionMenu
-â”œâ”€â”€ PendingInvitationsSection
-â”‚   â”œâ”€â”€ SectionHeader ("Pending Invitations ({count})")
-â”‚   â””â”€â”€ InvitationTable
-â”‚       â””â”€â”€ InvitationRow[] (repeating)
-â”‚           â”œâ”€â”€ EmailAddress
-â”‚           â”œâ”€â”€ RoleBadge
-â”‚           â”œâ”€â”€ InvitedDate
-â”‚           â”œâ”€â”€ ExpiresDate
-â”‚           â””â”€â”€ ActionButtons (Resend, Cancel)
-â”œâ”€â”€ ActivitySummarySection
-â”‚   â”œâ”€â”€ SectionHeader ("Team Activity (Last 30 Days)")
-â”‚   â””â”€â”€ ActivityTable
-â”‚       â””â”€â”€ ActivityRow[] (repeating)
-â”œâ”€â”€ InviteMemberModal
-â”‚   â”œâ”€â”€ EmailInput
-â”‚   â”œâ”€â”€ RoleSelector
-â”‚   â”œâ”€â”€ PersonalMessageInput
-â”‚   â””â”€â”€ ActionButtons (Cancel, Send Invitation)
-â””â”€â”€ EditMemberModal
-    â”œâ”€â”€ MemberInfo
-    â”œâ”€â”€ RoleDropdown
-    â”œâ”€â”€ StatusToggle
-    â”œâ”€â”€ ActivitySummary
-    â”œâ”€â”€ RemoveButton
-    â””â”€â”€ ActionButtons (Cancel, Save)
-```
+- **TeamManagementPage**
+    - **PageHeader**
+        - TitleSection ("Team Management")
+        - InviteMemberButton
+    - **ActiveMembersSection**
+        - SectionHeader ("Active Members ({count})")
+        - **MemberTable**
+            - MemberRow[] (repeating)
+                - AvatarWithName
+                - EmailAddress
+                - RoleBadge
+                - StatusBadge
+                - LastActiveDate
+                - ActionMenu
+    - **PendingInvitationsSection**
+        - SectionHeader ("Pending Invitations ({count})")
+        - **InvitationTable**
+            - InvitationRow[] (repeating)
+                - EmailAddress
+                - RoleBadge
+                - InvitedDate
+                - ExpiresDate
+                - ActionButtons (Resend, Cancel)
+    - **ActivitySummarySection**
+        - SectionHeader ("Team Activity (Last 30 Days)")
+        - **ActivityTable**
+            - ActivityRow[] (repeating)
+    - **InviteMemberModal**
+        - EmailInput
+        - RoleSelector
+        - PersonalMessageInput
+        - ActionButtons (Cancel, Send Invitation)
+    - **EditMemberModal**
+        - MemberInfo
+        - RoleDropdown
+        - StatusToggle
+        - ActivitySummary
+        - RemoveButton
+        - ActionButtons (Cancel, Save)
 
 ### 3.2 Component Specifications
 
@@ -379,36 +377,27 @@ ORDER BY u.name
 
 ### 7.1 Invitation Status States
 
-```
-     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-     â”‚ PENDING  â”‚
-     â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜
-          â”‚
-    â”Œâ”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”
-    â–¼           â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ACCEPTEDâ”‚  â”‚ EXPIRED â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-    â”‚
-    â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ MEMBERSHIP  â”‚
-â”‚  CREATED    â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING
+    PENDING --> ACCEPTED: User Accepts
+    PENDING --> EXPIRED: 7 Days
+    
+    ACCEPTED --> MEMBERSHIP_CREATED
+    MEMBERSHIP_CREATED --> [*]
 ```
 
 ### 7.2 Member Status States
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  ACTIVE  â”‚â—„â”€â”€â”€â”€â”€â–ºâ”‚ INACTIVE â”‚
-â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-     â”‚
-     â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ REMOVED  â”‚
-â”‚(soft del)â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```mermaid
+stateDiagram-v2
+    ACTIVE --> INACTIVE: Deactivate
+    INACTIVE --> ACTIVE: Reactivate
+    
+    ACTIVE --> REMOVED: Soft Delete
+    INACTIVE --> REMOVED: Soft Delete
+    
+    REMOVED --> [*]
 ```
 
 ### 7.3 State Transition Actions
