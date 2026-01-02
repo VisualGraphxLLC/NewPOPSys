@@ -1447,6 +1447,325 @@ Blocks: Campaign completion">
             </button>
         </div>
 
+        <!-- SCREEN: DEINSTALL - Material Removal Workflow -->
+        <div id="screen-deinstall" class="screen p-4 pb-24" data-tooltip="🗑️ DEINSTALL SURVEY SCREEN
+━━━━━━━━━━━━━━━
+Screen: Material Removal Evidence
+Purpose: Document campaign material removal
+Flow: Tasks → Deinstall Survey → Deinstall Attestation
+Trigger: Campaign enters deinstall phase
+━━━━━━━━━━━━━━━
+📊 DATA REQUIREMENTS:
+- StoreAssignment.id (campaign being deinstalled)
+- AssignmentItem[] (materials to remove)
+- DeinstallTask.status (PENDING → IN_PROGRESS → SUBMITTED)
+- PhotoUpload[] (removal evidence, unless bypass_photos)
+- Brand.bypass_photos (skip photo requirement if true)
+━━━━━━━━━━━━━━━
+⬅️ DEPENDS ON:
+- Campaign.deinstallWindowStart reached
+- deinstallPhase = true
+- StoreAssignment.installComplete = true
+━━━━━━━━━━━━━━━
+➡️ BLOCKS:
+- DeinstallAttestation (manager signature)
+- Campaign closure
+- Store compliance status">
+            <div class="flex items-center mb-4">
+                <button onclick="nav('screen-tasks')" class="p-2 -ml-2" data-tooltip="⬅️ BACK BUTTON\n📊 Data: Navigation action\n⬅️ Depends: None\n➡️ Blocks: Return to task list"><i data-lucide="arrow-left"></i></button>
+                <h1 class="text-lg font-bold ml-2" data-tooltip="🗑️ DEINSTALL SURVEY HEADER\n📊 Data: StoreAssignment.id, Campaign.name, Campaign.deinstallDeadline\n⬅️ Depends: Deinstall phase active\n➡️ Blocks: Material removal workflow">Remove Campaign Materials</h1>
+            </div>
+
+            <!-- Deadline Warning -->
+            <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4" data-tooltip="⏰ DEINSTALL DEADLINE WARNING\n📊 Data: Campaign.deinstallDeadline, DATEDIFF(deadline, NOW())\n⬅️ Depends: Campaign.deinstallWindow set\n➡️ Blocks: User urgency awareness, non-compliance prevention">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="clock" class="w-5 h-5 text-orange-600" data-tooltip="⏰ CLOCK ICON\n📊 Data: UI indicator\n⬅️ Depends: None\n➡️ Blocks: Visual deadline emphasis"></i>
+                    <div>
+                        <p class="text-sm font-medium text-orange-800" data-tooltip="📅 DEADLINE TEXT\n📊 Data: Campaign.deinstallDeadline formatted\n⬅️ Depends: Campaign configuration\n➡️ Blocks: Compliance tracking">Removal Deadline: <span class="font-bold">Jan 15, 2026</span></p>
+                        <p class="text-xs text-orange-600" data-tooltip="⚠️ DAYS REMAINING\n📊 Data: DATEDIFF(Campaign.deinstallDeadline, NOW())\n⬅️ Depends: Current date calculation\n➡️ Blocks: Urgency indicator">13 days remaining</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="flex justify-between items-center mb-4" data-tooltip="📊 REMOVAL PROGRESS\n📊 Data: COUNT(DeinstallEvidence WHERE status=COMPLETE), COUNT(AssignmentItem)\n⬅️ Depends: AssignmentItems from original install\n➡️ Blocks: Completion percentage, submit enablement">
+                <span class="text-sm font-medium text-gray-600" data-tooltip="📊 PROGRESS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Progress section identification">Removal Progress</span>
+                <span class="text-sm font-bold text-orange-600" data-tooltip="🔢 PROGRESS PERCENTAGE\n📊 Data: (COUNT(removed) / COUNT(total)) * 100\n⬅️ Depends: Items marked as removed\n➡️ Blocks: Completion indicator">25%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-6" data-tooltip="📊 PROGRESS BAR\n📊 Data: Visual of removal completion\n⬅️ Depends: Removal count calculation\n➡️ Blocks: Visual completion feedback">
+                <div class="bg-orange-500 h-2 rounded-full" style="width: 25%"></div>
+            </div>
+
+            <!-- Group: Windows (Removal) -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name (from original install)\n⬅️ Depends: StoreLayout, completed installation\n➡️ Blocks: Material removal by location">Slot: Front Windows</h3>
+
+                <!-- Removed Item with Photo -->
+                <div class="card border-l-4 border-green-500" data-tooltip="✅ REMOVED ITEM CARD\n📊 Data: DeinstallEvidence.imageUrl, DeinstallEvidence.removedAt, AssignmentItem.id\n⬅️ Depends: Material physically removed, photo captured\n➡️ Blocks: DeinstallVerification, compliance record">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-bold" data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name (from original install)\n⬅️ Depends: StoreLayout, Kit definition\n➡️ Blocks: Removal verification">Window Cling (Left)</h4>
+                            <p class="text-xs text-gray-500" data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal guidance">Peel carefully from corner. Dispose or return per brand policy.</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded" data-tooltip="✅ REMOVED BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Removal confirmed\n➡️ Blocks: Item counted as complete">Removed</span>
+                    </div>
+                    <div class="bg-gray-100 rounded h-24 flex items-center justify-center border-2 border-dashed border-gray-300" data-tooltip="🖼️ REMOVAL EVIDENCE PHOTO\n📊 Data: DeinstallEvidence.imageUrl (showing empty location)\n⬅️ Depends: Photo captured of cleared slot\n➡️ Blocks: Verification review">
+                        <img src="https://via.placeholder.com/300x100?text=Empty+Window+Photo" class="h-full w-full object-cover rounded cursor-pointer" data-tooltip="🔍 EVIDENCE IMAGE\n📊 Data: DeinstallEvidence.imageUrl\n⬅️ Depends: Photo uploaded\n➡️ Blocks: Manager verification">
+                    </div>
+                </div>
+
+                <!-- Pending Removal Item -->
+                <div class="card" data-tooltip="⏳ PENDING REMOVAL CARD\n📊 Data: AssignmentItem.id, DeinstallTask.status=PENDING\n⬅️ Depends: Material still installed\n➡️ Blocks: Deinstall completion">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-bold" data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name\n⬅️ Depends: Original installation record\n➡️ Blocks: Removal tracking">Window Cling (Right)</h4>
+                            <p class="text-xs text-gray-500" data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal">Peel carefully. Photo the empty window after removal.</p>
+                        </div>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded" data-tooltip="⏳ PENDING BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Item not yet removed\n➡️ Blocks: Removal action required">Pending</span>
+                    </div>
+                    <button
+                        class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
+                        onclick="this.classList.add('bg-green-100', 'border-green-300'); this.innerHTML='<span class=\'text-green-600 font-bold\'>✓ Removal Photo Captured</span>'"
+                        data-tooltip="📸 CAPTURE REMOVAL EVIDENCE\n📊 Data: DeinstallEvidence.imageUrl, DeinstallEvidence.capturedAt\n⬅️ Depends: Camera permission, material removed\n➡️ Blocks: DeinstallEvidence creation, completion">
+                        <i data-lucide="camera" size="24" data-tooltip="📷 CAMERA ICON\n📊 Data: UI element\n⬅️ Depends: None\n➡️ Blocks: Photo action indicator"></i>
+                        <span class="text-sm font-medium" data-tooltip="💬 CAPTURE LABEL\n📊 Data: UI text\n⬅️ Depends: None\n➡️ Blocks: User action prompt">Photo Empty Location</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group: Register (Removal) -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2" data-tooltip="📍 SLOT GROUPING HEADER\n📊 Data: LocationSlot.name\n⬅️ Depends: StoreLayout\n➡️ Blocks: Register area removal">Slot: Register</h3>
+                <div class="card" data-tooltip="⏳ PENDING REMOVAL CARD\n📊 Data: AssignmentItem.id\n⬅️ Depends: Material to be removed\n➡️ Blocks: Deinstall completion">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-bold" data-tooltip="📦 MATERIAL NAME\n📊 Data: AssignmentItem.name\n⬅️ Depends: Original installation\n➡️ Blocks: Removal tracking">Counter Mat</h4>
+                            <p class="text-xs text-gray-500" data-tooltip="📝 REMOVAL INSTRUCTION\n📊 Data: DeinstallRule.instructions\n⬅️ Depends: Material type\n➡️ Blocks: Proper removal">Remove mat from counter. Photo empty counter surface.</p>
+                        </div>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded" data-tooltip="⏳ PENDING BADGE\n📊 Data: DeinstallEvidence.status\n⬅️ Depends: Not yet removed\n➡️ Blocks: Action required">Pending</span>
+                    </div>
+                    <button
+                        class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
+                        onclick="this.classList.add('bg-green-100', 'border-green-300'); this.innerHTML='<span class=\'text-green-600 font-bold\'>✓ Removal Photo Captured</span>'"
+                        data-tooltip="📸 CAPTURE REMOVAL EVIDENCE\n📊 Data: DeinstallEvidence.imageUrl\n⬅️ Depends: Camera, material removed\n➡️ Blocks: Completion">
+                        <i data-lucide="camera" size="24"></i>
+                        <span class="text-sm font-medium">Photo Empty Location</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Disposal Instructions -->
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6" data-tooltip="♻️ DISPOSAL INSTRUCTIONS\n📊 Data: Brand.disposalPolicy, Campaign.disposalInstructions\n⬅️ Depends: Brand configuration\n➡️ Blocks: Proper material disposal compliance">
+                <div class="flex items-start gap-2">
+                    <i data-lucide="info" class="w-5 h-5 text-gray-500 mt-0.5" data-tooltip="ℹ️ INFO ICON\n📊 Data: UI element\n⬅️ Depends: None\n➡️ Blocks: Visual indicator"></i>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700" data-tooltip="📝 DISPOSAL HEADER\n📊 Data: UI text\n⬅️ Depends: None\n➡️ Blocks: Instruction section">Material Disposal</p>
+                        <p class="text-xs text-gray-500" data-tooltip="📋 DISPOSAL POLICY\n📊 Data: Brand.disposalPolicy\n⬅️ Depends: Brand configuration\n➡️ Blocks: Compliance">Per brand policy: Recycle paper materials. Discard vinyl in regular trash. Contact PSP if materials should be returned.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete Deinstall Button -->
+            <div class="pb-8">
+                <button onclick="nav('screen-deinstall-attestation')"
+                    class="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold cursor-pointer transition" data-tooltip="✅ COMPLETE DEINSTALL BUTTON\n📊 Data: DeinstallTask.status → SUBMITTED, navigate to attestation\n⬅️ Depends: All removal photos captured (unless bypass_photos), all items marked removed\n➡️ Blocks: DeinstallAttestation screen, manager signature requirement">
+                    Complete Removal & Attest
+                </button>
+                <p class="text-xs text-gray-500 text-center mt-2" data-tooltip="📝 ATTESTATION NOTE\n📊 Data: Brand.bypass_attestation setting\n⬅️ Depends: Brand configuration\n➡️ Blocks: User expectation setting">Manager signature required on next screen</p>
+            </div>
+        </div>
+
+        <!-- SCREEN: DEINSTALL ATTESTATION - Manager Sign-off for Removal -->
+        <div id="screen-deinstall-attestation" class="screen p-4 pb-24" data-tooltip="📋 DEINSTALL ATTESTATION SCREEN
+━━━━━━━━━━━━━━━
+Purpose: Manager sign-off confirming material removal
+Data: DeinstallAttestation entity
+Depends: DeinstallTask.status = SUBMITTED, all removal photos captured (unless bypass_photos)
+Blocks: Campaign deinstall completion, compliance tracking">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="nav('screen-deinstall')" class="p-2 -ml-2 hover:bg-gray-100 rounded-full" data-tooltip="⬅️ BACK BUTTON
+📊 Data: Navigation action
+⬅️ Depends: User action
+➡️ Blocks: Returns to deinstall task screen">
+                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                </button>
+                <h1 class="text-2xl font-bold" data-tooltip="📋 SCREEN TITLE
+📊 Data: UI header text
+⬅️ Depends: None
+➡️ Blocks: Screen identification">Confirm Removal</h1>
+            </div>
+
+            <!-- Campaign Context Card -->
+            <div class="card mb-4 border-l-4 border-orange-500" data-tooltip="📊 CAMPAIGN CONTEXT CARD
+📊 Data: Campaign.name, Store.name, RemovedItemCount, PhotoCount
+⬅️ Depends: DeinstallTask loaded
+➡️ Blocks: Context display">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="trash-2" class="w-6 h-6 text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-lg" data-tooltip="📋 CAMPAIGN NAME
+📊 Data: Campaign.name">Holiday Promo 2025</div>
+                        <div class="text-sm text-gray-500" data-tooltip="🏪 STORE NAME
+📊 Data: Store.name, Store.storeNumber">Store #4521 - Downtown</div>
+                    </div>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <div class="flex items-center gap-1 text-green-600" data-tooltip="✅ ITEMS REMOVED
+📊 Data: RemovedItemCount / TotalItemCount">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <span>4/4 Items Removed</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-green-600" data-tooltip="📸 REMOVAL PHOTOS
+📊 Data: RemovalPhoto.count">
+                        <i data-lucide="camera" class="w-4 h-4"></i>
+                        <span>4 Photos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deinstall Attestation Checklist -->
+            <div id="deinstall-attestation-checklist" class="card mb-4" data-tooltip="☑️ DEINSTALL ATTESTATION CHECKLIST
+📊 Data: DeinstallAttestationChecklist items
+⬅️ Depends: Form displayed
+➡️ Blocks: Submit enabled">
+                <h2 class="font-bold mb-4" data-tooltip="📋 SECTION HEADER">I confirm the following:</h2>
+
+                <label class="checkbox-item border-b" data-tooltip="☑️ MATERIALS REMOVED CHECKBOX
+📊 Data: DeinstallAttestation.materialsRemoved
+⬅️ Depends: User action
+➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-deinstall-materials" onchange="checkDeinstallSubmitReady()">
+                    <div>
+                        <div class="font-medium">All campaign materials have been removed</div>
+                        <div class="text-sm text-gray-500">From all designated locations per the layout map</div>
+                    </div>
+                </label>
+
+                <label class="checkbox-item border-b" data-tooltip="☑️ PHOTOS CHECKBOX
+📊 Data: DeinstallAttestation.photosAccurate
+⬅️ Depends: User action
+➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-deinstall-photos" onchange="checkDeinstallSubmitReady()">
+                    <div>
+                        <div class="font-medium">Photos show materials fully removed</div>
+                        <div class="text-sm text-gray-500">Empty locations documented where materials were displayed</div>
+                    </div>
+                </label>
+
+                <label class="checkbox-item border-b" data-tooltip="☑️ DISPOSAL CHECKBOX
+📊 Data: DeinstallAttestation.disposalCompliant
+⬅️ Depends: User action
+➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-deinstall-disposal" onchange="checkDeinstallSubmitReady()">
+                    <div>
+                        <div class="font-medium">Materials disposed per brand policy</div>
+                        <div class="text-sm text-gray-500">Recycled or discarded as instructed</div>
+                    </div>
+                </label>
+
+                <label class="checkbox-item" data-tooltip="☑️ SURFACE CONDITION CHECKBOX
+📊 Data: DeinstallAttestation.surfaceCondition
+⬅️ Depends: User action
+➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-deinstall-surface" onchange="checkDeinstallSubmitReady()">
+                    <div>
+                        <div class="font-medium">Surfaces are clean and undamaged</div>
+                        <div class="text-sm text-gray-500">No adhesive residue or damage from removal</div>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Digital Signature for Deinstall -->
+            <div class="card mb-4" data-tooltip="✍️ DIGITAL SIGNATURE SECTION
+📊 Data: DeinstallAttestation.signature, DeinstallAttestation.signedAt
+⬅️ Depends: Checklist complete
+➡️ Blocks: Deinstall attestation submission">
+                <h2 class="font-bold mb-2" data-tooltip="📋 SECTION HEADER">Manager Signature</h2>
+                <p class="text-sm text-gray-500 mb-3" data-tooltip="📝 INSTRUCTION TEXT">Sign below to confirm complete removal</p>
+
+                <div id="deinstall-signature-pad" class="signature-pad" onclick="simulateDeinstallSign(this)" data-tooltip="✍️ SIGNATURE PAD
+📊 Data: DeinstallAttestation.signatureData (base64)
+⬅️ Depends: Touch/click input
+➡️ Blocks: Signature validation">
+                    <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                    <span class="text-gray-400 text-sm">Tap to sign</span>
+                </div>
+            </div>
+
+            <!-- Submit Deinstall Attestation -->
+            <div class="pb-8">
+                <button id="btn-submit-deinstall-attestation" disabled
+                    onclick="submitDeinstallAttestation()"
+                    class="w-full py-4 bg-gray-300 text-gray-500 rounded-lg font-bold opacity-50 cursor-not-allowed transition" data-tooltip="✅ SUBMIT DEINSTALL ATTESTATION BUTTON
+📊 Data: DeinstallAttestation.status → SUBMITTED, DeinstallAttestation.submittedAt = NOW()
+⬅️ Depends: All checkboxes checked, signature captured
+➡️ Blocks: DeinstallTask.status → VERIFIED, Campaign deinstall completion
+STATE: Disabled until all requirements met, then enabled with orange styling">
+                    Submit Deinstall Attestation
+                </button>
+                <p class="text-xs text-gray-500 text-center mt-2" data-tooltip="📝 LEGAL NOTE
+📊 Data: UI static text
+⬅️ Depends: None
+➡️ Blocks: User awareness of attestation meaning">By signing, I attest that all materials have been properly removed</p>
+            </div>
+        </div>
+
+        <!-- SCREEN: DEINSTALL SUCCESS - Completion Confirmation -->
+        <div id="screen-deinstall-success" class="screen p-4 pb-24" data-tooltip="🎉 DEINSTALL SUCCESS SCREEN
+━━━━━━━━━━━━━━━
+Purpose: Confirm deinstall completion to store
+Data: DeinstallTask final status
+Depends: DeinstallAttestation submitted
+Blocks: None (terminal state)">
+            <div class="flex flex-col items-center justify-center min-h-[60vh] text-center">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6" data-tooltip="✅ SUCCESS ICON
+📊 Data: UI element
+⬅️ Depends: None
+➡️ Blocks: Visual confirmation">
+                    <i data-lucide="check-circle" class="w-12 h-12 text-green-600"></i>
+                </div>
+                <h1 class="text-2xl font-bold mb-2" data-tooltip="📋 SUCCESS TITLE
+📊 Data: UI text
+⬅️ Depends: DeinstallAttestation.status = SUBMITTED
+➡️ Blocks: User confirmation">Deinstall Complete!</h1>
+                <p class="text-gray-500 mb-6" data-tooltip="📝 SUCCESS MESSAGE
+📊 Data: UI text
+⬅️ Depends: None
+➡️ Blocks: User understanding">Campaign materials have been successfully removed and documented.</p>
+
+                <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 w-full max-w-sm" data-tooltip="📊 COMPLETION SUMMARY
+📊 Data: DeinstallTask summary stats
+⬅️ Depends: DeinstallTask data
+➡️ Blocks: User information">
+                    <div class="font-bold text-orange-800 mb-2">Holiday Promo 2025</div>
+                    <div class="text-sm text-orange-700">
+                        <div class="flex justify-between mb-1">
+                            <span>Items Removed:</span>
+                            <span class="font-medium">4</span>
+                        </div>
+                        <div class="flex justify-between mb-1">
+                            <span>Photos Uploaded:</span>
+                            <span class="font-medium">4</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Completed:</span>
+                            <span class="font-medium">Jan 2, 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="nav('screen-dashboard')"
+                    class="w-full max-w-sm py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold cursor-pointer transition" data-tooltip="🏠 RETURN HOME BUTTON
+📊 Data: Navigation action
+⬅️ Depends: User action
+➡️ Blocks: Navigate to dashboard">
+                    Return to Home
+                </button>
+            </div>
+        </div>
+
         <!-- Bottom Navigation -->
         <div class="bottom-nav" data-tooltip="📱 BOTTOM NAVIGATION
 ━━━━━━━━━━━━━━━
@@ -1494,6 +1813,7 @@ Purpose: Primary app navigation">
         let receiptComplete = false;
         let installComplete = false;
         let signatureComplete = false;
+        let deinstallSignatureComplete = false;
         let deinstallPhase = false;  // true when campaign enters deinstall phase
         let deinstallComplete = false;
 
@@ -1770,6 +2090,63 @@ Purpose: Primary app navigation">
             signatureComplete = false;
             lucide.createIcons();
             checkSubmitReady();
+        }
+
+        // === DEINSTALL ATTESTATION FUNCTIONS ===
+        function checkDeinstallSubmitReady() {
+            const checkboxes = document.querySelectorAll('#deinstall-attestation-checklist input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            const submitBtn = document.getElementById('btn-submit-deinstall-attestation');
+
+            if (allChecked && deinstallSignatureComplete) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-300', 'text-gray-500');
+                submitBtn.classList.add('bg-orange-500', 'text-white', 'hover:bg-orange-600');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-300', 'text-gray-500');
+                submitBtn.classList.remove('bg-orange-500', 'text-white', 'hover:bg-orange-600');
+            }
+        }
+
+        function simulateDeinstallSign(el) {
+            el.classList.add('signed');
+            el.innerHTML = `
+                <div class="text-green-600 font-bold">✓ Signed</div>
+                <div class="text-sm text-gray-500 mt-1">John Smith • ${new Date().toLocaleTimeString()}</div>
+            `;
+            deinstallSignatureComplete = true;
+            checkDeinstallSubmitReady();
+        }
+
+        function clearDeinstallSignature() {
+            const signaturePad = document.getElementById('deinstall-signature-pad');
+            signaturePad.classList.remove('signed');
+            signaturePad.innerHTML = `
+                <i data-lucide="pen-tool" class="text-gray-400 mb-2"></i>
+                <span class="text-sm text-gray-400">Tap to sign</span>
+            `;
+            deinstallSignatureComplete = false;
+            lucide.createIcons();
+            checkDeinstallSubmitReady();
+        }
+
+        function submitDeinstallAttestation() {
+            // 1. Show deinstall completed state in tasks
+            document.getElementById('deinstall-content-active').classList.add('hidden');
+            document.getElementById('deinstall-content-complete').classList.remove('hidden');
+
+            // 2. Mark Deinstall tab as complete (green)
+            const deinstallTab = document.getElementById('tab-deinstall');
+            if (deinstallTab) {
+                deinstallTab.classList.remove('text-orange-600');
+                deinstallTab.classList.add('text-green-600');
+                deinstallTab.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 mr-1"></i> Deinstall';
+            }
+
+            // 3. Navigate to success screen
+            nav('screen-deinstall-success');
+            lucide.createIcons();
         }
 
         function submitAttestation() {
