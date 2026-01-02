@@ -124,143 +124,37 @@ Priority Order (highest first):
 
 ### 3.3 Login Form Wireframe
 
-```
-+-------------------------------------------------------------+
-|                                                             |
-|                    +-------------------+                    |
-|                    |   [NewPOPSys]     |                    |
-|                    |      LOGO         |                    |
-|                    +-------------------+                    |
-|                                                             |
-|                    Welcome Back                             |
-|                    Sign in to your account                  |
-|                                                             |
-|            +-----------------------------------+            |
-|            | Email Address                     |            |
-|            | +-------------------------------+ |            |
-|            | | user@company.com              | |            |
-|            | +-------------------------------+ |            |
-|            |                                   |            |
-|            | Password                          |            |
-|            | +-------------------------------+ |            |
-|            | | ************           [eye]  | |            |
-|            | +-------------------------------+ |            |
-|            |                                   |            |
-|            | [x] Remember me    Forgot pass?   |            |
-|            |                                   |            |
-|            | +-------------------------------+ |            |
-|            | |         Sign In               | |            |
-|            | +-------------------------------+ |            |
-|            |                                   |            |
-|            | -------------- or -------------- |            |
-|            |                                   |            |
-|            | +-------------------------------+ |            |
-|            | | [lock] Sign in with SSO       | |            |
-|            | +-------------------------------+ |            |
-|            +-----------------------------------+            |
-|                                                             |
-|            Need help? Contact your administrator            |
-|                                                             |
-+-------------------------------------------------------------+
-```
+
+![Universal Login Screen](../../screenshots/Mobile_App/mobile_app.png)
+
 
 ### 3.4 MFA Modal
 
 **REQ-L001-UI-002**: When MFA is required, the system SHALL display a modal dialog for code entry.
 
-```
-+---------------------------------------+
-| Two-Factor Authentication         [X] |
-+---------------------------------------+
-|                                       |
-| Enter the 6-digit code from your      |
-| authenticator app                     |
-|                                       |
-|       +---+---+---+---+---+---+       |
-|       | _ | _ | _ | _ | _ | _ |       |
-|       +---+---+---+---+---+---+       |
-|                                       |
-| [ ] Trust this device for 30 days     |
-|                                       |
-| [Cancel]                   [Verify]   |
-|                                       |
-| Lost access? Use backup code          |
-+---------------------------------------+
-```
+> *[Visual component defined in Design System]*
+
 
 ### 3.5 Forgot Password Modal
 
 **REQ-L001-UI-003**: Password reset SHALL be initiated via a modal dialog.
 
-```
-+---------------------------------------+
-| Reset Password                    [X] |
-+---------------------------------------+
-|                                       |
-| Enter your email address and we'll    |
-| send you a link to reset your         |
-| password.                             |
-|                                       |
-| Email Address                         |
-| +-----------------------------------+ |
-| | user@company.com                  | |
-| +-----------------------------------+ |
-|                                       |
-| [Cancel]           [Send Reset Link]  |
-+---------------------------------------+
-```
+> *[Visual component defined in Design System]*
+
 
 ### 3.6 SSO Domain Entry Modal
 
 **REQ-L001-UI-004**: SSO authentication SHALL prompt for company domain.
 
-```
-+---------------------------------------+
-| Enterprise Sign In                [X] |
-+---------------------------------------+
-|                                       |
-| Enter your company domain to be       |
-| redirected to your identity           |
-| provider.                             |
-|                                       |
-| Company Domain                        |
-| +-----------------------------------+ |
-| | acmecorp.com                      | |
-| +-----------------------------------+ |
-|                                       |
-| [Cancel]                  [Continue]  |
-+---------------------------------------+
-```
+> *[Visual component defined in Design System]*
+
 
 ### 3.7 Role Selector Modal
 
 **REQ-L001-UI-005**: For multi-role users, the system SHALL display a role selection modal.
 
-```
-+---------------------------------------+
-| Select Account                    [X] |
-+---------------------------------------+
-|                                       |
-| You have access to multiple           |
-| accounts. Select one to continue:     |
-|                                       |
-| +-----------------------------------+ |
-| | [building] Acme Print Services    | |
-| |    PSP Administrator              | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | [tag] Brand Corp                  | |
-| |    Brand Admin                    | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | [store] Downtown Store #123       | |
-| |    Store Manager                  | |
-| +-----------------------------------+ |
-|                                       |
-+---------------------------------------+
-```
+> *[Visual component defined in Design System]*
+
 
 ---
 
@@ -306,23 +200,9 @@ Priority Order (highest first):
 
 **REQ-L001-DR-003**: The session object SHALL contain:
 
-```typescript
-interface SessionData {
-  session_id: string;       // UUID v4
-  user_id: string;          // User UUID
-  email: string;            // User email
-  roles: RoleMembership[];  // Array of role assignments
-  primary_role: string;     // Highest-priority role
-  tenant_id: string;        // PSP tenant UUID
-  brand_id?: string;        // Active brand (if applicable)
-  created_at: number;       // Unix timestamp
-  expires_at: number;       // Unix timestamp (8 hours default)
-  idle_expires_at: number;  // Unix timestamp (30 min from last activity)
-  mfa_verified: boolean;    // MFA completion status
-  remember_me: boolean;     // Extended session flag
-  device_fingerprint: string; // Device identifier
-}
-```
+
+![Universal Login Screen](../../screenshots/Mobile_App/mobile_app.png)
+
 
 ---
 
@@ -478,46 +358,19 @@ interface SessionData {
 
 **REQ-L001-ST-001**: The login flow SHALL follow this state machine:
 
+
+
+```mermaid
+stateDiagram-v2
+    [*] --> FormDisplayed
+    FormDisplayed --> ValidatingCredentials: submit
+    ValidatingCredentials --> Authenticated: valid
+    ValidatingCredentials --> ErrorDisplayed: invalid
+    ErrorDisplayed --> FormDisplayed: retry
+    Authenticated --> [*]
 ```
-[Initial]
-    |
-    v
-[Form Displayed] --submit--> [Validating Credentials]
-    |                              |
-    | (cancel)                     | (invalid)
-    v                              v
-[Cancelled]                   [Error Displayed] --retry--> [Form Displayed]
-                                   |
-                              (lockout)
-                                   v
-                              [Account Locked]
 
-[Validating Credentials]
-    |
-    | (valid, no MFA)
-    v
-[Creating Session] --> [Authenticated] --> [Redirecting]
 
-[Validating Credentials]
-    |
-    | (valid, MFA required)
-    v
-[MFA Modal] --submit--> [Validating MFA]
-    |                        |
-    | (cancel)               | (invalid)
-    v                        v
-[Form Displayed]        [MFA Error] --retry--> [MFA Modal]
-                             |
-                        (lockout)
-                             v
-                        [Account Locked]
-
-[Validating MFA]
-    |
-    | (valid)
-    v
-[Creating Session] --> [Authenticated] --> [Redirecting]
-```
 
 ### 7.2 Session Lifecycle States
 

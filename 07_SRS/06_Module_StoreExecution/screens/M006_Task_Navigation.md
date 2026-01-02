@@ -343,51 +343,34 @@ ISSUE_UPDATE tasks:
 
 ### 7.1 Task Navigation State Machine
 
+
+```mermaid
+stateDiagram-v2
+    TaskList --> DetermineType: tap_card
+    DetermineType --> Receipt: type=RECEIPT
+    DetermineType --> Install: type=INSTALL
+    DetermineType --> Retake: type=RETAKE
+    DetermineType --> Issue: type=ISSUE
+    Receipt --> TaskList: return
+    Install --> TaskList: return
+    Retake --> TaskList: return
+    Issue --> TaskList: return
 ```
-[TASK_LIST] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                         â”‚
-   â”‚ Tap task card           â”‚
-   â–¼                         â”‚
-[DETERMINE_TYPE]             â”‚
-   â”‚                         â”‚
-   â”œâ”€â”€ RECEIPT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Navigate to M003
-   â”‚                         â”‚
-   â”œâ”€â”€ INSTALL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Navigate to M004
-   â”‚                         â”‚
-   â”œâ”€â”€ RETAKE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Navigate to M008
-   â”‚                         â”‚
-   â””â”€â”€ ISSUE_UPDATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Show modal
-                             â”‚
-                    [TASK_LIST] (on return)
-```
+
 
 ### 7.2 Attestation Submission State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[REVIEW_SUMMARY] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                            â”‚
-   â”‚ All locations complete?    â”‚ No
-   â”‚ â–¼                          â–¼
-   â”‚ Yes                    [BLOCKED]
-   â–¼
-[CHECKBOX_REQUIRED]
-   â”‚
-   â”‚ Check certification
-   â–¼
-[SIGNATURE_REQUIRED]
-   â”‚
-   â”‚ Sign canvas
-   â–¼
-[SUBMIT_ENABLED]
-   â”‚
-   â”‚ Tap Submit
-   â–¼
-[SUBMITTING]
-   â”‚
-   â”‚ API success
-   â–¼
-[SUBMITTED] â”€â”€â”€â”€â”€â”€â”€â”€ Navigate to Dashboard
-```
+
 
 ### 7.3 Assignment Status After Attestation
 

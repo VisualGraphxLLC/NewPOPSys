@@ -96,44 +96,9 @@ This specification covers:
 
 ### 3.3 Layout Specification
 
-```
-+---------------------------------------+
-| STR-001 Downtown          [Bell] [ðŸ‘¤] |
-+---------------------------------------+
-| Quick Stats                           |
-| +--------+ +--------+ +--------+      |
-| | Active | | Pending| | Done   |      |
-| |   3    | |   2    | |   5    |      |
-| +--------+ +--------+ +--------+      |
-+---------------------------------------+
-| [All] [Active] [Pending] [Complete]   |
-+---------------------------------------+
-|                                       |
-| +-----------------------------------+ |
-| | Summer Promo 2026                 | |
-| | Install by: Jan 15, 2026          | |
-| | Status: IN_PROGRESS       [65%â•â•] | |
-| | [Receive] [Install] [Photos]      | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | Spring Refresh                    | |
-| | Shipment arriving: Jan 5, 2026    | |
-| | Status: AWAITING_SHIPMENT         | |
-| | [Track Shipment]                  | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | Q4 Closeout                       | |
-| | Completed: Dec 28, 2025           | |
-| | Status: COMPLETE           [100%] | |
-| | [View Summary]                    | |
-| +-----------------------------------+ |
-|                                       |
-+---------------------------------------+
-| [Dashboard] [Tasks] [Scan] [Profile]  |
-+---------------------------------------+
-```
+
+![Mobile Dashboard](../../screenshots/Store_Execution/mobile_dashboard.png)
+
 
 ### 3.4 Campaign Card Detail
 
@@ -315,39 +280,17 @@ This specification covers:
 
 ### 7.1 StorePhase State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[AWAITING_SHIPMENT]
-        â”‚
-        â”‚ Shipment created
-        â–¼
-[SHIPMENT_IN_TRANSIT]
-        â”‚
-        â”‚ Carrier delivers
-        â–¼
-[READY_TO_RECEIVE]
-        â”‚
-        â”‚ Start receiving
-        â–¼
-[RECEIVING] â—„â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-        â”‚                    â”‚
-        â”‚ All items received â”‚ More items
-        â–¼                    â”‚ to receive
-[READY_TO_INSTALL] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-        â”‚
-        â”‚ Start installation
-        â–¼
-[INSTALLING]
-        â”‚
-        â”‚ All photos submitted
-        â–¼
-[AWAITING_VERIFICATION]
-        â”‚
-        â”œâ”€â”€â–º [REWORK_REQUIRED] â”€â”€â–º [AWAITING_VERIFICATION]
-        â”‚
-        â”‚ All approved
-        â–¼
-[COMPLETE]
-```
+
 
 ### 7.2 Dashboard View State
 

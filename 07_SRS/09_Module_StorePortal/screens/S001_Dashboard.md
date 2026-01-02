@@ -85,29 +85,9 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 3.3 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Dashboard                                    Store: #12345  │
-├─────────────────────────────────────────────────────────────┤
-│  [KPI-001]    [KPI-002]    [KPI-003]    [KPI-004]          │
-│   Active       Pending      Completed    Compliance        │
-│     3            5            12           94%             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Active Campaigns                    Pending Actions        │
-│  ┌─────────────────────────┐        ┌─────────────────────┐│
-│  │ Campaign 1        [>]  │        │ ⚠ Receive shipment  ││
-│  │ Campaign 2        [>]  │        │ ○ Upload photos     ││
-│  │ Campaign 3        [>]  │        │ ○ Complete survey   ││
-│  └─────────────────────────┘        └─────────────────────┘│
-│                                                             │
-│  Recent Activity              Team Status (Manager only)    │
-│  ┌─────────────────────────┐  ┌─────────────────────────┐  │
-│  │ Jane uploaded photo     │  │ 4 active members        │  │
-│  │ John completed survey   │  │ 2 pending invitations   │  │
-│  └─────────────────────────┘  └─────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-```
+
+![Store Dashboard](../../screenshots/Store_Portal/store_portal_dashboard.png)
+
 
 ### 3.4 Component Requirements
 
@@ -138,22 +118,9 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 4.2 Data Query Specification
 
-```sql
--- Dashboard aggregate query
-SELECT
-  s.id as store_id,
-  s.name as store_name,
-  COUNT(DISTINCT CASE WHEN sa.status NOT IN ('COMPLETE', 'WAIVED') THEN sa.id END) as active_campaigns,
-  COUNT(DISTINCT CASE WHEN sa.status = 'COMPLETE'
-    AND sa.completed_at >= DATE_TRUNC('month', NOW()) THEN sa.id END) as completed_this_month,
-  (SELECT COUNT(*) FROM memberships m
-   JOIN users u ON m.user_id = u.id
-   WHERE m.store_id = s.id AND u.is_active = true) as active_team_members
-FROM stores s
-LEFT JOIN store_assignments sa ON sa.store_id = s.id AND sa.deleted_at IS NULL
-WHERE s.id = :storeId AND s.deleted_at IS NULL
-GROUP BY s.id, s.name
-```
+
+![Store Dashboard](../../screenshots/Store_Portal/store_portal_dashboard.png)
+
 
 ### 4.3 Data Requirements
 

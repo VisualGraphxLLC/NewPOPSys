@@ -91,33 +91,9 @@ This specification covers:
 
 ### 3.3 Layout Specification
 
-```
-+---------------------------------------+
-|                                       |
-|            [Brand Logo]               |
-|                                       |
-|           Welcome Back                |
-|                                       |
-|  +-------------------------------+    |
-|  | Store Number                  |    |
-|  | [STR-001________________]     |    |
-|  +-------------------------------+    |
-|                                       |
-|  +-------------------------------+    |
-|  | PIN                           |    |
-|  | [****__]                      |    |
-|  +-------------------------------+    |
-|                                       |
-|  [!] Invalid store number or PIN      |
-|                                       |
-|  +-------------------------------+    |
-|  |          [Login]              |    |
-|  +-------------------------------+    |
-|                                       |
-|         Forgot PIN?                   |
-|                                       |
-+---------------------------------------+
-```
+
+![Mobile Login](../../screenshots/Store_Execution/mobile_dashboard.png)
+
 
 ---
 
@@ -212,13 +188,9 @@ This specification covers:
 
 #### Request Schema
 
-```json
-{
-  "store_number": "STR-001",
-  "pin": "1234",
-  "device_id": "uuid-v4"
-}
-```
+
+![Mobile Login](../../screenshots/Store_Execution/mobile_dashboard.png)
+
 
 #### Response Schema (Success - 200)
 
@@ -281,47 +253,33 @@ This specification covers:
 
 ### 7.1 Authentication State Machine
 
+
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Validating: credentials entered
+    Validating --> Authenticating: local validation
+    Authenticating --> Authenticated: success
+    Authenticating --> Error: fail
+    Authenticated --> [*]
 ```
-[IDLE] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                    â”‚
-   â”‚ User enters        â”‚ Credentials cleared
-   â”‚ credentials        â”‚
-   â–¼                    â”‚
-[VALIDATING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                    â”‚
-   â”‚ Local validation   â”‚
-   â”‚ passed             â”‚
-   â–¼                    â”‚
-[AUTHENTICATING] â”€â”€â”€â”€â”€â”€â”¤
-   â”‚         â”‚          â”‚
-   â”‚ Success â”‚ Failure  â”‚
-   â–¼         â–¼          â”‚
-[AUTHENTICATED] [ERROR]â”€â”˜
-   â”‚
-   â”‚ Navigate to Dashboard
-   â–¼
-[COMPLETE]
-```
+
+
 
 ### 7.2 Rate Limit State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[UNLOCKED] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                     â”‚
-   â”‚ Failed attempt      â”‚ Timer expires
-   â”‚ (count < 5)         â”‚ OR success
-   â–¼                     â”‚
-[WARNING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                     â”‚
-   â”‚ 5th failed          â”‚
-   â”‚ attempt             â”‚
-   â–¼                     â”‚
-[LOCKED] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-   â”‚
-   â”‚ 15 min timer
-   â–¼
-[UNLOCKED]
-```
+
 
 ### 7.3 State Requirements
 

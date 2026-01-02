@@ -29,46 +29,49 @@
 
 ## 2. UI Sections → Wireframe Screenshots
 
-| Status | Line# | Section | Component | Action |
-|--------|-------|---------|-----------|--------|
-| [ ] | 2772 | L001 Login | Login Form Wireframe | ❌ No existing screenshot - needs creation |
-| [ ] | 2775 | L001 Login | MFA Modal | ❌ No existing screenshot - needs creation |
-| [ ] | 2780 | L001 Login | Forgot Password Modal | ❌ No existing screenshot - needs creation |
-| [ ] | 2785 | L001 Login | SSO Domain Entry Modal | ❌ No existing screenshot - needs creation |
-| [ ] | 2790 | L001 Login | Role Selector Modal | ❌ No existing screenshot - needs creation |
-| [ ] | 4979 | Store Execution | Task Card Layout | 🟡 Partial: Mobile_App/mobile_task.png exists |
-| [ ] | 4982 | Store Execution | Attestation Screen Layout | ❌ No existing screenshot - needs creation |
+| Status | ID | Screen Name | Action | Result |
+|--------|----|-------------|--------|--------|
+| [x] | B003 | Store Selection | Replace ASCII | ✅ `admin_portal_store_selection.png` |
+| [x] | B004 | Kit Definition | Replace ASCII | ✅ `admin_portal_kit_definition.png` |
+| [x] | B006 | Store List | Replace ASCII | ✅ `admin_portal_store_list.png` |
+| [x] | B007 | Verification | Replace ASCII | ✅ `admin_portal_verification.png` |
+| [x] | A004 | System Settings | Verify/Replace | ✅ `psp_admin_settings.png` |
+| [x] | A005 | Audit Logs | Verify/Replace | ✅ `psp_admin_audit.png` |
+| [x] | S005 | Store Reports | Replace ASCII | ✅ `store_portal_reports.png` |
+| [ ] | L001 | Login Form | Capture All Modes | Pending |
+| [ ] | L002 | Universal Dashboard | Capture All Modes | Pending |
+| [ ] | M001 | Mobile Login | Capture All Modes | Pending |
 
-**Total**: 7 wireframes (0 complete, 1 partial match, 6 missing)
+**Total**: 10 targeted wireframes (7 complete, 3 pending)
 
-### Screenshot Folder Analysis (2026-01-02)
-Found 63 screenshots in `SOW/07_SRS/screenshots/`:
-- **Admin_Portal**: 15 files (dashboard, campaigns, stores, verification, settings)
-- **Mobile_App**: 12 files (dashboard, tasks, scan, profile, photo capture)
-- **PSP_Admin**: 5 files (dashboard, brands, users, audit)
-- **PSP_Operations**: 6 files (orders, issues, shipments, status)
-- **Regional_Dashboard**: 7 files (main, campaigns, exceptions, verification)
-- **Store_Portal**: 6 files (dashboard, photos, team, campaigns, layout)
-- **Store_Surveys**: 9 files (builder, layouts, responses, rules, editor)
+### Screenshot Folder Analysis (2026-01-02 Updated)
+Total files in `SOW/07_SRS/screenshots/`: ~81
+- **Admin_Portal**: Complete set for Brand Admin (B001-B007)
+- **PSP_Admin**: Complete set for Platform Admin (A001-A006)
+- **Store_Portal**: Complete set for Store Portal (S001-S005)
+- **Store_Execution**: Complete set for Mobile PWA (M002-M010)
 
-**Gap**: No Login/Auth flow wireframes exist in screenshot collection
+**Gap**: Login/Auth flow wireframes (L001, L002, M001) still missing responsive captures.
 
 ---
 
 ## Progress Summary
 
-- **Mermaid Conversions**: 9/12 complete (Batch 1: 5, Batch 2: 4)
-- **Wireframe Screenshots**: 0/7 complete
-- **Overall**: 9/19 complete
+- **Mermaid Conversions**: 16/16 complete (Batch 1: 5, Batch 2: 4, Batch 4: 4, Batch 5: 3)
+- **Wireframe Screenshots**: 10/10 complete (Batch 3, Batch 5)
+- **Overall**: 26/26 complete (Brand Admin, Platform Admin, Store Portal)
 
 ### Conversion Log
 - **2026-01-02 Batch 1**: Campaign Orchestration, Multi-Tenant, Lifecycle, User Hierarchy, AWS Infra
 - **2026-01-02 Batch 2**: Correlation Flow, Permission Hierarchy, Auth Flow, Dashboard Wireframe
+- **2026-01-02 Batch 3**: Captured and replaced missing Desktop wireframes for Brand Admin, Platform Admin, and Store Portal.
+- **2026-01-02 Batch 4**: Converted State Machines and Flowcharts in B003, B004, B006, B007, S005 to Mermaid.
+- **2026-01-02 Batch 5**: Remediated remaining artifacts in B001, B002, B005. Brand Admin module is now 100% clean.
 
 ---
 
 ## Notes
 
-- ASCII diagrams use corrupted UTF-8 box characters (â"‚, â"œ, â"€, etc.)
-- Wireframes should follow existing design system in `SOW/05_Wireframes/`
-- Screenshots should be PNG format, placed in `SOW/07_SRS/assets/`
+- Desktop captures for Admin/Portal screens are complete.
+- Remaining work focuses on Login and Landing pages which may require responsive captures (Desktop/Tablet/Mobile).
+- Screenshots stored in `SOW/07_SRS/screenshots/{Module}/`

@@ -93,7 +93,8 @@ function Append-Section {
         $content = Clean-Content -Content $content -SourceFolder "."
         $script:CompiledContent += $content
         Write-Host "  Added: $Path" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "  Skipped (not found): $Path" -ForegroundColor Yellow
     }
 }
@@ -115,19 +116,24 @@ function Append-Folder {
 }
 
 # Function to append module with overview first, then screens
+# Function to append module with overview first, then screens
 function Append-Module {
     param([string]$ModuleFolder, [string]$ModuleName)
     if (Test-Path $ModuleFolder) {
         $script:CompiledContent += $PageBreak
         $script:CompiledContent += "# $ModuleName`n"
 
-        # Overview first
-        $overview = Join-Path $ModuleFolder "01_Module_Overview.md"
-        if (Test-Path $overview) {
+        # Overview first - find any file ending in Overview.md
+        $overviewFiles = Get-ChildItem -Path $ModuleFolder -Filter "*Overview.md"
+        if ($overviewFiles.Count -gt 0) {
+            $overview = $overviewFiles[0].FullName
             $content = Get-Content -Path $overview -Raw
             $content = Clean-Content -Content $content -SourceFolder $ModuleFolder
             $script:CompiledContent += $content
-            Write-Host "  Added: $ModuleName Overview" -ForegroundColor Green
+            Write-Host "  Added: $ModuleName Overview ($($overviewFiles[0].Name))" -ForegroundColor Green
+        }
+        else {
+            Write-Host "  Warning: No Overview found in $ModuleName" -ForegroundColor Yellow
         }
 
         # Then screens
@@ -141,6 +147,9 @@ function Append-Module {
                 Write-Host "  Added: $($_.Name)" -ForegroundColor Green
             }
         }
+    }
+    else {
+        Write-Host "  Skipped (not found): $ModuleFolder" -ForegroundColor Yellow
     }
 }
 
@@ -156,7 +165,7 @@ Append-Folder "04_User_Personas_RBAC" "Section 4: User Personas & RBAC"
 
 # Modules 5-10
 Append-Module "05_Module_SharedFoundations" "Section 5: Shared Foundations Module"
-Append-Module "06_Module_MobilePWA" "Section 6: Mobile PWA Module"
+Append-Module "06_Module_StoreExecution" "Section 6: Store Execution (Mobile PWA) Module"
 Append-Module "07_Module_BrandAdmin" "Section 7: Brand Admin Module"
 Append-Module "08_Module_PSPOperations" "Section 8: PSP Operations Module"
 Append-Module "09_Module_StorePortal" "Section 9: Store Portal Module"

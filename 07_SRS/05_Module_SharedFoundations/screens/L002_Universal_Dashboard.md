@@ -81,32 +81,9 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 
 **REQ-L002-UI-001**: The dashboard SHALL use a responsive grid layout with collapsible sidebar navigation.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  [≡]  NewPOPSys Logo    Dashboard                    [🔔] [👤] User ▾ [⚙]  │
-├─────────┬───────────────────────────────────────────────────────────────────┤
-│         │  Welcome, {User Name}                              {Date/Time}    │
-│  NAV    │  Role: {Primary Role} | Store: {Context}          [Switch ▾]     │
-│  BAR    ├───────────────────────────────────────────────────────────────────┤
-│         │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │
-│ [🏠]    │  │   KPI 1     │ │   KPI 2     │ │   KPI 3     │ │   KPI 4     │  │
-│ Home    │  │   Value     │ │   Value     │ │   Value     │ │   Value     │  │
-│         │  │   +/-Δ%     │ │   +/-Δ%     │ │   +/-Δ%     │ │   +/-Δ%     │  │
-│ [📦]    │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │
-│ Orders  │  ┌────────────────────────────────┐ ┌────────────────────────────┐│
-│         │  │                                │ │                            ││
-│ [📊]    │  │      Chart Widget              │ │     List Widget            ││
-│ Reports │  │      (Role-specific)           │ │     (Recent Activity)      ││
-│         │  │                                │ │                            ││
-│ [⚙️]    │  │                                │ │                            ││
-│ Settings│  └────────────────────────────────┘ └────────────────────────────┘│
-│         │  ┌────────────────────────────────┐ ┌────────────────────────────┐│
-│ [?]     │  │    Quick Actions               │ │    Alerts/Notifications    ││
-│ Help    │  │  [Action 1] [Action 2] [...]   │ │    • Alert 1               ││
-│         │  │                                │ │    • Alert 2               ││
-│         │  └────────────────────────────────┘ └────────────────────────────┘│
-└─────────┴───────────────────────────────────────────────────────────────────┘
-```
+
+![Universal Dashboard](../../screenshots/Admin_Portal/admin_portal_dashboard.png)
+
 
 ### 3.2 Responsive Breakpoints
 
@@ -152,90 +129,9 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 
 ### 4.1 TypeScript Interfaces
 
-```typescript
-// Dashboard Configuration
-interface DashboardConfig {
-  id: string;
-  userId: string;
-  roleId: RoleEnum;
-  tenantId: string;
-  layout: LayoutConfig;
-  widgets: WidgetInstance[];
-  preferences: DashboardPreferences;
-  lastModified: Date;
-}
 
-interface LayoutConfig {
-  columns: number;
-  rows: number;
-  gridGap: number;
-  sidebarExpanded: boolean;
-  sidebarPosition: 'left' | 'right';
-}
+![Universal Dashboard](../../screenshots/Admin_Portal/admin_portal_dashboard.png)
 
-interface WidgetInstance {
-  id: string;
-  widgetTypeId: string;
-  title: string;
-  position: GridPosition;
-  size: GridSize;
-  config: WidgetConfig;
-  refreshInterval: number; // seconds, 0 = manual only
-  collapsed: boolean;
-  visible: boolean;
-}
-
-interface GridPosition {
-  column: number;
-  row: number;
-}
-
-interface GridSize {
-  width: number;  // grid units
-  height: number; // grid units
-}
-
-interface WidgetConfig {
-  dataSource: string;
-  filters?: Record<string, any>;
-  chartType?: ChartType;
-  displayOptions?: Record<string, any>;
-}
-
-// User Widget Preferences
-interface DashboardPreferences {
-  theme: 'light' | 'dark' | 'system';
-  compactMode: boolean;
-  autoRefresh: boolean;
-  defaultDateRange: DateRangePreset;
-  timezone: string;
-}
-
-// Role-based permissions
-interface RolePermissions {
-  roleId: RoleEnum;
-  allowedWidgets: string[];
-  canCustomize: boolean;
-  canExport: boolean;
-  dataScope: DataScopeLevel;
-  maxWidgets: number;
-}
-
-type DataScopeLevel = 'system' | 'tenant' | 'brand' | 'region' | 'store';
-type DateRangePreset = 'today' | 'yesterday' | 'last7days' | 'last30days' | 'thisMonth' | 'lastMonth' | 'custom';
-type ChartType = 'line' | 'bar' | 'pie' | 'donut' | 'area' | 'gauge' | 'table';
-
-enum RoleEnum {
-  PLATFORM_ADMIN = 'PLATFORM_ADMIN',
-  PSP_ADMIN = 'PSP_ADMIN',
-  PSP_OPS = 'PSP_OPS',
-  BRAND_ADMIN = 'BRAND_ADMIN',
-  CAMPAIGN_MANAGER = 'CAMPAIGN_MANAGER',
-  REGIONAL_MANAGER = 'REGIONAL_MANAGER',
-  STORE_MANAGER = 'STORE_MANAGER',
-  STORE_OPERATOR = 'STORE_OPERATOR'
-}
-```
 
 ### 4.2 Widget Type Registry
 
@@ -426,26 +322,18 @@ POST /api/v1/dashboard/config/reset
 
 ### 7.1 Dashboard State Machine
 
+
+
+```mermaid
+stateDiagram-v2
+    [*] --> Loading
+    Loading --> Ready: success
+    Loading --> Partial: verification failed
+    Ready --> Refreshing: action
+    Refreshing --> Ready: done
 ```
-┌──────────────┐
-│   LOADING    │ ──────────────────────────────────────┐
-└──────┬───────┘                                       │
-       │ Config loaded                                 │
-       ▼                                               │
-┌──────────────┐     Widget error      ┌──────────────┐
-│    READY     │ ─────────────────────▶│   PARTIAL    │
-└──────┬───────┘                       └──────┬───────┘
-       │ User action                          │ Retry success
-       ▼                                      │
-┌──────────────┐                              │
-│  REFRESHING  │ ◀────────────────────────────┘
-└──────┬───────┘
-       │ Complete
-       ▼
-┌──────────────┐
-│    READY     │
-└──────────────┘
-```
+
+
 
 ### 7.2 State Definitions
 

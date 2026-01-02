@@ -66,39 +66,7 @@ The Kit Definition screen is the second step in the Campaign Builder wizard. It 
 ## 3. UI Components
 
 ### 3.1 Layout Structure
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Create Campaign                                             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Step 1: Select Stores  â”€â”€â”€âœ“â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”‚ Step 2: Define Kit     â”€â”€â”€â—â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”‚ Step 3: Review         â”€â”€â”€â”€â—‹â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚ Kit Items                                    [+ Add Item]   â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ â‰¡  1. Summer Poster (24x36)                             â”‚ â”‚
-â”‚ â”‚     Type: POSTER  â”‚  Qty: 2  â”‚  Location: FRONT_WINDOW  â”‚ â”‚
-â”‚ â”‚     ðŸ“· Photo Required: Front view                [Edit] â”‚ â”‚
-â”‚ â”‚                                                   [Ã—]   â”‚ â”‚
-â”‚ â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤ â”‚
-â”‚ â”‚ â‰¡  2. Counter Display Stand                             â”‚ â”‚
-â”‚ â”‚     Type: COUNTER_DISPLAY  â”‚  Qty: 1  â”‚  Location: --   â”‚ â”‚
-â”‚ â”‚     ðŸ“· No photo required                         [Edit] â”‚ â”‚
-â”‚ â”‚                                                   [Ã—]   â”‚ â”‚
-â”‚ â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤ â”‚
-â”‚ â”‚ â‰¡  3. Window Cling Set                                  â”‚ â”‚
-â”‚ â”‚     Type: WINDOW_CLING  â”‚  Qty: 4  â”‚  Location: ENTRY   â”‚ â”‚
-â”‚ â”‚     ðŸ“· Photo Required: Installed view            [Edit] â”‚ â”‚
-â”‚ â”‚                                                   [Ã—]   â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ Kit Summary: 3 items, 7 total units                         â”‚
-â”‚                                                             â”‚
-â”‚ [â† Back]                              [Save & Continue â†’]   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+![Kit Definition Wireframe](../../screenshots/Admin_Portal/admin_portal_kit_definition.png)
 
 ### 3.2 Component Specifications
 
@@ -322,30 +290,40 @@ The Kit Definition screen is the second step in the Campaign Builder wizard. It 
 
 ### 7.1 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] â†â”€backâ”€â”
-       â†“ save           â”‚
-[Step 2: Kit] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-       â†“ save
-[Step 3: Review] â†â”€backâ”€ [Step 2: Kit]
+```mermaid
+flowchart TD
+    S1[Step 1: Stores] -->|save| S2[Step 2: Kit]
+    S2 -->|back| S1
+    S2 -->|save| S3[Step 3: Review]
+    S3 -->|back| S2
 ```
 
 ### 7.2 Item Edit State Machine
 
-```
-[List View] â†’ [Add Modal] â†’ [Saving] â†’ [List View]
-     â†“              â†“           â†“
-[Edit Modal] â†’ [Saving] â†’ [List View]
-     â†“
-[Delete Confirm] â†’ [Deleting] â†’ [List View]
+```mermaid
+stateDiagram-v2
+    ListView --> AddModal
+    AddModal --> Saving
+    Saving --> ListView
+    ListView --> EditModal
+    EditModal --> Saving
+    EditModal --> DeleteConfirm
+    DeleteConfirm --> Deleting
+    Deleting --> ListView
 ```
 
 ### 7.3 Drag-Drop State Machine
 
-```
-[Idle] â†’ [Dragging] â†’ [Over Drop Zone] â†’ [Dropped] â†’ [Reordering] â†’ [Idle]
-              â†“                               â†“
-          [Cancelled] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ [Idle]
+```mermaid
+stateDiagram-v2
+    Idle --> Dragging
+    Dragging --> OverDropZone
+    OverDropZone --> Dropped
+    Dropped --> Reordering
+    Reordering --> Idle
+    Dragging --> Cancelled
+    OverDropZone --> Cancelled
+    Cancelled --> Idle
 ```
 
 ### 7.4 Item Card States

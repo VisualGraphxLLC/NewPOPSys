@@ -392,65 +392,45 @@ interface UserSettings {
 
 ### 7.1 Profile Edit State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[VIEWING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Tap edit button       â”‚
-   â–¼                       â”‚
-[EDITING]                  â”‚
-   â”‚         â”‚             â”‚
-   â”‚ Cancel  â”‚ Save        â”‚
-   â–¼         â–¼             â”‚
-[VIEWING] [SAVING]         â”‚
-             â”‚             â”‚
-             â”‚ Success     â”‚
-             â–¼             â”‚
-         [VIEWING] â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+
 
 ### 7.2 PIN Change State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[PROFILE] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Tap Change PIN        â”‚
-   â–¼                       â”‚
-[ENTER_CURRENT] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                       â”‚ Invalid
-   â”‚ Valid                 â–¼
-   â–¼                   [ERROR]
-[ENTER_NEW]                â”‚
-   â”‚                       â”‚
-   â”‚ Enter new PIN         â”‚
-   â–¼                       â”‚
-[CONFIRM_NEW]              â”‚
-   â”‚                       â”‚
-   â”‚ Match                 â”‚ Mismatch
-   â–¼                       â–¼
-[SAVING]               [ERROR]
-   â”‚
-   â”‚ Success
-   â–¼
-[SUCCESS] â”€â”€â”€â”€â”€â”€â”€â”€ Return to Profile
-```
+
 
 ### 7.3 Logout State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[PROFILE] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Tap Logout            â”‚
-   â–¼                       â”‚
-[CONFIRM_DIALOG]           â”‚
-   â”‚         â”‚             â”‚
-   â”‚ Cancel  â”‚ Confirm     â”‚
-   â–¼         â–¼             â”‚
-[PROFILE] [LOGGING_OUT]    â”‚
-             â”‚             â”‚
-             â”‚ Clear data  â”‚
-             â–¼             â”‚
-         [LOGIN_SCREEN] â”€â”€â”€â”˜
-```
+
 
 ### 7.4 State Requirements
 

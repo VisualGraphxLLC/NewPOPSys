@@ -85,28 +85,9 @@ PSP Portal → Orders (sidebar) → /psp/orders
 
 ### 3.2 Layout Specification
 
-```
-+------------------------------------------------------------------+
-| Order Queue                                                       |
-| New: 12 | Acknowledged: 8 | Shipped: 45 | Delivered: 234         |
-+------------------------------------------------------------------+
-| [Search orders...]                    [Brand ▼] [Campaign ▼]     |
-|                                                                   |
-| [New (12)] [Acknowledged (8)] [All Orders]                        |
-|                                                                   |
-| [ ] Select All                              [Acknowledge Selected]|
-|                                                                   |
-| +---------------------------------------------------------------+ |
-| | [ ] Order #   | Brand    | Store    | Items | Status   | Age  | |
-| +---------------------------------------------------------------+ |
-| | [ ] ORD-1234  | Acme     | STR-001  | 5     | New      | 2h   | |
-| | [ ] ORD-1235  | Acme     | STR-002  | 3     | New      | 1h   | |
-| | [ ] ORD-1236  | Beta Co  | STR-015  | 8     | Ack      | 4h   | |
-| +---------------------------------------------------------------+ |
-|                                                                   |
-| Showing 1-25 of 299              [< Prev] Page 1 of 12 [Next >]  |
-+------------------------------------------------------------------+
-```
+
+![Order Queue](../../screenshots/PSP_Operations/psp_ops_orders.png)
+
 
 ### 3.3 Component Specifications
 
@@ -147,27 +128,9 @@ PSP Portal → Orders (sidebar) → /psp/orders
 
 ### 4.2 Data Query
 
-```sql
-SELECT
-  so.id, so.order_number, so.status, so.created_at,
-  so.psp_order_ref, so.order_type,
-  s.store_number, s.name as store_name,
-  c.name as campaign_name,
-  b.name as brand_name,
-  COUNT(ol.id) as line_count,
-  SUM(ol.quantity) as total_quantity
-FROM store_orders so
-JOIN stores s ON so.store_id = s.id
-JOIN campaigns c ON so.campaign_id = c.id
-JOIN brands b ON c.brand_id = b.id
-LEFT JOIN order_lines ol ON ol.order_id = so.id
-WHERE so.tenant_id = :tenant_id
-  AND so.deleted_at IS NULL
-  AND so.status IN (:status_filter)
-GROUP BY so.id, s.id, c.id, b.id
-ORDER BY so.created_at DESC
-LIMIT :page_size OFFSET :offset
-```
+
+![Order Queue](../../screenshots/PSP_Operations/psp_ops_orders.png)
+
 
 ### 4.3 Data Requirements Matrix
 
@@ -294,56 +257,20 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Order Status State Machine
 
-```
-                    ┌─────────────┐
-                    │  GENERATED  │
-                    └──────┬──────┘
-                           │ acknowledge
-                           ▼
-                    ┌─────────────┐
-                    │ ACKNOWLEDGED│
-                    └──────┬──────┘
-                           │ start_production
-                           ▼
-                    ┌─────────────┐
-                    │IN_PRODUCTION│
-                    └──────┬──────┘
-                           │ complete_kitting
-                           ▼
-                    ┌─────────────┐
-                    │   KITTING   │
-                    └──────┬──────┘
-                           │ ready_to_ship
-                           ▼
-                    ┌─────────────┐
-               ┌────│READY_TO_SHIP│
-               │    └──────┬──────┘
-               │           │ ship (partial/full)
-               │           ▼
-               │    ┌─────────────────┐
-               │    │PARTIALLY_SHIPPED│───┐
-               │    └─────────────────┘   │
-               │                          │ all_shipped
-               │           ┌──────────────┘
-               │           ▼
-               │    ┌─────────────┐
-               └───►│   SHIPPED   │
-                    └──────┬──────┘
-                           │ deliver
-                           ▼
-                    ┌─────────────┐
-                    │  DELIVERED  │
-                    └──────┬──────┘
-                           │ close
-                           ▼
-                    ┌─────────────┐
-                    │   CLOSED    │
-                    └─────────────┘
 
-        ┌─────────────┐
-        │  CANCELLED  │ (from any state except CLOSED)
-        └─────────────┘
+
+```mermaid
+stateDiagram-v2
+    GENERATED --> ACKNOWLEDGED: acknowledge
+    ACKNOWLEDGED --> IN_PRODUCTION: start_production
+    IN_PRODUCTION --> KITTING: complete_kitting
+    KITTING --> READY_TO_SHIP: ready
+    READY_TO_SHIP --> SHIPPED: ship
+    SHIPPED --> DELIVERED: deliver
+    SHIPPED --> CLOSED: close
 ```
+
+
 
 ### 7.2 State Transition Requirements
 

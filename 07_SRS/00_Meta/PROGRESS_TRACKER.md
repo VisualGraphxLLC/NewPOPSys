@@ -104,16 +104,18 @@
 - [x] screens/L002_Universal_Dashboard.md ✅ CREATED
 - [x] 01_Module_Overview.md ✅ CREATED
 
-### 06_Module_StoreExecution (Complete - 10/10)
+### 06_Module_StoreExecution (Complete - 12/12)
 - [x] 6.0_Module_Overview.md ✅ UPDATED
 - [x] screens/M001_Login.md
 - [x] screens/M002_Dashboard.md
-- [x] screens/M003_Receipt_Survey.md
-- [x] screens/M004_Install_Survey.md
-- [x] screens/M005_Photo_Capture.md
-- [x] screens/M006_Tasks.md
+- [x] screens/M003_Verify_Receipt.md
+- [x] screens/M004_Installation_Photos.md
+- [x] screens/M005_Compliance_Attestation.md
+- [x] screens/M006_Task_Navigation.md
 - [x] screens/M007_Profile.md
-- [x] screens/M008_Retake.md
+- [x] screens/M008_Photo_Retake.md
+- [x] screens/M009_Deinstall_Checklist.md
+- [x] screens/M010_Deinstall_Confirmation.md
 - [x] screenshots/Store_Execution/ (All modes captured)
 
 ### 07_Module_BrandAdmin (Complete - 8/8)

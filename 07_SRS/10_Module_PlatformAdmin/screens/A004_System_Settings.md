@@ -12,7 +12,7 @@
 
 ## 2. Screenshot Reference
 
-![System Settings](../../screenshots/Admin_Portal/admin_portal_settings.png)
+![System Settings](../../screenshots/PSP_Admin/psp_admin_settings.png)
 
 *Figure A004-1: System Settings - Platform-wide configuration, webhooks, and feature flag management*
 

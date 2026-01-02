@@ -1,4 +1,4 @@
-﻿# NewPOPSys Software Requirements Specification
+# NewPOPSys Software Requirements Specification
 
 **Version:** 1.38
 **Date:** 2026-01-01
@@ -237,7 +237,7 @@ NewPOPSys v1 is a modernized campaign orchestration platform that replaces sprea
 ### Core Platform Loop
 
 ```
-Campaign â†’ Store Assignment â†’ PSP Fulfillment â†’ Store Execution â†’ Verification â†’ Visibility
+Campaign  Store Assignment  PSP Fulfillment  Store Execution  Verification  Visibility
 ```
 
 This loop represents the complete lifecycle of a POP campaign from creation through compliance verification.
@@ -627,11 +627,11 @@ All diagrams use Mermaid syntax for portability:
 Each requirement traces back to source documentation:
 
 ```
-SRS Requirement â†’ SUPP Reference â†’ Master SOW Section
-     â†“
-Screen Spec â†’ Wireframe â†’ API Contract
-     â†“
-Test Case â†’ Acceptance Criteria
+SRS Requirement  SUPP Reference  Master SOW Section
+     
+Screen Spec  Wireframe  API Contract
+     
+Test Case  Acceptance Criteria
 ```
 
 *Document Version: 1.0*
@@ -854,23 +854,23 @@ NewPOPSys v1.38 implements a three-tier user hierarchy aligned with the multi-te
 
 ```
 Platform Level (System-wide)
-â”œâ”€â”€ Platform Admin
-â”‚
+ Platform Admin
+
 PSP Level (Tenant-wide)
-â”œâ”€â”€ PSP Admin
-â”œâ”€â”€ Production Operator
-â”‚
+ PSP Admin
+ Production Operator
+
 Brand Level (Brand-scoped)
-â”œâ”€â”€ Brand Admin
-â”œâ”€â”€ Campaign Manager
-â”œâ”€â”€ Regional Manager
-â”‚
+ Brand Admin
+ Campaign Manager
+ Regional Manager
+
 Store Level (Store-scoped)
-â”œâ”€â”€ Store Manager
-â”œâ”€â”€ Store Operator
-â”‚
+ Store Manager
+ Store Operator
+
 System Level (Machine-to-Machine)
-â””â”€â”€ Integration User
+ Integration User
 ```
 
 ## User Class Summary
@@ -990,20 +990,20 @@ System Level (Machine-to-Machine)
 NewPOPSys v1.38 operates as a cloud-native application deployed on AWS infrastructure with a focus on reliability, scalability, and cost efficiency.
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                            AWS Cloud                                     â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”‚
-â”‚  â”‚  CloudFront â”‚  â”‚     ALB     â”‚  â”‚   ECS       â”‚  â”‚    RDS      â”‚    â”‚
-â”‚  â”‚    (CDN)    â”‚â”€â”€â”‚   (Load     â”‚â”€â”€â”‚  Fargate    â”‚â”€â”€â”‚ PostgreSQL  â”‚    â”‚
-â”‚  â”‚             â”‚  â”‚  Balancer)  â”‚  â”‚  (Compute)  â”‚  â”‚  (Database) â”‚    â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â”‚
-â”‚         â”‚                                  â”‚               â”‚            â”‚
-â”‚         â”‚                           â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”        â”‚            â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”                    â”‚             â”‚   â”Œâ”€â”€â”€â”€â”´â”€â”€â”€â”€â”      â”‚
-â”‚  â”‚     S3      â”‚                    â”‚ ElastiCache â”‚   â”‚   SES   â”‚      â”‚
-â”‚  â”‚  (Storage)  â”‚                    â”‚   (Redis)   â”‚   â”‚ (Email) â”‚      â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+                            AWS Cloud                                     
+            
+    CloudFront        ALB          ECS             RDS          
+      (CDN)       (Load       Fargate     PostgreSQL      
+                   Balancer)      (Compute)      (Database)     
+            
+                                                                      
+                                                        
+                                            
+       S3                           ElastiCache       SES         
+    (Storage)                         (Redis)       (Email)       
+                               
+
 ```
 
 ## Production Environment Specifications
@@ -2304,13 +2304,13 @@ NewPOPSys supports nine (9) distinct personas organized across four hierarchical
 
 ```
 Platform Admin (P01)
-    â””â”€â”€ PSP Admin (P02)
-            â””â”€â”€ Production Operator (P03)
-            â””â”€â”€ Brand Admin (P04)
-                    â””â”€â”€ Campaign Manager (P05)
-                    â””â”€â”€ Regional Manager (P06)
-                            â””â”€â”€ Store Manager (P07)
-                                    â””â”€â”€ Store Operator (P08)
+     PSP Admin (P02)
+             Production Operator (P03)
+             Brand Admin (P04)
+                     Campaign Manager (P05)
+                     Regional Manager (P06)
+                             Store Manager (P07)
+                                     Store Operator (P08)
 
 Integration User (P09) - Parallel service account with API-scoped access
 ```
@@ -2633,11 +2633,11 @@ The SharedFoundations module provides cross-cutting screens and functionality sh
 ### Authentication Flow
 
 ```
-User Request â†’ L001 Login â†’ Auth Service â†’ SSO Provider
-                    â†“
+User Request  L001 Login  Auth Service  SSO Provider
+                    
               MFA Challenge (if enabled)
-                    â†“
-              Session Created â†’ L002 Dashboard
+                    
+              Session Created  L002 Dashboard
 ```
 
 ### Session Management
@@ -2703,12 +2703,12 @@ All system roles may access this screen prior to authentication. Post-authentica
 
 ```
 Priority Order (highest first):
-1. PLATFORM_ADMIN / PSP_ADMIN â†’ /psp/dashboard
-2. PSP_OPS â†’ /psp/orders
-3. BRAND_ADMIN / CAMPAIGN_MANAGER â†’ /admin/dashboard
-4. REGIONAL_MANAGER â†’ /admin/regional
-5. STORE_MANAGER â†’ /store/dashboard
-6. STORE_OPERATOR â†’ /store/campaigns
+1. PLATFORM_ADMIN / PSP_ADMIN  /psp/dashboard
+2. PSP_OPS  /psp/orders
+3. BRAND_ADMIN / CAMPAIGN_MANAGER  /admin/dashboard
+4. REGIONAL_MANAGER  /admin/regional
+5. STORE_MANAGER  /store/dashboard
+6. STORE_OPERATOR  /store/campaigns
 ```
 
 ### 2.3 Multi-Role Handling
@@ -3121,30 +3121,30 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 **REQ-L002-UI-001**: The dashboard SHALL use a responsive grid layout with collapsible sidebar navigation.
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  [â‰¡]  NewPOPSys Logo    Dashboard                    [ðŸ””] [ðŸ‘¤] User â–¾ [âš™]  â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚         â”‚  Welcome, {User Name}                              {Date/Time}    â”‚
-â”‚  NAV    â”‚  Role: {Primary Role} | Store: {Context}          [Switch â–¾]     â”‚
-â”‚  BAR    â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚         â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
-â”‚ [ðŸ ]    â”‚  â”‚   KPI 1     â”‚ â”‚   KPI 2     â”‚ â”‚   KPI 3     â”‚ â”‚   KPI 4     â”‚  â”‚
-â”‚ Home    â”‚  â”‚   Value     â”‚ â”‚   Value     â”‚ â”‚   Value     â”‚ â”‚   Value     â”‚  â”‚
-â”‚         â”‚  â”‚   +/-Î”%     â”‚ â”‚   +/-Î”%     â”‚ â”‚   +/-Î”%     â”‚ â”‚   +/-Î”%     â”‚  â”‚
-â”‚ [ðŸ“¦]    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
-â”‚ Orders  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”â”‚
-â”‚         â”‚  â”‚                                â”‚ â”‚                            â”‚â”‚
-â”‚ [ðŸ“Š]    â”‚  â”‚      Chart Widget              â”‚ â”‚     List Widget            â”‚â”‚
-â”‚ Reports â”‚  â”‚      (Role-specific)           â”‚ â”‚     (Recent Activity)      â”‚â”‚
-â”‚         â”‚  â”‚                                â”‚ â”‚                            â”‚â”‚
-â”‚ [âš™ï¸]    â”‚  â”‚                                â”‚ â”‚                            â”‚â”‚
-â”‚ Settingsâ”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜â”‚
-â”‚         â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”â”‚
-â”‚ [?]     â”‚  â”‚    Quick Actions               â”‚ â”‚    Alerts/Notifications    â”‚â”‚
-â”‚ Help    â”‚  â”‚  [Action 1] [Action 2] [...]   â”‚ â”‚    â€¢ Alert 1               â”‚â”‚
-â”‚         â”‚  â”‚                                â”‚ â”‚    â€¢ Alert 2               â”‚â”‚
-â”‚         â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+  [≡]  NewPOPSys Logo    Dashboard                    [🔔] [👤] User  [⚙]  
+
+           Welcome, {User Name}                              {Date/Time}    
+  NAV      Role: {Primary Role} | Store: {Context}          [Switch ]     
+  BAR    
+                
+ [🏠]         KPI 1         KPI 2         KPI 3         KPI 4       
+ Home         Value         Value         Value         Value       
+              +/-Δ%         +/-Δ%         +/-Δ%         +/-Δ%       
+ [📦]           
+ Orders     
+                                                                        
+ [📊]            Chart Widget                    List Widget            
+ Reports         (Role-specific)                 (Recent Activity)      
+                                                                        
+ [⚙️]                                                                   
+ Settings   
+            
+ [?]           Quick Actions                    Alerts/Notifications    
+ Help        [Action 1] [Action 2] [...]        • Alert 1               
+                                                • Alert 2               
+            
+
 ```
 
 ### 3.2 Responsive Breakpoints
@@ -3160,7 +3160,7 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 **REQ-L002-UI-002**: Each KPI card SHALL display:
 - Metric label
 - Current value (formatted)
-- Trend indicator (â†‘/â†“/â†’)
+- Trend indicator (//)
 - Percentage change from comparison period
 - Sparkline (optional)
 
@@ -3417,24 +3417,24 @@ POST /api/v1/dashboard/config/reset
 ### 7.1 Dashboard State Machine
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   LOADING    â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜                                       â”‚
-       â”‚ Config loaded                                 â”‚
-       â–¼                                               â”‚
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     Widget error      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚    READY     â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚   PARTIAL    â”‚
-â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜                       â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜
-       â”‚ User action                          â”‚ Retry success
-       â–¼                                      â”‚
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                              â”‚
-â”‚  REFRESHING  â”‚ â—€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜
-       â”‚ Complete
-       â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚    READY     â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+   LOADING     
+                                       
+        Config loaded                                 
+                                                      
+     Widget error      
+    READY         PARTIAL    
+                       
+        User action                           Retry success
+                                             
+                              
+  REFRESHING   
+
+        Complete
+       
+
+    READY     
+
 ```
 
 ### 7.2 State Definitions
@@ -3519,18 +3519,81 @@ POST /api/v1/dashboard/config/reset
 
 ---
 
-# Section 6: Mobile PWA Module
+# Section 6: Store Execution (Mobile PWA) Module
+# Module Overview: Store Execution (Mobile PWA)
+
+
+## 1. Module Summary
+
+### Purpose
+
+The **Store Execution** module (formerly Store Operations) is the primary interface for field personnel and store managers. It is designed as a **Mobile-First PWA** to support offline-capable workflows for campaign material life cycles: from initial receipt verification to installation, photo documentation, and eventual deinstallation.
+
+### Scope
+
+- **Adaptive Workflow Engine**: Automatically advances through Receive -> Install -> Attest based on campaign state.
+- **Offline Persistence**: Stores sync queue and local cache to support low-connectivity areas (e.g., store backrooms/basements).
+- **Compliance Documentation**: Mandatory photo documentation with metadata (timestamp, GPS, slot ID).
+- **Attestation**: Multi-point compliance checklists with digital signature capture.
+- **Deinstallation Cycle**: Managed removal of materials at campaign end-of-life.
+
+### Target Users
+
+- **Store Operators**: Primary executors of receipt and installation.
+- **Store Managers**: Verification and final attestation sign-off.
+- **Brand Admin (Observational)**: Real-time visibility into execution results.
+
+## 2. Screen Inventory
+
+
+## 3. Workflow Visualizations (Wireframes)
+
+### 3.1 Dashboard & Task Entry
+The primary hub for users, displaying campaign status and quick stats.
+
+
+### 3.2 Receipt & Verification Flow
+Users verify SKU counts and condition of materials using a checklist approach.
+
+
+### 3.3 Installation & Photo Documentation
+Location-based slots with placement guidance and integrated photo capture.
+
+
+### 3.4 Compliance Attestation
+Final manager sign-off with compliance certification and digital signature.
+
+
+### 3.5 Deinstallation Cycle
+Closing the loop on campaign assets after the promotion ends.
+
+
+## 4. Module Dependencies
+
+### Internal Services
+- **Campaign Service**: Determines the active tasks and slot definitions for each store.
+- **File/Asset Service**: Manages photo uploads and signature image persistence.
+- **Sync Service**: Handles background sync of offline actions.
+
+### External Systems
+- **Logistics Integration**: Feeds delivery alerts to trigger the "Receive" workflow.
+
+## 5. RBAC Summary
+
+
+## 6. Revision History
+
 
 
 ---
 # M001 - Login Screen
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M001
 > **Route**: `/app/login`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
@@ -3549,7 +3612,8 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Login Screen](./screenshots/Mobile_App/mobile_app.png)
+![Login Screen](./screenshots/Store_Execution/mobile_dashboard.png) 
+*Note: Using Dashboard as placeholder; specific login wireframe is defined in L001.*
 
 ### 1.4 Source Documents
 
@@ -3774,12 +3838,12 @@ This specification covers:
 ---
 # M002 - Dashboard Screen
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M002
 > **Route**: `/app/dashboard`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
@@ -3798,7 +3862,6 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Dashboard Screen](./screenshots/Mobile_App/mobile_app_dashboard.png)
 
 ### 1.4 Source Documents
 
@@ -4019,20 +4082,20 @@ This specification covers:
 
 
 ---
-# M003 - Receipt Survey Screen
+# M003 - Verify Receipt Checklist
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M003
 > **Route**: `/app/campaign/:id/receive`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
 ### 1.1 Purpose
 
-The Receipt Survey screen enables store personnel to verify and document the receipt of campaign materials. Users systematically confirm each item received, report discrepancies (missing, damaged, wrong items), and create issue requests when problems are identified. This screen is critical for inventory accuracy and triggering fulfillment issue resolution workflows.
+The Verify Receipt Checklist screen enables store personnel to verify and document the receipt of campaign materials. Users systematically confirm each item received, report discrepancies (missing, damaged, wrong items), and create issue requests when problems are identified. This screen is critical for inventory accuracy and triggering fulfillment issue resolution workflows.
 
 ### 1.2 Scope
 
@@ -4045,8 +4108,6 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Receipt Survey](./screenshots/Mobile_App/mobile_app_scan.png)
-![Receipt Detail](./screenshots/Mobile_App/mobile_app_scan_detail.png)
 
 ### 1.4 Source Documents
 
@@ -4271,20 +4332,20 @@ This specification covers:
 
 
 ---
-# M004 - Install Survey Screen
+# M004 - Installation Photos
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M004
 > **Route**: `/app/campaign/:id/install`
 > **IEEE 830 Section**: 3.2.1 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
 ### 1.1 Purpose
 
-The Install Survey screen guides store personnel through the physical installation of POP materials at designated locations within the store. Users navigate a location-based checklist, viewing where each item should be placed and capturing proof photos. The screen supports the store's layout with slot assignments and ghost image overlays for precise placement.
+The Installation Photos screen guides store personnel through the physical installation of POP materials at designated locations within the store. Users navigate a location-based checklist, viewing where each item should be placed and capturing proof photos. The screen supports the store's layout with slot assignments and ghost image overlays for precise placement.
 
 ### 1.2 Scope
 
@@ -4298,8 +4359,6 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Install Survey](./screenshots/Mobile_App/mobile_app_tasks.png)
-![Task Detail](./screenshots/Mobile_App/mobile_app_task_detail.png)
 
 ### 1.4 Source Documents
 
@@ -4557,34 +4616,32 @@ This specification covers:
 
 
 ---
-# M005 - Photo Capture Screen
+# M005 - Compliance Attestation
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M005
-> **Route**: `/app/camera` (modal overlay)
+> **Route**: `/app/campaign/:id/attest`
 > **IEEE 830 Section**: 3.2.5 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
 ### 1.1 Purpose
 
-The Photo Capture screen provides a full-screen camera interface for capturing installation proof photos. It implements ghost image overlays for proper framing, quality validation before upload, and offline queueing for reliable photo submission in low-connectivity environments.
+The Compliance Attestation screen is the final legal and operational sign-off for a campaign installation. It requires the store manager or authorized personnel to certify that all materials have been installed according to brand standards, documented via photos, and that any issues have been reported. It features a digital signature capture for accountability.
 
 ### 1.2 Scope
 
 This specification covers:
-- Camera viewfinder with ghost image overlay
-- Photo quality validation (resolution check in v1)
-- Flash mode control (Auto/On/Off)
-- Photo review and confirmation
-- Background upload with retry logic
-- Offline photo queue management
+- 4-point compliance checklist verification
+- Final summary of installed items and captured photos
+- Digital signature pad for manager sign-off
+- Submission logic with validation for incomplete tasks
+- Role-based restriction (Manager only for final sign-off)
 
 ### 1.3 Screenshot Reference
 
-![Photo Capture Screen](./screenshots/Mobile_App/mobile_app_photo_capture.png)
 
 ### 1.4 Source Documents
 
@@ -4868,34 +4925,31 @@ This specification covers:
 
 
 ---
-# M006 - Tasks List Screen
+# M006 - Task Navigation
+ 
+ > **Module**: Store Execution (Mobile PWA)
+ > **Screen ID**: M006
+ > **Route**: `/app/tasks`
+ > **IEEE 830 Section**: 3.2.6 - User Interface Requirements
+ > **Version**: 1.1
+ > **Last Updated**: 2026-01-02
 
-> **Module**: MobilePWA (Store Execution)
-> **Screen ID**: M006
-> **Route**: `/app/tasks`
-> **IEEE 830 Section**: 3.2.6 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+ ## 1. Screen Overview
+ 
+ ### 1.1 Purpose
+ 
+ The Task Navigation screen (formerly Tasks List) provides a consolidated view of all pending work items for the store user. Tasks are dynamically derived from entity states and grouped by phase (Receive, Install, Deinstall, Attest).
+ 
+ ### 1.2 Scope
+ 
+ This specification covers:
+ - Task derivation from entity states
+ - Task list display with filtering (Receive / Install / Deinstall)
+ - Priority calculation and sorting
+ - Attestation workflow entry points
+ 
+ ### 1.3 Screenshot Reference
 
-## 1. Screen Overview
-
-### 1.1 Purpose
-
-The Tasks List screen provides a consolidated view of all pending work items for the store user. Tasks are dynamically derived from entity states (not stored separately) and grouped by priority and due date. The screen includes attestation workflow for final campaign submission with signature capture.
-
-### 1.2 Scope
-
-This specification covers:
-- Task derivation from entity states
-- Task list display with filtering
-- Priority calculation and sorting
-- Task type navigation routing
-- Attestation screen with signature capture
-- Final submission workflow
-
-### 1.3 Screenshot Reference
-
-![Tasks Screen](./screenshots/Mobile_App/mobile_app_tasks.png)
 
 ### 1.4 Source Documents
 
@@ -5172,12 +5226,12 @@ CompletionAttestation:
 ---
 # M007 - Profile Screen
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M007
 > **Route**: `/app/profile`
 > **IEEE 830 Section**: 3.2.7 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
@@ -5197,7 +5251,8 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Profile Screen](./screenshots/Mobile_App/mobile_app_profile.png)
+![Profile Screen](./screenshots/Store_Execution/mobile_profile.png)
+*(Note: Tablet and Desktop views follow standard responsive scaling)*
 
 ### 1.4 Source Documents
 
@@ -5506,20 +5561,20 @@ interface UserSettings {
 
 
 ---
-# M008 - Retake Flow Screen
+# M008 - Photo Retake
 
-> **Module**: MobilePWA (Store Execution)
+> **Module**: Store Execution (Mobile PWA)
 > **Screen ID**: M008
 > **Route**: `/app/campaign/:id/retake`
 > **IEEE 830 Section**: 3.2.8 - User Interface Requirements
-> **Version**: 1.0
-> **Last Updated**: 2026-01-01
+> **Version**: 1.1
+> **Last Updated**: 2026-01-02
 
 ## 1. Screen Overview
 
 ### 1.1 Purpose
 
-The Retake Flow screen guides store users through the process of recapturing rejected installation photos. It displays rejection reasons and admin feedback, provides side-by-side comparison between rejected and replacement photos, and manages the supersession workflow where new photos replace rejected ones.
+The Photo Retake screen guides store users through the process of recapturing rejected installation photos. It displays rejection reasons and admin feedback, provides side-by-side comparison between rejected and replacement photos, and manages the supersession workflow where new photos replace rejected ones.
 
 ### 1.2 Scope
 
@@ -5529,12 +5584,11 @@ This specification covers:
 - Camera integration for replacement photo capture
 - Side-by-side before/after comparison
 - Photo supersession workflow (old -> SUPERSEDED, new -> PENDING)
-- Multiple retake handling
-- Deep link support from push notifications
 
 ### 1.3 Screenshot Reference
 
-![Retake Flow Screen](./screenshots/Mobile_App/mobile_app_task_detail.png)
+![Retake Flow Screen](./screenshots/Store_Execution/mobile_photo_captured.png)
+*(Note: View shows the review state after capture; Tablet/Desktop modes scale responsively)*
 
 ### 1.4 Source Documents
 
@@ -5858,12 +5912,100 @@ When photos are rejected, the system sends notifications:
 
 
 ---
+# M009 - Deinstall Checklist
+
+> **Module**: Store Execution (Mobile PWA)
+> **Screen ID**: M009
+> **Route**: `/app/campaign/:id/deinstall`
+> **IEEE 830 Section**: 3.2.9 - User Interface Requirements
+> **Version**: 1.0
+> **Last Updated**: 2026-01-02
+
+## 1. Screen Overview
+
+### 1.1 Purpose
+
+The Deinstall Checklist screen facilitates the removal of POP materials once a campaign has ended. It provides a list of all items previously installed and requires the user to confirm their removal. This ensures that old promotional materials are not left in-store, maintaining brand consistency and clearing space for new campaigns.
+
+### 1.2 Scope
+
+This specification covers:
+- List of installed items for removal
+- Multi-select removal confirmation
+- Disposal instructions per item type (e.g., "Recycle", "Return to Brand")
+- Progress tracking for deinstallation phase
+
+### 1.3 Screenshot Reference
+
+
+## 2. User Roles & Permissions
+
+### 2.1 Authorized Roles
+
+
+## 3. UI Components
+
+### 3.1 Component Inventory
+
+
+## 10. Acceptance Criteria
+
+### 10.1 Functional Acceptance
+
+
+*Document Status: Draft*
+*IEEE 830 Compliance: Section 3.2.9 - User Interface Requirements*
+
+
+---
+# M010 - Deinstall Confirmation
+
+> **Module**: Store Execution (Mobile PWA)
+> **Screen ID**: M010
+> **Route**: `/app/campaign/:id/deinstall/confirm`
+> **IEEE 830 Section**: 3.2.10 - User Interface Requirements
+> **Version**: 1.0
+> **Last Updated**: 2026-01-02
+
+## 1. Screen Overview
+
+### 1.1 Purpose
+
+The Deinstall Confirmation screen serves as the final sign-off for the removal lifecycle. Users provide a final attestation that the deinstallation is complete and the store area is ready for the next campaign.
+
+### 1.2 Scope
+
+This specification covers:
+- Final summary of deinstalled items
+- Completion attestation checkbox
+- Digital signature (if required by brand)
+- Campaign closure trigger
+
+### 1.3 Screenshot Reference
+
+
+## 2. User Roles & Permissions
+
+### 2.1 Authorized Roles
+
+
+## 3. UI Components
+
+
+## 10. Acceptance Criteria
+
+
+*Document Status: Draft*
+*IEEE 830 Compliance: Section 3.2.10 - User Interface Requirements*
+
+
+---
 
 # Section 7: Brand Admin Module
 # Module Overview: BrandAdmin (A-Series)
 
 > **Module ID:** MOD-ADMIN
-> **Screen Range:** A001 â€“ A010
+> **Screen Range:** A001 – A010
 > **Version:** 1.0
 > **Last Updated:** 2025-01-01
 
@@ -5929,11 +6071,11 @@ The BrandAdmin module provides brand-level administration capabilities for manag
 ### Data Flow
 
 ```
-Asset Upload â†’ Approval Queue â†’ Asset Library â†’ Campaign Assignment
-                                                       â†“
-Store Selection â† Campaign Schedule â† Campaign Creation
-       â†“
-   Deployment â†’ Store Displays
+Asset Upload  Approval Queue  Asset Library  Campaign Assignment
+                                                       
+Store Selection  Campaign Schedule  Campaign Creation
+       
+   Deployment  Store Displays
 ```
 
 ## 6. Revision History
@@ -5984,28 +6126,28 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 ### 3.1 Layout Structure
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ [Logo] Brand Admin Portal          [User Menu â–¼] [Logout]   â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Dashboard                                                   â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”‚
-â”‚ â”‚ Active   â”‚ â”‚ Total    â”‚ â”‚ Pending  â”‚ â”‚ Complianceâ”‚        â”‚
-â”‚ â”‚ Campaignsâ”‚ â”‚ Stores   â”‚ â”‚ Reviews  â”‚ â”‚ Rate     â”‚        â”‚
-â”‚ â”‚    12    â”‚ â”‚   847    â”‚ â”‚    23    â”‚ â”‚   94.2%  â”‚        â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜        â”‚
-â”‚                                                             â”‚
-â”‚ Quick Actions                                               â”‚
-â”‚ [+ New Campaign]  [Review Photos]  [View All Stores]       â”‚
-â”‚                                                             â”‚
-â”‚ Recent Campaigns                                            â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”â”‚
-â”‚ â”‚ Campaign Name        Status    Stores   Progress        â”‚â”‚
-â”‚ â”‚ Summer Promo 2025    Active    234      â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‘â–‘ 80%  â”‚â”‚
-â”‚ â”‚ Holiday Display      Draft      --      Not started     â”‚â”‚
-â”‚ â”‚ Q4 End Caps          Active    156      â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ 100% â”‚â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+ [Logo] Brand Admin Portal          [User Menu ] [Logout]   
+
+ Dashboard                                                   
+
+            
+  Active     Total      Pending    Compliance        
+  Campaigns  Stores     Reviews    Rate             
+     12        847         23        94.2%          
+            
+                                                             
+ Quick Actions                                               
+ [+ New Campaign]  [Review Photos]  [View All Stores]       
+                                                             
+ Recent Campaigns                                            
+ 
+  Campaign Name        Status    Stores   Progress        
+  Summer Promo 2025    Active    234      ████████░░ 80%  
+  Holiday Display      Draft      --      Not started     
+  Q4 End Caps          Active    156      ██████████ 100% 
+ 
+
 ```
 
 ### 3.2 Component Specifications
@@ -6088,9 +6230,9 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 ### 7.1 Page Load State Machine
 
 ```
-[Initial] â†’ [Loading] â†’ [Loaded]
-                â†“
-            [Error] â†’ [Retry] â†’ [Loading]
+[Initial]  [Loading]  [Loaded]
+                
+            [Error]  [Retry]  [Loading]
 ```
 
 ### 7.2 State Definitions
@@ -6364,44 +6506,7 @@ The Store Selection screen is the first step in the Campaign Builder wizard. It 
 ## 3. UI Components
 
 ### 3.1 Layout Structure
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Create Campaign                                             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Step 1: Select Stores  â”€â”€â”€â—â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”‚ Step 2: Define Kit     â”€â”€â”€â”€â—‹â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”‚ Step 3: Review         â”€â”€â”€â”€â—‹â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚ Campaign Name *                                             â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ Summer Promo 2025                                       â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ Store Selection Recipe                                      â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ INCLUDE stores where:                                   â”‚ â”‚
-â”‚ â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
-â”‚ â”‚ â”‚ Region    [=]  [Northeast        â–¼]  [Ã—]          â”‚   â”‚ â”‚
-â”‚ â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
-â”‚ â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
-â”‚ â”‚ â”‚ Group     [=]  [Premium Locations â–¼]  [Ã—]         â”‚   â”‚ â”‚
-â”‚ â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
-â”‚ â”‚ [+ Add Rule]                                            â”‚ â”‚
-â”‚ â”‚                                                         â”‚ â”‚
-â”‚ â”‚ EXCLUDE stores where:                                   â”‚ â”‚
-â”‚ â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
-â”‚ â”‚ â”‚ Status    [=]  [Inactive          â–¼]  [Ã—]         â”‚   â”‚ â”‚
-â”‚ â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
-â”‚ â”‚ [+ Add Exclusion]                                       â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ Preview: 234 stores selected              [View Store List] â”‚
-â”‚                                                             â”‚
-â”‚ [Cancel]                            [Save & Continue â†’]     â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+![Store Selection Wireframe](./screenshots/Admin_Portal/admin_portal_store_selection.png)
 
 ### 3.2 Component Specifications
 
@@ -6609,39 +6714,7 @@ The Kit Definition screen is the second step in the Campaign Builder wizard. It 
 ## 3. UI Components
 
 ### 3.1 Layout Structure
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Create Campaign                                             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Step 1: Select Stores  â”€â”€â”€âœ“â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”‚ Step 2: Define Kit     â”€â”€â”€â—â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”‚ Step 3: Review         â”€â”€â”€â”€â—‹â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚ Kit Items                                    [+ Add Item]   â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ â‰¡  1. Summer Poster (24x36)                             â”‚ â”‚
-â”‚ â”‚     Type: POSTER  â”‚  Qty: 2  â”‚  Location: FRONT_WINDOW  â”‚ â”‚
-â”‚ â”‚     ðŸ“· Photo Required: Front view                [Edit] â”‚ â”‚
-â”‚ â”‚                                                   [Ã—]   â”‚ â”‚
-â”‚ â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤ â”‚
-â”‚ â”‚ â‰¡  2. Counter Display Stand                             â”‚ â”‚
-â”‚ â”‚     Type: COUNTER_DISPLAY  â”‚  Qty: 1  â”‚  Location: --   â”‚ â”‚
-â”‚ â”‚     ðŸ“· No photo required                         [Edit] â”‚ â”‚
-â”‚ â”‚                                                   [Ã—]   â”‚ â”‚
-â”‚ â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤ â”‚
-â”‚ â”‚ â‰¡  3. Window Cling Set                                  â”‚ â”‚
-â”‚ â”‚     Type: WINDOW_CLING  â”‚  Qty: 4  â”‚  Location: ENTRY   â”‚ â”‚
-â”‚ â”‚     ðŸ“· Photo Required: Installed view            [Edit] â”‚ â”‚
-â”‚ â”‚                                                   [Ã—]   â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ Kit Summary: 3 items, 7 total units                         â”‚
-â”‚                                                             â”‚
-â”‚ [â† Back]                              [Save & Continue â†’]   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+![Kit Definition Wireframe](./screenshots/Admin_Portal/admin_portal_kit_definition.png)
 
 ### 3.2 Component Specifications
 
@@ -7212,6 +7285,8 @@ The Store List screen provides brand administrators with a comprehensive view of
 
 ### 3.1 Layout Structure
 
+### 3.1 Layout Structure
+![Store List Wireframe](./screenshots/Admin_Portal/admin_portal_store_list.png)
 
 ### 3.2 Component Specifications
 
@@ -7463,7 +7538,7 @@ The Photo Verification Queue provides brand administrators with a streamlined in
 ## 3. UI Components
 
 ### 3.1 Layout Structure
-
+![Verification Queue Wireframe](./screenshots/Admin_Portal/admin_portal_verification.png)
 
 ### 3.2 Component Specifications
 
@@ -7750,7 +7825,7 @@ This screen serves as the primary work queue for PSP fulfillment operations. Ord
 ### 1.4 Navigation Path
 
 ```
-PSP Portal â†’ Orders (sidebar) â†’ /psp/orders
+PSP Portal  Orders (sidebar)  /psp/orders
 ```
 
 ### 1.5 Related Screens
@@ -7888,54 +7963,54 @@ LIMIT :page_size OFFSET :offset
 ### 7.1 Order Status State Machine
 
 ```
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚  GENERATED  â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ acknowledge
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚ ACKNOWLEDGEDâ”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ start_production
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚IN_PRODUCTIONâ”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ complete_kitting
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚   KITTING   â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ ready_to_ship
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-               â”Œâ”€â”€â”€â”€â”‚READY_TO_SHIPâ”‚
-               â”‚    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-               â”‚           â”‚ ship (partial/full)
-               â”‚           â–¼
-               â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-               â”‚    â”‚PARTIALLY_SHIPPEDâ”‚â”€â”€â”€â”
-               â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
-               â”‚                          â”‚ all_shipped
-               â”‚           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-               â”‚           â–¼
-               â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-               â””â”€â”€â”€â–ºâ”‚   SHIPPED   â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ deliver
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚  DELIVERED  â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ close
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚   CLOSED    â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                    
+                      GENERATED  
+                    
+                            acknowledge
+                           
+                    
+                     ACKNOWLEDGED
+                    
+                            start_production
+                           
+                    
+                    IN_PRODUCTION
+                    
+                            complete_kitting
+                           
+                    
+                       KITTING   
+                    
+                            ready_to_ship
+                           
+                    
+               READY_TO_SHIP
+                   
+                           ship (partial/full)
+                          
+                   
+                   PARTIALLY_SHIPPED
+                      
+                                          all_shipped
+                          
+                          
+                   
+                  SHIPPED   
+                    
+                            deliver
+                           
+                    
+                      DELIVERED  
+                    
+                            close
+                           
+                    
+                       CLOSED    
+                    
 
-        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-        â”‚  CANCELLED  â”‚ (from any state except CLOSED)
-        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+        
+          CANCELLED   (from any state except CLOSED)
+        
 ```
 
 ### 7.2 State Transition Requirements
@@ -8011,7 +8086,7 @@ This screen represents the final fulfillment stage where completed orders are sh
 ### 1.4 Navigation Path
 
 ```
-PSP Portal â†’ Shipments (sidebar) â†’ /psp/shipments
+PSP Portal  Shipments (sidebar)  /psp/shipments
 ```
 
 ### 1.5 Related Screens
@@ -8162,27 +8237,27 @@ LIMIT :page_size OFFSET :offset
 ### 7.1 Shipment Status State Machine
 
 ```
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚  LABEL_CREATED  â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                             â”‚ carrier_pickup
-                             â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚   IN_TRANSIT    â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                             â”‚
-              â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-              â”‚              â”‚              â”‚
-              â–¼              â–¼              â–¼
-      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-      â”‚OUT_FOR_DELâ”‚  â”‚  EXCEPTION  â”‚  â”‚ RETURNED  â”‚
-      â””â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-            â”‚               â”‚
-            â”‚               â”‚ resolved
-            â–¼               â–¼
-      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-      â”‚           DELIVERED             â”‚
-      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                    
+                      LABEL_CREATED  
+                    
+                              carrier_pickup
+                             
+                    
+                       IN_TRANSIT    
+                    
+                             
+              
+                                          
+                                          
+          
+      OUT_FOR_DEL    EXCEPTION     RETURNED  
+          
+                           
+                            resolved
+                           
+      
+                 DELIVERED             
+      
 ```
 
 ### 7.2 State Transition Requirements
@@ -8261,7 +8336,7 @@ This screen manages the exception handling workflow for store-reported problems 
 ### 1.4 Navigation Path
 
 ```
-PSP Portal â†’ Issues (sidebar) â†’ /psp/issues
+PSP Portal  Issues (sidebar)  /psp/issues
 ```
 
 ### 1.5 Related Screens
@@ -8426,32 +8501,32 @@ LIMIT :page_size OFFSET :offset
 ### 7.1 Issue Status State Machine
 
 ```
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚    OPEN     â”‚ â†â”€â”€ Store reports
-                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚ triage
-                           â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-            â”Œâ”€â”€â”€â”€â”€â”€â”€â”‚   TRIAGED   â”‚â”€â”€â”€â”€â”€â”€â”€â”
-            â”‚       â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜       â”‚
-            â”‚              â”‚              â”‚
-            â”‚ reject       â”‚ approve      â”‚ request_info
-            â–¼              â–¼              â–¼
-     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-     â”‚ REJECTED â”‚   â”‚ APPROVED â”‚   â”‚ AWAITING_   â”‚
-     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜   â”‚ INFO        â”‚
-            â”‚            â”‚         â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
-            â”‚            â”‚                â”‚
-            â”‚            â”‚ create_reorder â”‚ info_received
-            â”‚            â–¼                â”‚
-            â”‚     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”‚
-            â”‚     â”‚ IN_FULFILLMENT  â”‚â—„â”€â”€â”€â”€â”˜
-            â”‚     â””â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-            â”‚             â”‚ reorder_delivered
-            â”‚             â–¼
-            â”‚     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-            â””â”€â”€â”€â”€â–ºâ”‚  RESOLVED   â”‚
-                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                    
+                        OPEN       Store reports
+                    
+                            triage
+                           
+                    
+               TRIAGED   
+                          
+                                        
+             reject        approve       request_info
+                                        
+           
+      REJECTED     APPROVED     AWAITING_   
+            INFO        
+                                 
+                                        
+                         create_reorder  info_received
+                                        
+                      
+                  IN_FULFILLMENT  
+                 
+                          reorder_delivered
+                         
+                 
+              RESOLVED   
+                  
 ```
 
 ### 7.2 State Transition Requirements
@@ -8555,27 +8630,27 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 ### 3.3 Layout Structure
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Dashboard                                    Store: #12345  â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚  [KPI-001]    [KPI-002]    [KPI-003]    [KPI-004]          â”‚
-â”‚   Active       Pending      Completed    Compliance        â”‚
-â”‚     3            5            12           94%             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚  Active Campaigns                    Pending Actions        â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”â”‚
-â”‚  â”‚ Campaign 1        [>]  â”‚        â”‚ âš  Receive shipment  â”‚â”‚
-â”‚  â”‚ Campaign 2        [>]  â”‚        â”‚ â—‹ Upload photos     â”‚â”‚
-â”‚  â”‚ Campaign 3        [>]  â”‚        â”‚ â—‹ Complete survey   â”‚â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜â”‚
-â”‚                                                             â”‚
-â”‚  Recent Activity              Team Status (Manager only)    â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
-â”‚  â”‚ Jane uploaded photo     â”‚  â”‚ 4 active members        â”‚  â”‚
-â”‚  â”‚ John completed survey   â”‚  â”‚ 2 pending invitations   â”‚  â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+ Dashboard                                    Store: #12345  
+
+  [KPI-001]    [KPI-002]    [KPI-003]    [KPI-004]          
+   Active       Pending      Completed    Compliance        
+     3            5            12           94%             
+
+                                                             
+  Active Campaigns                    Pending Actions        
+          
+   Campaign 1        [>]           ⚠ Receive shipment  
+   Campaign 2        [>]            Upload photos     
+   Campaign 3        [>]            Complete survey   
+          
+                                                             
+  Recent Activity              Team Status (Manager only)    
+      
+   Jane uploaded photo        4 active members          
+   John completed survey      2 pending invitations     
+      
+
 ```
 
 ### 3.4 Component Requirements
@@ -8682,14 +8757,14 @@ X-Tenant-ID: {tenant_uuid}
 ### 7.1 Dashboard Load States
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   INITIAL   â”‚â”€â”€â”€â”€â–¶â”‚   LOADING   â”‚â”€â”€â”€â”€â–¶â”‚   LOADED    â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚                   â”‚
-                           â–¼                   â–¼
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚    ERROR    â”‚     â”‚  REFRESHING â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+          
+   INITIAL      LOADING      LOADED    
+          
+                                              
+                                              
+                         
+                        ERROR           REFRESHING 
+                         
 ```
 
 ### 7.2 State Descriptions
@@ -8779,35 +8854,35 @@ The Campaign History screen provides store personnel with a comprehensive view o
 ### 3.2 Layout Structure
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Campaigns                                 [Search] [Export] â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ [Active] [Completed] [All]                                  â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ Campaign          Status           Dates        Progressâ”‚ â”‚
-â”‚ â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤ â”‚
-â”‚ â”‚ Summer Promo      [Installing]     Jun 1-30    â–ˆâ–ˆâ–ˆâ–ˆâ–‘ 75%â”‚ â”‚
-â”‚ â”‚ Spring Sale       [Pending Review] May 1-31    â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ 100%â”‚ â”‚
-â”‚ â”‚ Winter Display    [Complete âœ“]     Dec 1-31    â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ 100%â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ â”Œâ”€ Expanded Detail Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”â”‚
-â”‚ â”‚ Summer Promo 2024                                        â”‚â”‚
-â”‚ â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€                                        â”‚â”‚
-â”‚ â”‚ Install Window: Jun 1 - Jun 30, 2024                     â”‚â”‚
-â”‚ â”‚ Status: Installing                                       â”‚â”‚
-â”‚ â”‚                                                          â”‚â”‚
-â”‚ â”‚ Tasks:                                                   â”‚â”‚
-â”‚ â”‚ âœ“ Shipment Received    âœ“ Pre-install Survey              â”‚â”‚
-â”‚ â”‚ â—‹ Install Complete     â—‹ Photo Upload (3/5)              â”‚â”‚
-â”‚ â”‚ â—‹ Completion Survey                                      â”‚â”‚
-â”‚ â”‚                                                          â”‚â”‚
-â”‚ â”‚ Items: 5 kit items                                       â”‚â”‚
-â”‚ â”‚ [View Photos] [Report Issue] [Continue Installation]    â”‚â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+ Campaigns                                 [Search] [Export] 
+
+ [Active] [Completed] [All]                                  
+
+                                                             
+  
+  Campaign          Status           Dates        Progress 
+  
+  Summer Promo      [Installing]     Jun 1-30    ████░ 75% 
+  Spring Sale       [Pending Review] May 1-31    █████ 100% 
+  Winter Display    [Complete ✓]     Dec 1-31    █████ 100% 
+  
+                                                             
+  Expanded Detail Panel 
+  Summer Promo 2024                                        
+                                          
+  Install Window: Jun 1 - Jun 30, 2024                     
+  Status: Installing                                       
+                                                           
+  Tasks:                                                   
+  ✓ Shipment Received    ✓ Pre-install Survey              
+   Install Complete      Photo Upload (3/5)              
+   Completion Survey                                      
+                                                           
+  Items: 5 kit items                                       
+  [View Photos] [Report Issue] [Continue Installation]    
+ 
+
 ```
 
 ### 3.3 Component Requirements
@@ -8962,15 +9037,15 @@ ORDER BY c.install_end DESC
 ### 7.1 Page States
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   LOADING   â”‚â”€â”€â”€â”€â–¶â”‚   LOADED    â”‚â”€â”€â”€â”€â–¶â”‚  FILTERING  â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-       â”‚                  â”‚                    â”‚
-       â–¼                  â–¼                    â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚    ERROR    â”‚     â”‚   DETAIL    â”‚     â”‚  EXPORTING  â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚    OPEN     â”‚     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+          
+   LOADING      LOADED      FILTERING  
+          
+                                             
+                                             
+          
+    ERROR            DETAIL           EXPORTING  
+         OPEN          
+                    
 ```
 
 ### 7.2 State Descriptions
@@ -9686,7 +9761,7 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.4 Screenshot Reference
 
-![Store Reports Dashboard](./screenshots/Regional_Dashboard/regional_dashboard.png)
+![Store Reports Dashboard](./screenshots/Store_Portal/store_portal_reports.png)
 
 *Figure S005-1: Store Reports Dashboard - Analytics and performance metrics interface*
 
@@ -9694,16 +9769,16 @@ This specification defines the functional requirements, data requirements, and u
 
 ```
 Store Portal Navigation:
-â”œâ”€â”€ Dashboard (S001)
-â”œâ”€â”€ Campaign History (S002)
-â”œâ”€â”€ Photo Gallery (S003)
-â”œâ”€â”€ Team Management (S004)
-â””â”€â”€ Reports (S005) â† Current Screen
-    â”œâ”€â”€ Overview Tab
-    â”œâ”€â”€ Campaigns Tab
-    â”œâ”€â”€ Photos Tab
-    â”œâ”€â”€ Team Tab
-    â””â”€â”€ Issues Tab
+ Dashboard (S001)
+ Campaign History (S002)
+ Photo Gallery (S003)
+ Team Management (S004)
+ Reports (S005)  Current Screen
+     Overview Tab
+     Campaigns Tab
+     Photos Tab
+     Team Tab
+     Issues Tab
 ```
 
 ## 2. User Roles & Permissions
@@ -9734,22 +9809,22 @@ REQ-S005-SEC-005: Role Enforcement
 
 ```
 ReportsScreen
-â”œâ”€â”€ PageHeader
-â”‚   â”œâ”€â”€ Title ("Store Reports")
-â”‚   â”œâ”€â”€ DateRangePicker
-â”‚   â””â”€â”€ ExportButton
-â”œâ”€â”€ TabNavigation
-â”‚   â”œâ”€â”€ OverviewTab
-â”‚   â”œâ”€â”€ CampaignsTab
-â”‚   â”œâ”€â”€ PhotosTab
-â”‚   â”œâ”€â”€ TeamTab
-â”‚   â””â”€â”€ IssuesTab
-â”œâ”€â”€ TabContent
-â”‚   â”œâ”€â”€ KPICardGrid (4 cards)
-â”‚   â”œâ”€â”€ TrendChart (line chart)
-â”‚   â”œâ”€â”€ BreakdownCharts (pie, bar)
-â”‚   â””â”€â”€ DataTable (detailed data)
-â””â”€â”€ LoadingState / EmptyState
+ PageHeader
+    Title ("Store Reports")
+    DateRangePicker
+    ExportButton
+ TabNavigation
+    OverviewTab
+    CampaignsTab
+    PhotosTab
+    TeamTab
+    IssuesTab
+ TabContent
+    KPICardGrid (4 cards)
+    TrendChart (line chart)
+    BreakdownCharts (pie, bar)
+    DataTable (detailed data)
+ LoadingState / EmptyState
 ```
 
 ### 3.2 Component Specifications
@@ -9771,36 +9846,8 @@ ReportsScreen
 
 ### 3.3 Reports Layout
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Store Reports                   [Last 90 Days â–¼] [Export]   â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚ [Overview] [Campaigns] [Photos] [Team] [Issues]            â”‚
-â”‚                                                             â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚
-â”‚  â”‚ Complianceâ”‚  â”‚ On-Time  â”‚  â”‚ Photo    â”‚  â”‚ Avg Time â”‚   â”‚
-â”‚  â”‚ Rate     â”‚  â”‚ Rate     â”‚  â”‚ Approval â”‚  â”‚ to Comp. â”‚   â”‚
-â”‚  â”‚   94%    â”‚  â”‚   88%    â”‚  â”‚   97%    â”‚  â”‚  4.2 daysâ”‚   â”‚
-â”‚  â”‚  â†‘ 3%    â”‚  â”‚  â†‘ 5%    â”‚  â”‚  â†“ 1%    â”‚  â”‚  â†“ 0.5d  â”‚   â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
-â”‚                                                             â”‚
-â”‚  Campaign Performance Trend                                 â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚
-â”‚  â”‚     Line Chart: Compliance % over time              â”‚   â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
-â”‚                                                             â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
-â”‚  â”‚ Photo Rejection Reasons â”‚  â”‚ Team Contribution       â”‚  â”‚
-â”‚  â”‚      [Pie Chart]        â”‚  â”‚      [Bar Chart]        â”‚  â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
-â”‚                                                             â”‚
-â”‚  Recent Campaigns                                           â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚
-â”‚  â”‚ Campaign    â”‚ Completed â”‚ On-Time â”‚ Photos â”‚ Issues â”‚   â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+### 3.3 Reports Layout
+![Store Reports Wireframe](./screenshots/Store_Portal/store_portal_reports.png)
 
 ## 4. Data Requirements
 
@@ -10096,36 +10143,36 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 ### 6.2 Request/Response Flow
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                      Reports Data Flow                          â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                                 â”‚
-â”‚  Store Portal                  API Gateway                      â”‚
-â”‚       â”‚                            â”‚                            â”‚
-â”‚       â”‚  GET /stores/{id}/reports  â”‚                            â”‚
-â”‚       â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€>â”‚                            â”‚
-â”‚       â”‚      ?range=90d            â”‚                            â”‚
-â”‚       â”‚                            â”‚                            â”‚
-â”‚       â”‚                     â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”                     â”‚
-â”‚       â”‚                     â”‚   Validate  â”‚                     â”‚
-â”‚       â”‚                     â”‚  JWT Token  â”‚                     â”‚
-â”‚       â”‚                     â”‚ Store Accessâ”‚                     â”‚
-â”‚       â”‚                     â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜                     â”‚
-â”‚       â”‚                            â”‚                            â”‚
-â”‚       â”‚                     â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”                     â”‚
-â”‚       â”‚                     â”‚  Aggregate  â”‚                     â”‚
-â”‚       â”‚                     â”‚   Metrics   â”‚                     â”‚
-â”‚       â”‚                     â”‚ (6 queries) â”‚                     â”‚
-â”‚       â”‚                     â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜                     â”‚
-â”‚       â”‚                            â”‚                            â”‚
-â”‚       â”‚    200 OK + JSON           â”‚                            â”‚
-â”‚       â”‚<â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤                            â”‚
-â”‚       â”‚                            â”‚                            â”‚
-â”‚       â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤                            â”‚
-â”‚       â”‚  Render Charts & Tables    â”‚                            â”‚
-â”‚       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                            â”‚
-â”‚                                                                 â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+                      Reports Data Flow                          
+
+                                                                 
+  Store Portal                  API Gateway                      
+                                                               
+         GET /stores/{id}/reports                              
+       >                            
+             ?range=90d                                        
+                                                               
+                                                 
+                               Validate                       
+                              JWT Token                       
+                             Store Access                     
+                                                 
+                                                               
+                                                 
+                              Aggregate                       
+                               Metrics                        
+                             (6 queries)                      
+                                                 
+                                                               
+           200 OK + JSON                                       
+       <                            
+                                                               
+                                   
+         Render Charts & Tables                                
+                                   
+                                                                 
+
 ```
 
 ### 6.3 API Requirements
@@ -10136,39 +10183,39 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 ### 7.1 Screen States
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                   Reports Screen States                         â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                                 â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                                              â”‚
-â”‚    â”‚   LOADING   â”‚                                              â”‚
-â”‚    â”‚  (Initial)  â”‚                                              â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜                                              â”‚
-â”‚           â”‚                                                     â”‚
-â”‚           â–¼                                                     â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                       â”‚
-â”‚    â”‚   SUCCESS   â”‚â—„â”€â”€â”€â”€â”€â”€â”€â”‚  REFRESHING â”‚                       â”‚
-â”‚    â”‚ (Data Ready)â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”‚(Range Change)â”‚                      â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                       â”‚
-â”‚           â”‚                      â–²                              â”‚
-â”‚           â”‚                      â”‚                              â”‚
-â”‚           â–¼                      â”‚                              â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”        â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”                       â”‚
-â”‚    â”‚  EXPORTING  â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”‚  NAVIGATING â”‚                       â”‚
-â”‚    â”‚(Generating) â”‚        â”‚ (Tab Switch)â”‚                       â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                       â”‚
-â”‚                                                                 â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                                              â”‚
-â”‚    â”‚    ERROR    â”‚ â† Network/Server failure                     â”‚
-â”‚    â”‚   (Retry)   â”‚                                              â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                                              â”‚
-â”‚                                                                 â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                                              â”‚
-â”‚    â”‚    EMPTY    â”‚ â† No data for period                         â”‚
-â”‚    â”‚ (No Data)   â”‚                                              â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                                              â”‚
-â”‚                                                                 â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+                   Reports Screen States                         
+
+                                                                 
+                                                  
+       LOADING                                                 
+      (Initial)                                                
+                                                  
+                                                                
+                                                                
+                                   
+       SUCCESS     REFRESHING                        
+     (Data Ready)(Range Change)                      
+                                   
+                                                               
+                                                               
+                                                               
+                                   
+      EXPORTING    NAVIGATING                        
+    (Generating)          (Tab Switch)                       
+                                   
+                                                                 
+                                                  
+        ERROR      Network/Server failure                     
+       (Retry)                                                 
+                                                  
+                                                                 
+                                                  
+        EMPTY      No data for period                         
+     (No Data)                                                 
+                                                  
+                                                                 
+
 ```
 
 ### 7.2 State Definitions
@@ -10661,7 +10708,7 @@ Key capabilities include brand creation, feature flag management, API key provis
 
 ## 2. Screenshot Reference
 
-![System Settings](./screenshots/Admin_Portal/admin_portal_settings.png)
+![System Settings](./screenshots/PSP_Admin/psp_admin_settings.png)
 
 *Figure A004-1: System Settings - Platform-wide configuration, webhooks, and feature flag management*
 
@@ -11153,12 +11200,12 @@ X-API-Key: vg_live_your_api_key_here
 
 #### 3.1.2 Authentication Flow
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   Client    â”‚â”€â”€â”€â”€â–¶â”‚  API Gateway     â”‚â”€â”€â”€â”€â–¶â”‚  Auth Service   â”‚
-â”‚             â”‚     â”‚                  â”‚     â”‚                 â”‚
-â”‚             â”‚â—€â”€â”€â”€â”€â”‚  X-API-Key       â”‚â—€â”€â”€â”€â”€â”‚  Validate Key   â”‚
-â”‚             â”‚     â”‚  Header Check    â”‚     â”‚  & Permissions  â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+          
+   Client      API Gateway       Auth Service   
+                                                          
+               X-API-Key         Validate Key   
+                    Header Check           & Permissions  
+          
 ```
 
 ### 3.2 API Key Security Requirements
@@ -12482,17 +12529,17 @@ This document specifies the external system integrations for NewPOPSys, detailin
 ### 1.2 Integration Architecture Overview
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                        NewPOPSys Core                           â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚  Orders API  â”‚ Shipments APIâ”‚  Events API  â”‚   Identity API    â”‚
-â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-       â”‚              â”‚              â”‚                 â”‚
-       â–¼              â–¼              â–¼                 â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   PSP MIS    â”‚ â”‚   Shipping   â”‚ â”‚  Brand ERP   â”‚ â”‚     SSO     â”‚
-â”‚   Systems    â”‚ â”‚   Carriers   â”‚ â”‚   Systems    â”‚ â”‚  Providers  â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+                        NewPOPSys Core                           
+
+  Orders API   Shipments API  Events API     Identity API    
+
+                                                    
+                                                    
+   
+   PSP MIS        Shipping      Brand ERP         SSO     
+   Systems        Carriers       Systems       Providers  
+   
 ```
 
 ### 1.3 Integration Partners Summary
@@ -12510,21 +12557,21 @@ Print Service Provider (PSP) Management Information Systems receive orders from 
 
 ```
 NewPOPSys                                    PSP MIS
-    â”‚                                            â”‚
-    â”‚â”€â”€â”€â”€â”€â”€â”€â”€ order.generated webhook â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                                            â”‚
-    â”‚â—€â”€â”€â”€â”€â”€â”€â”€ POST /orders/{id}/acknowledge â”€â”€â”€â”€â”€â”‚
-    â”‚                                            â”‚
-    â”‚â—€â”€â”€â”€â”€â”€â”€â”€ PUT /orders/{id}/status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚
-    â”‚                (in_production)             â”‚
-    â”‚                                            â”‚
-    â”‚â—€â”€â”€â”€â”€â”€â”€â”€ PUT /orders/{id}/status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚
-    â”‚                (ready_to_ship)             â”‚
-    â”‚                                            â”‚
-    â”‚â—€â”€â”€â”€â”€â”€â”€â”€ POST /orders/{id}/shipments â”€â”€â”€â”€â”€â”€â”€â”‚
-    â”‚                                            â”‚
-    â”‚â”€â”€â”€â”€â”€â”€â”€â”€ shipment.created webhook â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                                            â”‚
+                                                
+     order.generated webhook 
+                                                
+     POST /orders/{id}/acknowledge 
+                                                
+     PUT /orders/{id}/status 
+                    (in_production)             
+                                                
+     PUT /orders/{id}/status 
+                    (ready_to_ship)             
+                                                
+     POST /orders/{id}/shipments 
+                                                
+     shipment.created webhook 
+                                                
 ```
 
 ### 2.4 Order Data Mapping
@@ -12737,15 +12784,15 @@ NewPOPSys sends event notifications to Brand ERP systems via webhooks. ERPs do n
 
 ```
 NewPOPSys                              Brand ERP
-    â”‚                                      â”‚
-    â”‚â”€â”€â”€â”€ campaign.published webhook â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                                      â”‚
-    â”‚â”€â”€â”€â”€ order.generated webhook â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                                      â”‚
-    â”‚â”€â”€â”€â”€ order.shipped webhook â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                                      â”‚
-    â”‚â”€â”€â”€â”€ invoice.created webhook â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                                      â”‚
+                                          
+     campaign.published webhook 
+                                          
+     order.generated webhook 
+                                          
+     order.shipped webhook 
+                                          
+     invoice.created webhook 
+                                          
 ```
 
 ### 4.3 ERP Data Mapping
@@ -12845,21 +12892,21 @@ NewPOPSys                              Brand ERP
 
 ```
 Customer                NewPOPSys               Stripe
-    â”‚                       â”‚                      â”‚
-    â”‚â”€â”€ Place Order â”€â”€â”€â”€â”€â”€â”€â–¶â”‚                      â”‚
-    â”‚                       â”‚                      â”‚
-    â”‚                       â”‚â”€â”€ Create PaymentIntent â”€â–¶â”‚
-    â”‚                       â”‚                      â”‚
-    â”‚                       â”‚â—€â”€â”€ client_secret â”€â”€â”€â”€â”‚
-    â”‚                       â”‚                      â”‚
-    â”‚â—€â”€â”€ Payment Form â”€â”€â”€â”€â”€â”€â”‚                      â”‚
-    â”‚                       â”‚                      â”‚
-    â”‚â”€â”€ Confirm Payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚
-    â”‚                       â”‚                      â”‚
-    â”‚                       â”‚â—€â”€â”€ payment_intent.succeeded â”€â”€â”‚
-    â”‚                       â”‚    (webhook)         â”‚
-    â”‚                       â”‚                      â”‚
-    â”‚â—€â”€â”€ Order Confirmed â”€â”€â”€â”‚                      â”‚
+                                                 
+     Place Order                       
+                                                 
+                            Create PaymentIntent 
+                                                 
+                            client_secret 
+                                                 
+     Payment Form                       
+                                                 
+     Confirm Payment 
+                                                 
+                            payment_intent.succeeded 
+                               (webhook)         
+                                                 
+     Order Confirmed                       
 ```
 
 #### 6.2.3 Webhook Events
@@ -14365,15 +14412,15 @@ For bulk photo download, a ZIP archive is generated:
 **Structure:**
 ```
 photos_{campaign_id}_{YYYYMMDD}.zip
-â”œâ”€â”€ manifest.json
-â”œâ”€â”€ store_1234/
-â”‚   â”œâ”€â”€ item_ABC_slot_1.jpg
-â”‚   â”œâ”€â”€ item_ABC_slot_1_retake.jpg
-â”‚   â””â”€â”€ item_DEF_slot_2.jpg
-â”œâ”€â”€ store_5678/
-â”‚   â””â”€â”€ ...
-â””â”€â”€ rejected/
-    â””â”€â”€ ...
+ manifest.json
+ store_1234/
+    item_ABC_slot_1.jpg
+    item_ABC_slot_1_retake.jpg
+    item_DEF_slot_2.jpg
+ store_5678/
+    ...
+ rejected/
+     ...
 ```
 
 **Manifest.json:**
@@ -14514,7 +14561,7 @@ This appendix maintains a chronological record of all changes to the Software Re
    - Store-level execution tracking
 
 2. **Campaign Management**
-   - Full campaign lifecycle (Draft â†’ Published â†’ Completed â†’ Archived)
+   - Full campaign lifecycle (Draft  Published  Completed  Archived)
    - Kit definition with photo requirements
    - Store assignment and targeting
 

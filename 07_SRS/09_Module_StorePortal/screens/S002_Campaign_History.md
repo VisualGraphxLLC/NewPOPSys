@@ -77,37 +77,9 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 3.2 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Campaigns                                 [Search] [Export] │
-├─────────────────────────────────────────────────────────────┤
-│ [Active] [Completed] [All]                                  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ Campaign          Status           Dates        Progress│ │
-│ ├─────────────────────────────────────────────────────────┤ │
-│ │ Summer Promo      [Installing]     Jun 1-30    ████░ 75%│ │
-│ │ Spring Sale       [Pending Review] May 1-31    █████ 100%│ │
-│ │ Winter Display    [Complete ✓]     Dec 1-31    █████ 100%│ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ ┌─ Expanded Detail Panel ──────────────────────────────────┐│
-│ │ Summer Promo 2024                                        ││
-│ │ ─────────────────                                        ││
-│ │ Install Window: Jun 1 - Jun 30, 2024                     ││
-│ │ Status: Installing                                       ││
-│ │                                                          ││
-│ │ Tasks:                                                   ││
-│ │ ✓ Shipment Received    ✓ Pre-install Survey              ││
-│ │ ○ Install Complete     ○ Photo Upload (3/5)              ││
-│ │ ○ Completion Survey                                      ││
-│ │                                                          ││
-│ │ Items: 5 kit items                                       ││
-│ │ [View Photos] [Report Issue] [Continue Installation]    ││
-│ └──────────────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────┘
-```
+
+![Campaign History](../../screenshots/Store_Portal/store_portal_campaigns.png)
+
 
 ### 3.3 Component Requirements
 
@@ -138,33 +110,9 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 4.2 Data Query Specification
 
-```sql
--- Campaign list query
-SELECT
-  sa.id as assignment_id,
-  sa.status as phase,
-  sa.completed_at,
-  c.id as campaign_id,
-  c.name as campaign_name,
-  c.code as campaign_code,
-  c.install_start,
-  c.install_end,
-  COUNT(DISTINCT ai.id) as total_items,
-  COUNT(DISTINCT CASE WHEN pu.review_status = 'APPROVED' THEN pu.id END) as approved_photos,
-  CASE WHEN rv.id IS NOT NULL THEN true ELSE false END as received,
-  CASE WHEN ca.id IS NOT NULL THEN true ELSE false END as completed
-FROM store_assignments sa
-JOIN campaigns c ON sa.campaign_id = c.id
-LEFT JOIN assignment_items ai ON ai.store_assignment_id = sa.id
-LEFT JOIN photo_uploads pu ON pu.assignment_item_id = ai.id
-LEFT JOIN receive_verifications rv ON rv.store_assignment_id = sa.id
-LEFT JOIN completion_attestations ca ON ca.store_assignment_id = sa.id
-WHERE sa.store_id = :storeId
-  AND sa.deleted_at IS NULL
-  AND c.deleted_at IS NULL
-GROUP BY sa.id, c.id, rv.id, ca.id
-ORDER BY c.install_end DESC
-```
+
+![Campaign History](../../screenshots/Store_Portal/store_portal_campaigns.png)
+
 
 ### 4.3 Data Requirements
 

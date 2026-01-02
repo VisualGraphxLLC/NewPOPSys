@@ -68,28 +68,8 @@ The Store List screen provides brand administrators with a comprehensive view of
 
 ### 3.1 Layout Structure
 
-```
-+-------------------------------------------------------------+
-| Stores                                      [+ Invite Store] |
-+-------------------------------------------------------------+
-| [All] [Active] [Inactive] [Onboarding] [Suspended]          |
-+-------------------------------------------------------------+
-| Search stores...          [Region v] [Group v] [Export v]    |
-+-------------------------------------------------------------+
-| [ ] Store              Region     Status    Campaigns  [...]  |
-| ----------------------------------------------------------------|
-| [ ] Store #1234        Northeast  Active    3          [...]  |
-|     789 Main Street, Boston, MA 02101                         |
-| [ ] Store #5678        Midwest    Active    2          [...]  |
-|     456 Oak Ave, Chicago, IL 60601                            |
-| [ ] Store #9012        Southeast  Onboard   0          [...]  |
-|     123 Palm Dr, Miami, FL 33101                              |
-| [ ] Store #3456        Northeast  Inactive  1          [...]  |
-|     321 Elm St, New York, NY 10001                            |
-+-------------------------------------------------------------+
-| Showing 1-20 of 847             [<] [1] [2] [3] ... [43] [>] |
-+-------------------------------------------------------------+
-```
+### 3.1 Layout Structure
+![Store List Wireframe](../../screenshots/Admin_Portal/admin_portal_store_list.png)
 
 ### 3.2 Component Specifications
 
@@ -360,19 +340,14 @@ GET /api/v1/stores
 
 ### 7.1 Store Status State Machine
 
-```
-[ONBOARDING] â”€â”€accept invitationâ”€â”€> [ACTIVE]
-                                       |
-                        +--------------+---------------+
-                        |              |               |
-                        v              v               v
-                   [INACTIVE]    [SUSPENDED]    (stays ACTIVE)
-                        |              |
-                        |              |
-                        +------+-------+
-                               |
-                               v
-                           [ACTIVE]  <-- reactivate
+```mermaid
+stateDiagram-v2
+    ONBOARDING --> ACTIVE: Accept Invitation
+    ACTIVE --> INACTIVE: Admin Action
+    ACTIVE --> SUSPENDED: Admin Action
+    INACTIVE --> ACTIVE: Admin Action
+    SUSPENDED --> ACTIVE: Reactivate
+    SUSPENDED --> INACTIVE: Admin Action
 ```
 
 ### 7.2 Store Status Transitions
@@ -380,22 +355,6 @@ GET /api/v1/stores
 | From | To | Trigger | Conditions |
 |------|-----|---------|------------|
 | ONBOARDING | ACTIVE | Accept invitation | Valid invitation token |
-| ACTIVE | INACTIVE | Admin action | Confirmation required |
-| ACTIVE | SUSPENDED | Admin action | Reason required |
-| INACTIVE | ACTIVE | Admin action | None |
-| SUSPENDED | ACTIVE | Admin action | Resolution documented |
-| SUSPENDED | INACTIVE | Admin action | Reason required |
-
-### 7.3 UI State Machine
-
-```
-[Loading] --> [Loaded] --> [Selecting] --> [Bulk Action]
-    |             |                              |
-    v             v                              v
- [Error]     [Filtering]                    [Loaded]
-                  |
-                  v
-              [Loaded]
 ```
 
 ### 7.4 Page State Definitions
@@ -408,15 +367,16 @@ GET /api/v1/stores
 | Error | API failure | Show error with retry |
 | Selecting | Checkbox clicked | Show bulk action bar |
 | Filtering | Filter applied | Show filtered results |
-
----
-
-## 8. Error Handling
-
-### 8.1 Error Scenarios
-
-| Error | HTTP Code | User Message | Recovery Action |
-|-------|-----------|--------------|-----------------|
+```mermaid
+stateDiagram-v2
+    Loading --> Loaded
+    Loaded --> Selecting
+    Selecting --> BulkAction
+    Loading --> Error
+    Loaded --> Filtering
+    Filtering --> Loaded
+    Selecting --> Loaded
+```
 | List fetch failed | 500 | "Unable to load stores" | Retry button |
 | Store not found | 404 | "Store no longer exists" | Refresh list |
 | Status change failed | 422 | "Cannot change status: active campaigns" | Show affected campaigns |

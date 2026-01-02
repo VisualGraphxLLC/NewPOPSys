@@ -87,27 +87,9 @@ PSP Portal → Shipments (sidebar) → /psp/shipments
 
 ### 3.2 Layout Specification
 
-```
-+------------------------------------------------------------------+
-| Shipments                                    [+ Create Shipment]  |
-| In Transit: 23 | Delivered: 156 | Exception: 2                   |
-+------------------------------------------------------------------+
-| [Search tracking #, order #...]     [Carrier ▼] [Date Range ▼]   |
-|                                                                   |
-| [In Transit (23)] [Delivered] [Exception (2)] [All]              |
-|                                                                   |
-| +---------------------------------------------------------------+ |
-| | Tracking #    | Carrier | Order    | Store    | Status  | ETA | |
-| +---------------------------------------------------------------+ |
-| | 1Z999AA10...  | [UPS]   | ORD-1234 | STR-001  | Transit | 12/18| |
-| | 7489012345... | [FEDEX] | ORD-1235 | STR-002  | Transit | 12/17| |
-| | 9400111899... | [USPS]  | ORD-1236 | STR-015  | Deliver | 12/15| |
-| | 1Z999AA10...  | [UPS]   | ORD-1237 | STR-023  | Except  | -    | |
-| +---------------------------------------------------------------+ |
-|                                                                   |
-| Showing 1-25 of 181              [< Prev] Page 1 of 8 [Next >]   |
-+------------------------------------------------------------------+
-```
+
+![Shipments](../../screenshots/PSP_Operations/psp_ops_shipments.png)
+
 
 ### 3.3 Component Specifications
 
@@ -125,37 +107,9 @@ PSP Portal → Shipments (sidebar) → /psp/shipments
 
 #### P002-C008: Create Shipment Modal
 
-```
-+------------------------------------------+
-| Create Shipment                      [X] |
-+------------------------------------------+
-|                                          |
-| Order *                                  |
-| [Search order number...           ▼]     |
-|                                          |
-| Carrier *                                |
-| ( ) UPS  ( ) FedEx  ( ) USPS  ( ) DHL   |
-|                                          |
-| Tracking Number(s) *                     |
-| +--------------------------------------+ |
-| | 1Z999AA10123456784                   | |
-| +--------------------------------------+ |
-| [+ Add Another Tracking Number]          |
-|                                          |
-| Ship Date                                |
-| [2025-12-15        ]                     |
-|                                          |
-| Items to Ship                            |
-| +--------------------------------------+ |
-| | Item           | Ordered | Shipping | |
-| | Window Poster  | 2       | [2    ]  | |
-| | Counter Disp   | 1       | [1    ]  | |
-| | Shelf Talker   | 5       | [5    ]  | |
-| +--------------------------------------+ |
-|                                          |
-| [Cancel]              [Create Shipment]  |
-+------------------------------------------+
-```
+
+![Shipments](../../screenshots/PSP_Operations/psp_ops_shipments.png)
+
 
 ---
 
@@ -345,29 +299,17 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Shipment Status State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-                    ┌─────────────────┐
-                    │  LABEL_CREATED  │
-                    └────────┬────────┘
-                             │ carrier_pickup
-                             ▼
-                    ┌─────────────────┐
-                    │   IN_TRANSIT    │
-                    └────────┬────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              │              │              │
-              ▼              ▼              ▼
-      ┌───────────┐  ┌─────────────┐  ┌───────────┐
-      │OUT_FOR_DEL│  │  EXCEPTION  │  │ RETURNED  │
-      └─────┬─────┘  └──────┬──────┘  └───────────┘
-            │               │
-            │               │ resolved
-            ▼               ▼
-      ┌─────────────────────────────────┐
-      │           DELIVERED             │
-      └─────────────────────────────────┘
-```
+
 
 ### 7.2 State Transition Requirements
 

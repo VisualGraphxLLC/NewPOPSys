@@ -68,42 +68,7 @@ The Photo Verification Queue provides brand administrators with a streamlined in
 ## 3. UI Components
 
 ### 3.1 Layout Structure
-
-```
-+-------------------------------------------------------------+
-| Photo Verification                      Pending: 23          |
-+-------------------------------------------------------------+
-| [All] [Pending] [Approved] [Rejected] [Retake Requested]    |
-+-------------------------------------------------------------+
-| Campaign [All Campaigns v]  Store [All Stores v]  [Export]   |
-+-------------------------------------------------------------+
-|                                                              |
-| +-------------------+  +-------------------+                 |
-| | [Photo]           |  | [Photo]           |                 |
-| |                   |  |                   |                 |
-| | Store #1234       |  | Store #5678       |                 |
-| | Summer Promo      |  | Summer Promo      |                 |
-| | Window Banner     |  | Counter Display   |                 |
-| | Submitted 2h ago  |  | Submitted 1h ago  |                 |
-| |                   |  |                   |                 |
-| | [Approve] [Reject]|  | [Approve] [Reject]|                 |
-| +-------------------+  +-------------------+                 |
-|                                                              |
-| +-------------------+  +-------------------+                 |
-| | [Photo]           |  | [Photo]           |                 |
-| |                   |  |                   |                 |
-| | Store #9012       |  | Store #3456       |                 |
-| | Holiday Display   |  | Summer Promo      |                 |
-| | End Cap A         |  | Entry Door        |                 |
-| | Submitted 30m ago |  | Submitted 15m ago |                 |
-| |                   |  |                   |                 |
-| | [Approve] [Reject]|  | [Approve] [Reject]|                 |
-| +-------------------+  +-------------------+                 |
-|                                                              |
-+-------------------------------------------------------------+
-| Showing 1-20 of 23 pending       [<] [1] [2] [>]            |
-+-------------------------------------------------------------+
-```
+![Verification Queue Wireframe](../../screenshots/Admin_Portal/admin_portal_verification.png)
 
 ### 3.2 Component Specifications
 
@@ -412,16 +377,12 @@ GET /api/v1/photos
 
 ### 7.1 Photo Review Status State Machine
 
-```
-[PENDING] â”€â”€approveâ”€â”€> [APPROVED]
-    â”‚
-    â”‚ reject
-    v
-[REJECTED] â”€â”€new submissionâ”€â”€> [SUPERSEDED]
-                                     â”‚
-                                     â”‚ new photo
-                                     v
-                                [PENDING]
+```mermaid
+stateDiagram-v2
+    PENDING --> APPROVED
+    PENDING --> REJECTED
+    REJECTED --> SUPERSEDED
+    SUPERSEDED --> PENDING
 ```
 
 ### 7.2 Photo Review Transitions
@@ -436,28 +397,24 @@ GET /api/v1/photos
 
 ### 7.3 Assignment Item Status Updates
 
-```
-[Photo APPROVED] --> assignment_item.status = 'COMPLETE'
-                          â”‚
-                          v (if all items complete)
-                     assignment.status = 'SUBMITTED'
-                          â”‚
-                          v (if all photos verified)
-                     assignment.status = 'COMPLETE'
+```mermaid
+flowchart TD
+    PA[Photo APPROVED] --> S1[assignment_item.status = COMPLETE]
+    S1 -->|All items complete| S2[assignment.status = SUBMITTED]
+    S2 -->|All photos verified| S3[assignment.status = COMPLETE]
 ```
 
 ### 7.4 UI State Machine
-
+```mermaid
+stateDiagram-v2
+    Loading --> Loaded
+    Loaded --> Selecting
+    Selecting --> Processing
+    Loading --> Error
+    Loaded --> Filtering
+    Filtering --> Loaded
+    Selecting --> Loaded
 ```
-[Loading] --> [Loaded] --> [Selecting] --> [Processing]
-    |             |                              |
-    v             v                              v
- [Error]     [Filtering]                    [Loaded]
-                  |
-                  v
-              [Loaded]
-```
-
 ### 7.5 Photo Modal States
 
 | State | Trigger | UI Behavior |
@@ -471,27 +428,9 @@ GET /api/v1/photos
 
 ---
 
-## 8. Error Handling
-
-### 8.1 Error Scenarios
-
-| Error | HTTP Code | User Message | Recovery Action |
-|-------|-----------|--------------|-----------------|
-| List fetch failed | 500 | "Unable to load photos" | Retry button |
-| Photo load failed | 404 | "Photo no longer available" | Remove from grid |
-| Review failed | 422 | "Unable to save review" | Retry |
 | Already reviewed | 409 | "Photo was reviewed by another user" | Refresh |
 | Permission denied | 403 | "You don't have permission to review" | Contact admin |
 | Bulk partial failure | 207 | "X of Y photos reviewed" | Show failures |
-
-### 8.2 Validation Messages
-
-| Field | Validation | Message |
-|-------|------------|---------|
-| Rejection Reason | Required | "Select a reason for rejection" |
-| Custom Comment | Required for OTHER | "Provide a comment for 'Other' reason" |
-| Photo Selection | Exceeds limit | "Maximum 50 photos can be selected" |
-
 ### 8.3 Error Requirements
 
 | REQ-ID | Requirement |

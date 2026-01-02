@@ -31,7 +31,7 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.4 Screenshot Reference
 
-![Store Reports Dashboard](../../screenshots/Regional_Dashboard/regional_dashboard.png)
+![Store Reports Dashboard](../../screenshots/Store_Portal/store_portal_reports.png)
 
 *Figure S005-1: Store Reports Dashboard - Analytics and performance metrics interface*
 
@@ -175,36 +175,8 @@ ReportsScreen
 
 ### 3.3 Reports Layout
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Store Reports                   [Last 90 Days ▼] [Export]   │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ [Overview] [Campaigns] [Photos] [Team] [Issues]            │
-│                                                             │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │ Compliance│  │ On-Time  │  │ Photo    │  │ Avg Time │   │
-│  │ Rate     │  │ Rate     │  │ Approval │  │ to Comp. │   │
-│  │   94%    │  │   88%    │  │   97%    │  │  4.2 days│   │
-│  │  ↑ 3%    │  │  ↑ 5%    │  │  ↓ 1%    │  │  ↓ 0.5d  │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
-│                                                             │
-│  Campaign Performance Trend                                 │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │     Line Chart: Compliance % over time              │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                                                             │
-│  ┌─────────────────────────┐  ┌─────────────────────────┐  │
-│  │ Photo Rejection Reasons │  │ Team Contribution       │  │
-│  │      [Pie Chart]        │  │      [Bar Chart]        │  │
-│  └─────────────────────────┘  └─────────────────────────┘  │
-│                                                             │
-│  Recent Campaigns                                           │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │ Campaign    │ Completed │ On-Time │ Photos │ Issues │   │
-│  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-```
+### 3.3 Reports Layout
+![Store Reports Wireframe](../../screenshots/Store_Portal/store_portal_reports.png)
 
 ---
 
@@ -646,41 +618,21 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 │    │   (Retry)   │                                              │
 │    └─────────────┘                                              │
 │                                                                 │
-│    ┌─────────────┐                                              │
-│    │    EMPTY    │ ← No data for period                         │
-│    │ (No Data)   │                                              │
-│    └─────────────┘                                              │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+stateDiagram-v2
+    [*] --> LOADING
+    LOADING --> SUCCESS: Data Ready
+    LOADING --> ERROR: Failure
+    LOADING --> EMPTY: No Data
+    SUCCESS --> REFRESHING: Range Change
+    REFRESHING --> SUCCESS
+    SUCCESS --> EXPORTING: Export
+    EXPORTING --> SUCCESS
+    SUCCESS --> NAVIGATING: Tab Switch
+    NAVIGATING --> SUCCESS
+    ERROR --> LOADING: Retry
+    EMPTY --> LOADING: Change Range
 ```
-
-### 7.2 State Definitions
-
-| State | Description | User Actions Available |
-|-------|-------------|------------------------|
-| LOADING | Initial data fetch in progress | None |
-| SUCCESS | Data loaded, charts rendered | Tab switch, date change, export |
-| REFRESHING | Date range changed, updating | Cancel (via new action) |
-| NAVIGATING | Switching tabs | None |
-| EXPORTING | Report file generation | Cancel |
-| ERROR | API failure | Retry |
-| EMPTY | No data for selected period | Change date range |
-
-### 7.3 State Transition Requirements
-
-| Requirement ID | Requirement |
-|----------------|-------------|
-| REQ-S005-ST-001 | LOADING state SHALL display skeleton loaders for all components |
-| REQ-S005-ST-002 | Tab navigation SHALL NOT trigger full page reload |
-| REQ-S005-ST-003 | Date range change SHALL trigger REFRESHING state |
-| REQ-S005-ST-004 | Export SHALL display progress indicator for large reports |
-| REQ-S005-ST-005 | ERROR state SHALL provide retry action |
-| REQ-S005-ST-006 | EMPTY state SHALL suggest expanding date range |
-
----
-
-## 8. Error Handling
-
 ### 8.1 Error Scenarios
 
 | Error Code | Scenario | User Message | Recovery Action |

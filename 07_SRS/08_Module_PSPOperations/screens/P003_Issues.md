@@ -90,69 +90,15 @@ PSP Portal → Issues (sidebar) → /psp/issues
 
 ### 3.2 Layout Specification
 
-```
-+------------------------------------------------------------------+
-| Issues Queue                                                      |
-| Open: 8 | Triaged: 3 | In Fulfillment: 5 | Resolved: 127         |
-+------------------------------------------------------------------+
-| [Search issues...]                  [Type ▼] [Campaign ▼]        |
-|                                                                   |
-| [Open (8)] [Triaged (3)] [In Fulfillment (5)] [Resolved]         |
-|                                                                   |
-| +---------------------------------------------------------------+ |
-| | Issue #   | Type     | Store    | Item        | Status  | Age | |
-| +---------------------------------------------------------------+ |
-| | ISS-1042  | DAMAGED  | STR-001  | Window Post | Open    | 2h  | |
-| | ISS-1041  | MISSING  | STR-015  | End Cap     | Open    | 4h  | |
-| | ISS-1040  | DAMAGED  | STR-023  | Counter Dsp | Triaged | 1d  | |
-| | ISS-1038  | MISSING  | STR-089  | Window Post | Fulfill | 2d  | |
-| | ISS-1035  | QTY_SHORT| STR-045  | Shelf Talk  | Fulfill | 3d  | |
-| +---------------------------------------------------------------+ |
-|                                                                   |
-| Showing 1-25 of 143              [< Prev] Page 1 of 6 [Next >]   |
-+------------------------------------------------------------------+
-```
+
+![Issues](../../screenshots/PSP_Operations/psp_ops_issues.png)
+
 
 ### 3.3 Issue Detail Panel
 
-```
-+------------------------------------------+
-| Issue ISS-1042                       [X] |
-+------------------------------------------+
-| Type: DAMAGED                            |
-| Status: OPEN                             |
-| Reported: Dec 15, 2025 at 10:30 AM       |
-| Age: 2 hours                             |
-|                                          |
-| Store: STR-001 - Acme Downtown           |
-| Campaign: Summer Promo                   |
-|                                          |
-| Item Details                             |
-| -------------------                      |
-| Window Poster (24x36)                    |
-| Qty Ordered: 2                           |
-| Qty Affected: 1                          |
-|                                          |
-| Description                              |
-| -------------------                      |
-| "Poster arrived with large tear across   |
-| the middle. Cannot be used for display." |
-|                                          |
-| Evidence Photos (2)                      |
-| -------------------                      |
-| [Photo 1]  [Photo 2]                     |
-|                                          |
-| Triage Notes                             |
-| +--------------------------------------+ |
-| | Enter notes here...                  | |
-| +--------------------------------------+ |
-|                                          |
-| [Reject] [Request Info] [Approve]        |
-|                                          |
-| After Approval:                          |
-| [Create Reorder (1 unit)]                |
-+------------------------------------------+
-```
+
+![Issues](../../screenshots/PSP_Operations/psp_ops_issues.png)
+
 
 ### 3.4 Component Specifications
 
@@ -372,34 +318,17 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Issue Status State Machine
 
+
+
+```mermaid
+stateDiagram-v2
+    OPEN --> TRIAGE: assign
+    TRIAGE --> RESOLVED: fix
+    TRIAGE --> REJECTED: invalid
+    RESOLVED --> CLOSED: verify
 ```
-                    ┌─────────────┐
-                    │    OPEN     │ ←── Store reports
-                    └──────┬──────┘
-                           │ triage
-                           ▼
-                    ┌─────────────┐
-            ┌───────│   TRIAGED   │───────┐
-            │       └──────┬──────┘       │
-            │              │              │
-            │ reject       │ approve      │ request_info
-            ▼              ▼              ▼
-     ┌──────────┐   ┌──────────┐   ┌─────────────┐
-     │ REJECTED │   │ APPROVED │   │ AWAITING_   │
-     └──────────┘   └────┬─────┘   │ INFO        │
-            │            │         └──────┬──────┘
-            │            │                │
-            │            │ create_reorder │ info_received
-            │            ▼                │
-            │     ┌─────────────────┐     │
-            │     │ IN_FULFILLMENT  │◄────┘
-            │     └───────┬─────────┘
-            │             │ reorder_delivered
-            │             ▼
-            │     ┌─────────────┐
-            └────►│  RESOLVED   │
-                  └─────────────┘
-```
+
+
 
 ### 7.2 State Transition Requirements
 

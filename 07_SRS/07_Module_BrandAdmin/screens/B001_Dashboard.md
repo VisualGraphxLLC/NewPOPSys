@@ -63,30 +63,8 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 
 ### 3.1 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ [Logo] Brand Admin Portal          [User Menu ▼] [Logout]   │
-├─────────────────────────────────────────────────────────────┤
-│ Dashboard                                                   │
-├─────────────────────────────────────────────────────────────┤
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐        │
-│ │ Active   │ │ Total    │ │ Pending  │ │ Compliance│        │
-│ │ Campaigns│ │ Stores   │ │ Reviews  │ │ Rate     │        │
-│ │    12    │ │   847    │ │    23    │ │   94.2%  │        │
-│ └──────────┘ └──────────┘ └──────────┘ └──────────┘        │
-│                                                             │
-│ Quick Actions                                               │
-│ [+ New Campaign]  [Review Photos]  [View All Stores]       │
-│                                                             │
-│ Recent Campaigns                                            │
-│ ┌─────────────────────────────────────────────────────────┐│
-│ │ Campaign Name        Status    Stores   Progress        ││
-│ │ Summer Promo 2025    Active    234      ████████░░ 80%  ││
-│ │ Holiday Display      Draft      --      Not started     ││
-│ │ Q4 End Caps          Active    156      ██████████ 100% ││
-│ └─────────────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────┘
-```
+![Brand Admin Dashboard](../../screenshots/Admin_Portal/admin_portal_dashboard.png)
+
 
 ### 3.2 Component Specifications
 
@@ -231,10 +209,13 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 
 ### 7.1 Page Load State Machine
 
-```
-[Initial] → [Loading] → [Loaded]
-                ↓
-            [Error] → [Retry] → [Loading]
+```mermaid
+flowchart LR
+    Initial --> Loading
+    Loading --> Loaded
+    Loading --> Error
+    Error --> Retry
+    Retry --> Loading
 ```
 
 ### 7.2 State Definitions

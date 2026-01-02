@@ -376,73 +376,45 @@ newpopsys://app/campaign/{campaignId}/retake?items={assignmentItemIds}
 
 ### 7.1 Retake Flow State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[LIST_REJECTIONS] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                            â”‚
-   â”‚ Tap rejected item          â”‚
-   â–¼                            â”‚
-[VIEW_REJECTION]                â”‚
-   â”‚                            â”‚
-   â”‚ Tap Retake Photo           â”‚
-   â–¼                            â”‚
-[CAMERA] (M005 component)       â”‚
-   â”‚                            â”‚
-   â”‚ Photo captured             â”‚
-   â–¼                            â”‚
-[COMPARE]                       â”‚
-   â”‚         â”‚                  â”‚
-   â”‚ Retake  â”‚ Submit           â”‚
-   â”‚ Again   â–¼                  â”‚
-   â”‚     [UPLOADING]            â”‚
-   â–¼         â”‚                  â”‚
-[CAMERA]     â”‚ Success          â”‚
-             â–¼                  â”‚
-         [SUBMITTED]            â”‚
-             â”‚                  â”‚
-             â”‚ More retakes?    â”‚
-             â–¼                  â”‚
-         [LIST_REJECTIONS] â”€â”€â”€â”€â”€â”˜
-             â”‚
-             â”‚ All complete
-             â–¼
-         [DASHBOARD]
-```
+
 
 ### 7.2 Photo Status State Machine
 
-```
-Old Photo:
-  REJECTED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-     â”‚                         â”‚
-     â”‚ Retake submitted        â”‚
-     â–¼                         â”‚
-  SUPERSEDED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-New Photo:
-  [Created] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-     â”‚                         â”‚
-     â”‚ Upload complete         â”‚
-     â–¼                         â”‚
-  PENDING (review_status)      â”‚
-     â”‚                         â”‚
-     â”‚ Brand reviews           â”‚
-     â–¼                         â”‚
-  APPROVED or REJECTED â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
+
 
 ### 7.3 Assignment Item State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-RETAKE_REQUIRED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                           â”‚
-   â”‚ Retake submitted          â”‚
-   â–¼                           â”‚
-PROOF_SUBMITTED                â”‚
-   â”‚                           â”‚
-   â”‚ Photo approved            â”‚
-   â–¼                           â”‚
-VERIFIED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+
 
 ### 7.4 State Requirements
 

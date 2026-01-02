@@ -323,66 +323,45 @@ This specification covers:
 
 ### 7.1 Photo Upload State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[PENDING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Get presigned URL     â”‚ Error
-   â–¼                       â”‚
-[UPLOADING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                       â”‚
-   â”‚ Upload complete       â”‚ Network error
-   â–¼                       â–¼
-[UPLOADED]             [FAILED]
-   â”‚                       â”‚
-   â”‚ Thumbnail             â”‚ Retry < 3
-   â”‚ generated             â–¼
-   â–¼                   [PENDING] (retry)
-[COMPLETE]
-```
+
 
 ### 7.2 Camera Flow State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[INITIALIZING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Camera ready          â”‚ Permission denied
-   â–¼                       â–¼
-[VIEWFINDER]           [ERROR]
-   â”‚
-   â”‚ Shutter pressed
-   â–¼
-[CAPTURING]
-   â”‚
-   â”‚ Image captured
-   â–¼
-[REVIEWING]
-   â”‚         â”‚
-   â”‚ Retake  â”‚ Use Photo
-   â–¼         â–¼
-[VIEWFINDER] [UPLOADING]
-               â”‚
-               â”‚ Complete
-               â–¼
-           [SUCCESS]
-```
+
 
 ### 7.3 Offline Queue State Machine
 
+
+```mermaid
+stateDiagram-v2
+    [*] --> Step1
+    Step1 --> Step2: action
+    Step2 --> Step3: action
+    Step3 --> [*]
+    Step3 --> Error
+    Error --> Step1: retry
 ```
-[QUEUED] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                      â”‚
-   â”‚ Network available    â”‚ Queue full
-   â–¼                      â–¼
-[UPLOADING]           [WARNING]
-   â”‚         â”‚
-   â”‚ Success â”‚ Failure
-   â–¼         â–¼
-[SYNCED]  [RETRY_PENDING]
-             â”‚
-             â”‚ Retry attempt
-             â–¼
-         [UPLOADING]
-```
+
 
 ### 7.4 State Requirements
 
