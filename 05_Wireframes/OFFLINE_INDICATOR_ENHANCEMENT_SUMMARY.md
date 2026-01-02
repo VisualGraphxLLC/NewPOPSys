@@ -2,14 +2,14 @@
 ## NewPOPSys Mobile App Wireframe - SUPP-011 Implementation
 
 **Date:** 2025-12-19
-**File:** `mobile_app.html`
+**File:** `store_execution.html`
 **Reference:** SUPP-011 - Store Execution Module - Offline and Sync Strategy
 
 ---
 
 ## Overview
 
-Enhanced the mobile_app.html wireframe with a comprehensive offline experience that builds user trust and provides transparency into the offline/sync workflow. The implementation follows SUPP-011's PWA + IndexedDB strategy with sync-on-open capabilities.
+Enhanced the store_execution.html wireframe with a comprehensive offline experience that builds user trust and provides transparency into the offline/sync workflow. The implementation follows SUPP-011's PWA + IndexedDB strategy with sync-on-open capabilities.
 
 ---
 
@@ -278,8 +278,8 @@ function toggleOfflineMode() {
 - Sync Status screen HTML in `mobile_app_sync_screen.html`
 - Insert after Profile screen (line ~1084)
 - Add Sync Status menu item to Profile
-- JavaScript functions already added to mobile_app.html
-- CSS styles already added to mobile_app.html
+- JavaScript functions already added to store_execution.html
+- CSS styles already added to store_execution.html
 
 ### 🔮 Future Enhancements (Post-V1)
 - True background sync (requires native app)
@@ -310,7 +310,7 @@ function toggleOfflineMode() {
 ## Files Modified/Created
 
 ### Modified
-- `h:\Shared drives\VG Development\PopSystem\SOW\05_Wireframes\mobile_app.html`
+- `h:\Shared drives\VG Development\PopSystem\SOW\05_Wireframes\store_execution.html`
   - Added offline banner (line ~345-384)
   - Updated status bar icons (line ~323-341)
   - Added CSS styles (line ~152-208)
@@ -319,7 +319,7 @@ function toggleOfflineMode() {
 ### Created
 - `h:\Shared drives\VG Development\PopSystem\SOW\05_Wireframes\mobile_app_sync_screen.html`
   - Complete Sync Status screen HTML
-  - Ready to insert into mobile_app.html
+  - Ready to insert into store_execution.html
   - Includes Profile menu item template
 
 - `h:\Shared drives\VG Development\PopSystem\SOW\05_Wireframes\OFFLINE_INDICATOR_ENHANCEMENT_SUMMARY.md`
@@ -334,7 +334,7 @@ function toggleOfflineMode() {
 1. **Insert Sync Status Screen:**
    - Open `mobile_app_sync_screen.html`
    - Copy lines 38-404 (the full screen HTML)
-   - Insert into `mobile_app.html` after line 1009 (after Profile screen, before Bottom Navigation)
+   - Insert into `store_execution.html` after line 1009 (after Profile screen, before Bottom Navigation)
 
 2. **Add Sync Status Menu Item:**
    - In Profile screen settings menu (line ~1032)
@@ -342,7 +342,7 @@ function toggleOfflineMode() {
    - Template provided in `mobile_app_sync_screen.html` lines 11-30
 
 3. **Test:**
-   - Open mobile_app.html in browser
+   - Open store_execution.html in browser
    - Wait 2 seconds for offline mode demo
    - Verify offline banner appears
    - Navigate to Profile → Sync Status
@@ -364,7 +364,7 @@ function toggleOfflineMode() {
   - Storage: IndexedDB for drafts/outbox
   - Native apps: Future enhancement for true background sync
 
-- **Design Pattern**: Follows existing mobile_app.html tooltip pattern
+- **Design Pattern**: Follows existing store_execution.html tooltip pattern
   - Blue outline for Mobile App elements
   - Comprehensive data source tooltips
   - Consistent visual language
@@ -410,4 +410,4 @@ function toggleOfflineMode() {
 
 The offline indicator enhancement transforms the mobile app from a basic wireframe into a production-ready offline-first experience. Users can confidently work offline knowing their progress is saved and will sync automatically. The Sync Status screen provides full transparency into the sync queue, building trust through visibility and control.
 
-All enhancements follow the existing design patterns, reference SUPP-011 throughout, and are ready for integration into the main mobile_app.html file.
+All enhancements follow the existing design patterns, reference SUPP-011 throughout, and are ready for integration into the main store_execution.html file.

@@ -127,7 +127,7 @@
 6. INTEGRATION CHECKLIST
 --------------------------------------------------------------------------------
 
-  [X] CSS styles added to mobile_app.html (line ~152-208)
+  [X] CSS styles added to store_execution.html (line ~152-208)
   [X] JavaScript functions added (line ~1267-1280)
   [X] Offline banner added (line ~345-384)
   [X] Status bar icons updated (line ~323-341)
@@ -141,7 +141,7 @@
 7. FILES
 --------------------------------------------------------------------------------
 
-  mobile_app.html
+  store_execution.html
      - Main wireframe file (modified)
      - Contains offline banner, CSS, JS functions
      - Ready for Sync Status screen insertion
@@ -167,7 +167,7 @@
 8. TESTING THE DEMO
 --------------------------------------------------------------------------------
 
-  1. Open mobile_app.html in browser
+  1. Open store_execution.html in browser
   2. Wait 2 seconds -> Offline mode activates automatically
   3. Observe:
      - Orange banner appears

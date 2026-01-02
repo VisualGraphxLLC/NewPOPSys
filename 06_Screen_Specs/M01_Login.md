@@ -8,7 +8,7 @@
 
 ## Wireframe Reference
 
-**Interactive**: [mobile_app.html](../05_Wireframes/mobile_app.html) → Login Screen
+**Interactive**: [store_execution.html](../05_Wireframes/store_execution.html) → Login Screen
 
 ---
 

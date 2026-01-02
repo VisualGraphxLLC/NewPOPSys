@@ -23,7 +23,7 @@ Added a home icon link on all wireframes for easy navigation back to index.html:
 | psp_ops.html | Top nav bar (right side) | Yellow theme, home icon + "Index" text |
 | admin_portal.html | Top nav bar (right side) | Purple theme, home icon + "Index" text |
 | store_portal.html | Top nav bar (right side) | Teal theme, home icon + "Index" text |
-| mobile_app.html | Tooltip banner (left side) | Button style in banner |
+| store_execution.html | Tooltip banner (left side) | Button style in banner |
 
 ---
 
@@ -33,7 +33,7 @@ All screens verified working with navigation intact:
 
 | Wireframe | Screens | Tooltips | Navigation Status |
 |-----------|---------|----------|-------------------|
-| mobile_app.html | 7 | 21 | All working |
+| store_execution.html | 7 | 21 | All working |
 | store_portal.html | 5 | 32 | All working |
 | admin_portal.html | 6 + wizard | 38 | All working |
 | psp_ops.html | 3 | 32 | All working (1 fixed) |
@@ -42,7 +42,7 @@ All screens verified working with navigation intact:
 
 ## Screen Inventory
 
-### mobile_app.html (7 screens)
+### store_execution.html (7 screens)
 - screen-login
 - screen-dashboard
 - screen-receipt
@@ -97,7 +97,7 @@ All screens verified working with navigation intact:
 1. `psp_ops.html` - Fixed nav, added Index link
 2. `admin_portal.html` - Added Index link
 3. `store_portal.html` - Added Index link
-4. `mobile_app.html` - Added Index link in banner
+4. `store_execution.html` - Added Index link in banner
 
 ---
 

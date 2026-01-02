@@ -15,7 +15,7 @@ Define the Survey Builder screens (Brand Admin) and Store Survey execution scree
 ## Interactive Wireframes
 
 **Brand Admin Survey Builder**: [admin_portal.html](../../05_Wireframes/admin_portal.html)
-**Store Mobile App**: [mobile_app.html](../../05_Wireframes/mobile_app.html)
+**Store Mobile App**: [store_execution.html](../../05_Wireframes/store_execution.html)
 
 ---
 

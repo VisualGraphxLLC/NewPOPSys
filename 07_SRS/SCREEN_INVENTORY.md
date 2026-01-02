@@ -892,7 +892,7 @@ Group multiple orders for efficient bulk processing, picking, and shipping.
 |-------------------|-------------|-----------------|
 | admin_portal.html Settings nav | ✅ Documented in ADMIN_PORTAL_NEW_SCREENS.md | None |
 | psp_ops.html Batches nav | ❌ No spec | Create P04_Batches.md |
-| mobile_app.html Retake screen | ✅ M08 spec exists | None |
+| store_execution.html Retake screen | ✅ M08 spec exists | None |
 | store_portal.html Team nav | ✅ S04 spec exists | None |
 
 ### Data Model Gaps
@@ -947,7 +947,7 @@ Group multiple orders for efficient bulk processing, picking, and shipping.
 05_Wireframes/
 ├── login.html                    # Universal Login wireframe (4 modals)
 ├── admin_portal.html             # Brand Admin wireframe
-├── mobile_app.html               # Mobile App wireframe
+├── store_execution.html               # Mobile App wireframe
 ├── store_portal.html             # Store Portal wireframe
 ├── psp_ops.html                  # PSP Operations wireframe
 └── ADMIN_PORTAL_NEW_SCREENS.md   # Settings screens documentation

@@ -504,7 +504,7 @@ Open in any modern web browser (Chrome, Firefox, Safari, Edge). No installation 
 
 | Wireframe | File | Color Theme | Primary Users |
 |-----------|------|-------------|---------------|
-| 📱 Store Mobile App | `mobile_app.html` | Blue | Store User, Store Manager |
+| 📱 Store Mobile App | `store_execution.html` | Blue | Store User, Store Manager |
 | 🏪 Store Manager Portal | `store_portal.html` | Teal | Store Manager |
 | 🖥️ Brand Admin Portal | `admin_portal.html` | Purple | Brand Admin |
 | 👷 PSP Operations | `psp_ops.html` | Yellow | PSP Operator |
@@ -540,7 +540,7 @@ When hovering over elements, tooltips explain:
 
 ### Screen-by-Screen Guide
 
-#### Store Mobile App (`mobile_app.html`)
+#### Store Mobile App (`store_execution.html`)
 
 | Screen | What to Look For |
 |--------|------------------|

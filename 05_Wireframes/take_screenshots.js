@@ -9,7 +9,7 @@ async function run() {
         'admin_portal.html',
         'autocoder.html',
         'index.html',
-        'mobile_app.html',
+        'store_execution.html',
         'psp_admin.html',
         'psp_ops.html',
         'regional_dashboard.html',

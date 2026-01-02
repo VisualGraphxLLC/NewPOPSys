@@ -16,7 +16,7 @@ Interactive HTML wireframes demonstrating key workflows from the SOW. Built with
 | File | Module | SUPP Coverage | Key Screens |
 |------|--------|---------------|-------------|
 | [index.html](index.html) | Hub | — | Landing page with links to all wireframes |
-| [mobile_app.html](mobile_app.html) | Store Execution | SUPP-017, SUPP-036, SUPP-037 | Login, Dashboard, Receipt Survey, Install Survey, Photo Capture |
+| [store_execution.html](store_execution.html) | Store Execution | SUPP-017, SUPP-036, SUPP-037 | Login, Dashboard, Receipt Survey, Install Survey, Photo Capture |
 | [store_portal.html](store_portal.html) | Store Manager | SUPP-017, SUPP-001 | Dashboard, Campaign History, Photo Gallery, Team, Reports |
 | [admin_portal.html](admin_portal.html) | Brand Admin | SUPP-014, SUPP-015 | Campaign Creation, Store Selection, Kit Assignment, Dashboards |
 | [psp_ops.html](psp_ops.html) | PSP Operations | SUPP-018, SUPP-019 | Verification Queue, Photo Review, Issue Management, Reorder Approval |
@@ -26,7 +26,7 @@ Interactive HTML wireframes demonstrating key workflows from the SOW. Built with
 
 ## Wireframe Coverage Matrix
 
-### Store Mobile App (`mobile_app.html`)
+### Store Mobile App (`store_execution.html`)
 
 | Screen | Status | Notes |
 |--------|--------|-------|

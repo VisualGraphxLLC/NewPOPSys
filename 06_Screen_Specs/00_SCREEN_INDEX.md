@@ -22,7 +22,7 @@ This folder contains detailed specifications for every screen in the NewPOPSys a
 
 | Wireframe | Launch | Description |
 |-----------|--------|-------------|
-| **Mobile App** | [mobile_app.html](../05_Wireframes/mobile_app.html) | Store execution flows |
+| **Mobile App** | [store_execution.html](../05_Wireframes/store_execution.html) | Store execution flows |
 | **Store Manager Portal** | [store_portal.html](../05_Wireframes/store_portal.html) | Store web dashboard |
 | **Brand Admin** | [admin_portal.html](../05_Wireframes/admin_portal.html) | Campaign management |
 | **PSP Operations** | [psp_ops.html](../05_Wireframes/psp_ops.html) | Fulfillment operations |

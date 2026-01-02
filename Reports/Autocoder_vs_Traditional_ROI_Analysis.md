@@ -198,7 +198,7 @@ To achieve the same deliverables through traditional consulting:
 ├── 05_Wireframes/
 │   ├── index.html (stakeholder portal)
 │   ├── admin_portal.html
-│   ├── mobile_app.html
+│   ├── store_execution.html
 │   ├── psp_ops.html
 │   ├── psp_admin.html
 │   ├── store_portal.html
