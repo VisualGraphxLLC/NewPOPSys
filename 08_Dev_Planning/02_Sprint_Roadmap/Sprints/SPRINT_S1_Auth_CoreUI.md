@@ -2,7 +2,7 @@
 
 ## Auth Service (Fastify)
 *   [ ] **S1-01**: Implement Login/Register Endpoints.
-*   [ ] **S1-02**: JWT Generation & Verification Middleware.
+*   [ ] **S1-02**: Session Management (fastify-secure-session).
 *   [ ] **S1-03**: Password Hashing (Argon2).
 
 ## Frontend Integration (Next.js)

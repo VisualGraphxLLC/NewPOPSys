@@ -37,25 +37,6 @@ NewPOPSys v1 is a pilot-grade platform (MPV) designed to manage Point-of-Purchas
 | Layer | Technology | Decision | Purpose |
 |-------|------------|----------|---------|
 | **Frontend** | **Next.js 14+** | App Router | PWA Scaffold, Web Portals, SSR. |
-| **Language** | **TypeScript** | 5.3+ | Strict typing across full stack. |
-| **Styling** | **Tailwind CSS** | 3.x | Utility-first styling. |
-| **State** | **Context API** | - | Client state (No external libs). |
-| **Backend** | **Fastify** | 4.x | High-performance API Service. |
-| **Database** | **PostgreSQL** | 16 (RDS) | Primary System of Record. |
-| **ORM** | **Drizzle** | Latest | SQL-like, type-safe queries. |
-| **Async** | **Redis + BullMQ** | 7.x | Webhooks, Exports, Job Queues. |
-| **Build** | **Turborepo** | Latest | Monorepo orchestration. |
-| **Infra** | **AWS** | ECS/Fargate | Containerized hosting. |
-
-> **Explicit Exclusions**:
-> *   NO **Vite** (Next.js handles build).
-> *   NO **Zustand** (Context API sufficient).
-> *   NO **TanStack Query** (Use standard fetch/SWR pattern unless mandated).
-> *   NO **Supabase** (Custom Auth + RDS).
-
----
-
-## 3. Architecture Overview
 
 ### 3.1 Monorepo Structure (Turborepo)
 ```
@@ -154,7 +135,7 @@ packages/
 
 ## Auth Service (Fastify)
 *   [ ] **S1-01**: Implement Login/Register Endpoints.
-*   [ ] **S1-02**: JWT Generation & Verification Middleware.
+*   [ ] **S1-02**: Session Management (fastify-secure-session).
 *   [ ] **S1-03**: Password Hashing (Argon2).
 
 ## Frontend Integration (Next.js)
@@ -296,6 +277,15 @@ packages/
 *   **Rationale**:
     *   Efficient caching of builds.
     *   Dependency management for shared packages (`ui`, `database`).
+
+## ADR-006: Authentication Strategy
+*   **Decision**: 
+    *   **Web**: Server-side Session Cookies (`fastify-secure-session` + `httpOnly`).
+    *   **Integrations**: API Keys + HMAC (for Webhooks).
+*   **Rationale**:
+    *   Cookies provide superior security/UX for browser apps (vs JWT in localStorage).
+    *   API Keys simpler for 3rd party integrations (PSP/Shipping).
+*   **Source**: SRS Section 3.3.3.2.
 
 ---
 

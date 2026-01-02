@@ -41,6 +41,23 @@
     *   Efficient caching of builds.
     *   Dependency management for shared packages (`ui`, `database`).
 
+## ADR-006: Authentication Strategy
+*   **Decision**: 
+    *   **Web**: Server-side Session Cookies (`fastify-secure-session` + `httpOnly`).
+    *   **Integrations**: API Keys + HMAC (for Webhooks).
+*   **Rationale**:
+    *   Cookies provide superior security/UX for browser apps (vs JWT in localStorage).
+    *   API Keys simpler for 3rd party integrations (PSP/Shipping).
+*   **Source**: SRS Section 3.3.3.2.
+
+## ADR-007: TanStack Query
+*   **Decision**: Use TanStack Query (React Query) v5 for client-side data fetching and caching.
+*   **Rationale**:
+    *   Mandated by SRS Section 3.2 (Application Architecture).
+    *   Handles loading/error states, caching, and optimistic updates effectively.
+    *   Reduces boilerplate `useEffect` fetching code.
+*   **Consequences**: All API data fetching in Client Components must use `useQuery`/`useMutation`.
+
 ---
 
 *Verified against SRS v1.38*
