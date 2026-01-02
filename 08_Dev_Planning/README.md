@@ -113,7 +113,8 @@ Cross-reference: [SRS_SYNC_STATUS.md](./07_SRS_Alignment/SRS_SYNC_STATUS.md)
 - `Sprints/SPRINT_S0_Foundation.md` through `SPRINT_S6_Launch.md`
 
 ### 03_Technical_Specs/ (Implementation)
-- `AI_DEV_SPECS.md` - Detailed technical specs
+- `AI_DEVELOPMENT_HARNESS.md` - **NEW**: Agentic workflow & harness strategy
+- `AI_DEV_SPECS.md` - Detailed technical specs & code patterns
 - `TECH_STACK_DECISIONS.md` - ADR-style decisions
 - `ARCHITECTURE_OVERVIEW.md` - System architecture
 - `MONOREPO_STRUCTURE.md` - Code organization

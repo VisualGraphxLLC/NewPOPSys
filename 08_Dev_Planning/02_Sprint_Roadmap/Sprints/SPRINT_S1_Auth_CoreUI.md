@@ -85,7 +85,7 @@
 **Description:** Implement logic to redirect users to the correct portal based on their role.
 
 **Technical Details:**
-- Fetch user role from Supabase after authentication
+- Fetch user role from API /decrypted JWT token
 - Map roles to portal URLs (Brand -> /brand, PSP -> /psp, Store -> /store)
 - Handle users with multiple roles (role selector)
 - Implement default landing pages per role
@@ -173,10 +173,12 @@
 
 | From Sprint | Task | Required By | Status |
 |-------------|------|-------------|--------|
+| From Sprint | Task | Required By | Status |
+|-------------|------|-------------|--------|
 | S0 | S0-01 Monorepo Setup | S1-01 | TBD |
-| S0 | S0-02 Auth Foundation | S1-01, S1-02 | TBD |
-| S0 | S0-03 PostgreSQL Schema | S1-16 | TBD |
-| S0 | S0-04 CI/CD Pipeline | S1-27 | TBD |
+| S0 | S0-10 JWT Auth | S1-01, S1-02 | TBD |
+| S0 | S0-11 Drizzle Schema | S1-16 | TBD |
+| S0 | S0-15 CI/CD Pipeline | S1-27 | TBD |
 
 ### Outgoing Dependencies
 

@@ -33,19 +33,20 @@
 
 | ID | Title | Priority | Estimate | Assignee |
 |----|-------|----------|----------|----------|
-| POP-001 | Setup Frappe development environment | P0 | 3 SP | TBD |
-| POP-002 | Configure Docker infrastructure | P0 | 5 SP | TBD |
-| POP-003 | Initialize ERPNext base modules | P0 | 5 SP | TBD |
-| POP-004 | Define core DocType schemas | P0 | 8 SP | TBD |
-| POP-005 | Setup CI/CD pipeline | P1 | 5 SP | TBD |
+| POP-001 | Initialize Turborepo Monorepo Structure | P0 | 3 SP | TBD |
+| POP-002 | Configure Docker Infrastructure | P0 | 5 SP | TBD |
+| POP-003 | Setup Fastify Backend & Drizzle ORM | P0 | 5 SP | TBD |
+| POP-004 | Define Core Database Schema | P0 | 8 SP | TBD |
+| POP-005 | Initialize Next.js Monorepo Apps | P1 | 8 SP | TBD |
+| POP-006 | Setup CI/CD Pipeline | P1 | 3 SP | TBD |
 
-### In Progress (WIP: 3)
+### In Progress (WIP: 0)
 
 | ID | Title | Priority | Estimate | Assignee | Started |
 |----|-------|----------|----------|----------|---------|
 | | | | | | |
 
-### Review (WIP: 2)
+### Review (WIP: 0)
 
 | ID | Title | Priority | Estimate | Assignee | Reviewer |
 |----|-------|----------|----------|----------|----------|
@@ -61,101 +62,122 @@
 
 ## Sprint Backlog Details
 
-### POP-001: Setup Frappe development environment
+### POP-001: Initialize Turborepo Monorepo Structure
 **Priority**: P0 | **Estimate**: 3 SP | **Status**: To Do
 
-**Description**: Install and configure Frappe Bench with all required dependencies for local development.
+**Description**: Initialize Turborepo with pnpm workspaces for the new custom architecture.
+
+**Technical Details**:
+- Apps: `mobile-pwa`, `brand-admin`, `psp-admin`, `store-portal`
+- Packages: `ui`, `api-client`, `types`, `utils`
+- Backend: `api-server` (Fastify)
 
 **Acceptance Criteria**:
-- [ ] Frappe Bench installed and functional
-- [ ] Python virtual environment configured
-- [ ] MariaDB connection established
-- [ ] Redis cache operational
-- [ ] frappe-bench new-site command works
+- [ ] Turborepo initialized
+- [ ] Apps and packages directories created
+- [ ] Build pipeline configured
+- [ ] Shared Drizzle config setup
 
 **Dependencies**: None
 
 ---
 
-### POP-002: Configure Docker infrastructure
+### POP-002: Configure Docker Infrastructure
 **Priority**: P0 | **Estimate**: 5 SP | **Status**: To Do
 
-**Description**: Setup Docker Compose environment for consistent development and deployment.
+**Description**: Setup Docker Compose for local development with Postgres, Redis, and API.
+
+**Technical Details**:
+- PostgreSQL 16 container
+- Redis 7 container
+- Adminer or PGAdmin (optional)
+- Volume persistence
 
 **Acceptance Criteria**:
-- [ ] Docker Compose file created
-- [ ] Frappe container builds successfully
-- [ ] MariaDB container configured
-- [ ] Redis container configured
-- [ ] Volume persistence working
-- [ ] Network configuration complete
+- [ ] docker-compose.yml created
+- [ ] Postgres connected and accessible
+- [ ] Redis connected
+- [ ] Environment variables configured (.env)
 
 **Dependencies**: None
 
 ---
 
-### POP-003: Initialize ERPNext base modules
+### POP-003: Setup Fastify Backend & Drizzle ORM
 **Priority**: P0 | **Estimate**: 5 SP | **Status**: To Do
 
-**Description**: Install ERPNext and configure essential base modules needed for POP system.
+**Description**: Initialize the Fastify backend service with Drizzle ORM connection.
+
+**Technical Details**:
+- Fastify 4.x setup
+- Drizzle ORM with Postgres
+- Zod validation integration
+- Swagger/OpenAPI setup
 
 **Acceptance Criteria**:
-- [ ] ERPNext app installed
-- [ ] Company setup complete
-- [ ] Chart of accounts initialized
-- [ ] Basic settings configured
-- [ ] System health check passes
+- [ ] Fastify server starts
+- [ ] Drizzle connects to Docker Postgres
+- [ ] Health check endpoint works
+- [ ] Migration script functional
 
-**Dependencies**: POP-001
+**Dependencies**: POP-001, POP-002
 
 ---
 
-### POP-004: Define core DocType schemas
+### POP-004: Define Core Database Schema
 **Priority**: P0 | **Estimate**: 8 SP | **Status**: To Do
 
-**Description**: Design and document the core DocType schemas for Customer, Product, Order, and related entities.
+**Description**: Implement initial Drizzle schema for Users, Auth, and Core entities.
+
+**Technical Details**:
+- Users table
+- Auth/Session tables
+- Organizations/Tenants
+- Stores table
 
 **Acceptance Criteria**:
-- [ ] Customer DocType schema defined
-- [ ] Product DocType schema defined
-- [ ] Order DocType schema defined
-- [ ] Field naming conventions documented
-- [ ] Relationships mapped
-- [ ] Schema review completed
+- [ ] Schema defined in TypeScript
+- [ ] Migrations generated
+- [ ] Migrations applied successfully
+- [ ] ERD generated or verified
 
 **Dependencies**: POP-003
 
 ---
 
-### POP-005: Setup CI/CD pipeline
-**Priority**: P1 | **Estimate**: 5 SP | **Status**: To Do
+### POP-005: Initialize Next.js Monorepo Apps
+**Priority**: P1 | **Estimate**: 8 SP | **Status**: To Do
 
-**Description**: Configure GitHub Actions or similar CI/CD for automated testing and deployment.
+**Description**: Initialize Next.js applications for Brand, PSP, and Store portals within the monorepo.
+
+**Technical Details**:
+- `apps/brand-portal` (Next.js 14+)
+- `apps/psp-portal` (Next.js 14+)
+- `apps/store-portal` (Next.js 14+)
+- Configure shared UI package consumption
 
 **Acceptance Criteria**:
-- [ ] CI pipeline runs on PR
-- [ ] Unit test execution automated
-- [ ] Linting checks configured
-- [ ] Build verification working
-- [ ] Deploy to dev environment automated
+- [ ] Apps initialized successfully
+- [ ] Development servers run in parallel
+- [ ] Shared components render in all apps
+- [ ] Build pipeline succeeds for all apps
 
-**Dependencies**: POP-002
+**Dependencies**: POP-001
 
 ---
 
-### POP-006: Configure development database
-**Priority**: P0 | **Estimate**: 3 SP | **Status**: To Do
+### POP-006: Setup CI/CD Pipeline
+**Priority**: P1 | **Estimate**: 3 SP | **Status**: To Do
 
-**Description**: Setup and configure MariaDB for development with proper schemas and seed data.
+**Description**: Configure GitHub Actions for linting, testing, and Docker build verification.
 
 **Acceptance Criteria**:
-- [ ] Database created
-- [ ] User permissions configured
-- [ ] Backup script created
-- [ ] Seed data loaded
-- [ ] Connection from Frappe verified
+- [ ] CI workflow created
+- [ ] Lint/Type-check passes
+- [ ] Unit tests execution
+- [ ] Docker build verification
 
-**Dependencies**: POP-002
+**Dependencies**: POP-001
 
 ---
 
