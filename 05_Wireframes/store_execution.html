@@ -1120,15 +1120,20 @@ Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
                     </button>
                 </div>
                 <div id="attest-content-complete" class="card bg-green-50 border-green-200 hidden">
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 mb-3">
                         <div class="bg-green-100 text-green-600 rounded-full p-2">
                             <i data-lucide="check" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-green-700">Campaign Complete!</h3>
+                            <h3 class="font-bold text-green-700">Installation Complete!</h3>
                             <p class="text-xs text-green-600">Attestation submitted successfully</p>
                         </div>
                     </div>
+                    <!-- Demo: Simulate campaign entering deinstall phase -->
+                    <button onclick="enterDeinstallPhase()" class="w-full py-2 px-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer" data-tooltip="🧪 DEMO: ENTER DEINSTALL PHASE\n📊 Simulates campaign period ending\n➡️ Shows Deinstall tab">
+                        <i data-lucide="calendar-x" class="w-4 h-4"></i>
+                        Demo: Campaign Ended → Start Deinstall
+                    </button>
                 </div>
             </div>
 
