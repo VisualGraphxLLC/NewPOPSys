@@ -89,27 +89,12 @@ PSP Portal → Orders (sidebar) → /psp/orders
 
 ### 3.2 Layout Specification
 
-```
-+------------------------------------------------------------------+
-| Order Queue                                                       |
-| New: 12 | Acknowledged: 8 | Shipped: 45 | Delivered: 234         |
-+------------------------------------------------------------------+
-| [Search orders...]                    [Brand ▼] [Campaign ▼]     |
-|                                                                   |
-| [New (12)] [Acknowledged (8)] [All Orders]                        |
-|                                                                   |
-| [ ] Select All                              [Acknowledge Selected]|
-|                                                                   |
-| +---------------------------------------------------------------+ |
-| | [ ] Order #   | Brand    | Store    | Items | Status   | Age  | |
-| +---------------------------------------------------------------+ |
-| | [ ] ORD-1234  | Acme     | STR-001  | 5     | New      | 2h   | |
-| | [ ] ORD-1235  | Acme     | STR-002  | 3     | New      | 1h   | |
-| | [ ] ORD-1236  | Beta Co  | STR-015  | 8     | Ack      | 4h   | |
-| +---------------------------------------------------------------+ |
-|                                                                   |
-| Showing 1-25 of 299              [< Prev] Page 1 of 12 [Next >]  |
-+------------------------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.3 Component Specifications
@@ -298,55 +283,12 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Order Status State Machine
 
-```
-                    ┌─────────────┐
-                    │  GENERATED  │
-                    └──────┬──────┘
-                           │ acknowledge
-                           ▼
-                    ┌─────────────┐
-                    │ ACKNOWLEDGED│
-                    └──────┬──────┘
-                           │ start_production
-                           ▼
-                    ┌─────────────┐
-                    │IN_PRODUCTION│
-                    └──────┬──────┘
-                           │ complete_kitting
-                           ▼
-                    ┌─────────────┐
-                    │   KITTING   │
-                    └──────┬──────┘
-                           │ ready_to_ship
-                           ▼
-                    ┌─────────────┐
-               ┌────│READY_TO_SHIP│
-               │    └──────┬──────┘
-               │           │ ship (partial/full)
-               │           ▼
-               │    ┌─────────────────┐
-               │    │PARTIALLY_SHIPPED│───┐
-               │    └─────────────────┘   │
-               │                          │ all_shipped
-               │           ┌──────────────┘
-               │           ▼
-               │    ┌─────────────┐
-               └───►│   SHIPPED   │
-                    └──────┬──────┘
-                           │ deliver
-                           ▼
-                    ┌─────────────┐
-                    │  DELIVERED  │
-                    └──────┬──────┘
-                           │ close
-                           ▼
-                    ┌─────────────┐
-                    │   CLOSED    │
-                    └─────────────┘
-
-        ┌─────────────┐
-        │  CANCELLED  │ (from any state except CLOSED)
-        └─────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 State Transition Requirements
@@ -587,26 +529,12 @@ PSP Portal → Shipments (sidebar) → /psp/shipments
 
 ### 3.2 Layout Specification
 
-```
-+------------------------------------------------------------------+
-| Shipments                                    [+ Create Shipment]  |
-| In Transit: 23 | Delivered: 156 | Exception: 2                   |
-+------------------------------------------------------------------+
-| [Search tracking #, order #...]     [Carrier ▼] [Date Range ▼]   |
-|                                                                   |
-| [In Transit (23)] [Delivered] [Exception (2)] [All]              |
-|                                                                   |
-| +---------------------------------------------------------------+ |
-| | Tracking #    | Carrier | Order    | Store    | Status  | ETA | |
-| +---------------------------------------------------------------+ |
-| | 1Z999AA10...  | [UPS]   | ORD-1234 | STR-001  | Transit | 12/18| |
-| | 7489012345... | [FEDEX] | ORD-1235 | STR-002  | Transit | 12/17| |
-| | 9400111899... | [USPS]  | ORD-1236 | STR-015  | Deliver | 12/15| |
-| | 1Z999AA10...  | [UPS]   | ORD-1237 | STR-023  | Except  | -    | |
-| +---------------------------------------------------------------+ |
-|                                                                   |
-| Showing 1-25 of 181              [< Prev] Page 1 of 8 [Next >]   |
-+------------------------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.3 Component Specifications
@@ -625,36 +553,12 @@ PSP Portal → Shipments (sidebar) → /psp/shipments
 
 #### P002-C008: Create Shipment Modal
 
-```
-+------------------------------------------+
-| Create Shipment                      [X] |
-+------------------------------------------+
-|                                          |
-| Order *                                  |
-| [Search order number...           ▼]     |
-|                                          |
-| Carrier *                                |
-| ( ) UPS  ( ) FedEx  ( ) USPS  ( ) DHL   |
-|                                          |
-| Tracking Number(s) *                     |
-| +--------------------------------------+ |
-| | 1Z999AA10123456784                   | |
-| +--------------------------------------+ |
-| [+ Add Another Tracking Number]          |
-|                                          |
-| Ship Date                                |
-| [2025-12-15        ]                     |
-|                                          |
-| Items to Ship                            |
-| +--------------------------------------+ |
-| | Item           | Ordered | Shipping | |
-| | Window Poster  | 2       | [2    ]  | |
-| | Counter Disp   | 1       | [1    ]  | |
-| | Shelf Talker   | 5       | [5    ]  | |
-| +--------------------------------------+ |
-|                                          |
-| [Cancel]              [Create Shipment]  |
-+------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -845,28 +749,12 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Shipment Status State Machine
 
-```
-                    ┌─────────────────┐
-                    │  LABEL_CREATED  │
-                    └────────┬────────┘
-                             │ carrier_pickup
-                             ▼
-                    ┌─────────────────┐
-                    │   IN_TRANSIT    │
-                    └────────┬────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              │              │              │
-              ▼              ▼              ▼
-      ┌───────────┐  ┌─────────────┐  ┌───────────┐
-      │OUT_FOR_DEL│  │  EXCEPTION  │  │ RETURNED  │
-      └─────┬─────┘  └──────┬──────┘  └───────────┘
-            │               │
-            │               │ resolved
-            ▼               ▼
-      ┌─────────────────────────────────┐
-      │           DELIVERED             │
-      └─────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 State Transition Requirements
@@ -1119,68 +1007,22 @@ PSP Portal → Issues (sidebar) → /psp/issues
 
 ### 3.2 Layout Specification
 
-```
-+------------------------------------------------------------------+
-| Issues Queue                                                      |
-| Open: 8 | Triaged: 3 | In Fulfillment: 5 | Resolved: 127         |
-+------------------------------------------------------------------+
-| [Search issues...]                  [Type ▼] [Campaign ▼]        |
-|                                                                   |
-| [Open (8)] [Triaged (3)] [In Fulfillment (5)] [Resolved]         |
-|                                                                   |
-| +---------------------------------------------------------------+ |
-| | Issue #   | Type     | Store    | Item        | Status  | Age | |
-| +---------------------------------------------------------------+ |
-| | ISS-1042  | DAMAGED  | STR-001  | Window Post | Open    | 2h  | |
-| | ISS-1041  | MISSING  | STR-015  | End Cap     | Open    | 4h  | |
-| | ISS-1040  | DAMAGED  | STR-023  | Counter Dsp | Triaged | 1d  | |
-| | ISS-1038  | MISSING  | STR-089  | Window Post | Fulfill | 2d  | |
-| | ISS-1035  | QTY_SHORT| STR-045  | Shelf Talk  | Fulfill | 3d  | |
-| +---------------------------------------------------------------+ |
-|                                                                   |
-| Showing 1-25 of 143              [< Prev] Page 1 of 6 [Next >]   |
-+------------------------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.3 Issue Detail Panel
 
-```
-+------------------------------------------+
-| Issue ISS-1042                       [X] |
-+------------------------------------------+
-| Type: DAMAGED                            |
-| Status: OPEN                             |
-| Reported: Dec 15, 2025 at 10:30 AM       |
-| Age: 2 hours                             |
-|                                          |
-| Store: STR-001 - Acme Downtown           |
-| Campaign: Summer Promo                   |
-|                                          |
-| Item Details                             |
-| -------------------                      |
-| Window Poster (24x36)                    |
-| Qty Ordered: 2                           |
-| Qty Affected: 1                          |
-|                                          |
-| Description                              |
-| -------------------                      |
-| "Poster arrived with large tear across   |
-| the middle. Cannot be used for display." |
-|                                          |
-| Evidence Photos (2)                      |
-| -------------------                      |
-| [Photo 1]  [Photo 2]                     |
-|                                          |
-| Triage Notes                             |
-| +--------------------------------------+ |
-| | Enter notes here...                  | |
-| +--------------------------------------+ |
-|                                          |
-| [Reject] [Request Info] [Approve]        |
-|                                          |
-| After Approval:                          |
-| [Create Reorder (1 unit)]                |
-+------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Component Specifications
@@ -1401,33 +1243,12 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Issue Status State Machine
 
-```
-                    ┌─────────────┐
-                    │    OPEN     │ ←── Store reports
-                    └──────┬──────┘
-                           │ triage
-                           ▼
-                    ┌─────────────┐
-            ┌───────│   TRIAGED   │───────┐
-            │       └──────┬──────┘       │
-            │              │              │
-            │ reject       │ approve      │ request_info
-            ▼              ▼              ▼
-     ┌──────────┐   ┌──────────┐   ┌─────────────┐
-     │ REJECTED │   │ APPROVED │   │ AWAITING_   │
-     └──────────┘   └────┬─────┘   │ INFO        │
-            │            │         └──────┬──────┘
-            │            │                │
-            │            │ create_reorder │ info_received
-            │            ▼                │
-            │     ┌─────────────────┐     │
-            │     │ IN_FULFILLMENT  │◄────┘
-            │     └───────┬─────────┘
-            │             │ reorder_delivered
-            │             ▼
-            │     ┌─────────────┐
-            └────►│  RESOLVED   │
-                  └─────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 State Transition Requirements

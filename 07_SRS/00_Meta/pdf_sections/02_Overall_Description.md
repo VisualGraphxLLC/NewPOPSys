@@ -10,16 +10,12 @@ NewPOPSys v1.38 is a standalone multi-tenant SaaS platform designed to replace s
 
 ### Market Position
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     CAMPAIGN ORCHESTRATION LAYER                     │
-│                         (NewPOPSys v1.38)                           │
-├─────────────────────────────────────────────────────────────────────┤
-│  PSP Tenant  →  Brand Clients  →  Store Locations  →  Execution    │
-└─────────────────────────────────────────────────────────────────────┘
-         ↑              ↑                ↑                ↑
-    Production     Campaign          Delivery        Installation
-    Fulfillment    Configuration     Tracking        Verification
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### System Boundaries
@@ -109,17 +105,12 @@ NewPOPSys is a cloud-native application with no direct hardware interfaces. Howe
 
 ### Multi-Tenant Architecture
 
-```
-PSP Tenant (Root)
-├── Brand A
-│   ├── Stores (up to 1,000)
-│   ├── Campaigns
-│   └── Users (Brand Admin, Campaign Manager, Regional Manager)
-├── Brand B
-│   ├── Stores
-│   ├── Campaigns
-│   └── Users
-└── PSP Users (PSP Admin, Production Operator, Platform Admin)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### Data Isolation
@@ -348,25 +339,12 @@ This loop replaces ad-hoc spreadsheet coordination with structured, traceable wo
 
 NewPOPSys v1.38 implements a three-tier user hierarchy aligned with the multi-tenant architecture:
 
-```
-Platform Level (System-wide)
-├── Platform Admin
-│
-PSP Level (Tenant-wide)
-├── PSP Admin
-├── Production Operator
-│
-Brand Level (Brand-scoped)
-├── Brand Admin
-├── Campaign Manager
-├── Regional Manager
-│
-Store Level (Store-scoped)
-├── Store Manager
-├── Store Operator
-│
-System Level (Machine-to-Machine)
-└── Integration User
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ## User Class Summary
@@ -594,21 +572,12 @@ System Level (Machine-to-Machine)
 
 NewPOPSys v1.38 operates as a cloud-native application deployed on AWS infrastructure with a focus on reliability, scalability, and cost efficiency.
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                            AWS Cloud                                     │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
-│  │  CloudFront │  │     ALB     │  │   ECS       │  │    RDS      │    │
-│  │    (CDN)    │──│   (Load     │──│  Fargate    │──│ PostgreSQL  │    │
-│  │             │  │  Balancer)  │  │  (Compute)  │  │  (Database) │    │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘    │
-│         │                                  │               │            │
-│         │                           ┌──────┴──────┐        │            │
-│  ┌──────┴──────┐                    │             │   ┌────┴────┐      │
-│  │     S3      │                    │ ElastiCache │   │   SES   │      │
-│  │  (Storage)  │                    │   (Redis)   │   │ (Email) │      │
-│  └─────────────┘                    └─────────────┘   └─────────┘      │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ## Production Environment Specifications

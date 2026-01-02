@@ -289,17 +289,7 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 7.1 Page States
 
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   LOADING   │────▶│   LOADED    │────▶│  FILTERING  │
-└─────────────┘     └─────────────┘     └─────────────┘
-       │                  │                    │
-       ▼                  ▼                    ▼
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│    ERROR    │     │   DETAIL    │     │  EXPORTING  │
-└─────────────┘     │    OPEN     │     └─────────────┘
-                    └─────────────┘
-```
+![History](../../screenshots/Store_Portal/store_portal_campaigns.png)
 
 ### 7.2 State Descriptions
 

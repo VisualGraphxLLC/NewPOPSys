@@ -95,74 +95,15 @@ This specification covers:
 
 ### 3.3 Single Retake Card Layout
 
-```
-+---------------------------------------+
-| Retake Required                       |
-| Front Window Poster                   |
-+---------------------------------------+
-|                                       |
-|  +-------------------------------+    |
-|  |                               |    |
-|  |   [Rejected Photo]            |    |
-|  |   (dimmed, X overlay)         |    |
-|  |                               |    |
-|  +-------------------------------+    |
-|                                       |
-|  [!] WRONG_ANGLE                      |
-|                                       |
-|  "Please capture the poster           |
-|   straight-on, not at an angle.       |
-|   Ensure all corners are visible."    |
-|                                       |
-|          [Camera] Retake Photo        |
-|                                       |
-+---------------------------------------+
-```
+![Retake](../../screenshots/Store_Execution/mobile_retake.png)
 
 ### 3.4 After Capture Layout
 
-```
-+---------------------------------------+
-| Retake Required                       |
-| Front Window Poster                   |
-+---------------------------------------+
-|                                       |
-|  Before          After                |
-|  +----------+    +----------+         |
-|  | [Old]    |    | [New]    |         |
-|  |   X      |    |   Check  |         |
-|  +----------+    +----------+         |
-|                                       |
-|  [Retake Again]       [Submit]        |
-|                                       |
-+---------------------------------------+
-```
+![Retake](../../screenshots/Store_Execution/mobile_retake.png)
 
 ### 3.5 Multiple Retakes List Layout
 
-```
-+---------------------------------------+
-| <- Retakes Required (3)               |
-+---------------------------------------+
-|                                       |
-| +-----------------------------------+ |
-| | Front Window Poster           [>] | |
-| | [!] WRONG_ANGLE                   | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | End Cap Display               [>] | |
-| | [!] TOO_DARK                      | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | Checkout Counter              [>] | |
-| | [!] BLURRY                        | |
-| +-----------------------------------+ |
-|                                       |
-|        [Submit All Retakes]           |
-+---------------------------------------+
-```
+![Retake](../../screenshots/Store_Execution/mobile_retake.png)
 
 ---
 

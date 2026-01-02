@@ -245,16 +245,7 @@ X-Tenant-ID: {tenant_uuid}
 
 ### 7.1 Dashboard Load States
 
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   INITIAL   │────▶│   LOADING   │────▶│   LOADED    │
-└─────────────┘     └─────────────┘     └─────────────┘
-                           │                   │
-                           ▼                   ▼
-                    ┌─────────────┐     ┌─────────────┐
-                    │    ERROR    │     │  REFRESHING │
-                    └─────────────┘     └─────────────┘
-```
+![Dashboard](../../screenshots/Store_Portal/store_portal_dashboard.png)
 
 ### 7.2 State Descriptions
 

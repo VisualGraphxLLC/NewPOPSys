@@ -96,46 +96,11 @@ This specification covers:
 
 ### 3.3 Camera View Layout
 
-```
-+---------------------------------------+
-| [X]                            [Flash]|
-|                                       |
-|  +-------------------------------+    |
-|  |                               |    |
-|  |     Camera Viewfinder         |    |
-|  |                               |    |
-|  |  +-------------------------+  |    |
-|  |  |     Ghost Image         |  |    |
-|  |  |     (50% opacity)       |  |    |
-|  |  +-------------------------+  |    |
-|  |                               |    |
-|  +-------------------------------+    |
-|                                       |
-|  "Align poster with outline"          |
-|                                       |
-|  [Gallery]    [Shutter]    [Switch]   |
-+---------------------------------------+
-```
+![Compliance](../../screenshots/Store_Execution/mobile_compliance.png)
 
 ### 3.4 Review View Layout
 
-```
-+---------------------------------------+
-| Review Photo                      [X] |
-+---------------------------------------+
-|                                       |
-|  +-------------------------------+    |
-|  |                               |    |
-|  |     Captured Image            |    |
-|  |     (full resolution)         |    |
-|  |                               |    |
-|  +-------------------------------+    |
-|                                       |
-|  [!] Photo resolution too low         |
-|                                       |
-|  [Retake]             [Use Photo]     |
-+---------------------------------------+
-```
+![Compliance](../../screenshots/Store_Execution/mobile_compliance.png)
 
 ---
 

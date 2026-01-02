@@ -105,33 +105,7 @@ This specification covers:
 
 ### 3.4 Item Card Expanded View
 
-```
-+---------------------------------------+
-| Window Poster (24x36)                 |
-| SKU: POS-001                          |
-+---------------------------------------+
-| Location: Front Window - Left         |
-| Instructions:                         |
-| "Place at eye level, ensure all       |
-|  corners are secure and no bubbles"   |
-+---------------------------------------+
-| Reference Image:                      |
-| â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   |
-| â”‚                                 â”‚   |
-| â”‚   [Ghost Image Preview]        â”‚   |
-| â”‚   (tap to enlarge)             â”‚   |
-| â”‚                                 â”‚   |
-| â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   |
-+---------------------------------------+
-| Pre-Install Checklist:                |
-| [âœ“] Surface is clean and dry          |
-| [âœ“] Previous materials removed        |
-| [ ] Positioning matches reference     |
-+---------------------------------------+
-| Status: Ready to photograph           |
-| [Capture Proof Photo]             ðŸ“·  |
-+---------------------------------------+
-```
+![Install](../../screenshots/Store_Execution/mobile_install.png)
 
 ---
 

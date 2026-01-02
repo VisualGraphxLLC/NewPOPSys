@@ -102,22 +102,7 @@ This specification covers:
 
 ### 3.4 Campaign Card Detail
 
-```
-+---------------------------------------+
-|  ðŸ·ï¸ Summer Promo 2026                 |
-|  Brand: Acme Retail                   |
-+---------------------------------------+
-|  Install Window: Jan 10-15, 2026      |
-|  Items: 12 total, 8 received          |
-+---------------------------------------+
-|  Status: IN_PROGRESS                  |
-|  [â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‘â–‘] 65%                     |
-+---------------------------------------+
-|  âš ï¸ 2 photos need retake              |
-+---------------------------------------+
-|  [Receive] [Install] [Complete]       |
-+---------------------------------------+
-```
+![Mobile Dashboard](../../screenshots/Store_Execution/mobile_dashboard.png)
 
 ---
 

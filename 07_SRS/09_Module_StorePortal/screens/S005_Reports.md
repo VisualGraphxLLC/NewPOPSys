@@ -37,19 +37,7 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.5 Screen Context
 
-```
-Store Portal Navigation:
-├── Dashboard (S001)
-├── Campaign History (S002)
-├── Photo Gallery (S003)
-├── Team Management (S004)
-└── Reports (S005) ← Current Screen
-    ├── Overview Tab
-    ├── Campaigns Tab
-    ├── Photos Tab
-    ├── Team Tab
-    └── Issues Tab
-```
+![Reports](../../screenshots/Store_Portal/store_portal_reports.png)
 
 ---
 
@@ -93,25 +81,7 @@ REQ-S005-SEC-005: Role Enforcement
 
 ### 3.1 Component Hierarchy
 
-```
-ReportsScreen
-├── PageHeader
-│   ├── Title ("Store Reports")
-│   ├── DateRangePicker
-│   └── ExportButton
-├── TabNavigation
-│   ├── OverviewTab
-│   ├── CampaignsTab
-│   ├── PhotosTab
-│   ├── TeamTab
-│   └── IssuesTab
-├── TabContent
-│   ├── KPICardGrid (4 cards)
-│   ├── TrendChart (line chart)
-│   ├── BreakdownCharts (pie, bar)
-│   └── DataTable (detailed data)
-└── LoadingState / EmptyState
-```
+![Reports](../../screenshots/Store_Portal/store_portal_reports.png)
 
 ### 3.2 Component Specifications
 
@@ -541,38 +511,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 6.2 Request/Response Flow
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Reports Data Flow                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Store Portal                  API Gateway                      │
-│       │                            │                            │
-│       │  GET /stores/{id}/reports  │                            │
-│       ├───────────────────────────>│                            │
-│       │      ?range=90d            │                            │
-│       │                            │                            │
-│       │                     ┌──────┴──────┐                     │
-│       │                     │   Validate  │                     │
-│       │                     │  JWT Token  │                     │
-│       │                     │ Store Access│                     │
-│       │                     └──────┬──────┘                     │
-│       │                            │                            │
-│       │                     ┌──────┴──────┐                     │
-│       │                     │  Aggregate  │                     │
-│       │                     │   Metrics   │                     │
-│       │                     │ (6 queries) │                     │
-│       │                     └──────┬──────┘                     │
-│       │                            │                            │
-│       │    200 OK + JSON           │                            │
-│       │<───────────────────────────┤                            │
-│       │                            │                            │
-│       ├────────────────────────────┤                            │
-│       │  Render Charts & Tables    │                            │
-│       └────────────────────────────┘                            │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+![Reports](../../screenshots/Store_Portal/store_portal_reports.png)
 
 ### 6.3 API Requirements
 
@@ -590,35 +529,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 7.1 Screen States
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Reports Screen States                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│    ┌─────────────┐                                              │
-│    │   LOADING   │                                              │
-│    │  (Initial)  │                                              │
-│    └──────┬──────┘                                              │
-│           │                                                     │
-│           ▼                                                     │
-│    ┌──────┴──────┐        ┌─────────────┐                       │
-│    │   SUCCESS   │◄───────│  REFRESHING │                       │
-│    │ (Data Ready)│────────│(Range Change)│                      │
-│    └──────┬──────┘        └─────────────┘                       │
-│           │                      ▲                              │
-│           │                      │                              │
-│           ▼                      │                              │
-│    ┌──────┴──────┐        ┌──────┴──────┐                       │
-│    │  EXPORTING  │────────│  NAVIGATING │                       │
-│    │(Generating) │        │ (Tab Switch)│                       │
-│    └─────────────┘        └─────────────┘                       │
-│                                                                 │
-│    ┌─────────────┐                                              │
-│    │    ERROR    │ ← Network/Server failure                     │
-│    │   (Retry)   │                                              │
-│    └─────────────┘                                              │
-│                                                                 │
-```mermaid
+![Reports](../../screenshots/Store_Portal/store_portal_reports.png)mermaid
 stateDiagram-v2
     [*] --> LOADING
     LOADING --> SUCCESS: Data Ready

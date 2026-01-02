@@ -57,9 +57,14 @@ Total files in `SOW/07_SRS/screenshots/`: ~81
 
 ## Progress Summary
 
-- **Mermaid Conversions**: 16/16 complete (Batch 1: 5, Batch 2: 4, Batch 4: 4, Batch 5: 3)
-- **Wireframe Screenshots**: 10/10 complete (Batch 3, Batch 5)
-- **Overall**: 26/26 complete (Brand Admin, Platform Admin, Store Portal)
+- **Mermaid Conversions**: 30/30 complete (Batch 1-6)
+- **Wireframe Screenshots**: 25/25 complete (Batch 3, 5, 6)
+- **Overall**: 100% complete (All Modules)
+
+### Conversion Log
+- **2026-01-02 Batch 1-5**: Completed Brand Admin, Platform Admin basics.
+- **2026-01-02 Batch 6**: Completed Shared Foundations (L), Mobile (M), PSP Ops (P), and remaining Store Portal (S) files using automated script.
+- **Status**: All ASCII artifacts removed. Code committed to git.
 
 ### Conversion Log
 - **2026-01-02 Batch 1**: Campaign Orchestration, Multi-Tenant, Lifecycle, User Hierarchy, AWS Infra

@@ -94,32 +94,12 @@ This specification covers:
 
 ### 3.3 Layout Specification
 
-```
-+---------------------------------------+
-|                                       |
-|            [Brand Logo]               |
-|                                       |
-|           Welcome Back                |
-|                                       |
-|  +-------------------------------+    |
-|  | Store Number                  |    |
-|  | [STR-001________________]     |    |
-|  +-------------------------------+    |
-|                                       |
-|  +-------------------------------+    |
-|  | PIN                           |    |
-|  | [****__]                      |    |
-|  +-------------------------------+    |
-|                                       |
-|  [!] Invalid store number or PIN      |
-|                                       |
-|  +-------------------------------+    |
-|  |          [Login]              |    |
-|  +-------------------------------+    |
-|                                       |
-|         Forgot PIN?                   |
-|                                       |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -284,46 +264,22 @@ This specification covers:
 
 ### 7.1 Authentication State Machine
 
-```
-[IDLE] ─────────────────┐
-   │                    │
-   │ User enters        │ Credentials cleared
-   │ credentials        │
-   ▼                    │
-[VALIDATING] ──────────┤
-   │                    │
-   │ Local validation   │
-   │ passed             │
-   ▼                    │
-[AUTHENTICATING] ──────┤
-   │         │          │
-   │ Success │ Failure  │
-   ▼         ▼          │
-[AUTHENTICATED] [ERROR]─┘
-   │
-   │ Navigate to Dashboard
-   ▼
-[COMPLETE]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Rate Limit State Machine
 
-```
-[UNLOCKED] ──────────────┐
-   │                     │
-   │ Failed attempt      │ Timer expires
-   │ (count < 5)         │ OR success
-   ▼                     │
-[WARNING] ──────────────┤
-   │                     │
-   │ 5th failed          │
-   │ attempt             │
-   ▼                     │
-[LOCKED] ────────────────┘
-   │
-   │ 15 min timer
-   ▼
-[UNLOCKED]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 State Requirements
@@ -567,62 +523,22 @@ This specification covers:
 
 ### 3.3 Layout Specification
 
-```
-+---------------------------------------+
-| STR-001 Downtown          [Bell] [👤] |
-+---------------------------------------+
-| Quick Stats                           |
-| +--------+ +--------+ +--------+      |
-| | Active | | Pending| | Done   |      |
-| |   3    | |   2    | |   5    |      |
-| +--------+ +--------+ +--------+      |
-+---------------------------------------+
-| [All] [Active] [Pending] [Complete]   |
-+---------------------------------------+
-|                                       |
-| +-----------------------------------+ |
-| | Summer Promo 2026                 | |
-| | Install by: Jan 15, 2026          | |
-| | Status: IN_PROGRESS       [65%══] | |
-| | [Receive] [Install] [Photos]      | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | Spring Refresh                    | |
-| | Shipment arriving: Jan 5, 2026    | |
-| | Status: AWAITING_SHIPMENT         | |
-| | [Track Shipment]                  | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | Q4 Closeout                       | |
-| | Completed: Dec 28, 2025           | |
-| | Status: COMPLETE           [100%] | |
-| | [View Summary]                    | |
-| +-----------------------------------+ |
-|                                       |
-+---------------------------------------+
-| [Dashboard] [Tasks] [Scan] [Profile]  |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Campaign Card Detail
 
-```
-+---------------------------------------+
-|  🏷️ Summer Promo 2026                 |
-|  Brand: Acme Retail                   |
-+---------------------------------------+
-|  Install Window: Jan 10-15, 2026      |
-|  Items: 12 total, 8 received          |
-+---------------------------------------+
-|  Status: IN_PROGRESS                  |
-|  [████████░░] 65%                     |
-+---------------------------------------+
-|  ⚠️ 2 photos need retake              |
-+---------------------------------------+
-|  [Receive] [Install] [Complete]       |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -786,56 +702,22 @@ This specification covers:
 
 ### 7.1 StorePhase State Machine
 
-```
-[AWAITING_SHIPMENT]
-        │
-        │ Shipment created
-        ▼
-[SHIPMENT_IN_TRANSIT]
-        │
-        │ Carrier delivers
-        ▼
-[READY_TO_RECEIVE]
-        │
-        │ Start receiving
-        ▼
-[RECEIVING] ◄────────────────┐
-        │                    │
-        │ All items received │ More items
-        ▼                    │ to receive
-[READY_TO_INSTALL] ──────────┘
-        │
-        │ Start installation
-        ▼
-[INSTALLING]
-        │
-        │ All photos submitted
-        ▼
-[AWAITING_VERIFICATION]
-        │
-        ├──► [REWORK_REQUIRED] ──► [AWAITING_VERIFICATION]
-        │
-        │ All approved
-        ▼
-[COMPLETE]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Dashboard View State
 
-```
-[LOADING]
-    │
-    ├──► [ERROR] ──► [RETRY]
-    │
-    │ Data loaded
-    ▼
-[DISPLAYING]
-    │
-    ├──► [REFRESHING] ──► [DISPLAYING]
-    │
-    │ User taps campaign
-    ▼
-[NAVIGATING]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 State Requirements
@@ -1073,65 +955,22 @@ This specification covers:
 
 ### 3.3 Layout Specification
 
-```
-+---------------------------------------+
-| ← Receive: Summer Promo              |
-+---------------------------------------+
-| Progress: 8/12 items verified         |
-| [████████████░░░░░░] 67%             |
-+---------------------------------------+
-|                                       |
-| ┌─────────────────────────────────┐   |
-| │ [✓] Window Poster (24x36)      │   |
-| │     SKU: POS-001  Qty: 2       │   |
-| │     Verified: 2 of 2       [!] │   |
-| └─────────────────────────────────┘   |
-|                                       |
-| ┌─────────────────────────────────┐   |
-| │ [ ] End Cap Display            │   |
-| │     SKU: POS-002  Qty: 1       │   |
-| │     Not verified           [!] │   |
-| └─────────────────────────────────┘   |
-|                                       |
-| ┌─────────────────────────────────┐   |
-| │ [⚠] Counter Mat               │   |
-| │     SKU: POS-003  Qty: 3       │   |
-| │     Issue: 1 DAMAGED       [!] │   |
-| └─────────────────────────────────┘   |
-|                                       |
-+---------------------------------------+
-| Summary:                              |
-| ✓ Verified: 8  ⚠ Issues: 1  ○ Pending: 3|
-+---------------------------------------+
-|        [Complete Receiving]           |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Issue Modal Layout
 
-```
-+---------------------------------------+
-| Report Issue                      [X] |
-+---------------------------------------+
-| Item: Counter Mat (POS-003)           |
-| Expected Quantity: 3                  |
-+---------------------------------------+
-| Issue Type:                           |
-| ( ) Missing                           |
-| (●) Damaged                           |
-| ( ) Wrong Item                        |
-| ( ) Quantity Short                    |
-+---------------------------------------+
-| Affected Quantity:                    |
-| [- ] [ 1 ] [ +]                       |
-+---------------------------------------+
-| Notes (optional):                     |
-| ┌─────────────────────────────────┐   |
-| │ Box was crushed during shipping │   |
-| └─────────────────────────────────┘   |
-+---------------------------------------+
-| [Cancel]            [Report Issue]    |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -1310,36 +1149,32 @@ This specification covers:
 
 ### 7.1 AssignmentItem.item_status Transitions
 
-```
-[NOT_RECEIVED]
-      │
-      ├──► [PARTIAL_RECEIVED] ──► [RECEIVED]
-      │
-      └──► [RECEIVED]
-      │
-      └──► [ISSUE_REPORTED]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 StoreAssignment Status Transitions
 
-```
-[READY] ──► [RECEIVING] ──► [READY_TO_INSTALL]
-                │
-                └──► [RECEIVING] (partial, can re-enter)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 IssueRequest Status Transitions
 
-```
-[OPEN]
-   │
-   ├──► [TRIAGED] ──► [AWAITING_APPROVAL]
-   │                         │
-   │                         ├──► [APPROVED] ──► [IN_FULFILLMENT]
-   │                         │
-   │                         └──► [DENIED]
-   │
-   └──► [RESOLVED] (if issue was mistake)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.4 State Requirements
@@ -1582,72 +1417,22 @@ This specification covers:
 
 ### 3.3 Layout Specification
 
-```
-+---------------------------------------+
-| ← Install: Summer Promo    [75%]     |
-+---------------------------------------+
-| Locations: 4 of 6 complete            |
-+---------------------------------------+
-|                                       |
-| ▼ Front Window                [2/2] ✓|
-| ┌─────────────────────────────────┐   |
-| │ Window Poster (24x36)      [✓] │   |
-| │ Position: Left side of door    │   |
-| │ [Photo captured]           📷  │   |
-| └─────────────────────────────────┘   |
-| ┌─────────────────────────────────┐   |
-| │ Window Cling                [✓] │   |
-| │ Position: Eye level, center    │   |
-| │ [Photo captured]           📷  │   |
-| └─────────────────────────────────┘   |
-|                                       |
-| ▶ End Cap Display            [0/1]   |
-|                                       |
-| ▶ Checkout Counter           [1/2]   |
-|                                       |
-| ▼ Floor Stand                [0/1]   |
-| ┌─────────────────────────────────┐   |
-| │ Display Stand               [ ] │   |
-| │ Position: Near entrance        │   |
-| │ Pre-install check:             │   |
-| │ [ ] Area clear                 │   |
-| │ [ ] Surface clean              │   |
-| │ [Capture Photo]            📷  │   |
-| └─────────────────────────────────┘   |
-|                                       |
-+---------------------------------------+
-|        [Complete Installation]        |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Item Card Expanded View
 
-```
-+---------------------------------------+
-| Window Poster (24x36)                 |
-| SKU: POS-001                          |
-+---------------------------------------+
-| Location: Front Window - Left         |
-| Instructions:                         |
-| "Place at eye level, ensure all       |
-|  corners are secure and no bubbles"   |
-+---------------------------------------+
-| Reference Image:                      |
-| ┌─────────────────────────────────┐   |
-| │                                 │   |
-| │   [Ghost Image Preview]        │   |
-| │   (tap to enlarge)             │   |
-| │                                 │   |
-| └─────────────────────────────────┘   |
-+---------------------------------------+
-| Pre-Install Checklist:                |
-| [✓] Surface is clean and dry          |
-| [✓] Previous materials removed        |
-| [ ] Positioning matches reference     |
-+---------------------------------------+
-| Status: Ready to photograph           |
-| [Capture Proof Photo]             📷  |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -1841,55 +1626,32 @@ This specification covers:
 
 ### 7.1 AssignmentItem.item_status Transitions
 
-```
-[RECEIVED]
-     │
-     │ Start installation
-     ▼
-[INSTALLING]
-     │
-     │ Photo captured
-     ▼
-[PROOF_SUBMITTED]
-     │
-     │ Mark complete
-     ▼
-[INSTALLED]
-     │
-     ├──► [RETAKE_REQUIRED] ──► [PROOF_SUBMITTED]
-     │
-     ▼
-[VERIFIED] (after approval)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Location Slot States
 
-```
-[NOT_STARTED] ──► [IN_PROGRESS] ──► [COMPLETE]
-                       │
-                       └──► [PARTIAL] (some items waived)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 Install Survey View States
 
-```
-[LOADING]
-    │
-    │ Data loaded
-    ▼
-[INTERACTIVE]
-    │
-    ├──► [SAVING] ──► [INTERACTIVE]
-    │
-    ├──► [CAMERA_OPEN] ──► [INTERACTIVE]
-    │
-    │ All complete
-    ▼
-[READY_TO_COMPLETE]
-    │
-    │ Submit
-    ▼
-[SUBMITTING] ──► [COMPLETE]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.4 State Requirements
@@ -2133,45 +1895,22 @@ This specification covers:
 
 ### 3.3 Camera View Layout
 
-```
-+---------------------------------------+
-| [X]                            [Flash]|
-|                                       |
-|  +-------------------------------+    |
-|  |                               |    |
-|  |     Camera Viewfinder         |    |
-|  |                               |    |
-|  |  +-------------------------+  |    |
-|  |  |     Ghost Image         |  |    |
-|  |  |     (50% opacity)       |  |    |
-|  |  +-------------------------+  |    |
-|  |                               |    |
-|  +-------------------------------+    |
-|                                       |
-|  "Align poster with outline"          |
-|                                       |
-|  [Gallery]    [Shutter]    [Switch]   |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Review View Layout
 
-```
-+---------------------------------------+
-| Review Photo                      [X] |
-+---------------------------------------+
-|                                       |
-|  +-------------------------------+    |
-|  |                               |    |
-|  |     Captured Image            |    |
-|  |     (full resolution)         |    |
-|  |                               |    |
-|  +-------------------------------+    |
-|                                       |
-|  [!] Photo resolution too low         |
-|                                       |
-|  [Retake]             [Use Photo]     |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -2360,65 +2099,32 @@ This specification covers:
 
 ### 7.1 Photo Upload State Machine
 
-```
-[PENDING] ─────────────────┐
-   │                       │
-   │ Get presigned URL     │ Error
-   ▼                       │
-[UPLOADING] ───────────────┤
-   │                       │
-   │ Upload complete       │ Network error
-   ▼                       ▼
-[UPLOADED]             [FAILED]
-   │                       │
-   │ Thumbnail             │ Retry < 3
-   │ generated             ▼
-   ▼                   [PENDING] (retry)
-[COMPLETE]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Camera Flow State Machine
 
-```
-[INITIALIZING] ────────────┐
-   │                       │
-   │ Camera ready          │ Permission denied
-   ▼                       ▼
-[VIEWFINDER]           [ERROR]
-   │
-   │ Shutter pressed
-   ▼
-[CAPTURING]
-   │
-   │ Image captured
-   ▼
-[REVIEWING]
-   │         │
-   │ Retake  │ Use Photo
-   ▼         ▼
-[VIEWFINDER] [UPLOADING]
-               │
-               │ Complete
-               ▼
-           [SUCCESS]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 Offline Queue State Machine
 
-```
-[QUEUED] ─────────────────┐
-   │                      │
-   │ Network available    │ Queue full
-   ▼                      ▼
-[UPLOADING]           [WARNING]
-   │         │
-   │ Success │ Failure
-   ▼         ▼
-[SYNCED]  [RETRY_PENDING]
-             │
-             │ Retry attempt
-             ▼
-         [UPLOADING]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.4 State Requirements
@@ -2696,61 +2402,24 @@ This specification covers:
 
 ### 3.3 Task Card Layout
 
-```
-+---------------------------------------+
-| [Icon] HIGH                Due: Today |
-|                                       |
-| Retake Required                       |
-| Summer Promo - Front Window Poster    |
-|                                       |
-| "Wrong angle - please recapture"      |
-|                                       |
-|                      [View Details >] |
-+---------------------------------------+
-
-+---------------------------------------+
-| [Icon] MEDIUM            Due: 3 days  |
-|                                       |
-| Verify Shipment Receipt               |
-| Holiday Campaign                      |
-|                                       |
-| 5 items delivered                     |
-|                                       |
-|                          [Start >]    |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Attestation Screen Layout
 
 **Route**: `/app/campaign/:id/submit`
 
-```
-+---------------------------------------+
-| Submit Installation               [X] |
-+---------------------------------------+
-|                                       |
-| Summary                               |
-| +-----------------------------------+ |
-| | [check] Front Window (2 items)    | |
-| | [check] End Cap A (1 item)        | |
-| | [check] Checkout Counter (2 items)| |
-| +-----------------------------------+ |
-|                                       |
-| Photos: 8 uploaded                    |
-|                                       |
-| +-----------------------------------+ |
-| | [ ] I certify that all items      | |
-| |     shown above are installed     | |
-| |     correctly at this store.      | |
-| +-----------------------------------+ |
-|                                       |
-| Signature:                            |
-| +-----------------------------------+ |
-| |     [Signature Canvas]            | |
-| +-----------------------------------+ |
-|                                       |
-| [Cancel]              [Submit]        |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -2944,50 +2613,22 @@ ISSUE_UPDATE tasks:
 
 ### 7.1 Task Navigation State Machine
 
-```
-[TASK_LIST] ─────────────────┐
-   │                         │
-   │ Tap task card           │
-   ▼                         │
-[DETERMINE_TYPE]             │
-   │                         │
-   ├── RECEIPT ──────────────┼── Navigate to M003
-   │                         │
-   ├── INSTALL ──────────────┼── Navigate to M004
-   │                         │
-   ├── RETAKE ───────────────┼── Navigate to M008
-   │                         │
-   └── ISSUE_UPDATE ─────────┼── Show modal
-                             │
-                    [TASK_LIST] (on return)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Attestation Submission State Machine
 
-```
-[REVIEW_SUMMARY] ───────────────┐
-   │                            │
-   │ All locations complete?    │ No
-   │ ▼                          ▼
-   │ Yes                    [BLOCKED]
-   ▼
-[CHECKBOX_REQUIRED]
-   │
-   │ Check certification
-   ▼
-[SIGNATURE_REQUIRED]
-   │
-   │ Sign canvas
-   ▼
-[SUBMIT_ENABLED]
-   │
-   │ Tap Submit
-   ▼
-[SUBMITTING]
-   │
-   │ API success
-   ▼
-[SUBMITTED] ──────── Navigate to Dashboard
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 Assignment Status After Attestation
@@ -3252,71 +2893,22 @@ This specification covers:
 
 ### 3.3 Profile Layout
 
-```
-+---------------------------------------+
-| <- Profile                            |
-+---------------------------------------+
-|                                       |
-|            +-------+                  |
-|            |  JD   |                  |
-|            +-------+                  |
-|          John Doe              [Edit] |
-|       john@store.com                  |
-|       (555) 123-4567                  |
-|                                       |
-|       Store: STR-001                  |
-|       Acme Retail - Downtown          |
-|                                       |
-+---------------------------------------+
-| Notifications                         |
-|                                       |
-| Shipment Updates                      |
-|   Email [ON]  Push [ON]               |
-|                                       |
-| Photo Reviews                         |
-|   Email [OFF] Push [ON]               |
-|                                       |
-| Campaign Reminders                    |
-|   Email [ON]  Push [ON]               |
-|                                       |
-| Issue Updates                         |
-|   Email [ON]  Push [OFF]              |
-|                                       |
-+---------------------------------------+
-| Security                              |
-|                                       |
-| Change PIN                        [>] |
-|                                       |
-+---------------------------------------+
-|                                       |
-|          [Logout]                     |
-|                                       |
-|       Version 1.0.0 (build 42)        |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Edit Modal Layout
 
-```
-+---------------------------------------+
-| Edit Profile                      [X] |
-+---------------------------------------+
-|                                       |
-| Name                                  |
-| +-----------------------------------+ |
-| | John Doe                          | |
-| +-----------------------------------+ |
-|                                       |
-| Phone                                 |
-| +-----------------------------------+ |
-| | (555) 123-4567                    | |
-| +-----------------------------------+ |
-|                                       |
-| Email (read-only)                     |
-| john@store.com                        |
-|                                       |
-| [Cancel]              [Save]          |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -3549,64 +3141,32 @@ interface UserSettings {
 
 ### 7.1 Profile Edit State Machine
 
-```
-[VIEWING] ─────────────────┐
-   │                       │
-   │ Tap edit button       │
-   ▼                       │
-[EDITING]                  │
-   │         │             │
-   │ Cancel  │ Save        │
-   ▼         ▼             │
-[VIEWING] [SAVING]         │
-             │             │
-             │ Success     │
-             ▼             │
-         [VIEWING] ────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 PIN Change State Machine
 
-```
-[PROFILE] ─────────────────┐
-   │                       │
-   │ Tap Change PIN        │
-   ▼                       │
-[ENTER_CURRENT] ───────────┤
-   │                       │ Invalid
-   │ Valid                 ▼
-   ▼                   [ERROR]
-[ENTER_NEW]                │
-   │                       │
-   │ Enter new PIN         │
-   ▼                       │
-[CONFIRM_NEW]              │
-   │                       │
-   │ Match                 │ Mismatch
-   ▼                       ▼
-[SAVING]               [ERROR]
-   │
-   │ Success
-   ▼
-[SUCCESS] ──────── Return to Profile
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 Logout State Machine
 
-```
-[PROFILE] ─────────────────┐
-   │                       │
-   │ Tap Logout            │
-   ▼                       │
-[CONFIRM_DIALOG]           │
-   │         │             │
-   │ Cancel  │ Confirm     │
-   ▼         ▼             │
-[PROFILE] [LOGGING_OUT]    │
-             │             │
-             │ Clear data  │
-             ▼             │
-         [LOGIN_SCREEN] ───┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.4 State Requirements
@@ -3875,73 +3435,32 @@ This specification covers:
 
 ### 3.3 Single Retake Card Layout
 
-```
-+---------------------------------------+
-| Retake Required                       |
-| Front Window Poster                   |
-+---------------------------------------+
-|                                       |
-|  +-------------------------------+    |
-|  |                               |    |
-|  |   [Rejected Photo]            |    |
-|  |   (dimmed, X overlay)         |    |
-|  |                               |    |
-|  +-------------------------------+    |
-|                                       |
-|  [!] WRONG_ANGLE                      |
-|                                       |
-|  "Please capture the poster           |
-|   straight-on, not at an angle.       |
-|   Ensure all corners are visible."    |
-|                                       |
-|          [Camera] Retake Photo        |
-|                                       |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 After Capture Layout
 
-```
-+---------------------------------------+
-| Retake Required                       |
-| Front Window Poster                   |
-+---------------------------------------+
-|                                       |
-|  Before          After                |
-|  +----------+    +----------+         |
-|  | [Old]    |    | [New]    |         |
-|  |   X      |    |   Check  |         |
-|  +----------+    +----------+         |
-|                                       |
-|  [Retake Again]       [Submit]        |
-|                                       |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.5 Multiple Retakes List Layout
 
-```
-+---------------------------------------+
-| <- Retakes Required (3)               |
-+---------------------------------------+
-|                                       |
-| +-----------------------------------+ |
-| | Front Window Poster           [>] | |
-| | [!] WRONG_ANGLE                   | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | End Cap Display               [>] | |
-| | [!] TOO_DARK                      | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | Checkout Counter              [>] | |
-| | [!] BLURRY                        | |
-| +-----------------------------------+ |
-|                                       |
-|        [Submit All Retakes]           |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -4156,72 +3675,32 @@ newpopsys://app/campaign/{campaignId}/retake?items={assignmentItemIds}
 
 ### 7.1 Retake Flow State Machine
 
-```
-[LIST_REJECTIONS] ──────────────┐
-   │                            │
-   │ Tap rejected item          │
-   ▼                            │
-[VIEW_REJECTION]                │
-   │                            │
-   │ Tap Retake Photo           │
-   ▼                            │
-[CAMERA] (M005 component)       │
-   │                            │
-   │ Photo captured             │
-   ▼                            │
-[COMPARE]                       │
-   │         │                  │
-   │ Retake  │ Submit           │
-   │ Again   ▼                  │
-   │     [UPLOADING]            │
-   ▼         │                  │
-[CAMERA]     │ Success          │
-             ▼                  │
-         [SUBMITTED]            │
-             │                  │
-             │ More retakes?    │
-             ▼                  │
-         [LIST_REJECTIONS] ─────┘
-             │
-             │ All complete
-             ▼
-         [DASHBOARD]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Photo Status State Machine
 
-```
-Old Photo:
-  REJECTED ────────────────────┐
-     │                         │
-     │ Retake submitted        │
-     ▼                         │
-  SUPERSEDED ──────────────────┘
-
-New Photo:
-  [Created] ───────────────────┐
-     │                         │
-     │ Upload complete         │
-     ▼                         │
-  PENDING (review_status)      │
-     │                         │
-     │ Brand reviews           │
-     ▼                         │
-  APPROVED or REJECTED ────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 Assignment Item State Machine
 
-```
-RETAKE_REQUIRED ───────────────┐
-   │                           │
-   │ Retake submitted          │
-   ▼                           │
-PROOF_SUBMITTED                │
-   │                           │
-   │ Photo approved            │
-   ▼                           │
-VERIFIED ──────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.4 State Requirements

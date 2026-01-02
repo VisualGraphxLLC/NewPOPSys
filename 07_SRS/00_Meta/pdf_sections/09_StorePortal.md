@@ -89,28 +89,12 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 3.3 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Dashboard                                    Store: #12345  │
-├─────────────────────────────────────────────────────────────┤
-│  [KPI-001]    [KPI-002]    [KPI-003]    [KPI-004]          │
-│   Active       Pending      Completed    Compliance        │
-│     3            5            12           94%             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Active Campaigns                    Pending Actions        │
-│  ┌─────────────────────────┐        ┌─────────────────────┐│
-│  │ Campaign 1        [>]  │        │ ⚠ Receive shipment  ││
-│  │ Campaign 2        [>]  │        │ ○ Upload photos     ││
-│  │ Campaign 3        [>]  │        │ ○ Complete survey   ││
-│  └─────────────────────────┘        └─────────────────────┘│
-│                                                             │
-│  Recent Activity              Team Status (Manager only)    │
-│  ┌─────────────────────────┐  ┌─────────────────────────┐  │
-│  │ Jane uploaded photo     │  │ 4 active members        │  │
-│  │ John completed survey   │  │ 2 pending invitations   │  │
-│  └─────────────────────────┘  └─────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Component Requirements
@@ -282,15 +266,12 @@ X-Tenant-ID: {tenant_uuid}
 
 ### 7.1 Dashboard Load States
 
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   INITIAL   │────▶│   LOADING   │────▶│   LOADED    │
-└─────────────┘     └─────────────┘     └─────────────┘
-                           │                   │
-                           ▼                   ▼
-                    ┌─────────────┐     ┌─────────────┐
-                    │    ERROR    │     │  REFRESHING │
-                    └─────────────┘     └─────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 State Descriptions
@@ -509,36 +490,12 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 3.2 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Campaigns                                 [Search] [Export] │
-├─────────────────────────────────────────────────────────────┤
-│ [Active] [Completed] [All]                                  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ Campaign          Status           Dates        Progress│ │
-│ ├─────────────────────────────────────────────────────────┤ │
-│ │ Summer Promo      [Installing]     Jun 1-30    ████░ 75%│ │
-│ │ Spring Sale       [Pending Review] May 1-31    █████ 100%│ │
-│ │ Winter Display    [Complete ✓]     Dec 1-31    █████ 100%│ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ ┌─ Expanded Detail Panel ──────────────────────────────────┐│
-│ │ Summer Promo 2024                                        ││
-│ │ ─────────────────                                        ││
-│ │ Install Window: Jun 1 - Jun 30, 2024                     ││
-│ │ Status: Installing                                       ││
-│ │                                                          ││
-│ │ Tasks:                                                   ││
-│ │ ✓ Shipment Received    ✓ Pre-install Survey              ││
-│ │ ○ Install Complete     ○ Photo Upload (3/5)              ││
-│ │ ○ Completion Survey                                      ││
-│ │                                                          ││
-│ │ Items: 5 kit items                                       ││
-│ │ [View Photos] [Report Issue] [Continue Installation]    ││
-│ └──────────────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.3 Component Requirements
@@ -773,16 +730,12 @@ ORDER BY c.install_end DESC
 
 ### 7.1 Page States
 
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   LOADING   │────▶│   LOADED    │────▶│  FILTERING  │
-└─────────────┘     └─────────────┘     └─────────────┘
-       │                  │                    │
-       ▼                  ▼                    ▼
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│    ERROR    │     │   DETAIL    │     │  EXPORTING  │
-└─────────────┘     │    OPEN     │     └─────────────┘
-                    └─────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 State Descriptions
@@ -1001,34 +954,12 @@ The Photo Gallery screen provides store personnel with a centralized view of all
 
 ### 3.1 Component Hierarchy
 
-```
-PhotoGalleryPage
-├── PageHeader
-│   ├── TitleSection ("Photo Gallery")
-│   └── StatusSummary (count by status)
-├── FilterBar
-│   ├── CampaignFilter (dropdown)
-│   ├── StatusFilter (dropdown)
-│   ├── DateRangeFilter (dropdown)
-│   ├── ItemTypeFilter (multi-select)
-│   └── UploadedByFilter (dropdown) [Store Manager only]
-├── ViewToggle
-│   ├── GridViewButton
-│   └── ListViewButton
-├── ActionBar
-│   └── BulkDownloadButton [Store Manager only]
-├── ContentArea
-│   ├── PhotoGrid (default view)
-│   │   └── PhotoCard[] (repeating)
-│   └── PhotoList (alternate view)
-│       └── PhotoRow[] (repeating)
-├── Pagination
-│   ├── ResultCount
-│   └── LoadMoreButton
-└── LightboxModal
-    ├── PhotoViewer
-    ├── PhotoInfoPanel
-    └── NavigationControls
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -1047,18 +978,12 @@ PhotoGalleryPage
 
 ### 3.3 Photo Card Layout
 
-```
-┌─────────────────┐
-│                 │
-│    [Thumbnail]  │
-│                 │
-│       ✓         │  ← Status overlay
-├─────────────────┤
-│ Window Poster   │  ← Item name
-│ Summer Promo    │  ← Campaign name
-│ Jun 15, 2025    │  ← Upload date
-│ by John D.      │  ← Uploader name
-└─────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 Status Overlay Specifications
@@ -1259,22 +1184,12 @@ LIMIT :limit OFFSET :offset
 
 ### 7.1 Photo Review Status States
 
-```
-                    ┌─────────────┐
-                    │   PENDING   │
-                    └──────┬──────┘
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            │
-       ┌──────────┐  ┌──────────┐       │
-       │ APPROVED │  │ REJECTED │       │
-       └──────────┘  └────┬─────┘       │
-                          │             │
-                          ▼             │
-                    ┌──────────┐        │
-                    │SUPERSEDED│←───────┘
-                    └──────────┘
-                    (after retake)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Status Transition Rules
@@ -1517,46 +1432,12 @@ The Team Management screen enables Store Managers to administer their store's te
 
 ### 3.1 Component Hierarchy
 
-```
-TeamManagementPage
-├── PageHeader
-│   ├── TitleSection ("Team Management")
-│   └── InviteMemberButton
-├── ActiveMembersSection
-│   ├── SectionHeader ("Active Members ({count})")
-│   └── MemberTable
-│       └── MemberRow[] (repeating)
-│           ├── AvatarWithName
-│           ├── EmailAddress
-│           ├── RoleBadge
-│           ├── StatusBadge
-│           ├── LastActiveDate
-│           └── ActionMenu
-├── PendingInvitationsSection
-│   ├── SectionHeader ("Pending Invitations ({count})")
-│   └── InvitationTable
-│       └── InvitationRow[] (repeating)
-│           ├── EmailAddress
-│           ├── RoleBadge
-│           ├── InvitedDate
-│           ├── ExpiresDate
-│           └── ActionButtons (Resend, Cancel)
-├── ActivitySummarySection
-│   ├── SectionHeader ("Team Activity (Last 30 Days)")
-│   └── ActivityTable
-│       └── ActivityRow[] (repeating)
-├── InviteMemberModal
-│   ├── EmailInput
-│   ├── RoleSelector
-│   ├── PersonalMessageInput
-│   └── ActionButtons (Cancel, Send Invitation)
-└── EditMemberModal
-    ├── MemberInfo
-    ├── RoleDropdown
-    ├── StatusToggle
-    ├── ActivitySummary
-    ├── RemoveButton
-    └── ActionButtons (Cancel, Save)
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -1818,36 +1699,22 @@ ORDER BY u.name
 
 ### 7.1 Invitation Status States
 
-```
-     ┌──────────┐
-     │ PENDING  │
-     └────┬─────┘
-          │
-    ┌─────┴─────┐
-    ▼           ▼
-┌────────┐  ┌─────────┐
-│ACCEPTED│  │ EXPIRED │
-└────────┘  └─────────┘
-    │
-    ▼
-┌─────────────┐
-│ MEMBERSHIP  │
-│  CREATED    │
-└─────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Member Status States
 
-```
-┌──────────┐       ┌──────────┐
-│  ACTIVE  │◄─────►│ INACTIVE │
-└────┬─────┘       └──────────┘
-     │
-     ▼
-┌──────────┐
-│ REMOVED  │
-│(soft del)│
-└──────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 State Transition Actions
@@ -2048,18 +1915,12 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.4 Screen Context
 
-```
-Store Portal Navigation:
-├── Dashboard (S001)
-├── Campaign History (S002)
-├── Photo Gallery (S003)
-├── Team Management (S004)
-└── Reports (S005) ← Current Screen
-    ├── Overview Tab
-    ├── Campaigns Tab
-    ├── Photos Tab
-    ├── Team Tab
-    └── Issues Tab
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -2104,24 +1965,12 @@ REQ-S005-SEC-005: Role Enforcement
 
 ### 3.1 Component Hierarchy
 
-```
-ReportsScreen
-├── PageHeader
-│   ├── Title ("Store Reports")
-│   ├── DateRangePicker
-│   └── ExportButton
-├── TabNavigation
-│   ├── OverviewTab
-│   ├── CampaignsTab
-│   ├── PhotosTab
-│   ├── TeamTab
-│   └── IssuesTab
-├── TabContent
-│   ├── KPICardGrid (4 cards)
-│   ├── TrendChart (line chart)
-│   ├── BreakdownCharts (pie, bar)
-│   └── DataTable (detailed data)
-└── LoadingState / EmptyState
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -2186,35 +2035,12 @@ ReportsScreen
 
 ### 3.3 Reports Layout
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Store Reports                   [Last 90 Days ▼] [Export]   │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ [Overview] [Campaigns] [Photos] [Team] [Issues]            │
-│                                                             │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │ Compliance│  │ On-Time  │  │ Photo    │  │ Avg Time │   │
-│  │ Rate     │  │ Rate     │  │ Approval │  │ to Comp. │   │
-│  │   94%    │  │   88%    │  │   97%    │  │  4.2 days│   │
-│  │  ↑ 3%    │  │  ↑ 5%    │  │  ↓ 1%    │  │  ↓ 0.5d  │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
-│                                                             │
-│  Campaign Performance Trend                                 │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │     Line Chart: Compliance % over time              │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                                                             │
-│  ┌─────────────────────────┐  ┌─────────────────────────┐  │
-│  │ Photo Rejection Reasons │  │ Team Contribution       │  │
-│  │      [Pie Chart]        │  │      [Bar Chart]        │  │
-│  └─────────────────────────┘  └─────────────────────────┘  │
-│                                                             │
-│  Recent Campaigns                                           │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │ Campaign    │ Completed │ On-Time │ Photos │ Issues │   │
-│  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -2580,37 +2406,12 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 6.2 Request/Response Flow
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Reports Data Flow                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Store Portal                  API Gateway                      │
-│       │                            │                            │
-│       │  GET /stores/{id}/reports  │                            │
-│       ├───────────────────────────>│                            │
-│       │      ?range=90d            │                            │
-│       │                            │                            │
-│       │                     ┌──────┴──────┐                     │
-│       │                     │   Validate  │                     │
-│       │                     │  JWT Token  │                     │
-│       │                     │ Store Access│                     │
-│       │                     └──────┬──────┘                     │
-│       │                            │                            │
-│       │                     ┌──────┴──────┐                     │
-│       │                     │  Aggregate  │                     │
-│       │                     │   Metrics   │                     │
-│       │                     │ (6 queries) │                     │
-│       │                     └──────┬──────┘                     │
-│       │                            │                            │
-│       │    200 OK + JSON           │                            │
-│       │<───────────────────────────┤                            │
-│       │                            │                            │
-│       ├────────────────────────────┤                            │
-│       │  Render Charts & Tables    │                            │
-│       └────────────────────────────┘                            │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 6.3 API Requirements
@@ -2629,40 +2430,12 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 7.1 Screen States
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   Reports Screen States                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│    ┌─────────────┐                                              │
-│    │   LOADING   │                                              │
-│    │  (Initial)  │                                              │
-│    └──────┬──────┘                                              │
-│           │                                                     │
-│           ▼                                                     │
-│    ┌──────┴──────┐        ┌─────────────┐                       │
-│    │   SUCCESS   │◄───────│  REFRESHING │                       │
-│    │ (Data Ready)│────────│(Range Change)│                      │
-│    └──────┬──────┘        └─────────────┘                       │
-│           │                      ▲                              │
-│           │                      │                              │
-│           ▼                      │                              │
-│    ┌──────┴──────┐        ┌──────┴──────┐                       │
-│    │  EXPORTING  │────────│  NAVIGATING │                       │
-│    │(Generating) │        │ (Tab Switch)│                       │
-│    └─────────────┘        └─────────────┘                       │
-│                                                                 │
-│    ┌─────────────┐                                              │
-│    │    ERROR    │ ← Network/Server failure                     │
-│    │   (Retry)   │                                              │
-│    └─────────────┘                                              │
-│                                                                 │
-│    ┌─────────────┐                                              │
-│    │    EMPTY    │ ← No data for period                         │
-│    │ (No Data)   │                                              │
-│    └─────────────┘                                              │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 State Definitions

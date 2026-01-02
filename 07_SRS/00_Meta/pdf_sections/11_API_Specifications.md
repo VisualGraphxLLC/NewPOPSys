@@ -66,13 +66,12 @@ X-API-Key: vg_live_your_api_key_here
 ```
 
 #### 3.1.2 Authentication Flow
-```
-┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   Client    │────▶│  API Gateway     │────▶│  Auth Service   │
-│             │     │                  │     │                 │
-│             │◀────│  X-API-Key       │◀────│  Validate Key   │
-│             │     │  Header Check    │     │  & Permissions  │
-└─────────────┘     └──────────────────┘     └─────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 API Key Security Requirements
@@ -1754,18 +1753,12 @@ This document specifies the external system integrations for NewPOPSys, detailin
 
 ### 1.2 Integration Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        NewPOPSys Core                           │
-├──────────────┬──────────────┬──────────────┬───────────────────┤
-│  Orders API  │ Shipments API│  Events API  │   Identity API    │
-└──────┬───────┴──────┬───────┴──────┬───────┴─────────┬─────────┘
-       │              │              │                 │
-       ▼              ▼              ▼                 ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌─────────────┐
-│   PSP MIS    │ │   Shipping   │ │  Brand ERP   │ │     SSO     │
-│   Systems    │ │   Carriers   │ │   Systems    │ │  Providers  │
-└──────────────┘ └──────────────┘ └──────────────┘ └─────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 1.3 Integration Partners Summary

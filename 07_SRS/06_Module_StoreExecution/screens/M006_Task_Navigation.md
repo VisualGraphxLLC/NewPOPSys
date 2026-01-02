@@ -95,62 +95,13 @@
 
 ### 3.3 Task Card Layout
 
-```
-+---------------------------------------+
-| [Icon] HIGH                Due: Today |
-|                                       |
-| Retake Required                       |
-| Summer Promo - Front Window Poster    |
-|                                       |
-| "Wrong angle - please recapture"      |
-|                                       |
-|                      [View Details >] |
-+---------------------------------------+
-
-+---------------------------------------+
-| [Icon] MEDIUM            Due: 3 days  |
-|                                       |
-| Verify Shipment Receipt               |
-| Holiday Campaign                      |
-|                                       |
-| 5 items delivered                     |
-|                                       |
-|                          [Start >]    |
-+---------------------------------------+
-```
+![Tasks](../../screenshots/Store_Execution/mobile_tasks.png)
 
 ### 3.4 Attestation Screen Layout
 
 **Route**: `/app/campaign/:id/submit`
 
-```
-+---------------------------------------+
-| Submit Installation               [X] |
-+---------------------------------------+
-|                                       |
-| Summary                               |
-| +-----------------------------------+ |
-| | [check] Front Window (2 items)    | |
-| | [check] End Cap A (1 item)        | |
-| | [check] Checkout Counter (2 items)| |
-| +-----------------------------------+ |
-|                                       |
-| Photos: 8 uploaded                    |
-|                                       |
-| +-----------------------------------+ |
-| | [ ] I certify that all items      | |
-| |     shown above are installed     | |
-| |     correctly at this store.      | |
-| +-----------------------------------+ |
-|                                       |
-| Signature:                            |
-| +-----------------------------------+ |
-| |     [Signature Canvas]            | |
-| +-----------------------------------+ |
-|                                       |
-| [Cancel]              [Submit]        |
-+---------------------------------------+
-```
+![Tasks](../../screenshots/Store_Execution/mobile_tasks.png)
 
 ---
 

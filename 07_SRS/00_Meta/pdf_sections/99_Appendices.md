@@ -730,34 +730,12 @@ All waived items with justification
 
 **Template Structure:**
 
-```
-+--------------------------------------------------+
-|  [TENANT LOGO]           Campaign Completion     |
-|                          Certificate             |
-+--------------------------------------------------+
-|                                                  |
-|  This certifies that                             |
-|                                                  |
-|       [STORE NAME]                               |
-|       Store #[STORE_NUMBER]                      |
-|       [STORE ADDRESS]                            |
-|                                                  |
-|  has successfully completed all requirements     |
-|  for the campaign:                               |
-|                                                  |
-|       [CAMPAIGN NAME]                            |
-|       [BRAND NAME]                               |
-|                                                  |
-|  Completion Date: [DATE]                         |
-|  Items Installed: [COUNT]                        |
-|  Photos Approved: [COUNT]                        |
-|                                                  |
-|  Verified by: [REVIEWER NAME]                    |
-|  Certificate ID: [ULID]                          |
-|                                                  |
-+--------------------------------------------------+
-|  Page 1 of 1          Generated: [TIMESTAMP]     |
-+--------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### C.4.3 Photo Proof Report (PDF)
@@ -1026,17 +1004,12 @@ Photos are exported as metadata with signed URLs (not embedded images).
 For bulk photo download, a ZIP archive is generated:
 
 **Structure:**
-```
-photos_{campaign_id}_{YYYYMMDD}.zip
-├── manifest.json
-├── store_1234/
-│   ├── item_ABC_slot_1.jpg
-│   ├── item_ABC_slot_1_retake.jpg
-│   └── item_DEF_slot_2.jpg
-├── store_5678/
-│   └── ...
-└── rejected/
-    └── ...
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 **Manifest.json:**

@@ -122,142 +122,60 @@ Priority Order (highest first):
 
 ### 3.3 Login Form Wireframe
 
-```
-+-------------------------------------------------------------+
-|                                                             |
-|                    +-------------------+                    |
-|                    |   [NewPOPSys]     |                    |
-|                    |      LOGO         |                    |
-|                    +-------------------+                    |
-|                                                             |
-|                    Welcome Back                             |
-|                    Sign in to your account                  |
-|                                                             |
-|            +-----------------------------------+            |
-|            | Email Address                     |            |
-|            | +-------------------------------+ |            |
-|            | | user@company.com              | |            |
-|            | +-------------------------------+ |            |
-|            |                                   |            |
-|            | Password                          |            |
-|            | +-------------------------------+ |            |
-|            | | ************           [eye]  | |            |
-|            | +-------------------------------+ |            |
-|            |                                   |            |
-|            | [x] Remember me    Forgot pass?   |            |
-|            |                                   |            |
-|            | +-------------------------------+ |            |
-|            | |         Sign In               | |            |
-|            | +-------------------------------+ |            |
-|            |                                   |            |
-|            | -------------- or -------------- |            |
-|            |                                   |            |
-|            | +-------------------------------+ |            |
-|            | | [lock] Sign in with SSO       | |            |
-|            | +-------------------------------+ |            |
-|            +-----------------------------------+            |
-|                                                             |
-|            Need help? Contact your administrator            |
-|                                                             |
-+-------------------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.4 MFA Modal
 
 **REQ-L001-UI-002**: When MFA is required, the system SHALL display a modal dialog for code entry.
 
-```
-+---------------------------------------+
-| Two-Factor Authentication         [X] |
-+---------------------------------------+
-|                                       |
-| Enter the 6-digit code from your      |
-| authenticator app                     |
-|                                       |
-|       +---+---+---+---+---+---+       |
-|       | _ | _ | _ | _ | _ | _ |       |
-|       +---+---+---+---+---+---+       |
-|                                       |
-| [ ] Trust this device for 30 days     |
-|                                       |
-| [Cancel]                   [Verify]   |
-|                                       |
-| Lost access? Use backup code          |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.5 Forgot Password Modal
 
 **REQ-L001-UI-003**: Password reset SHALL be initiated via a modal dialog.
 
-```
-+---------------------------------------+
-| Reset Password                    [X] |
-+---------------------------------------+
-|                                       |
-| Enter your email address and we'll    |
-| send you a link to reset your         |
-| password.                             |
-|                                       |
-| Email Address                         |
-| +-----------------------------------+ |
-| | user@company.com                  | |
-| +-----------------------------------+ |
-|                                       |
-| [Cancel]           [Send Reset Link]  |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.6 SSO Domain Entry Modal
 
 **REQ-L001-UI-004**: SSO authentication SHALL prompt for company domain.
 
-```
-+---------------------------------------+
-| Enterprise Sign In                [X] |
-+---------------------------------------+
-|                                       |
-| Enter your company domain to be       |
-| redirected to your identity           |
-| provider.                             |
-|                                       |
-| Company Domain                        |
-| +-----------------------------------+ |
-| | acmecorp.com                      | |
-| +-----------------------------------+ |
-|                                       |
-| [Cancel]                  [Continue]  |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.7 Role Selector Modal
 
 **REQ-L001-UI-005**: For multi-role users, the system SHALL display a role selection modal.
 
-```
-+---------------------------------------+
-| Select Account                    [X] |
-+---------------------------------------+
-|                                       |
-| You have access to multiple           |
-| accounts. Select one to continue:     |
-|                                       |
-| +-----------------------------------+ |
-| | [building] Acme Print Services    | |
-| |    PSP Administrator              | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | [tag] Brand Corp                  | |
-| |    Brand Admin                    | |
-| +-----------------------------------+ |
-|                                       |
-| +-----------------------------------+ |
-| | [store] Downtown Store #123       | |
-| |    Store Manager                  | |
-| +-----------------------------------+ |
-|                                       |
-+---------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---
@@ -538,27 +456,12 @@ interface SessionData {
 
 **REQ-L001-ST-003**: Password reset flow states:
 
-```
-[Forgot Password Modal] --submit--> [Sending Email]
-    |                                    |
-    v                                    v
-[Cancelled]                         [Email Sent]
-                                         |
-                                    (user clicks link)
-                                         v
-                                    [Token Validation]
-                                         |
-                           +-------------+-------------+
-                           | (valid)                   | (expired/invalid)
-                           v                           v
-                    [New Password Form]           [Token Error]
-                           |
-                      --submit-->
-                           v
-                    [Password Updated]
-                           |
-                           v
-                    [Redirect to Login]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---

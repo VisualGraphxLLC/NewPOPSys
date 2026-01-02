@@ -60,17 +60,12 @@ NewPOPSys supports nine (9) distinct personas organized across four hierarchical
 
 ## 4. Permission Hierarchy
 
-```
-Platform Admin (P01)
-    └── PSP Admin (P02)
-            └── Production Operator (P03)
-            └── Brand Admin (P04)
-                    └── Campaign Manager (P05)
-                    └── Regional Manager (P06)
-                            └── Store Manager (P07)
-                                    └── Store Operator (P08)
-
-Integration User (P09) - Parallel service account with API-scoped access
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---

@@ -67,29 +67,12 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 
 ### 3.1 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ [Logo] Brand Admin Portal          [User Menu ▼] [Logout]   │
-├─────────────────────────────────────────────────────────────┤
-│ Dashboard                                                   │
-├─────────────────────────────────────────────────────────────┤
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐        │
-│ │ Active   │ │ Total    │ │ Pending  │ │ Compliance│        │
-│ │ Campaigns│ │ Stores   │ │ Reviews  │ │ Rate     │        │
-│ │    12    │ │   847    │ │    23    │ │   94.2%  │        │
-│ └──────────┘ └──────────┘ └──────────┘ └──────────┘        │
-│                                                             │
-│ Quick Actions                                               │
-│ [+ New Campaign]  [Review Photos]  [View All Stores]       │
-│                                                             │
-│ Recent Campaigns                                            │
-│ ┌─────────────────────────────────────────────────────────┐│
-│ │ Campaign Name        Status    Stores   Progress        ││
-│ │ Summer Promo 2025    Active    234      ████████░░ 80%  ││
-│ │ Holiday Display      Draft      --      Not started     ││
-│ │ Q4 End Caps          Active    156      ██████████ 100% ││
-│ └─────────────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -411,24 +394,12 @@ The Campaign List screen provides brand administrators with a comprehensive view
 
 ### 3.1 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Campaigns                              [+ New Campaign]     │
-├─────────────────────────────────────────────────────────────┤
-│ [All] [Active] [Completed] [Draft] [Archived]               │
-├─────────────────────────────────────────────────────────────┤
-│ 🔍 Search campaigns...          [Filter ▼]  [Export ▼]      │
-├─────────────────────────────────────────────────────────────┤
-│ □ Campaign Name      Status    Stores  Progress   Actions   │
-│ ─────────────────────────────────────────────────────────── │
-│ □ Summer Promo 2025  ●Active   234     ████░░ 80%  [•••]   │
-│ □ Holiday Display    ○Draft     --     --          [•••]   │
-│ □ Q4 End Caps        ●Active   156     ██████ 100% [•••]   │
-│ □ Back to School     ✓Complete 892     ██████ 100% [•••]   │
-│ □ Spring Refresh     ○Draft     --     --          [•••]   │
-├─────────────────────────────────────────────────────────────┤
-│ Showing 1-5 of 47              [<] [1] [2] [3] [>]         │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -615,21 +586,12 @@ GET /api/v1/campaigns
 
 ### 7.1 Campaign Lifecycle State Machine
 
-```
-┌─────────┐    publish     ┌───────────┐
-│  DRAFT  │ ─────────────→ │ SCHEDULED │
-└────┬────┘                └─────┬─────┘
-     │                           │ start_date reached
-     │ delete                    ↓
-     ↓                     ┌───────────┐    complete    ┌───────────┐
-  [Deleted]                │ PUBLISHED │ ─────────────→ │ COMPLETED │
-                           └─────┬─────┘                └─────┬─────┘
-                                 │                             │
-                                 │ cancel                      │ archive
-                                 ↓                             ↓
-                           ┌───────────┐    archive     ┌───────────┐
-                           │ CANCELLED │ ─────────────→ │ ARCHIVED  │
-                           └───────────┘                └───────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 UI State Management
@@ -805,42 +767,12 @@ The Store Selection screen is the first step in the Campaign Builder wizard. It 
 
 ### 3.1 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Create Campaign                                             │
-├─────────────────────────────────────────────────────────────┤
-│ Step 1: Select Stores  ───●───────────────────────────────  │
-│ Step 2: Define Kit     ────○──────────────────────────────  │
-│ Step 3: Review         ────○──────────────────────────────  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ Campaign Name *                                             │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ Summer Promo 2025                                       │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ Store Selection Recipe                                      │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ INCLUDE stores where:                                   │ │
-│ │ ┌───────────────────────────────────────────────────┐   │ │
-│ │ │ Region    [=]  [Northeast        ▼]  [×]          │   │ │
-│ │ └───────────────────────────────────────────────────┘   │ │
-│ │ ┌───────────────────────────────────────────────────┐   │ │
-│ │ │ Group     [=]  [Premium Locations ▼]  [×]         │   │ │
-│ │ └───────────────────────────────────────────────────┘   │ │
-│ │ [+ Add Rule]                                            │ │
-│ │                                                         │ │
-│ │ EXCLUDE stores where:                                   │ │
-│ │ ┌───────────────────────────────────────────────────┐   │ │
-│ │ │ Status    [=]  [Inactive          ▼]  [×]         │   │ │
-│ │ └───────────────────────────────────────────────────┘   │ │
-│ │ [+ Add Exclusion]                                       │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ Preview: 234 stores selected              [View Store List] │
-│                                                             │
-│ [Cancel]                            [Save & Continue →]     │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -1038,11 +970,12 @@ The Store Selection screen is the first step in the Campaign Builder wizard. It 
 
 ### 7.1 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] ──save──→ [Step 2: Kit] ──save──→ [Step 3: Review]
-       ↑                         │                        │
-       └─────────back────────────┘                        │
-       └──────────────────back────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Form State Machine
@@ -1240,37 +1173,12 @@ The Kit Definition screen is the second step in the Campaign Builder wizard. It 
 
 ### 3.1 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Create Campaign                                             │
-├─────────────────────────────────────────────────────────────┤
-│ Step 1: Select Stores  ───✓───────────────────────────────  │
-│ Step 2: Define Kit     ───●───────────────────────────────  │
-│ Step 3: Review         ────○──────────────────────────────  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ Kit Items                                    [+ Add Item]   │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ ≡  1. Summer Poster (24x36)                             │ │
-│ │     Type: POSTER  │  Qty: 2  │  Location: FRONT_WINDOW  │ │
-│ │     📷 Photo Required: Front view                [Edit] │ │
-│ │                                                   [×]   │ │
-│ ├─────────────────────────────────────────────────────────┤ │
-│ │ ≡  2. Counter Display Stand                             │ │
-│ │     Type: COUNTER_DISPLAY  │  Qty: 1  │  Location: --   │ │
-│ │     📷 No photo required                         [Edit] │ │
-│ │                                                   [×]   │ │
-│ ├─────────────────────────────────────────────────────────┤ │
-│ │ ≡  3. Window Cling Set                                  │ │
-│ │     Type: WINDOW_CLING  │  Qty: 4  │  Location: ENTRY   │ │
-│ │     📷 Photo Required: Installed view            [Edit] │ │
-│ │                                                   [×]   │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ Kit Summary: 3 items, 7 total units                         │
-│                                                             │
-│ [← Back]                              [Save & Continue →]   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -1495,12 +1403,12 @@ The Kit Definition screen is the second step in the Campaign Builder wizard. It 
 
 ### 7.1 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] ←─back─┐
-       ↓ save           │
-[Step 2: Kit] ──────────┘
-       ↓ save
-[Step 3: Review] ←─back─ [Step 2: Kit]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Item Edit State Machine
@@ -1711,53 +1619,12 @@ The Campaign Review screen is the final step in the Campaign Builder wizard. It 
 
 ### 3.1 Layout Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Create Campaign                                             │
-├─────────────────────────────────────────────────────────────┤
-│ Step 1: Select Stores  ───────────────────●─────────────    │
-│ Step 2: Define Kit     ───────────────────●─────────────    │
-│ Step 3: Review         ───────────────────●─────────────    │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│ Campaign Summary                                            │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ Campaign Name: Summer Promo 2025                   [✎]  │ │
-│ │ Status: Draft                                           │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ ┌───────────────────────┐ ┌───────────────────────┐        │
-│ │ 📍 Store Selection    │ │ 📦 Kit Definition     │        │
-│ │                       │ │                       │        │
-│ │ 234 stores selected   │ │ 5 items defined       │        │
-│ │ 3 regions             │ │ 12 total pieces       │        │
-│ │ 0 exclusions          │ │ 3 photo requirements  │        │
-│ │                       │ │                       │        │
-│ │ [View Details]        │ │ [View Details]        │        │
-│ └───────────────────────┘ └───────────────────────┘        │
-│                                                             │
-│ Installation Schedule                                       │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ Install Start *           Install End *                 │ │
-│ │ ┌─────────────────┐       ┌─────────────────┐          │ │
-│ │ │ 📅 Dec 1, 2025  │       │ 📅 Dec 31, 2025 │          │ │
-│ │ └─────────────────┘       └─────────────────┘          │ │
-│ │                                                         │ │
-│ │ ☑ Allow late installations (extend by 7 days)          │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ Pre-Launch Checklist                                        │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ ✓ Campaign name defined                                 │ │
-│ │ ✓ At least one store selected (234 stores)             │ │
-│ │ ✓ Kit items defined (5 items)                          │ │
-│ │ ✓ Photo requirements configured                        │ │
-│ │ ✓ Install dates set                                    │ │
-│ │ ○ All items have SKUs (2 missing)                [Fix] │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│                                                             │
-│ [← Back]         [Save Draft]         [Publish Campaign]    │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -2033,29 +1900,22 @@ GROUP BY c.id;
 
 ### 7.1 Campaign Status Transition (Publish)
 
-```
-                                  publish (start > today)
-[DRAFT] ────────────────────────────────────────────────→ [SCHEDULED]
-    │                                                          │
-    │ publish (start <= today)                    start_date   │
-    └─────────────────→ [PUBLISHED] ←──────────────────────────┘
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] ←───────back───────── [Step 2: Kit]
-                                              │
-                                              │ continue
-                                              ↓
-                           [Step 3: Review]
-                                  │
-                    ┌─────────────┼─────────────┐
-                    ↓             ↓             ↓
-              [Save Draft]   [Publish]    [Back to Kit]
-                    │             │
-                    ↓             ↓
-            [Campaign List]  [Campaign Detail]
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.3 Publish State Machine
@@ -2262,27 +2122,12 @@ The Store List screen provides brand administrators with a comprehensive view of
 
 ### 3.1 Layout Structure
 
-```
-+-------------------------------------------------------------+
-| Stores                                      [+ Invite Store] |
-+-------------------------------------------------------------+
-| [All] [Active] [Inactive] [Onboarding] [Suspended]          |
-+-------------------------------------------------------------+
-| Search stores...          [Region v] [Group v] [Export v]    |
-+-------------------------------------------------------------+
-| [ ] Store              Region     Status    Campaigns  [...]  |
-| ----------------------------------------------------------------|
-| [ ] Store #1234        Northeast  Active    3          [...]  |
-|     789 Main Street, Boston, MA 02101                         |
-| [ ] Store #5678        Midwest    Active    2          [...]  |
-|     456 Oak Ave, Chicago, IL 60601                            |
-| [ ] Store #9012        Southeast  Onboard   0          [...]  |
-|     123 Palm Dr, Miami, FL 33101                              |
-| [ ] Store #3456        Northeast  Inactive  1          [...]  |
-|     321 Elm St, New York, NY 10001                            |
-+-------------------------------------------------------------+
-| Showing 1-20 of 847             [<] [1] [2] [3] ... [43] [>] |
-+-------------------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications
@@ -2554,19 +2399,12 @@ GET /api/v1/stores
 
 ### 7.1 Store Status State Machine
 
-```
-[ONBOARDING] ──accept invitation──> [ACTIVE]
-                                       |
-                        +--------------+---------------+
-                        |              |               |
-                        v              v               v
-                   [INACTIVE]    [SUSPENDED]    (stays ACTIVE)
-                        |              |
-                        |              |
-                        +------+-------+
-                               |
-                               v
-                           [ACTIVE]  <-- reactivate
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 7.2 Store Status Transitions
@@ -2787,40 +2625,12 @@ The Photo Verification Queue provides brand administrators with a streamlined in
 
 ### 3.1 Layout Structure
 
-```
-+-------------------------------------------------------------+
-| Photo Verification                      Pending: 23          |
-+-------------------------------------------------------------+
-| [All] [Pending] [Approved] [Rejected] [Retake Requested]    |
-+-------------------------------------------------------------+
-| Campaign [All Campaigns v]  Store [All Stores v]  [Export]   |
-+-------------------------------------------------------------+
-|                                                              |
-| +-------------------+  +-------------------+                 |
-| | [Photo]           |  | [Photo]           |                 |
-| |                   |  |                   |                 |
-| | Store #1234       |  | Store #5678       |                 |
-| | Summer Promo      |  | Summer Promo      |                 |
-| | Window Banner     |  | Counter Display   |                 |
-| | Submitted 2h ago  |  | Submitted 1h ago  |                 |
-| |                   |  |                   |                 |
-| | [Approve] [Reject]|  | [Approve] [Reject]|                 |
-| +-------------------+  +-------------------+                 |
-|                                                              |
-| +-------------------+  +-------------------+                 |
-| | [Photo]           |  | [Photo]           |                 |
-| |                   |  |                   |                 |
-| | Store #9012       |  | Store #3456       |                 |
-| | Holiday Display   |  | Summer Promo      |                 |
-| | End Cap A         |  | Entry Door        |                 |
-| | Submitted 30m ago |  | Submitted 15m ago |                 |
-| |                   |  |                   |                 |
-| | [Approve] [Reject]|  | [Approve] [Reject]|                 |
-| +-------------------+  +-------------------+                 |
-|                                                              |
-+-------------------------------------------------------------+
-| Showing 1-20 of 23 pending       [<] [1] [2] [>]            |
-+-------------------------------------------------------------+
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 3.2 Component Specifications

@@ -95,72 +95,11 @@ This specification covers:
 
 ### 3.3 Profile Layout
 
-```
-+---------------------------------------+
-| <- Profile                            |
-+---------------------------------------+
-|                                       |
-|            +-------+                  |
-|            |  JD   |                  |
-|            +-------+                  |
-|          John Doe              [Edit] |
-|       john@store.com                  |
-|       (555) 123-4567                  |
-|                                       |
-|       Store: STR-001                  |
-|       Acme Retail - Downtown          |
-|                                       |
-+---------------------------------------+
-| Notifications                         |
-|                                       |
-| Shipment Updates                      |
-|   Email [ON]  Push [ON]               |
-|                                       |
-| Photo Reviews                         |
-|   Email [OFF] Push [ON]               |
-|                                       |
-| Campaign Reminders                    |
-|   Email [ON]  Push [ON]               |
-|                                       |
-| Issue Updates                         |
-|   Email [ON]  Push [OFF]              |
-|                                       |
-+---------------------------------------+
-| Security                              |
-|                                       |
-| Change PIN                        [>] |
-|                                       |
-+---------------------------------------+
-|                                       |
-|          [Logout]                     |
-|                                       |
-|       Version 1.0.0 (build 42)        |
-+---------------------------------------+
-```
+![Profile](../../screenshots/Store_Execution/mobile_profile.png)
 
 ### 3.4 Edit Modal Layout
 
-```
-+---------------------------------------+
-| Edit Profile                      [X] |
-+---------------------------------------+
-|                                       |
-| Name                                  |
-| +-----------------------------------+ |
-| | John Doe                          | |
-| +-----------------------------------+ |
-|                                       |
-| Phone                                 |
-| +-----------------------------------+ |
-| | (555) 123-4567                    | |
-| +-----------------------------------+ |
-|                                       |
-| Email (read-only)                     |
-| john@store.com                        |
-|                                       |
-| [Cancel]              [Save]          |
-+---------------------------------------+
-```
+![Profile](../../screenshots/Store_Execution/mobile_profile.png)
 
 ---
 

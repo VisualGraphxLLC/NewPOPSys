@@ -314,44 +314,12 @@ NewPOPSys follows a **modular monolith** architecture pattern for v1, designed t
 
 The application uses Turborepo for monorepo management with the following structure:
 
-```
-/
-├── apps/
-│   ├── web/                    # Next.js frontend application
-│   │   ├── app/               # App router pages
-│   │   ├── components/        # React components
-│   │   ├── hooks/             # Custom React hooks
-│   │   └── styles/            # CSS/Tailwind styles
-│   │
-│   ├── api/                    # Fastify API server
-│   │   ├── routes/            # API route handlers
-│   │   ├── services/          # Business logic services
-│   │   ├── middleware/        # Auth, validation, tenant context
-│   │   └── plugins/           # Fastify plugins
-│   │
-│   └── worker/                 # BullMQ background workers
-│       ├── jobs/              # Job processors
-│       ├── queues/            # Queue definitions
-│       └── handlers/          # Event handlers
-│
-├── packages/
-│   ├── shared/                 # Shared types, utilities, Zod schemas
-│   │   ├── types/             # TypeScript type definitions
-│   │   ├── schemas/           # Zod validation schemas
-│   │   └── utils/             # Common utility functions
-│   │
-│   ├── db/                     # Prisma schema and migrations
-│   │   ├── prisma/            # Schema and migrations
-│   │   └── client/            # Generated Prisma client
-│   │
-│   └── ui/                     # Shared UI component library
-│       ├── components/        # Reusable React components
-│       └── primitives/        # Base design system components
-│
-└── tooling/
-    ├── eslint/                 # Shared ESLint configuration
-    ├── typescript/             # Shared TypeScript configuration
-    └── tailwind/               # Shared Tailwind configuration
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 1.3 Frontend Architecture (Next.js)
@@ -369,34 +337,12 @@ The frontend uses Next.js with the App Router pattern:
 
 **Route Organization by Module:**
 
-```
-app/
-├── (auth)/                     # Authentication routes
-│   ├── login/
-│   └── forgot-password/
-│
-├── (psp)/                      # PSP Operations module
-│   ├── dashboard/
-│   ├── orders/
-│   ├── shipments/
-│   └── batches/
-│
-├── (brand)/                    # Brand Admin module
-│   ├── campaigns/
-│   ├── stores/
-│   ├── kits/
-│   └── reviews/
-│
-├── (store)/                    # Store Portal / Mobile PWA
-│   ├── tasks/
-│   ├── campaigns/
-│   ├── receive/
-│   └── install/
-│
-└── (admin)/                    # Platform Admin module
-    ├── tenants/
-    ├── users/
-    └── settings/
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ### 1.4 Backend Architecture (Fastify API)
@@ -413,22 +359,12 @@ The API layer uses Fastify for performance and developer ergonomics:
 
 **API Route Organization:**
 
-```
-routes/
-├── v1/
-│   ├── auth/                   # Authentication endpoints
-│   ├── campaigns/              # Campaign CRUD + publish
-│   ├── stores/                 # Store management
-│   ├── orders/                 # Order/fulfillment operations
-│   ├── shipments/              # Shipment tracking
-│   ├── issues/                 # Issue/reorder management
-│   ├── reviews/                # Photo review queue
-│   ├── exports/                # Report generation
-│   └── webhooks/               # Inbound webhook handlers
-│
-└── internal/                   # Internal service endpoints
-    ├── health/
-    └── metrics/
+```mermaid
+graph TD
+    Client[Client App] --> API[API Gateway]
+    API --> Auth[Auth Service]
+    API --> Core[Core Service]
+    Core --> DB[(Database)]
 ```
 
 ---

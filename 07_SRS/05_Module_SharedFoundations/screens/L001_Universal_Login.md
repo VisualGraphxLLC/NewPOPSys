@@ -393,28 +393,7 @@ stateDiagram-v2
 
 **REQ-L001-ST-003**: Password reset flow states:
 
-```
-[Forgot Password Modal] --submit--> [Sending Email]
-    |                                    |
-    v                                    v
-[Cancelled]                         [Email Sent]
-                                         |
-                                    (user clicks link)
-                                         v
-                                    [Token Validation]
-                                         |
-                           +-------------+-------------+
-                           | (valid)                   | (expired/invalid)
-                           v                           v
-                    [New Password Form]           [Token Error]
-                           |
-                      --submit-->
-                           v
-                    [Password Updated]
-                           |
-                           v
-                    [Redirect to Login]
-```
+![Login](../../screenshots/Mobile_App/mobile_app.png)
 
 ---
 
