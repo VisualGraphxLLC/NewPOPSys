@@ -852,26 +852,7 @@ This loop replaces ad-hoc spreadsheet coordination with structured, traceable wo
 
 NewPOPSys v1.38 implements a three-tier user hierarchy aligned with the multi-tenant architecture:
 
-```
-Platform Level (System-wide)
- Platform Admin
-
-PSP Level (Tenant-wide)
- PSP Admin
- Production Operator
-
-Brand Level (Brand-scoped)
- Brand Admin
- Campaign Manager
- Regional Manager
-
-Store Level (Store-scoped)
- Store Manager
- Store Operator
-
-System Level (Machine-to-Machine)
- Integration User
-```
+[Diagram - See rendered image above or refer to source document]
 
 ## User Class Summary
 
@@ -989,22 +970,7 @@ System Level (Machine-to-Machine)
 
 NewPOPSys v1.38 operates as a cloud-native application deployed on AWS infrastructure with a focus on reliability, scalability, and cost efficiency.
 
-```
-
-                            AWS Cloud                                     
-            
-    CloudFront        ALB          ECS             RDS          
-      (CDN)       (Load       Fargate     PostgreSQL      
-                   Balancer)      (Compute)      (Database)     
-            
-                                                                      
-                                                        
-                                            
-       S3                           ElastiCache       SES         
-    (Storage)                         (Redis)       (Email)       
-                               
-
-```
+[Diagram - See rendered image above or refer to source document]
 
 ## Production Environment Specifications
 
@@ -2302,18 +2268,7 @@ NewPOPSys supports nine (9) distinct personas organized across four hierarchical
 
 ## 4. Permission Hierarchy
 
-```
-Platform Admin (P01)
-     PSP Admin (P02)
-             Production Operator (P03)
-             Brand Admin (P04)
-                     Campaign Manager (P05)
-                     Regional Manager (P06)
-                             Store Manager (P07)
-                                     Store Operator (P08)
-
-Integration User (P09) - Parallel service account with API-scoped access
-```
+[Diagram - See rendered image above or refer to source document]
 
 ## 5. Key Constraints
 
@@ -2734,25 +2689,35 @@ Priority Order (highest first):
 ### 3.3 Login Form Wireframe
 
 
+![Universal Login Screen](./screenshots/Mobile_App/mobile_app.png)
+
+
 ### 3.4 MFA Modal
 
 **REQ-L001-UI-002**: When MFA is required, the system SHALL display a modal dialog for code entry.
+
+> *[Visual component defined in Design System]*
 
 
 ### 3.5 Forgot Password Modal
 
 **REQ-L001-UI-003**: Password reset SHALL be initiated via a modal dialog.
 
+> *[Visual component defined in Design System]*
+
 
 ### 3.6 SSO Domain Entry Modal
 
 **REQ-L001-UI-004**: SSO authentication SHALL prompt for company domain.
+
+> *[Visual component defined in Design System]*
 
 
 ### 3.7 Role Selector Modal
 
 **REQ-L001-UI-005**: For multi-role users, the system SHALL display a role selection modal.
 
+> *[Visual component defined in Design System]*
 
 ## 4. Data Requirements
 
@@ -2773,23 +2738,8 @@ Priority Order (highest first):
 
 **REQ-L001-DR-003**: The session object SHALL contain:
 
-```typescript
-interface SessionData {
-  session_id: string;       // UUID v4
-  user_id: string;          // User UUID
-  email: string;            // User email
-  roles: RoleMembership[];  // Array of role assignments
-  primary_role: string;     // Highest-priority role
-  tenant_id: string;        // PSP tenant UUID
-  brand_id?: string;        // Active brand (if applicable)
-  created_at: number;       // Unix timestamp
-  expires_at: number;       // Unix timestamp (8 hours default)
-  idle_expires_at: number;  // Unix timestamp (30 min from last activity)
-  mfa_verified: boolean;    // MFA completion status
-  remember_me: boolean;     // Extended session flag
-  device_fingerprint: string; // Device identifier
-}
-```
+
+![Universal Login Screen](./screenshots/Mobile_App/mobile_app.png)
 
 ## 5. Business Rules & Validation
 
@@ -2898,46 +2848,9 @@ interface SessionData {
 
 **REQ-L001-ST-001**: The login flow SHALL follow this state machine:
 
-```
-[Initial]
 
-    v
-[Form Displayed] --submit--> [Validating Credentials]
+[Diagram - See rendered image above or refer to source document]
 
-    | (cancel)                     | (invalid)
-    v                              v
-[Cancelled]                   [Error Displayed] --retry--> [Form Displayed]
-
-                              (lockout)
-                                   v
-                              [Account Locked]
-
-[Validating Credentials]
-
-    | (valid, no MFA)
-    v
-[Creating Session] --> [Authenticated] --> [Redirecting]
-
-[Validating Credentials]
-
-    | (valid, MFA required)
-    v
-[MFA Modal] --submit--> [Validating MFA]
-
-    | (cancel)               | (invalid)
-    v                        v
-[Form Displayed]        [MFA Error] --retry--> [MFA Modal]
-
-                        (lockout)
-                             v
-                        [Account Locked]
-
-[Validating MFA]
-
-    | (valid)
-    v
-[Creating Session] --> [Authenticated] --> [Redirecting]
-```
 
 ### 7.2 Session Lifecycle States
 
@@ -2948,27 +2861,7 @@ interface SessionData {
 
 **REQ-L001-ST-003**: Password reset flow states:
 
-```
-[Forgot Password Modal] --submit--> [Sending Email]
-
-    v                                    v
-[Cancelled]                         [Email Sent]
-
-                                    (user clicks link)
-                                         v
-                                    [Token Validation]
-
-                           | (valid)                   | (expired/invalid)
-                           v                           v
-                    [New Password Form]           [Token Error]
-
-                      --submit-->
-                           v
-                    [Password Updated]
-
-                           v
-                    [Redirect to Login]
-```
+![Login](./screenshots/Mobile_App/mobile_app.png)
 
 ## 8. Error Handling
 
@@ -3120,32 +3013,9 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 
 **REQ-L002-UI-001**: The dashboard SHALL use a responsive grid layout with collapsible sidebar navigation.
 
-```
 
-  [≡]  NewPOPSys Logo    Dashboard                    [🔔] [👤] User  [⚙]  
+![Universal Dashboard](./screenshots/Admin_Portal/admin_portal_dashboard.png)
 
-           Welcome, {User Name}                              {Date/Time}    
-  NAV      Role: {Primary Role} | Store: {Context}          [Switch ]     
-  BAR    
-                
- [🏠]         KPI 1         KPI 2         KPI 3         KPI 4       
- Home         Value         Value         Value         Value       
-              +/-Δ%         +/-Δ%         +/-Δ%         +/-Δ%       
- [📦]           
- Orders     
-                                                                        
- [📊]            Chart Widget                    List Widget            
- Reports         (Role-specific)                 (Recent Activity)      
-                                                                        
- [⚙️]                                                                   
- Settings   
-            
- [?]           Quick Actions                    Alerts/Notifications    
- Help        [Action 1] [Action 2] [...]        • Alert 1               
-                                                • Alert 2               
-            
-
-```
 
 ### 3.2 Responsive Breakpoints
 
@@ -3176,90 +3046,9 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 
 ### 4.1 TypeScript Interfaces
 
-```typescript
-// Dashboard Configuration
-interface DashboardConfig {
-  id: string;
-  userId: string;
-  roleId: RoleEnum;
-  tenantId: string;
-  layout: LayoutConfig;
-  widgets: WidgetInstance[];
-  preferences: DashboardPreferences;
-  lastModified: Date;
-}
 
-interface LayoutConfig {
-  columns: number;
-  rows: number;
-  gridGap: number;
-  sidebarExpanded: boolean;
-  sidebarPosition: 'left' | 'right';
-}
+![Universal Dashboard](./screenshots/Admin_Portal/admin_portal_dashboard.png)
 
-interface WidgetInstance {
-  id: string;
-  widgetTypeId: string;
-  title: string;
-  position: GridPosition;
-  size: GridSize;
-  config: WidgetConfig;
-  refreshInterval: number; // seconds, 0 = manual only
-  collapsed: boolean;
-  visible: boolean;
-}
-
-interface GridPosition {
-  column: number;
-  row: number;
-}
-
-interface GridSize {
-  width: number;  // grid units
-  height: number; // grid units
-}
-
-interface WidgetConfig {
-  dataSource: string;
-  filters?: Record<string, any>;
-  chartType?: ChartType;
-  displayOptions?: Record<string, any>;
-}
-
-// User Widget Preferences
-interface DashboardPreferences {
-  theme: 'light' | 'dark' | 'system';
-  compactMode: boolean;
-  autoRefresh: boolean;
-  defaultDateRange: DateRangePreset;
-  timezone: string;
-}
-
-// Role-based permissions
-interface RolePermissions {
-  roleId: RoleEnum;
-  allowedWidgets: string[];
-  canCustomize: boolean;
-  canExport: boolean;
-  dataScope: DataScopeLevel;
-  maxWidgets: number;
-}
-
-type DataScopeLevel = 'system' | 'tenant' | 'brand' | 'region' | 'store';
-type DateRangePreset = 'today' | 'yesterday' | 'last7days' | 'last30days' | 'thisMonth' | 'lastMonth' | 'custom';
-type ChartType = 'line' | 'bar' | 'pie' | 'donut' | 'area' | 'gauge' | 'table';
-
-enum RoleEnum {
-  PLATFORM_ADMIN = 'PLATFORM_ADMIN',
-  PSP_ADMIN = 'PSP_ADMIN',
-  PSP_OPS = 'PSP_OPS',
-  BRAND_ADMIN = 'BRAND_ADMIN',
-  CAMPAIGN_MANAGER = 'CAMPAIGN_MANAGER',
-  REGIONAL_MANAGER = 'REGIONAL_MANAGER',
-  STORE_MANAGER = 'STORE_MANAGER',
-  STORE_OPERATOR = 'STORE_OPERATOR'
-}
-```
 
 ### 4.2 Widget Type Registry
 
@@ -3416,26 +3205,9 @@ POST /api/v1/dashboard/config/reset
 
 ### 7.1 Dashboard State Machine
 
-```
 
-   LOADING     
-                                       
-        Config loaded                                 
-                                                      
-     Widget error      
-    READY         PARTIAL    
-                       
-        User action                           Retry success
-                                             
-                              
-  REFRESHING   
+[Diagram - See rendered image above or refer to source document]
 
-        Complete
-       
-
-    READY     
-
-```
 
 ### 7.2 State Definitions
 
@@ -3643,6 +3415,8 @@ This specification covers:
 ### 3.3 Layout Specification
 
 
+![Mobile Login](./screenshots/Store_Execution/mobile_dashboard.png)
+
 ## 4. Data Requirements
 
 ### 4.1 Input Data
@@ -3678,13 +3452,9 @@ This specification covers:
 
 #### Request Schema
 
-```json
-{
-  "store_number": "STR-001",
-  "pin": "1234",
-  "device_id": "uuid-v4"
-}
-```
+
+![Mobile Login](./screenshots/Store_Execution/mobile_dashboard.png)
+
 
 #### Response Schema (Success - 200)
 
@@ -3729,47 +3499,15 @@ This specification covers:
 
 ### 7.1 Authentication State Machine
 
-```
-[IDLE] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                    â”‚
-   â”‚ User enters        â”‚ Credentials cleared
-   â”‚ credentials        â”‚
-   â–¼                    â”‚
-[VALIDATING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                    â”‚
-   â”‚ Local validation   â”‚
-   â”‚ passed             â”‚
-   â–¼                    â”‚
-[AUTHENTICATING] â”€â”€â”€â”€â”€â”€â”¤
-   â”‚         â”‚          â”‚
-   â”‚ Success â”‚ Failure  â”‚
-   â–¼         â–¼          â”‚
-[AUTHENTICATED] [ERROR]â”€â”˜
-   â”‚
-   â”‚ Navigate to Dashboard
-   â–¼
-[COMPLETE]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 Rate Limit State Machine
 
-```
-[UNLOCKED] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                     â”‚
-   â”‚ Failed attempt      â”‚ Timer expires
-   â”‚ (count < 5)         â”‚ OR success
-   â–¼                     â”‚
-[WARNING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                     â”‚
-   â”‚ 5th failed          â”‚
-   â”‚ attempt             â”‚
-   â–¼                     â”‚
-[LOCKED] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-   â”‚
-   â”‚ 15 min timer
-   â–¼
-[UNLOCKED]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.3 State Requirements
 
@@ -3888,8 +3626,12 @@ This specification covers:
 ### 3.3 Layout Specification
 
 
+![Mobile Dashboard](./screenshots/Store_Execution/mobile_dashboard.png)
+
+
 ### 3.4 Campaign Card Detail
 
+![Mobile Dashboard](./screenshots/Store_Execution/mobile_dashboard.png)
 
 ## 4. Data Requirements
 
@@ -3971,39 +3713,9 @@ This specification covers:
 
 ### 7.1 StorePhase State Machine
 
-```
-[AWAITING_SHIPMENT]
-        â”‚
-        â”‚ Shipment created
-        â–¼
-[SHIPMENT_IN_TRANSIT]
-        â”‚
-        â”‚ Carrier delivers
-        â–¼
-[READY_TO_RECEIVE]
-        â”‚
-        â”‚ Start receiving
-        â–¼
-[RECEIVING] â—„â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-        â”‚                    â”‚
-        â”‚ All items received â”‚ More items
-        â–¼                    â”‚ to receive
-[READY_TO_INSTALL] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-        â”‚
-        â”‚ Start installation
-        â–¼
-[INSTALLING]
-        â”‚
-        â”‚ All photos submitted
-        â–¼
-[AWAITING_VERIFICATION]
-        â”‚
-        â”œâ”€â”€â–º [REWORK_REQUIRED] â”€â”€â–º [AWAITING_VERIFICATION]
-        â”‚
-        â”‚ All approved
-        â–¼
-[COMPLETE]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 Dashboard View State
 
@@ -4134,8 +3846,12 @@ This specification covers:
 ### 3.3 Layout Specification
 
 
+![Mobile Interface](./screenshots/Store_Execution/mobile_dashboard.png)
+
+
 ### 3.4 Issue Modal Layout
 
+![Receipt](./screenshots/Store_Execution/mobile_receipt.png)
 
 ## 4. Data Requirements
 
@@ -4385,8 +4101,12 @@ This specification covers:
 ### 3.3 Layout Specification
 
 
+![Mobile Interface](./screenshots/Store_Execution/mobile_dashboard.png)
+
+
 ### 3.4 Item Card Expanded View
 
+![Install](./screenshots/Store_Execution/mobile_install.png)
 
 ## 4. Data Requirements
 
@@ -4670,9 +4390,11 @@ This specification covers:
 
 ### 3.3 Camera View Layout
 
+![Compliance](./screenshots/Store_Execution/mobile_compliance.png)
 
 ### 3.4 Review View Layout
 
+![Compliance](./screenshots/Store_Execution/mobile_compliance.png)
 
 ## 4. Data Requirements
 
@@ -4775,66 +4497,21 @@ This specification covers:
 
 ### 7.1 Photo Upload State Machine
 
-```
-[PENDING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Get presigned URL     â”‚ Error
-   â–¼                       â”‚
-[UPLOADING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                       â”‚
-   â”‚ Upload complete       â”‚ Network error
-   â–¼                       â–¼
-[UPLOADED]             [FAILED]
-   â”‚                       â”‚
-   â”‚ Thumbnail             â”‚ Retry < 3
-   â”‚ generated             â–¼
-   â–¼                   [PENDING] (retry)
-[COMPLETE]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 Camera Flow State Machine
 
-```
-[INITIALIZING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Camera ready          â”‚ Permission denied
-   â–¼                       â–¼
-[VIEWFINDER]           [ERROR]
-   â”‚
-   â”‚ Shutter pressed
-   â–¼
-[CAPTURING]
-   â”‚
-   â”‚ Image captured
-   â–¼
-[REVIEWING]
-   â”‚         â”‚
-   â”‚ Retake  â”‚ Use Photo
-   â–¼         â–¼
-[VIEWFINDER] [UPLOADING]
-               â”‚
-               â”‚ Complete
-               â–¼
-           [SUCCESS]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.3 Offline Queue State Machine
 
-```
-[QUEUED] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                      â”‚
-   â”‚ Network available    â”‚ Queue full
-   â–¼                      â–¼
-[UPLOADING]           [WARNING]
-   â”‚         â”‚
-   â”‚ Success â”‚ Failure
-   â–¼         â–¼
-[SYNCED]  [RETRY_PENDING]
-             â”‚
-             â”‚ Retry attempt
-             â–¼
-         [UPLOADING]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.4 State Requirements
 
@@ -4978,11 +4655,13 @@ This specification covers:
 
 ### 3.3 Task Card Layout
 
+![Tasks](./screenshots/Store_Execution/mobile_tasks.png)
 
 ### 3.4 Attestation Screen Layout
 
 **Route**: `/app/campaign/:id/submit`
 
+![Tasks](./screenshots/Store_Execution/mobile_tasks.png)
 
 ## 4. Data Requirements
 
@@ -5097,51 +4776,15 @@ ISSUE_UPDATE tasks:
 
 ### 7.1 Task Navigation State Machine
 
-```
-[TASK_LIST] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                         â”‚
-   â”‚ Tap task card           â”‚
-   â–¼                         â”‚
-[DETERMINE_TYPE]             â”‚
-   â”‚                         â”‚
-   â”œâ”€â”€ RECEIPT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Navigate to M003
-   â”‚                         â”‚
-   â”œâ”€â”€ INSTALL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Navigate to M004
-   â”‚                         â”‚
-   â”œâ”€â”€ RETAKE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Navigate to M008
-   â”‚                         â”‚
-   â””â”€â”€ ISSUE_UPDATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€ Show modal
-                             â”‚
-                    [TASK_LIST] (on return)
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 Attestation Submission State Machine
 
-```
-[REVIEW_SUMMARY] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                            â”‚
-   â”‚ All locations complete?    â”‚ No
-   â”‚ â–¼                          â–¼
-   â”‚ Yes                    [BLOCKED]
-   â–¼
-[CHECKBOX_REQUIRED]
-   â”‚
-   â”‚ Check certification
-   â–¼
-[SIGNATURE_REQUIRED]
-   â”‚
-   â”‚ Sign canvas
-   â–¼
-[SUBMIT_ENABLED]
-   â”‚
-   â”‚ Tap Submit
-   â–¼
-[SUBMITTING]
-   â”‚
-   â”‚ API success
-   â–¼
-[SUBMITTED] â”€â”€â”€â”€â”€â”€â”€â”€ Navigate to Dashboard
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.3 Assignment Status After Attestation
 
@@ -5281,9 +4924,11 @@ This specification covers:
 
 ### 3.3 Profile Layout
 
+![Profile](./screenshots/Store_Execution/mobile_profile.png)
 
 ### 3.4 Edit Modal Layout
 
+![Profile](./screenshots/Store_Execution/mobile_profile.png)
 
 ## 4. Data Requirements
 
@@ -5421,65 +5066,21 @@ interface UserSettings {
 
 ### 7.1 Profile Edit State Machine
 
-```
-[VIEWING] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Tap edit button       â”‚
-   â–¼                       â”‚
-[EDITING]                  â”‚
-   â”‚         â”‚             â”‚
-   â”‚ Cancel  â”‚ Save        â”‚
-   â–¼         â–¼             â”‚
-[VIEWING] [SAVING]         â”‚
-             â”‚             â”‚
-             â”‚ Success     â”‚
-             â–¼             â”‚
-         [VIEWING] â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 PIN Change State Machine
 
-```
-[PROFILE] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Tap Change PIN        â”‚
-   â–¼                       â”‚
-[ENTER_CURRENT] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-   â”‚                       â”‚ Invalid
-   â”‚ Valid                 â–¼
-   â–¼                   [ERROR]
-[ENTER_NEW]                â”‚
-   â”‚                       â”‚
-   â”‚ Enter new PIN         â”‚
-   â–¼                       â”‚
-[CONFIRM_NEW]              â”‚
-   â”‚                       â”‚
-   â”‚ Match                 â”‚ Mismatch
-   â–¼                       â–¼
-[SAVING]               [ERROR]
-   â”‚
-   â”‚ Success
-   â–¼
-[SUCCESS] â”€â”€â”€â”€â”€â”€â”€â”€ Return to Profile
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.3 Logout State Machine
 
-```
-[PROFILE] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                       â”‚
-   â”‚ Tap Logout            â”‚
-   â–¼                       â”‚
-[CONFIRM_DIALOG]           â”‚
-   â”‚         â”‚             â”‚
-   â”‚ Cancel  â”‚ Confirm     â”‚
-   â–¼         â–¼             â”‚
-[PROFILE] [LOGGING_OUT]    â”‚
-             â”‚             â”‚
-             â”‚ Clear data  â”‚
-             â–¼             â”‚
-         [LOGIN_SCREEN] â”€â”€â”€â”˜
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.4 State Requirements
 
@@ -5617,12 +5218,15 @@ This specification covers:
 
 ### 3.3 Single Retake Card Layout
 
+![Retake](./screenshots/Store_Execution/mobile_retake.png)
 
 ### 3.4 After Capture Layout
 
+![Retake](./screenshots/Store_Execution/mobile_retake.png)
 
 ### 3.5 Multiple Retakes List Layout
 
+![Retake](./screenshots/Store_Execution/mobile_retake.png)
 
 ## 4. Data Requirements
 
@@ -5756,73 +5360,21 @@ newpopsys://app/campaign/{campaignId}/retake?items={assignmentItemIds}
 
 ### 7.1 Retake Flow State Machine
 
-```
-[LIST_REJECTIONS] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                            â”‚
-   â”‚ Tap rejected item          â”‚
-   â–¼                            â”‚
-[VIEW_REJECTION]                â”‚
-   â”‚                            â”‚
-   â”‚ Tap Retake Photo           â”‚
-   â–¼                            â”‚
-[CAMERA] (M005 component)       â”‚
-   â”‚                            â”‚
-   â”‚ Photo captured             â”‚
-   â–¼                            â”‚
-[COMPARE]                       â”‚
-   â”‚         â”‚                  â”‚
-   â”‚ Retake  â”‚ Submit           â”‚
-   â”‚ Again   â–¼                  â”‚
-   â”‚     [UPLOADING]            â”‚
-   â–¼         â”‚                  â”‚
-[CAMERA]     â”‚ Success          â”‚
-             â–¼                  â”‚
-         [SUBMITTED]            â”‚
-             â”‚                  â”‚
-             â”‚ More retakes?    â”‚
-             â–¼                  â”‚
-         [LIST_REJECTIONS] â”€â”€â”€â”€â”€â”˜
-             â”‚
-             â”‚ All complete
-             â–¼
-         [DASHBOARD]
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 Photo Status State Machine
 
-```
-Old Photo:
-  REJECTED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-     â”‚                         â”‚
-     â”‚ Retake submitted        â”‚
-     â–¼                         â”‚
-  SUPERSEDED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-New Photo:
-  [Created] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-     â”‚                         â”‚
-     â”‚ Upload complete         â”‚
-     â–¼                         â”‚
-  PENDING (review_status)      â”‚
-     â”‚                         â”‚
-     â”‚ Brand reviews           â”‚
-     â–¼                         â”‚
-  APPROVED or REJECTED â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.3 Assignment Item State Machine
 
-```
-RETAKE_REQUIRED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â”‚                           â”‚
-   â”‚ Retake submitted          â”‚
-   â–¼                           â”‚
-PROOF_SUBMITTED                â”‚
-   â”‚                           â”‚
-   â”‚ Photo approved            â”‚
-   â–¼                           â”‚
-VERIFIED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.4 State Requirements
 
@@ -6125,30 +5677,8 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 
 ### 3.1 Layout Structure
 
-```
+![Brand Admin Dashboard](./screenshots/Admin_Portal/admin_portal_dashboard.png)
 
- [Logo] Brand Admin Portal          [User Menu ] [Logout]   
-
- Dashboard                                                   
-
-            
-  Active     Total      Pending    Compliance        
-  Campaigns  Stores     Reviews    Rate             
-     12        847         23        94.2%          
-            
-                                                             
- Quick Actions                                               
- [+ New Campaign]  [Review Photos]  [View All Stores]       
-                                                             
- Recent Campaigns                                            
- 
-  Campaign Name        Status    Stores   Progress        
-  Summer Promo 2025    Active    234      ████████░░ 80%  
-  Holiday Display      Draft      --      Not started     
-  Q4 End Caps          Active    156      ██████████ 100% 
- 
-
-```
 
 ### 3.2 Component Specifications
 
@@ -6229,11 +5759,7 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 
 ### 7.1 Page Load State Machine
 
-```
-[Initial]  [Loading]  [Loaded]
-                
-            [Error]  [Retry]  [Loading]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 State Definitions
 
@@ -6308,25 +5834,8 @@ The Campaign List screen provides brand administrators with a comprehensive view
 
 ### 3.1 Layout Structure
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Campaigns                              [+ New Campaign]     â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ [All] [Active] [Completed] [Draft] [Archived]               â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ ðŸ” Search campaigns...          [Filter â–¼]  [Export â–¼]      â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ â–¡ Campaign Name      Status    Stores  Progress   Actions   â”‚
-â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”‚
-â”‚ â–¡ Summer Promo 2025  â—Active   234     â–ˆâ–ˆâ–ˆâ–ˆâ–‘â–‘ 80%  [â€¢â€¢â€¢]   â”‚
-â”‚ â–¡ Holiday Display    â—‹Draft     --     --          [â€¢â€¢â€¢]   â”‚
-â”‚ â–¡ Q4 End Caps        â—Active   156     â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ 100% [â€¢â€¢â€¢]   â”‚
-â”‚ â–¡ Back to School     âœ“Complete 892     â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ 100% [â€¢â€¢â€¢]   â”‚
-â”‚ â–¡ Spring Refresh     â—‹Draft     --     --          [â€¢â€¢â€¢]   â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Showing 1-5 of 47              [<] [1] [2] [3] [>]         â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+![Campaign List Wireframe](./screenshots/Admin_Portal/admin_portal_campaigns.png)
+
 
 ### 3.2 Component Specifications
 
@@ -6416,22 +5925,7 @@ GET /api/v1/campaigns
 
 ### 7.1 Campaign Lifecycle State Machine
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”    publish     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  DRAFT  â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ â”‚ SCHEDULED â”‚
-â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”˜                â””â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜
-     â”‚                           â”‚ start_date reached
-     â”‚ delete                    â†“
-     â†“                     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    complete    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-  [Deleted]                â”‚ PUBLISHED â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ â”‚ COMPLETED â”‚
-                           â””â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜                â””â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜
-                                 â”‚                             â”‚
-                                 â”‚ cancel                      â”‚ archive
-                                 â†“                             â†“
-                           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    archive     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                           â”‚ CANCELLED â”‚ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ â”‚ ARCHIVED  â”‚
-                           â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 UI State Management
 
@@ -6624,20 +6118,11 @@ The Store Selection screen is the first step in the Campaign Builder wizard. It 
 
 ### 7.1 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] â”€â”€saveâ”€â”€â†’ [Step 2: Kit] â”€â”€saveâ”€â”€â†’ [Step 3: Review]
-       â†‘                         â”‚                        â”‚
-       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€backâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                        â”‚
-       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€backâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 Form State Machine
 
-```
-[Empty] â†’ [Editing] â†’ [Validating] â†’ [Valid] â†’ [Saving] â†’ [Saved]
-              â†“              â†“                      â†“
-          [Invalid]     [Invalid]              [Error]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.3 Preview State
 
@@ -6845,31 +6330,15 @@ The Kit Definition screen is the second step in the Campaign Builder wizard. It 
 
 ### 7.1 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] â†â”€backâ”€â”
-       â†“ save           â”‚
-[Step 2: Kit] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-       â†“ save
-[Step 3: Review] â†â”€backâ”€ [Step 2: Kit]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 Item Edit State Machine
 
-```
-[List View] â†’ [Add Modal] â†’ [Saving] â†’ [List View]
-     â†“              â†“           â†“
-[Edit Modal] â†’ [Saving] â†’ [List View]
-     â†“
-[Delete Confirm] â†’ [Deleting] â†’ [List View]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.3 Drag-Drop State Machine
 
-```
-[Idle] â†’ [Dragging] â†’ [Over Drop Zone] â†’ [Dropped] â†’ [Reordering] â†’ [Idle]
-              â†“                               â†“
-          [Cancelled] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ [Idle]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.4 Item Card States
 
@@ -6932,7 +6401,7 @@ The Campaign Review screen is the final step in the Campaign Builder wizard. It 
 
 ### 1.4 Screenshot Reference
 
-![Campaign Review](./screenshots/Admin_Portal/admin_portal_verification.png)
+![Campaign Review](./screenshots/Admin_Portal/admin_portal_new_campaign_wizard.png)
 
 ## 2. User Roles & Permissions
 
@@ -6948,54 +6417,8 @@ The Campaign Review screen is the final step in the Campaign Builder wizard. It 
 
 ### 3.1 Layout Structure
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Create Campaign                                             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚ Step 1: Select Stores  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â—â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€    â”‚
-â”‚ Step 2: Define Kit     â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â—â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€    â”‚
-â”‚ Step 3: Review         â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â—â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€    â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                             â”‚
-â”‚ Campaign Summary                                            â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ Campaign Name: Summer Promo 2025                   [âœŽ]  â”‚ â”‚
-â”‚ â”‚ Status: Draft                                           â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”‚
-â”‚ â”‚ ðŸ“ Store Selection    â”‚ â”‚ ðŸ“¦ Kit Definition     â”‚        â”‚
-â”‚ â”‚                       â”‚ â”‚                       â”‚        â”‚
-â”‚ â”‚ 234 stores selected   â”‚ â”‚ 5 items defined       â”‚        â”‚
-â”‚ â”‚ 3 regions             â”‚ â”‚ 12 total pieces       â”‚        â”‚
-â”‚ â”‚ 0 exclusions          â”‚ â”‚ 3 photo requirements  â”‚        â”‚
-â”‚ â”‚                       â”‚ â”‚                       â”‚        â”‚
-â”‚ â”‚ [View Details]        â”‚ â”‚ [View Details]        â”‚        â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜        â”‚
-â”‚                                                             â”‚
-â”‚ Installation Schedule                                       â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ Install Start *           Install End *                 â”‚ â”‚
-â”‚ â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”‚ â”‚
-â”‚ â”‚ â”‚ ðŸ“… Dec 1, 2025  â”‚       â”‚ ðŸ“… Dec 31, 2025 â”‚          â”‚ â”‚
-â”‚ â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â”‚ â”‚
-â”‚ â”‚                                                         â”‚ â”‚
-â”‚ â”‚ â˜‘ Allow late installations (extend by 7 days)          â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ Pre-Launch Checklist                                        â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ âœ“ Campaign name defined                                 â”‚ â”‚
-â”‚ â”‚ âœ“ At least one store selected (234 stores)             â”‚ â”‚
-â”‚ â”‚ âœ“ Kit items defined (5 items)                          â”‚ â”‚
-â”‚ â”‚ âœ“ Photo requirements configured                        â”‚ â”‚
-â”‚ â”‚ âœ“ Install dates set                                    â”‚ â”‚
-â”‚ â”‚ â—‹ All items have SKUs (2 missing)                [Fix] â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                             â”‚
-â”‚ [â† Back]         [Save Draft]         [Publish Campaign]    â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+![Campaign Review Wireframe](./screenshots/Admin_Portal/admin_portal_new_campaign_wizard.png)
+
 
 ### 3.2 Component Specifications
 
@@ -7172,42 +6595,15 @@ GROUP BY c.id;
 
 ### 7.1 Campaign Status Transition (Publish)
 
-```
-                                  publish (start > today)
-[DRAFT] â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ [SCHEDULED]
-    â”‚                                                          â”‚
-    â”‚ publish (start <= today)                    start_date   â”‚
-    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ [PUBLISHED] â†â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 Wizard Navigation State Machine
 
-```
-[Step 1: Stores] â†â”€â”€â”€â”€â”€â”€â”€backâ”€â”€â”€â”€â”€â”€â”€â”€â”€ [Step 2: Kit]
-                                              â”‚
-                                              â”‚ continue
-                                              â†“
-                           [Step 3: Review]
-                                  â”‚
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â†“             â†“             â†“
-              [Save Draft]   [Publish]    [Back to Kit]
-                    â”‚             â”‚
-                    â†“             â†“
-            [Campaign List]  [Campaign Detail]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.3 Publish State Machine
 
-```
-[Ready] â†’ [Validating] â†’ [Publishing] â†’ [Success] â†’ [Redirect]
-              â”‚                â”‚
-              â†“                â†“
-          [Invalid]        [Failed]
-              â”‚                â”‚
-              â†“                â†“
-          [Fix Issues]    [Retry]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.4 UI State Transitions
 
@@ -7437,37 +6833,16 @@ GET /api/v1/stores
 
 ### 7.1 Store Status State Machine
 
-```
-[ONBOARDING] â”€â”€accept invitationâ”€â”€> [ACTIVE]
-
-                        v              v               v
-                   [INACTIVE]    [SUSPENDED]    (stays ACTIVE)
-
-                               v
-                           [ACTIVE]  <-- reactivate
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 Store Status Transitions
 
-
-### 7.3 UI State Machine
-
-```
-[Loading] --> [Loaded] --> [Selecting] --> [Bulk Action]
-
-    v             v                              v
- [Error]     [Filtering]                    [Loaded]
-
-                  v
-              [Loaded]
 ```
 
 ### 7.4 Page State Definitions
 
 
-## 8. Error Handling
-
-### 8.1 Error Scenarios
+[Diagram - See rendered image above or refer to source document]
 
 
 ### 8.2 Validation Messages
@@ -7719,54 +7094,18 @@ GET /api/v1/photos
 
 ### 7.1 Photo Review Status State Machine
 
-```
-[PENDING] â”€â”€approveâ”€â”€> [APPROVED]
-    â”‚
-    â”‚ reject
-    v
-[REJECTED] â”€â”€new submissionâ”€â”€> [SUPERSEDED]
-                                     â”‚
-                                     â”‚ new photo
-                                     v
-                                [PENDING]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.2 Photo Review Transitions
 
 
 ### 7.3 Assignment Item Status Updates
 
-```
-[Photo APPROVED] --> assignment_item.status = 'COMPLETE'
-                          â”‚
-                          v (if all items complete)
-                     assignment.status = 'SUBMITTED'
-                          â”‚
-                          v (if all photos verified)
-                     assignment.status = 'COMPLETE'
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 7.4 UI State Machine
-
-```
-[Loading] --> [Loaded] --> [Selecting] --> [Processing]
-
-    v             v                              v
- [Error]     [Filtering]                    [Loaded]
-
-                  v
-              [Loaded]
-```
-
+[Diagram - See rendered image above or refer to source document]
 ### 7.5 Photo Modal States
-
-
-## 8. Error Handling
-
-### 8.1 Error Scenarios
-
-
-### 8.2 Validation Messages
 
 
 ### 8.3 Error Requirements
@@ -7853,6 +7192,9 @@ PSP Portal  Orders (sidebar)  /psp/orders
 ### 3.2 Layout Specification
 
 
+![Order Queue](./screenshots/PSP_Operations/psp_ops_orders.png)
+
+
 ### 3.3 Component Specifications
 
 #### P001-C001: Page Header
@@ -7868,27 +7210,9 @@ PSP Portal  Orders (sidebar)  /psp/orders
 
 ### 4.2 Data Query
 
-```sql
-SELECT
-  so.id, so.order_number, so.status, so.created_at,
-  so.psp_order_ref, so.order_type,
-  s.store_number, s.name as store_name,
-  c.name as campaign_name,
-  b.name as brand_name,
-  COUNT(ol.id) as line_count,
-  SUM(ol.quantity) as total_quantity
-FROM store_orders so
-JOIN stores s ON so.store_id = s.id
-JOIN campaigns c ON so.campaign_id = c.id
-JOIN brands b ON c.brand_id = b.id
-LEFT JOIN order_lines ol ON ol.order_id = so.id
-WHERE so.tenant_id = :tenant_id
-  AND so.deleted_at IS NULL
-  AND so.status IN (:status_filter)
-GROUP BY so.id, s.id, c.id, b.id
-ORDER BY so.created_at DESC
-LIMIT :page_size OFFSET :offset
-```
+
+![Order Queue](./screenshots/PSP_Operations/psp_ops_orders.png)
+
 
 ### 4.3 Data Requirements Matrix
 
@@ -7962,56 +7286,9 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Order Status State Machine
 
-```
-                    
-                      GENERATED  
-                    
-                            acknowledge
-                           
-                    
-                     ACKNOWLEDGED
-                    
-                            start_production
-                           
-                    
-                    IN_PRODUCTION
-                    
-                            complete_kitting
-                           
-                    
-                       KITTING   
-                    
-                            ready_to_ship
-                           
-                    
-               READY_TO_SHIP
-                   
-                           ship (partial/full)
-                          
-                   
-                   PARTIALLY_SHIPPED
-                      
-                                          all_shipped
-                          
-                          
-                   
-                  SHIPPED   
-                    
-                            deliver
-                           
-                    
-                      DELIVERED  
-                    
-                            close
-                           
-                    
-                       CLOSED    
-                    
 
-        
-          CANCELLED   (from any state except CLOSED)
-        
-```
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 State Transition Requirements
 
@@ -8114,6 +7391,9 @@ PSP Portal  Shipments (sidebar)  /psp/shipments
 ### 3.2 Layout Specification
 
 
+![Shipments](./screenshots/PSP_Operations/psp_ops_shipments.png)
+
+
 ### 3.3 Component Specifications
 
 #### P002-C005: Shipments Table
@@ -8121,6 +7401,8 @@ PSP Portal  Shipments (sidebar)  /psp/shipments
 
 #### P002-C008: Create Shipment Modal
 
+
+![Shipments](./screenshots/PSP_Operations/psp_ops_shipments.png)
 
 ## 4. Data Requirements
 
@@ -8236,29 +7518,9 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Shipment Status State Machine
 
-```
-                    
-                      LABEL_CREATED  
-                    
-                              carrier_pickup
-                             
-                    
-                       IN_TRANSIT    
-                    
-                             
-              
-                                          
-                                          
-          
-      OUT_FOR_DEL    EXCEPTION     RETURNED  
-          
-                           
-                            resolved
-                           
-      
-                 DELIVERED             
-      
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 State Transition Requirements
 
@@ -8364,7 +7626,13 @@ PSP Portal  Issues (sidebar)  /psp/issues
 ### 3.2 Layout Specification
 
 
+![Issues](./screenshots/PSP_Operations/psp_ops_issues.png)
+
+
 ### 3.3 Issue Detail Panel
+
+
+![Issues](./screenshots/PSP_Operations/psp_ops_issues.png)
 
 
 ### 3.4 Component Specifications
@@ -8500,34 +7768,9 @@ LIMIT :page_size OFFSET :offset
 
 ### 7.1 Issue Status State Machine
 
-```
-                    
-                        OPEN       Store reports
-                    
-                            triage
-                           
-                    
-               TRIAGED   
-                          
-                                        
-             reject        approve       request_info
-                                        
-           
-      REJECTED     APPROVED     AWAITING_   
-            INFO        
-                                 
-                                        
-                         create_reorder  info_received
-                                        
-                      
-                  IN_FULFILLMENT  
-                 
-                          reorder_delivered
-                         
-                 
-              RESOLVED   
-                  
-```
+
+[Diagram - See rendered image above or refer to source document]
+
 
 ### 7.2 State Transition Requirements
 
@@ -8629,29 +7872,9 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 3.3 Layout Structure
 
-```
 
- Dashboard                                    Store: #12345  
+![Store Dashboard](./screenshots/Store_Portal/store_portal_dashboard.png)
 
-  [KPI-001]    [KPI-002]    [KPI-003]    [KPI-004]          
-   Active       Pending      Completed    Compliance        
-     3            5            12           94%             
-
-                                                             
-  Active Campaigns                    Pending Actions        
-          
-   Campaign 1        [>]           ⚠ Receive shipment  
-   Campaign 2        [>]            Upload photos     
-   Campaign 3        [>]            Complete survey   
-          
-                                                             
-  Recent Activity              Team Status (Manager only)    
-      
-   Jane uploaded photo        4 active members          
-   John completed survey      2 pending invitations     
-      
-
-```
 
 ### 3.4 Component Requirements
 
@@ -8663,22 +7886,9 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 4.2 Data Query Specification
 
-```sql
--- Dashboard aggregate query
-SELECT
-  s.id as store_id,
-  s.name as store_name,
-  COUNT(DISTINCT CASE WHEN sa.status NOT IN ('COMPLETE', 'WAIVED') THEN sa.id END) as active_campaigns,
-  COUNT(DISTINCT CASE WHEN sa.status = 'COMPLETE'
-    AND sa.completed_at >= DATE_TRUNC('month', NOW()) THEN sa.id END) as completed_this_month,
-  (SELECT COUNT(*) FROM memberships m
-   JOIN users u ON m.user_id = u.id
-   WHERE m.store_id = s.id AND u.is_active = true) as active_team_members
-FROM stores s
-LEFT JOIN store_assignments sa ON sa.store_id = s.id AND sa.deleted_at IS NULL
-WHERE s.id = :storeId AND s.deleted_at IS NULL
-GROUP BY s.id, s.name
-```
+
+![Store Dashboard](./screenshots/Store_Portal/store_portal_dashboard.png)
+
 
 ### 4.3 Data Requirements
 
@@ -8756,16 +7966,7 @@ X-Tenant-ID: {tenant_uuid}
 
 ### 7.1 Dashboard Load States
 
-```
-          
-   INITIAL      LOADING      LOADED    
-          
-                                              
-                                              
-                         
-                        ERROR           REFRESHING 
-                         
-```
+![Dashboard](./screenshots/Store_Portal/store_portal_dashboard.png)
 
 ### 7.2 State Descriptions
 
@@ -8853,37 +8054,9 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 3.2 Layout Structure
 
-```
 
- Campaigns                                 [Search] [Export] 
+![Campaign History](./screenshots/Store_Portal/store_portal_campaigns.png)
 
- [Active] [Completed] [All]                                  
-
-                                                             
-  
-  Campaign          Status           Dates        Progress 
-  
-  Summer Promo      [Installing]     Jun 1-30    ████░ 75% 
-  Spring Sale       [Pending Review] May 1-31    █████ 100% 
-  Winter Display    [Complete ✓]     Dec 1-31    █████ 100% 
-  
-                                                             
-  Expanded Detail Panel 
-  Summer Promo 2024                                        
-                                          
-  Install Window: Jun 1 - Jun 30, 2024                     
-  Status: Installing                                       
-                                                           
-  Tasks:                                                   
-  ✓ Shipment Received    ✓ Pre-install Survey              
-   Install Complete      Photo Upload (3/5)              
-   Completion Survey                                      
-                                                           
-  Items: 5 kit items                                       
-  [View Photos] [Report Issue] [Continue Installation]    
- 
-
-```
 
 ### 3.3 Component Requirements
 
@@ -8895,33 +8068,9 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 4.2 Data Query Specification
 
-```sql
--- Campaign list query
-SELECT
-  sa.id as assignment_id,
-  sa.status as phase,
-  sa.completed_at,
-  c.id as campaign_id,
-  c.name as campaign_name,
-  c.code as campaign_code,
-  c.install_start,
-  c.install_end,
-  COUNT(DISTINCT ai.id) as total_items,
-  COUNT(DISTINCT CASE WHEN pu.review_status = 'APPROVED' THEN pu.id END) as approved_photos,
-  CASE WHEN rv.id IS NOT NULL THEN true ELSE false END as received,
-  CASE WHEN ca.id IS NOT NULL THEN true ELSE false END as completed
-FROM store_assignments sa
-JOIN campaigns c ON sa.campaign_id = c.id
-LEFT JOIN assignment_items ai ON ai.store_assignment_id = sa.id
-LEFT JOIN photo_uploads pu ON pu.assignment_item_id = ai.id
-LEFT JOIN receive_verifications rv ON rv.store_assignment_id = sa.id
-LEFT JOIN completion_attestations ca ON ca.store_assignment_id = sa.id
-WHERE sa.store_id = :storeId
-  AND sa.deleted_at IS NULL
-  AND c.deleted_at IS NULL
-GROUP BY sa.id, c.id, rv.id, ca.id
-ORDER BY c.install_end DESC
-```
+
+![Campaign History](./screenshots/Store_Portal/store_portal_campaigns.png)
+
 
 ### 4.3 Data Requirements
 
@@ -9036,17 +8185,7 @@ ORDER BY c.install_end DESC
 
 ### 7.1 Page States
 
-```
-          
-   LOADING      LOADED      FILTERING  
-          
-                                             
-                                             
-          
-    ERROR            DETAIL           EXPORTING  
-         OPEN          
-                    
-```
+![History](./screenshots/Store_Portal/store_portal_campaigns.png)
 
 ### 7.2 State Descriptions
 
@@ -9767,19 +8906,7 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.5 Screen Context
 
-```
-Store Portal Navigation:
- Dashboard (S001)
- Campaign History (S002)
- Photo Gallery (S003)
- Team Management (S004)
- Reports (S005)  Current Screen
-     Overview Tab
-     Campaigns Tab
-     Photos Tab
-     Team Tab
-     Issues Tab
-```
+![Reports](./screenshots/Store_Portal/store_portal_reports.png)
 
 ## 2. User Roles & Permissions
 
@@ -9807,25 +8934,7 @@ REQ-S005-SEC-005: Role Enforcement
 
 ### 3.1 Component Hierarchy
 
-```
-ReportsScreen
- PageHeader
-    Title ("Store Reports")
-    DateRangePicker
-    ExportButton
- TabNavigation
-    OverviewTab
-    CampaignsTab
-    PhotosTab
-    TeamTab
-    IssuesTab
- TabContent
-    KPICardGrid (4 cards)
-    TrendChart (line chart)
-    BreakdownCharts (pie, bar)
-    DataTable (detailed data)
- LoadingState / EmptyState
-```
+![Reports](./screenshots/Store_Portal/store_portal_reports.png)
 
 ### 3.2 Component Specifications
 
@@ -10142,38 +9251,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 6.2 Request/Response Flow
 
-```
-
-                      Reports Data Flow                          
-
-                                                                 
-  Store Portal                  API Gateway                      
-                                                               
-         GET /stores/{id}/reports                              
-       >                            
-             ?range=90d                                        
-                                                               
-                                                 
-                               Validate                       
-                              JWT Token                       
-                             Store Access                     
-                                                 
-                                                               
-                                                 
-                              Aggregate                       
-                               Metrics                        
-                             (6 queries)                      
-                                                 
-                                                               
-           200 OK + JSON                                       
-       <                            
-                                                               
-                                   
-         Render Charts & Tables                                
-                                   
-                                                                 
-
-```
+![Reports](./screenshots/Store_Portal/store_portal_reports.png)
 
 ### 6.3 API Requirements
 
@@ -10182,50 +9260,21 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 7.1 Screen States
 
+![Reports](./screenshots/Store_Portal/store_portal_reports.png)mermaid
+stateDiagram-v2
+    [*] --> LOADING
+    LOADING --> SUCCESS: Data Ready
+    LOADING --> ERROR: Failure
+    LOADING --> EMPTY: No Data
+    SUCCESS --> REFRESHING: Range Change
+    REFRESHING --> SUCCESS
+    SUCCESS --> EXPORTING: Export
+    EXPORTING --> SUCCESS
+    SUCCESS --> NAVIGATING: Tab Switch
+    NAVIGATING --> SUCCESS
+    ERROR --> LOADING: Retry
+    EMPTY --> LOADING: Change Range
 ```
-
-                   Reports Screen States                         
-
-                                                                 
-                                                  
-       LOADING                                                 
-      (Initial)                                                
-                                                  
-                                                                
-                                                                
-                                   
-       SUCCESS     REFRESHING                        
-     (Data Ready)(Range Change)                      
-                                   
-                                                               
-                                                               
-                                                               
-                                   
-      EXPORTING    NAVIGATING                        
-    (Generating)          (Tab Switch)                       
-                                   
-                                                                 
-                                                  
-        ERROR      Network/Server failure                     
-       (Retry)                                                 
-                                                  
-                                                                 
-                                                  
-        EMPTY      No data for period                         
-     (No Data)                                                 
-                                                  
-                                                                 
-
-```
-
-### 7.2 State Definitions
-
-
-### 7.3 State Transition Requirements
-
-
-## 8. Error Handling
-
 ### 8.1 Error Scenarios
 
 
@@ -11199,14 +10248,7 @@ X-API-Key: vg_live_your_api_key_here
 ```
 
 #### 3.1.2 Authentication Flow
-```
-          
-   Client      API Gateway       Auth Service   
-                                                          
-               X-API-Key         Validate Key   
-                    Header Check           & Permissions  
-          
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 3.2 API Key Security Requirements
 
@@ -12528,19 +11570,7 @@ This document specifies the external system integrations for NewPOPSys, detailin
 
 ### 1.2 Integration Architecture Overview
 
-```
-
-                        NewPOPSys Core                           
-
-  Orders API   Shipments API  Events API     Identity API    
-
-                                                    
-                                                    
-   
-   PSP MIS        Shipping      Brand ERP         SSO     
-   Systems        Carriers       Systems       Providers  
-   
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 1.3 Integration Partners Summary
 
@@ -14189,6 +13219,7 @@ All waived items with justification
 
 **Template Structure:**
 
+![Export Format](./screenshots/Appendices/export_format.png)
 
 ### C.4.3 Photo Proof Report (PDF)
 
@@ -14410,18 +13441,7 @@ Photos are exported as metadata with signed URLs (not embedded images).
 For bulk photo download, a ZIP archive is generated:
 
 **Structure:**
-```
-photos_{campaign_id}_{YYYYMMDD}.zip
- manifest.json
- store_1234/
-    item_ABC_slot_1.jpg
-    item_ABC_slot_1_retake.jpg
-    item_DEF_slot_2.jpg
- store_5678/
-    ...
- rejected/
-     ...
-```
+![Export Format](./screenshots/Appendices/export_format.png)
 
 **Manifest.json:**
 ```json
