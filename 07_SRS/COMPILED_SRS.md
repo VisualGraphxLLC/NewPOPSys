@@ -1250,11 +1250,7 @@ This section defines the database model for NewPOPSys v1, including table organi
 
 All data is scoped through a two-level tenant hierarchy:
 
-```
-tenants (PSP root)
-  |-- brands (customer brands)
-       |-- campaigns, stores, users (via memberships)
-```
+[Diagram - See rendered image above or refer to source document]
 
 **Implementation Rules**:
 - Every tenant represents a PSP organization with isolated data
@@ -1347,29 +1343,19 @@ The following statuses are derived from data, not stored:
 
 ### 3.1.6.1 Campaign Execution Flow
 
-```
-tenants -> brands -> campaigns -> store_assignments -> [orders, photos, issues]
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 3.1.6.2 Store Hierarchy
 
-```
-brands -> regions -> stores -> layouts -> slots
-
-          districts -> territories
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 3.1.6.3 Photo Verification Flow
 
-```
-store_assignments -> photo_uploads -> photo_reviews -> retake_requests
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 3.1.6.4 Issue Resolution Flow
 
-```
-store_assignments -> issue_requests -> reorders -> store_orders
-```
+[Diagram - See rendered image above or refer to source document]
 
 ## 3.1.7 JSONB Usage Patterns
 
@@ -2172,11 +2158,7 @@ UNIQUE(tenant_id, key)
 
 All integration events include `correlationId` for end-to-end tracing:
 
-```
-Campaign â†’ Orders â†’ Shipments â†’ Execution â†’ Exports
-     â†“         â†“          â†“           â†“          â†“
-   corr_xxx  corr_xxx  corr_xxx   corr_xxx   corr_xxx
-```
+[Diagram - See rendered image above or refer to source document]
 
 - OpenTelemetry spans linked by correlation ID
 - Structured JSON logs include `requestId` and `correlationId`
@@ -11585,24 +11567,7 @@ Print Service Provider (PSP) Management Information Systems receive orders from 
 
 ### 2.3 Data Flow
 
-```
-NewPOPSys                                    PSP MIS
-                                                
-     order.generated webhook 
-                                                
-     POST /orders/{id}/acknowledge 
-                                                
-     PUT /orders/{id}/status 
-                    (in_production)             
-                                                
-     PUT /orders/{id}/status 
-                    (ready_to_ship)             
-                                                
-     POST /orders/{id}/shipments 
-                                                
-     shipment.created webhook 
-                                                
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 2.4 Order Data Mapping
 
@@ -11812,18 +11777,7 @@ Content-Type: application/json
 
 NewPOPSys sends event notifications to Brand ERP systems via webhooks. ERPs do not call back into NewPOPSys directly.
 
-```
-NewPOPSys                              Brand ERP
-                                          
-     campaign.published webhook 
-                                          
-     order.generated webhook 
-                                          
-     order.shipped webhook 
-                                          
-     invoice.created webhook 
-                                          
-```
+[Diagram - See rendered image above or refer to source document]
 
 ### 4.3 ERP Data Mapping
 
@@ -11920,24 +11874,7 @@ NewPOPSys                              Brand ERP
 
 #### 6.2.2 Payment Intent Flow
 
-```
-Customer                NewPOPSys               Stripe
-                                                 
-     Place Order                       
-                                                 
-                            Create PaymentIntent 
-                                                 
-                            client_secret 
-                                                 
-     Payment Form                       
-                                                 
-     Confirm Payment 
-                                                 
-                            payment_intent.succeeded 
-                               (webhook)         
-                                                 
-     Order Confirmed                       
-```
+[Diagram - See rendered image above or refer to source document]
 
 #### 6.2.3 Webhook Events
 
