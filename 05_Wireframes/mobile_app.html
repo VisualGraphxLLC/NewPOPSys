@@ -761,8 +761,8 @@ Helpful: For support requests">v1.35 (Pilot Build)</p>
             <h2 class="text-lg font-semibold text-gray-800 mb-3" data-tooltip="📋 CAMPAIGN SECTION HEADER\n📊 Data: Section title for active StoreAssignments\n⬅️ Depends: User authenticated, campaigns assigned\n➡️ Blocks: Campaign list section identification">Active Campaigns</h2>
 
             <div class="dashboard-campaigns">
-                <!-- Campaign Card: Receipt Phase -->
-                <div class="card cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Install phase access, CompletionSubmission">
+                <!-- Campaign Card: Receipt Phase - Links to Task Flow -->
+                <div class="card cursor-pointer" onclick="nav('screen-tasks')" data-tooltip="📦 CAMPAIGN CARD - RECEIPT PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.startDate, KitDefinition.name\n⬅️ Depends: Store logged in, Campaign active, Shipment delivered\n➡️ Blocks: Task list navigation, progressive workflow">
                     <div class="flex justify-between items-start mb-2">
                         <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔵 ACTION REQUIRED BADGE\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Shipment delivered, receipt not submitted\n➡️ Blocks: User must complete receipt survey">Action
                             Required</span>
@@ -779,14 +779,53 @@ Helpful: For support requests">v1.35 (Pilot Build)</p>
                     </div>
                 </div>
 
-                <!-- Campaign Card: Install Phase -->
-                <div id="card-campaign-install" class="card opacity-60 grayscale" onclick="nav('screen-install')" data-tooltip="🔒 CAMPAIGN CARD - INSTALL PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, AssignmentItem.photoStatus\n⬅️ Depends: Receipt survey completed, ReceiveVerification approved\n➡️ Blocks: PhotoUpload creation, CompletionSubmission">
+                <!-- Campaign Card: Install Phase - Links to Task Flow -->
+                <div id="card-campaign-install" class="card opacity-60 grayscale" onclick="nav('screen-tasks')" data-tooltip="🔒 CAMPAIGN CARD - INSTALL PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, AssignmentItem.photoStatus\n⬅️ Depends: Receipt survey completed, ReceiveVerification approved\n➡️ Blocks: Task list navigation, progressive workflow">
                     <div class="flex justify-between items-start mb-2 status-badge">
                         <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔒 LOCKED STATUS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Receipt not completed\n➡️ Blocks: Install phase access">Locked</span>
                         <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing">Start: Jan 05</span>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: StoreAssignment context">Holiday Promo 2025 (Install)</h3>
                     <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DEFINITION\n📊 Data: KitDefinition.name, COUNT(KitItem)\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: AssignmentItem creation">Kit: Full Store Reset</p>
+                </div>
+            </div>
+
+            <!-- Past Campaigns Section -->
+            <h2 class="text-lg font-semibold text-gray-800 mb-3 mt-6" data-tooltip="📋 PAST CAMPAIGNS HEADER\n📊 Data: Section title for completed StoreAssignments\n⬅️ Depends: User authenticated, campaigns completed\n➡️ Blocks: Historical campaign list">Past Campaigns</h2>
+
+            <div class="dashboard-campaigns">
+                <!-- Past Campaign Card: Completed -->
+                <div class="card opacity-50" data-tooltip="✅ COMPLETED CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus=COMPLETE, Campaign.endDate\n⬅️ Depends: All tasks completed, attestation submitted\n➡️ Blocks: Historical reference only">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="✅ COMPLETED BADGE\n📊 Data: StoreAssignment.executionStatus=COMPLETE\n⬅️ Depends: All tasks done\n➡️ Blocks: None - read only">Completed</span>
+                        <span class="text-xs text-gray-500" data-tooltip="📅 COMPLETION DATE\n📊 Data: StoreAssignment.completedAt\n⬅️ Depends: Attestation submitted\n➡️ Blocks: None">Nov 15, 2024</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: None - historical">Fall Refresh 2024</h3>
+                    <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT SUMMARY\n📊 Data: KitDefinition.name\n⬅️ Depends: Kit defined\n➡️ Blocks: None">Kit: Window Display</p>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>All Tasks Complete</span>
+                        <span>5/5 Tasks</span>
+                    </div>
+                </div>
+
+                <!-- Past Campaign Card: Completed (Older) -->
+                <div class="card opacity-50" data-tooltip="✅ COMPLETED CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus=COMPLETE\n⬅️ Depends: All tasks completed\n➡️ Blocks: Historical reference only">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
+                        <span class="text-xs text-gray-500">Sep 20, 2024</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Back to School 2024</h3>
+                    <p class="text-sm text-gray-600 mb-3">Kit: Poster + Standee</p>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>All Tasks Complete</span>
+                        <span>4/4 Tasks</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1379,10 +1418,7 @@ Purpose: Primary app navigation">
                 <i data-lucide="list-checks" size="20" data-tooltip="📋 TASKS ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
                 <span data-tooltip="📋 TASKS LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Tasks</span>
             </div>
-            <div id="nav-scan" class="nav-item cursor-pointer" onclick="nav('screen-scan')" data-tooltip="📷 SCAN TAB\n📊 Data: Navigation state, camera permission\n⬅️ Depends: User authenticated, camera access\n➡️ Blocks: Camera screen access, ad-hoc photos">
-                <i data-lucide="camera" size="20" data-tooltip="📷 CAMERA ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
-                <span data-tooltip="📷 SCAN LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Scan</span>
-            </div>
+            <!-- Scan removed from nav - photo capture is accessed through task flow only -->
             <div id="nav-profile" class="nav-item cursor-pointer" onclick="nav('screen-profile')" data-tooltip="👤 PROFILE TAB\n📊 Data: Navigation state, User.id, COUNT(notifications unread)\n⬅️ Depends: User authenticated\n➡️ Blocks: Profile screen access, settings, notifications">
                 <i data-lucide="user" size="20" data-tooltip="👤 PROFILE ICON\n📊 Data: UI icon element\n⬅️ Depends: None\n➡️ Blocks: Visual navigation indicator"></i>
                 <span data-tooltip="👤 PROFILE LABEL\n📊 Data: UI static text\n⬅️ Depends: None\n➡️ Blocks: Tab identification">Profile</span>
