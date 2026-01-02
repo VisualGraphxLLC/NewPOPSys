@@ -61,6 +61,42 @@
         .text-green-600, .text-green-500 { color: var(--accent) !important; }
         .bg-amber-500, .bg-yellow-500 { background-color: var(--accent) !important; }
 
+        /* Signature Pad & Attestation Styles */
+        .signature-pad {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+            cursor: crosshair;
+            transition: all 0.2s;
+        }
+        .signature-pad.signed {
+            border-style: solid;
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .checkbox-item:hover {
+            background: #f9fafb;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+        }
+
         /* Base styles */
         body {
             background-color: #333;
@@ -904,8 +940,8 @@ Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
             </div>
 
             <div class="pb-8">
-                <button onclick="alert('This would submit the audit to SUPP-018 Verification')"
-                    class="btn-primary bg-green-600 cursor-pointer" data-tooltip="🚀 SUBMIT AUDIT BUTTON\n📊 Data: CompletionSubmission.status, CompletionSubmission.submittedAt, StoreAssignment.executionStatus\n⬅️ Depends: All photos uploaded, PhotoUpload.status=UPLOADED\n➡️ Blocks: PhotoReview queue, PSP verification workflow">Submit Audit</button>
+                <button onclick="completeInstall()"
+                    class="btn-primary bg-green-600 cursor-pointer" data-tooltip="✅ COMPLETE INSTALLATION BUTTON\n📊 Data: CompletionSubmission.status, InstallVerification.status, StoreAssignment.executionStatus\n⬅️ Depends: All photos uploaded, PhotoUpload.status=UPLOADED\n➡️ Blocks: Attestation task unlock, PhotoReview queue">Complete Installation</button>
             </div>
         </div>
 
@@ -925,12 +961,21 @@ Order: Priority, Due Date">My Tasks</h1>
                     </div>
                     <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="⚠️ DUE TODAY BADGE\n📊 Data: Campaign.startDate, StoreAssignment.dueDate\n⬅️ Depends: Campaign timing, deadline calculation\n➡️ Blocks: User urgency indicator">Due Today</span>
                 </div>
-                <div class="card flex justify-between items-center opacity-60 grayscale" data-tooltip="🔒 TASK CARD - INSTALL (LOCKED)\n📊 Data: StoreAssignment.id, StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt verified, ReceiveVerification.status=APPROVED\n➡️ Blocks: Install survey access, PhotoUpload creation">
+                <div id="task-install" class="card flex justify-between items-center opacity-60 grayscale" data-tooltip="🔒 TASK CARD - INSTALL (LOCKED)\n📊 Data: StoreAssignment.id, StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt verified, ReceiveVerification.status=APPROVED\n➡️ Blocks: Install survey access, PhotoUpload creation">
                     <div>
                         <div class="font-bold" data-tooltip="📝 TASK NAME\n📊 Data: Generated from AssignmentItem entities\n⬅️ Depends: AssignmentItems created\n➡️ Blocks: Task identification, photo workflow">Install Window Clings</div>
                         <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign active\n➡️ Blocks: Task campaign association">Holiday Promo 2025</div>
                     </div>
                     <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="🔒 LOCKED BADGE\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt not yet completed\n➡️ Blocks: Task access, prevents premature install">Locked</span>
+                </div>
+
+                <!-- ATTESTATION TASK - Locked until Install complete -->
+                <div id="task-attestation" class="card flex justify-between items-center opacity-60 grayscale" data-tooltip="🔒 TASK CARD - ATTESTATION (LOCKED)\n📊 Data: StoreAssignment.id, InstallVerification.status\n⬅️ Depends: All tasks completed, InstallVerification.status=COMPLETE\n➡️ Blocks: Campaign completion, final verification">
+                    <div>
+                        <div class="font-bold" data-tooltip="📝 ATTESTATION TASK\n📊 Data: StoreAttestation entity\n⬅️ Depends: All tasks done\n➡️ Blocks: Campaign sign-off">Attest Completion</div>
+                        <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name\n⬅️ Depends: Campaign active\n➡️ Blocks: Final attestation">Holiday Promo 2025</div>
+                    </div>
+                    <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="🔒 LOCKED BADGE\n📊 Data: InstallVerification.status\n⬅️ Depends: Install not yet completed\n➡️ Blocks: Attestation access">Locked</span>
                 </div>
             </div>
         </div>
@@ -1081,6 +1126,110 @@ UX: Affordance indicator"></i>
             </div>
         </div>
 
+        <!-- SCREEN: ATTESTATION -->
+        <div id="screen-attestation" class="screen p-4 pb-24" data-tooltip="📋 ATTESTATION SCREEN
+━━━━━━━━━━━━━━━
+Purpose: Final campaign sign-off
+Data: StoreAttestation entity
+Depends: All tasks complete
+Blocks: Campaign completion">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="nav('screen-tasks')" class="p-2 -ml-2 hover:bg-gray-100 rounded-full" data-tooltip="⬅️ BACK BUTTON\nReturns to tasks list">
+                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                </button>
+                <h1 class="text-2xl font-bold" data-tooltip="📋 SCREEN TITLE\nAttestation sign-off header">Attest Completion</h1>
+            </div>
+
+            <!-- Campaign Context Card -->
+            <div class="card mb-4" data-tooltip="📊 CAMPAIGN CONTEXT CARD\n📊 Data: Campaign.name, Store.name, TaskCount, PhotoCount\n⬅️ Depends: StoreAssignment loaded\n➡️ Blocks: Context display">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-lg" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name">Holiday Promo 2025</div>
+                        <div class="text-sm text-gray-500" data-tooltip="🏪 STORE NAME\n📊 Data: Store.name, Store.storeNumber">Store #4521 - Downtown</div>
+                    </div>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <div class="flex items-center gap-1 text-green-600" data-tooltip="✅ TASKS COMPLETED\n📊 Data: CompletedTaskCount / TotalTaskCount">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <span>5/5 Tasks</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-green-600" data-tooltip="📸 PHOTOS UPLOADED\n📊 Data: PhotoUpload.count">
+                        <i data-lucide="camera" class="w-4 h-4"></i>
+                        <span>8 Photos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attestation Checklist -->
+            <div id="attestation-checklist" class="card mb-4" data-tooltip="☑️ ATTESTATION CHECKLIST\n📊 Data: AttestationChecklist items\n⬅️ Depends: Form displayed\n➡️ Blocks: Submit enabled">
+                <h2 class="font-bold mb-4" data-tooltip="📋 SECTION HEADER">I confirm the following:</h2>
+
+                <label class="checkbox-item border-b" data-tooltip="☑️ MATERIALS CHECKBOX\n📊 Data: AttestationChecklist.materialsInstalled\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-materials" onchange="checkSubmitReady()">
+                    <div>
+                        <div class="font-medium">All materials have been installed</div>
+                        <div class="text-sm text-gray-500">Per the provided instructions and placement guide</div>
+                    </div>
+                </label>
+
+                <label class="checkbox-item border-b" data-tooltip="☑️ PHOTOS CHECKBOX\n📊 Data: AttestationChecklist.photosAccurate\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-photos" onchange="checkSubmitReady()">
+                    <div>
+                        <div class="font-medium">Photos accurately represent installation</div>
+                        <div class="text-sm text-gray-500">All required photos have been uploaded</div>
+                    </div>
+                </label>
+
+                <label class="checkbox-item border-b" data-tooltip="☑️ ISSUES CHECKBOX\n📊 Data: AttestationChecklist.issuesReported\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-issues" onchange="checkSubmitReady()">
+                    <div>
+                        <div class="font-medium">Any issues have been reported</div>
+                        <div class="text-sm text-gray-500">Or no issues were encountered during installation</div>
+                    </div>
+                </label>
+
+                <label class="checkbox-item" data-tooltip="☑️ COMPLIANCE CHECKBOX\n📊 Data: AttestationChecklist.brandCompliance\n⬅️ Depends: User action\n➡️ Blocks: Submit validation">
+                    <input type="checkbox" id="chk-compliance" onchange="checkSubmitReady()">
+                    <div>
+                        <div class="font-medium">Installation meets brand compliance</div>
+                        <div class="text-sm text-gray-500">Materials are properly aligned and undamaged</div>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Digital Signature -->
+            <div class="card mb-4" data-tooltip="✍️ DIGITAL SIGNATURE SECTION\n📊 Data: StoreAttestation.signature, StoreAttestation.signedAt\n⬅️ Depends: Checklist complete\n➡️ Blocks: Attestation submission">
+                <h2 class="font-bold mb-2" data-tooltip="📋 SECTION HEADER">Digital Signature</h2>
+                <p class="text-sm text-gray-500 mb-3" data-tooltip="📝 INSTRUCTION TEXT">Sign below to confirm your attestation</p>
+
+                <div id="signature-pad" class="signature-pad" onclick="simulateSign()" data-tooltip="✍️ SIGNATURE PAD\n📊 Data: StoreAttestation.signatureData (base64)\n⬅️ Depends: Touch/click input\n➡️ Blocks: Signature validation">
+                    <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                    <span class="text-gray-400 text-sm">Tap to sign</span>
+                </div>
+
+                <button onclick="clearSignature()" class="text-sm text-blue-600 mt-2" data-tooltip="🗑️ CLEAR BUTTON\n📊 Data: Resets signatureData\n⬅️ Depends: Signature exists\n➡️ Blocks: Re-signing">Clear Signature</button>
+            </div>
+
+            <!-- Legal Notice -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6" data-tooltip="⚠️ LEGAL NOTICE\n📊 Data: Static legal text\n⬅️ Depends: None\n➡️ Blocks: User awareness">
+                <div class="flex gap-3">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5"></i>
+                    <div class="text-sm text-yellow-800">
+                        <div class="font-bold mb-1">Legal Notice</div>
+                        By signing this attestation, you certify that all information provided is accurate and complete. False attestations may result in disciplinary action.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="attestation-submit" onclick="submitAttestation()" disabled class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed" data-tooltip="📤 SUBMIT BUTTON\n📊 Data: Creates StoreAttestation record\n⬅️ Depends: All checkboxes + signature\n➡️ Blocks: Campaign completion, success modal">
+                Submit Attestation
+            </button>
+        </div>
+
         <!-- Bottom Navigation -->
         <div class="bottom-nav" data-tooltip="📱 BOTTOM NAVIGATION
 ━━━━━━━━━━━━━━━
@@ -1129,11 +1278,19 @@ Purpose: Primary app navigation">
 
         // State
         let receiptComplete = false;
+        let installComplete = false;
+        let signatureComplete = false;
 
         function nav(screenId) {
             // Guard: Prevent going to install if receipt not done
             if (screenId === 'screen-install' && !receiptComplete) {
                 alert("🔒 Locked: You must verify shipment receipt before starting installation.");
+                return;
+            }
+
+            // Guard: Prevent going to attestation if install not done
+            if (screenId === 'screen-attestation' && !installComplete) {
+                alert("🔒 Locked: You must complete the installation before attestation.");
                 return;
             }
 
@@ -1220,6 +1377,16 @@ Purpose: Primary app navigation">
             card.classList.remove('opacity-60', 'grayscale');
             card.querySelector('.status-badge').innerHTML = '<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Ready to Start</span>';
 
+            // Unlock install task card in Tasks list
+            const installTask = document.getElementById('task-install');
+            if (installTask) {
+                installTask.classList.remove('opacity-60', 'grayscale');
+                installTask.querySelector('span:last-child').textContent = 'Next Up';
+                installTask.querySelector('span:last-child').className = 'bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded';
+                installTask.setAttribute('onclick', "nav('screen-install')");
+                installTask.style.cursor = 'pointer';
+            }
+
             alert("✅ Receipt Verified! Install Phase Unlocked.");
             nav('screen-dashboard');
         }
@@ -1230,6 +1397,84 @@ Purpose: Primary app navigation">
 
         function toggleOfflineMode() {
             document.body.classList.toggle('offline-mode');
+            lucide.createIcons();
+        }
+
+        // === ATTESTATION FUNCTIONS ===
+
+        function completeInstall() {
+            installComplete = true;
+
+            // Unlock attestation task card
+            const attestTask = document.getElementById('task-attestation');
+            if (attestTask) {
+                attestTask.classList.remove('opacity-60', 'grayscale');
+                attestTask.querySelector('span').textContent = 'Next Up';
+                attestTask.querySelector('span').className = 'bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded';
+                attestTask.setAttribute('onclick', "nav('screen-attestation')");
+                attestTask.style.cursor = 'pointer';
+            }
+
+            alert("✅ Installation Complete! Attestation Unlocked.");
+            nav('screen-tasks');
+        }
+
+        function checkSubmitReady() {
+            const checkboxes = document.querySelectorAll('#attestation-checklist input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            const submitBtn = document.getElementById('attestation-submit');
+
+            if (allChecked && signatureComplete) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function simulateSign() {
+            const signaturePad = document.getElementById('signature-pad');
+            signaturePad.classList.add('signed');
+            signaturePad.innerHTML = `
+                <div class="text-green-600 font-bold">✓ Signed</div>
+                <div class="text-sm text-gray-500 mt-1">John Smith • ${new Date().toLocaleTimeString()}</div>
+            `;
+            signatureComplete = true;
+            checkSubmitReady();
+        }
+
+        function clearSignature() {
+            const signaturePad = document.getElementById('signature-pad');
+            signaturePad.classList.remove('signed');
+            signaturePad.innerHTML = `
+                <i data-lucide="pen-tool" class="text-gray-400 mb-2"></i>
+                <span class="text-sm text-gray-400">Tap to sign</span>
+            `;
+            signatureComplete = false;
+            lucide.createIcons();
+            checkSubmitReady();
+        }
+
+        function submitAttestation() {
+            // Mark attestation task as complete on tasks screen
+            const attestTask = document.getElementById('task-attestation');
+            if (attestTask) {
+                attestTask.innerHTML = `
+                    <div class='flex items-center gap-3'>
+                        <div class='bg-green-100 text-green-600 rounded-full p-1'><i data-lucide='check' size='16'></i></div>
+                        <div>
+                            <div class="font-bold text-gray-500 line-through">Attest Completion</div>
+                            <div class="text-xs text-green-600 font-bold">Completed Just Now</div>
+                        </div>
+                    </div>
+                `;
+                attestTask.classList.add('bg-gray-50');
+                attestTask.removeAttribute('onclick');
+            }
+
+            alert("✅ Attestation Submitted Successfully!\n\nYour campaign completion has been verified and recorded.");
+            nav('screen-tasks');
             lucide.createIcons();
         }
 
