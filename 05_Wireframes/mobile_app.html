@@ -778,16 +778,7 @@ Helpful: For support requests">v1.35 (Pilot Build)</p>
                         <span data-tooltip="✅ TASK COUNTER\n📊 Data: COUNT(CompletionSubmission WHERE status=COMPLETE)\n⬅️ Depends: Receipt and install surveys\n➡️ Blocks: Assignment completion status">1/5 Tasks</span>
                     </div>
                 </div>
-
-                <!-- Campaign Card: Install Phase - Links to Task Flow -->
-                <div id="card-campaign-install" class="card opacity-60 grayscale" onclick="nav('screen-tasks')" data-tooltip="🔒 CAMPAIGN CARD - INSTALL PHASE\n📊 Data: Campaign.name, StoreAssignment.executionStatus, AssignmentItem.photoStatus\n⬅️ Depends: Receipt survey completed, ReceiveVerification approved\n➡️ Blocks: Task list navigation, progressive workflow">
-                    <div class="flex justify-between items-start mb-2 status-badge">
-                        <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded" data-tooltip="🔒 LOCKED STATUS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Receipt not completed\n➡️ Blocks: Install phase access">Locked</span>
-                        <span class="text-xs text-gray-500" data-tooltip="📅 CAMPAIGN START DATE\n📊 Data: Campaign.startDate\n⬅️ Depends: Campaign created\n➡️ Blocks: Install phase timing">Start: Jan 05</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Campaign created\n➡️ Blocks: StoreAssignment context">Holiday Promo 2025 (Install)</h3>
-                    <p class="text-sm text-gray-600 mb-3" data-tooltip="📦 KIT DEFINITION\n📊 Data: KitDefinition.name, COUNT(KitItem)\n⬅️ Depends: Kit defined in Campaign\n➡️ Blocks: AssignmentItem creation">Kit: Full Store Reset</p>
-                </div>
+                <!-- Note: Install phase is shown as tasks within the task flow, not as a separate campaign card -->
             </div>
 
             <!-- Past Campaigns Section -->
