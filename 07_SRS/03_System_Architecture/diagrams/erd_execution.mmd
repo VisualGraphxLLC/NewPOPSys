@@ -1,0 +1,353 @@
+%% ERD Execution: Photo Verification, Issues, and Supporting Systems
+%% NewPOPSys v1.38 - Execution & Verification + Issues & Reorders + Support Modules
+%% Mermaid ER Diagram
+
+erDiagram
+    %% =====================================================================
+    %% MODULE 6: EXECUTION & VERIFICATION
+    %% =====================================================================
+
+    receive_verifications {
+        uuid id PK
+        uuid store_assignment_id FK
+        uuid verified_by_user_id FK
+        boolean all_items_received
+        string notes
+        timestamp verified_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    photo_uploads {
+        uuid id PK
+        uuid store_assignment_id FK
+        uuid assignment_item_id FK "Nullable - specific item"
+        uuid location_slot_id FK "Nullable - specific slot"
+        uuid uploaded_by_user_id FK
+        string s3_key "S3 object key"
+        string s3_bucket
+        string original_filename
+        string mime_type
+        integer file_size_bytes
+        string review_status "PENDING|APPROVED|REJECTED|SUPERSEDED"
+        jsonb metadata_json "EXIF, GPS, device info"
+        timestamp captured_at
+        timestamp uploaded_at
+        timestamp created_at
+        timestamp deleted_at
+    }
+
+    photo_reviews {
+        uuid id PK
+        uuid photo_upload_id FK
+        uuid reviewer_user_id FK
+        string decision "APPROVED|REJECTED"
+        string rejection_reason "Nullable"
+        string review_notes
+        timestamp reviewed_at
+        timestamp created_at
+    }
+
+    retake_requests {
+        uuid id PK
+        uuid photo_upload_id FK "Original rejected photo"
+        uuid store_assignment_id FK
+        uuid new_photo_upload_id FK "Nullable - replacement photo"
+        string reason
+        string instructions
+        boolean is_resolved
+        timestamp requested_at
+        timestamp resolved_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    completion_attestations {
+        uuid id PK
+        uuid store_assignment_id FK
+        uuid attested_by_user_id FK
+        string attestation_type "INSTALLATION|REMOVAL|SURVEY"
+        boolean is_complete
+        string notes
+        timestamp attested_at
+        timestamp created_at
+    }
+
+    %% =====================================================================
+    %% MODULE 7: ISSUES & REORDERS
+    %% =====================================================================
+
+    issue_requests {
+        uuid id PK
+        uuid store_assignment_id FK
+        uuid evidence_photo_id FK "Nullable - supporting photo"
+        uuid submitted_by_user_id FK
+        uuid reviewed_by_user_id FK "Nullable"
+        string issue_type "DAMAGED|MISSING|WRONG_ITEM|DEFECTIVE|OTHER"
+        string status "OPEN|TRIAGED|AWAITING_APPROVAL|APPROVED|IN_FULFILLMENT|DENIED|RESOLVED"
+        string description
+        string resolution_notes
+        timestamp submitted_at
+        timestamp reviewed_at
+        timestamp resolved_at
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+    }
+
+    issue_lines {
+        uuid id PK
+        uuid issue_request_id FK
+        uuid kit_item_id FK
+        integer quantity_affected
+        string issue_detail
+        timestamp created_at
+        timestamp deleted_at
+    }
+
+    reorders {
+        uuid id PK
+        uuid issue_request_id FK
+        uuid store_order_id FK "Generated replacement order"
+        string reorder_type "REPLACEMENT|ADDITIONAL"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% =====================================================================
+    %% MODULE 8: NOTIFICATIONS
+    %% =====================================================================
+
+    notification_preferences {
+        uuid id PK
+        uuid user_id FK
+        string channel "EMAIL|SMS|PUSH|IN_APP"
+        string event_type "ASSIGNMENT|SHIPMENT|REVIEW|ISSUE|DEADLINE"
+        boolean is_enabled
+        jsonb settings_json
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    notifications {
+        uuid id PK
+        uuid user_id FK
+        string channel "EMAIL|SMS|PUSH|IN_APP"
+        string event_type
+        string title
+        string body
+        jsonb data_json "Event-specific payload"
+        boolean is_read
+        boolean is_sent
+        timestamp sent_at
+        timestamp read_at
+        timestamp created_at
+    }
+
+    %% =====================================================================
+    %% MODULE 9: WEBHOOKS & INTEGRATION
+    %% =====================================================================
+
+    webhook_endpoints {
+        uuid id PK
+        uuid tenant_id FK
+        string name
+        string url
+        string secret_hash "HMAC signing secret"
+        string[] subscribed_events "Array of event types"
+        boolean is_active
+        timestamp last_triggered_at
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+    }
+
+    webhook_deliveries {
+        uuid id PK
+        uuid webhook_endpoint_id FK
+        string event_type
+        jsonb payload_json
+        integer http_status
+        string response_body
+        integer retry_count
+        boolean is_success
+        timestamp delivered_at
+        timestamp created_at
+    }
+
+    %% =====================================================================
+    %% MODULE 10: EXPORTS & JOBS
+    %% =====================================================================
+
+    export_jobs {
+        uuid id PK
+        uuid brand_id FK "Nullable"
+        uuid campaign_id FK "Nullable"
+        uuid requested_by_user_id FK
+        string export_type "CAMPAIGN_REPORT|COMPLIANCE_REPORT|STORE_LIST|PHOTO_ARCHIVE"
+        string format "CSV|XLSX|PDF|ZIP"
+        string status "QUEUED|PROCESSING|COMPLETED|FAILED"
+        jsonb filters_json "Export parameters"
+        string s3_key "Nullable - output file location"
+        integer file_size_bytes
+        string error_message "Nullable"
+        timestamp started_at
+        timestamp completed_at
+        timestamp expires_at
+        timestamp created_at
+    }
+
+    %% =====================================================================
+    %% MODULE 11: AUDIT & OBSERVABILITY
+    %% =====================================================================
+
+    audit_events {
+        uuid id PK
+        uuid tenant_id FK
+        uuid brand_id FK "Nullable"
+        uuid actor_user_id FK "Nullable - human actor"
+        uuid actor_api_key_id FK "Nullable - API actor"
+        string event_type "CREATE|UPDATE|DELETE|LOGIN|EXPORT|PERMISSION_CHANGE"
+        string entity_type "Campaign|Store|Photo|etc."
+        uuid entity_id
+        jsonb before_json "State before change"
+        jsonb after_json "State after change"
+        string ip_address
+        string user_agent
+        timestamp occurred_at
+        timestamp created_at
+    }
+
+    %% =====================================================================
+    %% LINKED ENTITIES FROM OTHER MODULES (Reference Only)
+    %% =====================================================================
+
+    store_assignments {
+        uuid id PK
+        uuid campaign_id FK
+        uuid store_id FK
+        string status
+    }
+
+    assignment_items {
+        uuid id PK
+        uuid store_assignment_id FK
+        uuid kit_item_id FK
+        uuid location_slot_id FK
+    }
+
+    kit_items {
+        uuid id PK
+        uuid kit_definition_id FK
+        string sku
+        string name
+    }
+
+    location_slots {
+        uuid id PK
+        uuid store_layout_id FK
+        string slot_code UK
+        string name
+    }
+
+    store_orders {
+        uuid id PK
+        uuid store_assignment_id FK
+        string order_type
+        string status
+    }
+
+    users {
+        uuid id PK
+        string email UK
+        string first_name
+        string last_name
+    }
+
+    tenants {
+        uuid id PK
+        string slug UK
+        string name
+    }
+
+    brands {
+        uuid id PK
+        uuid tenant_id FK
+        string code UK
+        string name
+    }
+
+    campaigns {
+        uuid id PK
+        uuid brand_id FK
+        string name
+        string status
+    }
+
+    api_keys {
+        uuid id PK
+        uuid tenant_id FK
+        string key_hash UK
+        string name
+    }
+
+    %% =====================================================================
+    %% RELATIONSHIPS
+    %% =====================================================================
+
+    %% Receive Verification
+    store_assignments ||--o{ receive_verifications : "verified by"
+    users ||--o{ receive_verifications : "verifies"
+
+    %% Photo Upload Flow
+    store_assignments ||--o{ photo_uploads : "submits"
+    assignment_items ||--o{ photo_uploads : "documents"
+    location_slots ||--o{ photo_uploads : "shows"
+    users ||--o{ photo_uploads : "uploads"
+
+    %% Photo Review Flow
+    photo_uploads ||--o{ photo_reviews : "reviewed in"
+    users ||--o{ photo_reviews : "reviews"
+
+    %% Retake Requests
+    photo_uploads ||--o{ retake_requests : "triggers"
+    store_assignments ||--o{ retake_requests : "requires"
+    photo_uploads ||--o{ retake_requests : "resolved by (new photo)"
+
+    %% Completion Attestation
+    store_assignments ||--o{ completion_attestations : "attested for"
+    users ||--o{ completion_attestations : "attests"
+
+    %% Issue Flow
+    store_assignments ||--o{ issue_requests : "reports"
+    photo_uploads ||--o{ issue_requests : "evidenced by"
+    users ||--o{ issue_requests : "submits"
+    users ||--o{ issue_requests : "reviews"
+
+    %% Issue Lines
+    issue_requests ||--o{ issue_lines : "contains"
+    kit_items ||--o{ issue_lines : "affected"
+
+    %% Reorder Flow
+    issue_requests ||--o{ reorders : "generates"
+    store_orders ||--o{ reorders : "fulfilled by"
+
+    %% Notifications
+    users ||--o{ notification_preferences : "configures"
+    users ||--o{ notifications : "receives"
+
+    %% Webhooks
+    tenants ||--o{ webhook_endpoints : "configures"
+    webhook_endpoints ||--o{ webhook_deliveries : "delivers"
+
+    %% Exports
+    brands ||--o{ export_jobs : "exports"
+    campaigns ||--o{ export_jobs : "exports"
+    users ||--o{ export_jobs : "requests"
+
+    %% Audit
+    tenants ||--o{ audit_events : "logs"
+    brands ||--o{ audit_events : "logs"
+    users ||--o{ audit_events : "actor"
+    api_keys ||--o{ audit_events : "actor"
+

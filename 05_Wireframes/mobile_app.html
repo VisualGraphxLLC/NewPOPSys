@@ -945,37 +945,171 @@ Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
             </div>
         </div>
 
-        <!-- SCREEN: TASKS LIST -->
+        <!-- SCREEN: TASKS - Tabbed Progressive Workflow -->
         <div id="screen-tasks" class="screen p-4 pb-24">
-            <h1 class="text-2xl font-bold mb-4" data-tooltip="📋 TASKS SCREEN
-━━━━━━━━━━━━━━━
-Feature: Unified task list
-Source: All campaign assignments
-Filter: Store-specific tasks
-Order: Priority, Due Date">My Tasks</h1>
-            <div class="space-y-3">
-                <div class="card flex justify-between items-center cursor-pointer" onclick="nav('screen-receipt')" data-tooltip="📦 TASK CARD - RECEIPT\n📊 Data: StoreAssignment.id, StoreAssignment.executionStatus, Campaign.startDate\n⬅️ Depends: Shipment delivered, user authenticated\n➡️ Blocks: Receipt survey navigation">
-                    <div>
-                        <div class="font-bold" data-tooltip="📝 TASK NAME\n📊 Data: Generated from StoreAssignment.executionStatus\n⬅️ Depends: StoreAssignment created\n➡️ Blocks: Task identification, workflow step">Verify Receipt</div>
-                        <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign active\n➡️ Blocks: Task campaign association">Holiday Promo 2025</div>
-                    </div>
-                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="⚠️ DUE TODAY BADGE\n📊 Data: Campaign.startDate, StoreAssignment.dueDate\n⬅️ Depends: Campaign timing, deadline calculation\n➡️ Blocks: User urgency indicator">Due Today</span>
-                </div>
-                <div id="task-install" class="card flex justify-between items-center opacity-60 grayscale" data-tooltip="🔒 TASK CARD - INSTALL (LOCKED)\n📊 Data: StoreAssignment.id, StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt verified, ReceiveVerification.status=APPROVED\n➡️ Blocks: Install survey access, PhotoUpload creation">
-                    <div>
-                        <div class="font-bold" data-tooltip="📝 TASK NAME\n📊 Data: Generated from AssignmentItem entities\n⬅️ Depends: AssignmentItems created\n➡️ Blocks: Task identification, photo workflow">Install Window Clings</div>
-                        <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name, Campaign.id\n⬅️ Depends: Campaign active\n➡️ Blocks: Task campaign association">Holiday Promo 2025</div>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="🔒 LOCKED BADGE\n📊 Data: StoreAssignment.executionStatus, ReceiveVerification.status\n⬅️ Depends: Receipt not yet completed\n➡️ Blocks: Task access, prevents premature install">Locked</span>
-                </div>
+            <!-- Campaign Header -->
+            <div class="mb-4" data-tooltip="📋 TASK WORKFLOW SCREEN\n━━━━━━━━━━━━━━━\nFeature: Progressive task tabs\nPattern: Complete one, unlock next\nUX: Tabs replace separate tasks">
+                <h1 class="text-2xl font-bold">Holiday Promo 2025</h1>
+                <p class="text-sm text-gray-500">Complete each step in sequence</p>
+            </div>
 
-                <!-- ATTESTATION TASK - Locked until Install complete -->
-                <div id="task-attestation" class="card flex justify-between items-center opacity-60 grayscale" data-tooltip="🔒 TASK CARD - ATTESTATION (LOCKED)\n📊 Data: StoreAssignment.id, InstallVerification.status\n⬅️ Depends: All tasks completed, InstallVerification.status=COMPLETE\n➡️ Blocks: Campaign completion, final verification">
-                    <div>
-                        <div class="font-bold" data-tooltip="📝 ATTESTATION TASK\n📊 Data: StoreAttestation entity\n⬅️ Depends: All tasks done\n➡️ Blocks: Campaign sign-off">Attest Completion</div>
-                        <div class="text-xs text-gray-500" data-tooltip="📋 CAMPAIGN CONTEXT\n📊 Data: Campaign.name\n⬅️ Depends: Campaign active\n➡️ Blocks: Final attestation">Holiday Promo 2025</div>
+            <!-- Progress Tabs -->
+            <div class="flex mb-4 bg-gray-100 rounded-lg p-1" data-tooltip="📊 PROGRESS TABS\n📊 Data: StoreAssignment.executionStatus\n⬅️ Depends: Campaign assigned\n➡️ Blocks: Step-by-step progression">
+                <button id="tab-receive" onclick="switchTaskTab('receive')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium bg-white shadow text-blue-600 cursor-pointer" data-tooltip="📦 RECEIVE TAB\n📊 Data: ReceiveVerification.status\n⬅️ Depends: Shipment exists\n➡️ Blocks: Install phase unlock">
+                    <i data-lucide="package" class="w-4 h-4 inline mr-1"></i>
+                    Receive
+                </button>
+                <button id="tab-install" onclick="switchTaskTab('install')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed" data-tooltip="🔧 INSTALL TAB (LOCKED)\n📊 Data: InstallVerification.status\n⬅️ Depends: Receipt verified\n➡️ Blocks: Attestation phase unlock">
+                    <i data-lucide="wrench" class="w-4 h-4 inline mr-1"></i>
+                    Install
+                </button>
+                <button id="tab-attest" onclick="switchTaskTab('attest')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed" data-tooltip="✅ ATTEST TAB (LOCKED)\n📊 Data: StoreAttestation.status\n⬅️ Depends: Install completed\n➡️ Blocks: Campaign completion">
+                    <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>
+                    Attest
+                </button>
+            </div>
+
+            <!-- Tab Content: Receive -->
+            <div id="task-tab-receive" class="task-tab-content">
+                <div class="card" data-tooltip="📦 RECEIVE TASK CONTENT\n📊 Data: ReceiveVerification entity\n⬅️ Depends: Shipment data\n➡️ Blocks: Receipt survey">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-blue-100 text-blue-600 rounded-full p-2">
+                            <i data-lucide="package" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Verify Shipment Receipt</h3>
+                            <p class="text-xs text-gray-500">Confirm materials arrived intact</p>
+                        </div>
+                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">Due Today</span>
                     </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded" data-tooltip="🔒 LOCKED BADGE\n📊 Data: InstallVerification.status\n⬅️ Depends: Install not yet completed\n➡️ Blocks: Attestation access">Locked</span>
+
+                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                        <div class="text-sm font-medium mb-2">Shipment Contents:</div>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Window Clings (2)</li>
+                            <li>• Counter Display</li>
+                            <li>• Promotional Flyers (50)</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="nav('screen-receipt')" class="btn-primary w-full cursor-pointer" data-tooltip="▶️ START BUTTON\n📊 Data: Navigates to receipt screen\n⬅️ Depends: Tab active\n➡️ Blocks: Receipt survey flow">
+                        Start Verification
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Install (Initially Hidden) -->
+            <div id="task-tab-install" class="task-tab-content hidden">
+                <div id="install-content-locked" class="card bg-gray-50 opacity-60">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-gray-200 text-gray-400 rounded-full p-2">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-400">Install Materials</h3>
+                            <p class="text-xs text-gray-400">Complete receipt verification first</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="install-content-active" class="card hidden" data-tooltip="🔧 INSTALL TASK CONTENT\n📊 Data: InstallVerification entity\n⬅️ Depends: Receipt complete\n➡️ Blocks: Photo uploads">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-blue-100 text-blue-600 rounded-full p-2">
+                            <i data-lucide="wrench" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Install Materials</h3>
+                            <p class="text-xs text-gray-500">Place items and capture photos</p>
+                        </div>
+                        <span class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                        <div class="text-sm font-medium mb-2">Installation Tasks:</div>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Window Cling (Left) - Photo required</li>
+                            <li>• Window Cling (Right) - Photo required</li>
+                            <li>• Counter Mat - Photo required</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="nav('screen-install')" class="btn-primary w-full cursor-pointer" data-tooltip="▶️ START INSTALL\n📊 Data: Navigates to install screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Photo workflow">
+                        Start Installation
+                    </button>
+                </div>
+                <div id="install-content-complete" class="card bg-green-50 border-green-200 hidden">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 text-green-600 rounded-full p-2">
+                            <i data-lucide="check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-green-700">Installation Complete</h3>
+                            <p class="text-xs text-green-600">All photos uploaded successfully</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Attest (Initially Hidden) -->
+            <div id="task-tab-attest" class="task-tab-content hidden">
+                <div id="attest-content-locked" class="card bg-gray-50 opacity-60">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-gray-200 text-gray-400 rounded-full p-2">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-400">Attest Completion</h3>
+                            <p class="text-xs text-gray-400">Complete installation first</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="attest-content-active" class="card hidden" data-tooltip="✅ ATTEST TASK CONTENT\n📊 Data: StoreAttestation entity\n⬅️ Depends: Install complete\n➡️ Blocks: Final sign-off">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-blue-100 text-blue-600 rounded-full p-2">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Complete Attestation</h3>
+                            <p class="text-xs text-gray-500">Sign off on campaign completion</p>
+                        </div>
+                        <span class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                        <div class="flex gap-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-600 flex-shrink-0"></i>
+                            <p class="text-xs text-yellow-800">By attesting, you confirm all materials were installed correctly per guidelines.</p>
+                        </div>
+                    </div>
+
+                    <button onclick="nav('screen-attestation')" class="btn-primary w-full cursor-pointer" data-tooltip="▶️ START ATTESTATION\n📊 Data: Navigates to attestation screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Campaign completion">
+                        Complete Attestation
+                    </button>
+                </div>
+                <div id="attest-content-complete" class="card bg-green-50 border-green-200 hidden">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 text-green-600 rounded-full p-2">
+                            <i data-lucide="check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-green-700">Campaign Complete!</h3>
+                            <p class="text-xs text-green-600">Attestation submitted successfully</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receive Tab - Completed State (Initially Hidden) -->
+            <div id="task-tab-receive-complete" class="hidden">
+                <div class="card bg-green-50 border-green-200">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 text-green-600 rounded-full p-2">
+                            <i data-lucide="check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-green-700">Receipt Verified</h3>
+                            <p class="text-xs text-green-600">All items confirmed received</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1281,6 +1415,53 @@ Purpose: Primary app navigation">
         let installComplete = false;
         let signatureComplete = false;
 
+        // === TAB SWITCHING FUNCTION ===
+        function switchTaskTab(tabName) {
+            // Guard: prevent switching to locked tabs
+            if (tabName === 'install' && !receiptComplete) {
+                alert("🔒 Complete receipt verification first");
+                return;
+            }
+            if (tabName === 'attest' && !installComplete) {
+                alert("🔒 Complete installation first");
+                return;
+            }
+
+            // Hide all tab content
+            document.querySelectorAll('.task-tab-content').forEach(el => el.classList.add('hidden'));
+
+            // Show selected tab content
+            const tabContent = document.getElementById('task-tab-' + tabName);
+            if (tabContent) tabContent.classList.remove('hidden');
+
+            // Handle receive tab special case (show complete state if done)
+            if (tabName === 'receive' && receiptComplete) {
+                document.getElementById('task-tab-receive').classList.add('hidden');
+                document.getElementById('task-tab-receive-complete').classList.remove('hidden');
+            } else if (tabName === 'receive') {
+                document.getElementById('task-tab-receive-complete').classList.add('hidden');
+            }
+
+            // Update tab button styles
+            const tabs = ['receive', 'install', 'attest'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-' + t);
+                btn.classList.remove('bg-white', 'shadow', 'text-blue-600');
+
+                if (t === tabName) {
+                    btn.classList.add('bg-white', 'shadow', 'text-blue-600');
+                } else {
+                    // Keep completed tabs green
+                    if ((t === 'receive' && receiptComplete) || (t === 'install' && installComplete)) {
+                        btn.classList.remove('text-gray-400');
+                        btn.classList.add('text-green-600');
+                    }
+                }
+            });
+
+            lucide.createIcons();
+        }
+
         function nav(screenId) {
             // Guard: Prevent going to install if receipt not done
             if (screenId === 'screen-install' && !receiptComplete) {
@@ -1374,21 +1555,40 @@ Purpose: Primary app navigation">
 
             // Update Dashboard UI to show unlock
             const card = document.getElementById('card-campaign-install');
-            card.classList.remove('opacity-60', 'grayscale');
-            card.querySelector('.status-badge').innerHTML = '<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Ready to Start</span>';
-
-            // Unlock install task card in Tasks list
-            const installTask = document.getElementById('task-install');
-            if (installTask) {
-                installTask.classList.remove('opacity-60', 'grayscale');
-                installTask.querySelector('span:last-child').textContent = 'Next Up';
-                installTask.querySelector('span:last-child').className = 'bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded';
-                installTask.setAttribute('onclick', "nav('screen-install')");
-                installTask.style.cursor = 'pointer';
+            if (card) {
+                card.classList.remove('opacity-60', 'grayscale');
+                const badge = card.querySelector('.status-badge');
+                if (badge) badge.innerHTML = '<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Ready to Start</span>';
             }
 
+            // === NEW TABBED WORKFLOW ===
+            // 1. Show receive completed state
+            document.getElementById('task-tab-receive').classList.add('hidden');
+            document.getElementById('task-tab-receive-complete').classList.remove('hidden');
+
+            // 2. Mark Receive tab as complete (green)
+            const receiveTab = document.getElementById('tab-receive');
+            receiveTab.classList.remove('text-gray-400');
+            receiveTab.classList.add('text-green-600');
+            receiveTab.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 mr-1"></i> Receive';
+
+            // 3. Enable Install tab
+            const installTab = document.getElementById('tab-install');
+            installTab.classList.remove('text-gray-400', 'cursor-not-allowed');
+            installTab.classList.add('text-blue-600');
+
+            // 4. Show install active content, hide locked
+            document.getElementById('install-content-locked').classList.add('hidden');
+            document.getElementById('install-content-active').classList.remove('hidden');
+
+            // 5. Auto-switch to Install tab
+            switchTaskTab('install');
+
+            // 6. Navigate back to Tasks screen
+            nav('screen-tasks');
+
             alert("✅ Receipt Verified! Install Phase Unlocked.");
-            nav('screen-dashboard');
+            lucide.createIcons();
         }
 
         function syncNow() {
@@ -1405,18 +1605,34 @@ Purpose: Primary app navigation">
         function completeInstall() {
             installComplete = true;
 
-            // Unlock attestation task card
-            const attestTask = document.getElementById('task-attestation');
-            if (attestTask) {
-                attestTask.classList.remove('opacity-60', 'grayscale');
-                attestTask.querySelector('span').textContent = 'Next Up';
-                attestTask.querySelector('span').className = 'bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded';
-                attestTask.setAttribute('onclick', "nav('screen-attestation')");
-                attestTask.style.cursor = 'pointer';
-            }
+            // === NEW TABBED WORKFLOW ===
+            // 1. Show install completed state, hide active
+            document.getElementById('install-content-active').classList.add('hidden');
+            document.getElementById('install-content-complete').classList.remove('hidden');
+
+            // 2. Mark Install tab as complete (green)
+            const installTab = document.getElementById('tab-install');
+            installTab.classList.remove('text-blue-600');
+            installTab.classList.add('text-green-600');
+            installTab.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 mr-1"></i> Install';
+
+            // 3. Enable Attest tab
+            const attestTab = document.getElementById('tab-attest');
+            attestTab.classList.remove('text-gray-400', 'cursor-not-allowed');
+            attestTab.classList.add('text-blue-600');
+
+            // 4. Show attest active content, hide locked
+            document.getElementById('attest-content-locked').classList.add('hidden');
+            document.getElementById('attest-content-active').classList.remove('hidden');
+
+            // 5. Auto-switch to Attest tab
+            switchTaskTab('attest');
+
+            // 6. Navigate back to Tasks screen
+            nav('screen-tasks');
 
             alert("✅ Installation Complete! Attestation Unlocked.");
-            nav('screen-tasks');
+            lucide.createIcons();
         }
 
         function checkSubmitReady() {
@@ -1457,24 +1673,27 @@ Purpose: Primary app navigation">
         }
 
         function submitAttestation() {
-            // Mark attestation task as complete on tasks screen
-            const attestTask = document.getElementById('task-attestation');
-            if (attestTask) {
-                attestTask.innerHTML = `
-                    <div class='flex items-center gap-3'>
-                        <div class='bg-green-100 text-green-600 rounded-full p-1'><i data-lucide='check' size='16'></i></div>
-                        <div>
-                            <div class="font-bold text-gray-500 line-through">Attest Completion</div>
-                            <div class="text-xs text-green-600 font-bold">Completed Just Now</div>
-                        </div>
-                    </div>
-                `;
-                attestTask.classList.add('bg-gray-50');
-                attestTask.removeAttribute('onclick');
+            // === NEW TABBED WORKFLOW ===
+            // 1. Show attest completed state, hide active
+            document.getElementById('attest-content-active').classList.add('hidden');
+            document.getElementById('attest-content-complete').classList.remove('hidden');
+
+            // 2. Mark Attest tab as complete (green)
+            const attestTab = document.getElementById('tab-attest');
+            attestTab.classList.remove('text-blue-600');
+            attestTab.classList.add('text-green-600');
+            attestTab.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 mr-1"></i> Attest';
+
+            // 3. Update task header to show all complete
+            const taskHeader = document.querySelector('#screen-tasks h1');
+            if (taskHeader) {
+                taskHeader.innerHTML = 'Tasks <span class="text-green-600 text-sm ml-2">✓ All Complete</span>';
             }
 
-            alert("✅ Attestation Submitted Successfully!\n\nYour campaign completion has been verified and recorded.");
+            // 4. Navigate back to Tasks screen to show completion
             nav('screen-tasks');
+
+            alert("✅ Attestation Submitted Successfully!\n\nYour campaign completion has been verified and recorded.");
             lucide.createIcons();
         }
 
