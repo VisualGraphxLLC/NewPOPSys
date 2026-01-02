@@ -1446,14 +1446,12 @@ Blocks: Campaign completion">
                 </div>
             </div>
 
-            <!-- Submit Button - Fixed at bottom -->
-            <div class="fixed-bottom-action" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); width: 375px; padding: 0 16px 16px 16px; background: linear-gradient(to top, #f3f4f6 80%, transparent); box-sizing: border-box;">
+            <!-- Submit Button - Sticky at bottom of scroll container -->
+            <div class="sticky-bottom-action" style="position: sticky; bottom: 0; width: 100%; padding: 16px; background: linear-gradient(to top, #f3f4f6 90%, transparent); box-sizing: border-box; margin-top: auto;">
                 <button id="attestation-submit" onclick="submitAttestation()" disabled class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed shadow-lg" data-tooltip="📤 SUBMIT BUTTON\n📊 Data: Creates StoreAttestation record\n⬅️ Depends: All checkboxes + signature\n➡️ Blocks: Campaign completion, success modal">
                     Submit Attestation
                 </button>
             </div>
-            <!-- Spacer for fixed button -->
-            <div style="height: 80px;"></div>
         </div>
 
         <!-- SCREEN: DEINSTALL - Material Removal Workflow -->
@@ -1703,8 +1701,8 @@ Blocks: Campaign deinstall completion, compliance tracking">
                 </div>
             </div>
 
-            <!-- Submit Deinstall Attestation - Fixed at bottom -->
-            <div class="fixed-bottom-action" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); width: 375px; padding: 0 16px 16px 16px; background: linear-gradient(to top, #f3f4f6 80%, transparent); box-sizing: border-box;">
+            <!-- Submit Deinstall Attestation - Sticky at bottom of scroll container -->
+            <div class="sticky-bottom-action" style="position: sticky; bottom: 0; width: 100%; padding: 16px; background: linear-gradient(to top, #f3f4f6 90%, transparent); box-sizing: border-box; margin-top: auto;">
                 <button id="btn-submit-deinstall-attestation" disabled
                     onclick="submitDeinstallAttestation()"
                     class="w-full py-4 bg-gray-300 text-gray-500 rounded-lg font-bold opacity-50 cursor-not-allowed transition shadow-lg" data-tooltip="✅ SUBMIT DEINSTALL ATTESTATION BUTTON
@@ -1719,8 +1717,6 @@ STATE: Disabled until all requirements met, then enabled with orange styling">
 ⬅️ Depends: None
 ➡️ Blocks: User awareness of attestation meaning">By signing, I attest that all materials have been properly removed</p>
             </div>
-            <!-- Spacer for fixed button -->
-            <div style="height: 100px;"></div>
         </div>
 
         <!-- SCREEN: DEINSTALL SUCCESS - Completion Confirmation -->
