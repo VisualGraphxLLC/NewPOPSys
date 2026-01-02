@@ -997,6 +997,10 @@ Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
                     <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>
                     Attest
                 </button>
+                <button id="tab-deinstall" onclick="switchTaskTab('deinstall')" class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed hidden" data-tooltip="🗑️ DEINSTALL TAB (LOCKED)\n📊 Data: DeinstallTask.status\n⬅️ Depends: Campaign in deinstall phase\n➡️ Blocks: Campaign archive">
+                    <i data-lucide="trash-2" class="w-4 h-4 inline mr-1"></i>
+                    Deinstall
+                </button>
             </div>
 
             <!-- Tab Content: Receive -->
@@ -1123,6 +1127,55 @@ Source: SUPP-017 two-stage model">Proceeds to Install Phase</p>
                         <div>
                             <h3 class="font-bold text-green-700">Campaign Complete!</h3>
                             <p class="text-xs text-green-600">Attestation submitted successfully</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Deinstall (Hidden by default - only shown when campaign in deinstall phase) -->
+            <div id="task-tab-deinstall" class="task-tab-content hidden">
+                <div id="deinstall-content-locked" class="card bg-gray-50 opacity-60">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-gray-200 text-gray-400 rounded-full p-2">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-400">Deinstall Materials</h3>
+                            <p class="text-xs text-gray-400">Not available - Campaign still active</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="deinstall-content-active" class="card hidden" data-tooltip="🗑️ DEINSTALL TASK CONTENT\n📊 Data: DeinstallTask entity\n⬅️ Depends: Campaign in deinstall phase\n➡️ Blocks: Deinstall attestation">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-orange-100 text-orange-600 rounded-full p-2">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Remove Campaign Materials</h3>
+                            <p class="text-xs text-gray-500">Campaign ended - deinstall required</p>
+                        </div>
+                        <span class="ml-auto bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded">Action Required</span>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+                        <div class="flex gap-2">
+                            <i data-lucide="calendar" class="w-4 h-4 text-orange-600 flex-shrink-0"></i>
+                            <p class="text-xs text-orange-800">Deinstall window: Complete by <strong>Jan 15, 2026</strong></p>
+                        </div>
+                    </div>
+
+                    <button onclick="nav('screen-deinstall')" class="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium cursor-pointer" data-tooltip="▶️ START DEINSTALL\n📊 Data: Navigates to deinstall screen\n⬅️ Depends: Tab unlocked\n➡️ Blocks: Deinstall completion">
+                        Start Deinstall Process
+                    </button>
+                </div>
+                <div id="deinstall-content-complete" class="card bg-green-50 border-green-200 hidden">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 text-green-600 rounded-full p-2">
+                            <i data-lucide="check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-green-700">Deinstall Complete!</h3>
+                            <p class="text-xs text-green-600">Materials removed and attested</p>
                         </div>
                     </div>
                 </div>
@@ -1441,6 +1494,8 @@ Purpose: Primary app navigation">
         let receiptComplete = false;
         let installComplete = false;
         let signatureComplete = false;
+        let deinstallPhase = false;  // true when campaign enters deinstall phase
+        let deinstallComplete = false;
 
         // === TAB SWITCHING FUNCTION ===
         function switchTaskTab(tabName) {
@@ -1451,6 +1506,10 @@ Purpose: Primary app navigation">
             }
             if (tabName === 'attest' && !installComplete) {
                 alert("🔒 Complete installation first");
+                return;
+            }
+            if (tabName === 'deinstall' && !deinstallPhase) {
+                alert("🔒 Deinstall not available - campaign still active");
                 return;
             }
 
@@ -1470,16 +1529,24 @@ Purpose: Primary app navigation">
             }
 
             // Update tab button styles
-            const tabs = ['receive', 'install', 'attest'];
+            const tabs = ['receive', 'install', 'attest', 'deinstall'];
             tabs.forEach(t => {
                 const btn = document.getElementById('tab-' + t);
-                btn.classList.remove('bg-white', 'shadow', 'text-blue-600');
+                if (!btn) return; // Skip if tab doesn't exist (deinstall may be hidden)
+                btn.classList.remove('bg-white', 'shadow', 'text-blue-600', 'text-orange-600');
 
                 if (t === tabName) {
-                    btn.classList.add('bg-white', 'shadow', 'text-blue-600');
+                    if (t === 'deinstall') {
+                        btn.classList.add('bg-white', 'shadow', 'text-orange-600');
+                    } else {
+                        btn.classList.add('bg-white', 'shadow', 'text-blue-600');
+                    }
                 } else {
                     // Keep completed tabs green
-                    if ((t === 'receive' && receiptComplete) || (t === 'install' && installComplete)) {
+                    if ((t === 'receive' && receiptComplete) ||
+                        (t === 'install' && installComplete) ||
+                        (t === 'attest' && signatureComplete) ||
+                        (t === 'deinstall' && deinstallComplete)) {
                         btn.classList.remove('text-gray-400');
                         btn.classList.add('text-green-600');
                     }
@@ -1499,6 +1566,12 @@ Purpose: Primary app navigation">
             // Guard: Prevent going to attestation if install not done
             if (screenId === 'screen-attestation' && !installComplete) {
                 alert("🔒 Locked: You must complete the installation before attestation.");
+                return;
+            }
+
+            // Guard: Prevent going to deinstall if not in deinstall phase
+            if (screenId === 'screen-deinstall' && !deinstallPhase) {
+                alert("🔒 Locked: Deinstall not available - campaign still active.");
                 return;
             }
 
@@ -1721,6 +1794,60 @@ Purpose: Primary app navigation">
             nav('screen-tasks');
 
             alert("✅ Attestation Submitted Successfully!\n\nYour campaign completion has been verified and recorded.");
+            lucide.createIcons();
+        }
+
+        // === DEINSTALL FUNCTIONS ===
+
+        function enterDeinstallPhase() {
+            // Demo function: Simulates campaign entering deinstall phase
+            deinstallPhase = true;
+
+            // 1. Show the Deinstall tab button
+            const deinstallTab = document.getElementById('tab-deinstall');
+            deinstallTab.classList.remove('hidden', 'text-gray-400', 'cursor-not-allowed');
+            deinstallTab.classList.add('text-orange-600');
+
+            // 2. Show deinstall active content, hide locked
+            document.getElementById('deinstall-content-locked').classList.add('hidden');
+            document.getElementById('deinstall-content-active').classList.remove('hidden');
+
+            // 3. Auto-switch to Deinstall tab
+            switchTaskTab('deinstall');
+
+            // 4. Update task header to show deinstall required
+            const taskHeader = document.querySelector('#screen-tasks h1');
+            if (taskHeader) {
+                taskHeader.innerHTML = 'Tasks <span class="text-orange-600 text-sm ml-2">⚠️ Deinstall Required</span>';
+            }
+
+            alert("🗑️ Campaign Ended!\n\nDeinstall phase has begun. Please remove campaign materials.");
+            lucide.createIcons();
+        }
+
+        function completeDeinstall() {
+            deinstallComplete = true;
+
+            // 1. Show deinstall completed state, hide active
+            document.getElementById('deinstall-content-active').classList.add('hidden');
+            document.getElementById('deinstall-content-complete').classList.remove('hidden');
+
+            // 2. Mark Deinstall tab as complete (green)
+            const deinstallTab = document.getElementById('tab-deinstall');
+            deinstallTab.classList.remove('text-orange-600');
+            deinstallTab.classList.add('text-green-600');
+            deinstallTab.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 mr-1"></i> Deinstall';
+
+            // 3. Update task header to show all complete
+            const taskHeader = document.querySelector('#screen-tasks h1');
+            if (taskHeader) {
+                taskHeader.innerHTML = 'Tasks <span class="text-green-600 text-sm ml-2">✓ Campaign Complete</span>';
+            }
+
+            // 4. Navigate back to Tasks screen
+            nav('screen-tasks');
+
+            alert("✅ Deinstall Complete!\n\nCampaign materials have been removed and verified.");
             lucide.createIcons();
         }
 
