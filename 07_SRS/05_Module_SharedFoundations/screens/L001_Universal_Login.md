@@ -25,7 +25,7 @@ The Universal Login Screen (L001) serves as the single authentication entry poin
 
 ### 1.3 Screenshot Reference
 
-![Universal Login Screen](../../screenshots/Mobile_App/mobile_app.png)
+![Universal Login Screen](../../screenshots/Auth_Login/login.png)
 
 *Figure L001-1: Universal Login Screen - Mobile and Web responsive login interface*
 
@@ -125,7 +125,7 @@ Priority Order (highest first):
 ### 3.3 Login Form Wireframe
 
 
-![Universal Login Screen](../../screenshots/Mobile_App/mobile_app.png)
+![Universal Login Screen](../../screenshots/Auth_Login/login.png)
 
 
 ### 3.4 MFA Modal
@@ -201,7 +201,7 @@ Priority Order (highest first):
 **REQ-L001-DR-003**: The session object SHALL contain:
 
 
-![Universal Login Screen](../../screenshots/Mobile_App/mobile_app.png)
+![Universal Login Screen](../../screenshots/Auth_Login/login.png)
 
 
 ---
@@ -393,7 +393,7 @@ stateDiagram-v2
 
 **REQ-L001-ST-003**: Password reset flow states:
 
-![Login](../../screenshots/Mobile_App/mobile_app.png)
+![Login](../../screenshots/Auth_Login/login.png)
 
 ---
 

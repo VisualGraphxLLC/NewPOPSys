@@ -36,7 +36,7 @@ The Photo Gallery screen provides store personnel with a centralized view of all
 
 ### 1.4 Screenshot Reference
 
-![Photo Gallery Screen](../../screenshots/Store_Portal/store_portal_photos.png)
+![Photo Gallery Screen](../../screenshots/Store_Manager_Portal/manager_photos.png)
 
 ---
 

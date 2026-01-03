@@ -17,7 +17,7 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 1.2 Screenshot Reference
 
-![Store Portal Dashboard](../../screenshots/Store_Portal/store_portal_dashboard.png)
+![Store Portal Dashboard](../../screenshots/Store_Manager_Portal/manager_dashboard.png)
 
 ### 1.3 Source References
 

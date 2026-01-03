@@ -26,7 +26,7 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Retake Flow Screen](../../screenshots/Store_Execution/mobile_photo_captured.png)
+![Retake Flow Screen](../../screenshots/Store_Execution/mobile_retake.png)
 *(Note: View shows the review state after capture; Tablet/Desktop modes scale responsively)*
 
 ### 1.4 Source Documents

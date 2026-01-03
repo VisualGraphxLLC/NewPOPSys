@@ -17,7 +17,7 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 1.2 Screenshot Reference
 
-![Store Portal Campaigns](../../screenshots/Store_Portal/store_portal_campaigns.png)
+![Store Portal Campaigns](../../screenshots/Store_Manager_Portal/manager_campaigns.png)
 
 ### 1.3 Source References
 

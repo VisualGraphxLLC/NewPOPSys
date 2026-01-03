@@ -37,7 +37,7 @@ The Team Management screen enables Store Managers to administer their store's te
 
 ### 1.4 Screenshot Reference
 
-![Team Management Screen](../../screenshots/Store_Portal/store_portal_team.png)
+![Team Management Screen](../../screenshots/Store_Manager_Portal/manager_team.png)
 
 ---
 

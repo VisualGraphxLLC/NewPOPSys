@@ -31,13 +31,13 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.4 Screenshot Reference
 
-![Store Reports Dashboard](../../screenshots/Store_Portal/store_portal_reports.png)
+![Store Reports Dashboard](../../screenshots/Store_Manager_Portal/manager_reports.png)
 
 *Figure S005-1: Store Reports Dashboard - Analytics and performance metrics interface*
 
 ### 1.5 Screen Context
 
-![Reports](../../screenshots/Store_Portal/store_portal_reports.png)
+![Reports](../../screenshots/Store_Manager_Portal/manager_reports.png)
 
 ---
 
@@ -81,7 +81,7 @@ REQ-S005-SEC-005: Role Enforcement
 
 ### 3.1 Component Hierarchy
 
-![Reports](../../screenshots/Store_Portal/store_portal_reports.png)
+![Reports](../../screenshots/Store_Manager_Portal/manager_reports.png)
 
 ### 3.2 Component Specifications
 
@@ -146,7 +146,7 @@ REQ-S005-SEC-005: Role Enforcement
 ### 3.3 Reports Layout
 
 ### 3.3 Reports Layout
-![Store Reports Wireframe](../../screenshots/Store_Portal/store_portal_reports.png)
+![Store Reports Wireframe](../../screenshots/Store_Manager_Portal/manager_reports.png)
 
 ---
 
@@ -511,7 +511,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 6.2 Request/Response Flow
 
-![Reports](../../screenshots/Store_Portal/store_portal_reports.png)
+![Reports](../../screenshots/Store_Manager_Portal/manager_reports.png)
 
 ### 6.3 API Requirements
 
@@ -529,7 +529,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 7.1 Screen States
 
-![Reports](../../screenshots/Store_Portal/store_portal_reports.png)mermaid
+![Reports](../../screenshots/Store_Manager_Portal/manager_reports.png)mermaid
 stateDiagram-v2
     [*] --> LOADING
     LOADING --> SUCCESS: Data Ready

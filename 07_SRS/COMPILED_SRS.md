@@ -1,4 +1,4 @@
-# NewPOPSys Software Requirements Specification
+﻿# NewPOPSys Software Requirements Specification
 
 **Version:** 1.38
 **Date:** 2026-01-01
@@ -351,7 +351,7 @@ NewPOPSys v1 is a modernized campaign orchestration platform that replaces sprea
 ### Core Platform Loop
 
 ```
-Campaign  Store Assignment  PSP Fulfillment  Store Execution  Verification  Visibility
+Campaign â†’ Store Assignment â†’ PSP Fulfillment â†’ Store Execution â†’ Verification â†’ Visibility
 ```
 
 This loop represents the complete lifecycle of a POP campaign from creation through compliance verification.
@@ -638,8 +638,8 @@ Any scope changes must:
 | **Receipt Survey** | First-stage store survey upon delivery. Confirms items received, reports issues. |
 | **Install Survey** | Second-stage store survey. Captures proof photos of installed items. |
 | **Completion Attestation** | Store user's checkbox confirmation that installation is complete. |
-| **Retake Loop** | Workflow: rejected photos  RetakeRequest  new upload  review  repeat. |
-| **Reorder Flow** | Issue approved  Reorder generated  PSP ships  Store receives. |
+| **Retake Loop** | Workflow: rejected photos â†’ RetakeRequest â†’ new upload â†’ review â†’ repeat. |
+| **Reorder Flow** | Issue approved â†’ Reorder generated â†’ PSP ships â†’ Store receives. |
 | **Deinstall Task** | End-of-campaign task where store removes expired POP materials. |
 | **Waiver** | Administrative override marking requirement satisfied without proof. |
 | **Reopen** | Admin action to unlock a COMPLETE store for additional work. |
@@ -649,7 +649,7 @@ Any scope changes must:
 
 | Term | Definition |
 |------|------------|
-| **Rollup** | Aggregation of lower-level quantities to higher levels (Item  Store  Campaign). |
+| **Rollup** | Aggregation of lower-level quantities to higher levels (Item â†’ Store â†’ Campaign). |
 | **Pinning** | Freezing a specific version of survey/layout to a store assignment. |
 | **Rebase** | Updating a pinned version to latest, with re-verification rules. |
 | **Idempotency Key** | Unique identifier ensuring API request processed only once. |
@@ -1053,11 +1053,11 @@ All diagrams use Mermaid syntax for portability:
 Each requirement traces back to source documentation:
 
 ```
-SRS Requirement  SUPP Reference  Master SOW Section
-     
-Screen Spec  Wireframe  API Contract
-     
-Test Case  Acceptance Criteria
+SRS Requirement â†’ SUPP Reference â†’ Master SOW Section
+     â†“
+Screen Spec â†’ Wireframe â†’ API Contract
+     â†“
+Test Case â†’ Acceptance Criteria
 ```
 
 ---
@@ -4289,7 +4289,7 @@ This section documents all user personas and their role-based access control.
 | File | Description | Status |
 |------|-------------|--------|
 | 4.1_Persona_Matrix.md | All 9 personas with goals | Complete |
-| 4.2_Permission_Matrix.md | RBAC grid (persona × feature) | Complete |
+| 4.2_Permission_Matrix.md | RBAC grid (persona Ã— feature) | Complete |
 | 4.3_Authentication_Flows.md | Login, SSO, session management | Not Started |
 
 ## Persona Details
@@ -4374,7 +4374,24 @@ The SharedFoundations module provides cross-cutting screens and functionality sh
 
 ---
 
-## 3. Module Dependencies
+
+## 3. Visual Reference (Wireframes)
+
+### 3.1 Authentication Flow
+
+| Login Screen | MFA Challenge |
+| :---: | :---: |
+| ![Universal Login](./screenshots/Auth_Login/login.png) | ![MFA Modal](./screenshots/Auth_Login/login_mfa.png) |
+
+### 3.2 Account Recovery
+
+| Forgot Password | Recovery Success |
+| :---: | :---: |
+| ![Forgot PW](./screenshots/Auth_Login/forgot_password.png) | ![Confirmation](./screenshots/Auth_Login/reset_password_sent.png) |
+
+---
+
+## 4. Module Dependencies
 
 ### Required Services
 
@@ -4424,11 +4441,11 @@ The SharedFoundations module provides cross-cutting screens and functionality sh
 ### Authentication Flow
 
 ```
-User Request  L001 Login  Auth Service  SSO Provider
-                    
+User Request â†’ L001 Login â†’ Auth Service â†’ SSO Provider
+                    â†“
               MFA Challenge (if enabled)
-                    
-              Session Created  L002 Dashboard
+                    â†“
+              Session Created â†’ L002 Dashboard
 ```
 
 ### Session Management
@@ -4506,7 +4523,7 @@ The Universal Login Screen (L001) serves as the single authentication entry poin
 
 ### 1.3 Screenshot Reference
 
-![Universal Login Screen](./screenshots/Mobile_App/mobile_app.png)
+![Universal Login Screen](./screenshots/Auth_Login/login.png)
 
 *Figure L001-1: Universal Login Screen - Mobile and Web responsive login interface*
 
@@ -4544,12 +4561,12 @@ All system roles may access this screen prior to authentication. Post-authentica
 
 ```
 Priority Order (highest first):
-1. PLATFORM_ADMIN / PSP_ADMIN  /psp/dashboard
-2. PSP_OPS  /psp/orders
-3. BRAND_ADMIN / CAMPAIGN_MANAGER  /admin/dashboard
-4. REGIONAL_MANAGER  /admin/regional
-5. STORE_MANAGER  /store/dashboard
-6. STORE_OPERATOR  /store/campaigns
+1. PLATFORM_ADMIN / PSP_ADMIN â†’ /psp/dashboard
+2. PSP_OPS â†’ /psp/orders
+3. BRAND_ADMIN / CAMPAIGN_MANAGER â†’ /admin/dashboard
+4. REGIONAL_MANAGER â†’ /admin/regional
+5. STORE_MANAGER â†’ /store/dashboard
+6. STORE_OPERATOR â†’ /store/campaigns
 ```
 
 ### 2.3 Multi-Role Handling
@@ -4606,7 +4623,7 @@ Priority Order (highest first):
 ### 3.3 Login Form Wireframe
 
 
-![Universal Login Screen](./screenshots/Mobile_App/mobile_app.png)
+![Universal Login Screen](./screenshots/Auth_Login/login.png)
 
 
 ### 3.4 MFA Modal
@@ -4682,7 +4699,7 @@ Priority Order (highest first):
 **REQ-L001-DR-003**: The session object SHALL contain:
 
 
-![Universal Login Screen](./screenshots/Mobile_App/mobile_app.png)
+![Universal Login Screen](./screenshots/Auth_Login/login.png)
 
 
 ---
@@ -4864,7 +4881,7 @@ Priority Order (highest first):
 
 **REQ-L001-ST-003**: Password reset flow states:
 
-![Login](./screenshots/Mobile_App/mobile_app.png)
+![Login](./screenshots/Auth_Login/login.png)
 
 ---
 
@@ -5138,6 +5155,58 @@ Priority Order (highest first):
 
 
 ---
+# L001a Account Recovery - Screen Specification
+
+> **SRS Section**: 5.1.2 | **Screen ID**: L001a | **Version**: 1.0
+> **Module**: SharedFoundations
+> **Route**: `/login/recovery`
+> **Last Updated**: 2026-01-03
+
+---
+
+## 1. Screen Overview
+
+### 1.1 Purpose
+The Account Recovery screen enables users to reset their forgotten passwords. It follows a secure workflow involving email verification to prevent account enumeration and unauthorized access.
+
+### 1.2 Screenshot Reference
+
+| Request Reset | Reset Link Sent |
+| :---: | :---: |
+| ![Forgot Password](./screenshots/Auth_Login/forgot_password.png) | ![Reset Sent](./screenshots/Auth_Login/reset_password_sent.png) |
+
+---
+
+## 2. Functional Requirements
+
+### 2.1 Request Flow
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| REQ-L001a-FR-001 | User enters email address to request reset map | Must |
+| REQ-L001a-FR-002 | System sends email with time-limited token (1 hour) | Must |
+| REQ-L001a-FR-003 | success message displayed even if email not found (Security) | Must |
+
+### 2.2 Reset Flow
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| REQ-L001a-FR-004 | User clicks email link to access Reset Password form | Must |
+| REQ-L001a-FR-005 | Password complexity rules enforced (12+ chars, special chars) | Must |
+| REQ-L001a-FR-006 | Confirm password field required | Must |
+
+---
+
+## 3. Data Requirements
+
+### 3.1 API Endpoints
+- `POST /auth/recovery/request` - Initiate reset
+- `POST /auth/recovery/confirm` - Validate token and set new password
+
+---
+
+*Document Status: Active*
+
+
+---
 # L002 Universal Dashboard - SRS Specification
 
 > **SRS Section**: 5.1.2 | **Screen ID**: L002 | **Version**: 1.0 | **Status**: Draft
@@ -5199,13 +5268,13 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 
 | Permission | PLATFORM_ADMIN | PSP_ADMIN | PSP_OPS | BRAND_ADMIN | CAMPAIGN_MGR | REGIONAL_MGR | STORE_MGR | STORE_OP |
 |------------|----------------|-----------|---------|-------------|--------------|--------------|-----------|----------|
-| View system widgets | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
-| View tenant widgets | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ |
-| View brand widgets | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ |
-| View store widgets | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Customize layout | ✓ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✗ |
-| Export dashboard | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ |
-| View all stores | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ |
+| View system widgets | âœ“ | âœ“ | âœ— | âœ— | âœ— | âœ— | âœ— | âœ— |
+| View tenant widgets | âœ“ | âœ“ | âœ“ | âœ— | âœ— | âœ— | âœ— | âœ— |
+| View brand widgets | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ— | âœ— |
+| View store widgets | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ |
+| Customize layout | âœ“ | âœ“ | âœ— | âœ“ | âœ“ | âœ— | âœ“ | âœ— |
+| Export dashboard | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ— |
+| View all stores | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ“ | âœ— | âœ— |
 
 ### 2.3 Widget Visibility Rules
 
@@ -5240,9 +5309,9 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 
 | Element | Description | Actions |
 |---------|-------------|---------|
-| Logo | Tenant/Brand logo (configurable) | Click  Dashboard home |
+| Logo | Tenant/Brand logo (configurable) | Click â†’ Dashboard home |
 | Page Title | "Dashboard" | Static |
-| Notifications | Bell icon with badge count | Click  Notification panel |
+| Notifications | Bell icon with badge count | Click â†’ Notification panel |
 | User Menu | Avatar + name dropdown | Profile, Settings, Logout |
 | Settings | Gear icon | Dashboard customization |
 
@@ -5251,7 +5320,7 @@ The Universal Dashboard (L002) serves as the unified dashboard shell that adapts
 **REQ-L002-UI-002**: Each KPI card SHALL display:
 - Metric label
 - Current value (formatted)
-- Trend indicator (//)
+- Trend indicator (â†‘/â†“/â†’)
 - Percentage change from comparison period
 - Sparkline (optional)
 
@@ -5735,12 +5804,20 @@ Final manager sign-off with compliance certification and digital signature.
 | :--- | :--- | :--- |
 | ![Mobile Attest](./screenshots/Store_Execution/mobile_attestation.png) | ![Tablet Attest](./screenshots/Store_Execution/tablet_attestation.png) | ![Desktop Attest](./screenshots/Store_Execution/desktop_attestation.png) |
 
+
 ### 3.5 Deinstallation Cycle
 Closing the loop on campaign assets after the promotion ends.
 
 | Mobile | Tablet | Desktop |
 | :--- | :--- | :--- |
 | ![Mobile Deinstall](./screenshots/Store_Execution/mobile_deinstall_list.png) | ![Tablet Deinstall](./screenshots/Store_Execution/tablet_deinstall_list.png) | ![Desktop Deinstall](./screenshots/Store_Execution/desktop_deinstall_list.png) |
+
+### 3.6 Retake Workflow
+When a manager requests a retake, the specific task re-opens in the mobile app with clear "Retake Requested" badging.
+
+| Mobile Retake Alert | Desktop Retake View |
+| :--- | :--- |
+| ![Mobile Retake](./screenshots/Store_Execution/mobile_retake.png) | ![Desktop Retake](./screenshots/Store_Execution/desktop_tasks_retake.png) |
 
 ---
 
@@ -9057,7 +9134,7 @@ This specification covers:
 
 ### 1.3 Screenshot Reference
 
-![Retake Flow Screen](./screenshots/Store_Execution/mobile_photo_captured.png)
+![Retake Flow Screen](./screenshots/Store_Execution/mobile_retake.png)
 *(Note: View shows the review state after capture; Tablet/Desktop modes scale responsively)*
 
 ### 1.4 Source Documents
@@ -9690,7 +9767,7 @@ This specification covers:
 # Module Overview: BrandAdmin (A-Series)
 
 > **Module ID:** MOD-ADMIN
-> **Screen Range:** A001 – A010
+> **Screen Range:** A001 â€“ A010
 > **Version:** 1.0
 > **Last Updated:** 2025-01-01
 
@@ -9731,10 +9808,10 @@ The BrandAdmin module provides brand-level administration capabilities for manag
 | A004 | Store Management | `/admin/stores` | Planned | P2 |
 | A005 | User Management | `/admin/users` | Planned | P2 |
 | A006 | Reports & Analytics | `/admin/reports` | Planned | P2 |
-| A007 | Reserved | — | Reserved | — |
-| A008 | Reserved | — | Reserved | — |
-| A009 | Reserved | — | Reserved | — |
-| A010 | Reserved | — | Reserved | — |
+| A007 | Reserved | â€” | Reserved | â€” |
+| A008 | Reserved | â€” | Reserved | â€” |
+| A009 | Reserved | â€” | Reserved | â€” |
+| A010 | Reserved | â€” | Reserved | â€” |
 
 **Status Legend:** Planned | In Development | Complete | Reserved
 
@@ -9769,14 +9846,14 @@ The BrandAdmin module provides brand-level administration capabilities for manag
 
 | Permission | BRAND_ADMIN | CAMPAIGN_MANAGER | REGIONAL_MANAGER |
 |------------|:-----------:|:----------------:|:----------------:|
-| View Dashboard | ✓ | ✓ | ✓ |
-| Manage Campaigns | ✓ | ✓ | — |
-| Approve Campaigns | ✓ | — | — |
-| Manage Assets | ✓ | ✓ | — |
-| Manage Stores | ✓ | — | View Only |
-| Manage Users | ✓ | — | — |
-| Access Reports | ✓ | ✓ | ✓ (Regional) |
-| System Settings | ✓ | — | — |
+| View Dashboard | âœ“ | âœ“ | âœ“ |
+| Manage Campaigns | âœ“ | âœ“ | â€” |
+| Approve Campaigns | âœ“ | â€” | â€” |
+| Manage Assets | âœ“ | âœ“ | â€” |
+| Manage Stores | âœ“ | â€” | View Only |
+| Manage Users | âœ“ | â€” | â€” |
+| Access Reports | âœ“ | âœ“ | âœ“ (Regional) |
+| System Settings | âœ“ | â€” | â€” |
 
 ### Role Descriptions
 
@@ -9806,18 +9883,18 @@ The BrandAdmin module provides brand-level administration capabilities for manag
 
 | Approval Type | Approvers | SLA |
 |---------------|-----------|-----|
-| Asset Upload | Campaign Manager  Brand Admin | 24 hours |
-| Campaign Launch | Campaign Manager  Brand Admin | 48 hours |
-| Store Assignment | Regional Manager  Brand Admin | 24 hours |
+| Asset Upload | Campaign Manager â†’ Brand Admin | 24 hours |
+| Campaign Launch | Campaign Manager â†’ Brand Admin | 48 hours |
+| Store Assignment | Regional Manager â†’ Brand Admin | 24 hours |
 
 ### Data Flow
 
 ```
-Asset Upload  Approval Queue  Asset Library  Campaign Assignment
-                                                       
-Store Selection  Campaign Schedule  Campaign Creation
-       
-   Deployment  Store Displays
+Asset Upload â†’ Approval Queue â†’ Asset Library â†’ Campaign Assignment
+                                                       â†“
+Store Selection â† Campaign Schedule â† Campaign Creation
+       â†“
+   Deployment â†’ Store Displays
 ```
 
 ---
@@ -10090,7 +10167,7 @@ The Brand Admin Dashboard serves as the primary landing page for brand-level use
 | REQ-B001-A11Y-003 | Progress bars SHALL have aria-valuenow, aria-valuemin, aria-valuemax attributes | 4.1.2 Name, Role, Value |
 | REQ-B001-A11Y-004 | Color-coded elements SHALL have additional non-color indicators | 1.4.1 Use of Color |
 | REQ-B001-A11Y-005 | Loading states SHALL announce "Loading dashboard" to screen readers | 4.1.3 Status Messages |
-| REQ-B001-A11Y-006 | Focus order SHALL follow visual layout: KPIs  Quick Actions  Recent Campaigns | 2.4.3 Focus Order |
+| REQ-B001-A11Y-006 | Focus order SHALL follow visual layout: KPIs â†’ Quick Actions â†’ Recent Campaigns | 2.4.3 Focus Order |
 
 ---
 
@@ -12795,7 +12872,7 @@ This screen serves as the primary work queue for PSP fulfillment operations. Ord
 ### 1.4 Navigation Path
 
 ```
-PSP Portal  Orders (sidebar)  /psp/orders
+PSP Portal â†’ Orders (sidebar) â†’ /psp/orders
 ```
 
 ### 1.5 Related Screens
@@ -12921,7 +12998,7 @@ PSP Portal  Orders (sidebar)  /psp/orders
 | REQ-P001-BR-001 | Orders in GENERATED status SHALL appear in "New" tab | Status filter |
 | REQ-P001-BR-002 | Orders in ACKNOWLEDGED status SHALL appear in "Acknowledged" tab | Status filter |
 | REQ-P001-BR-003 | Only GENERATED orders SHALL be selectable for bulk acknowledge | UI disable |
-| REQ-P001-BR-004 | Order status progression SHALL follow: GENERATED  ACKNOWLEDGED  IN_PRODUCTION  SHIPPED | State machine |
+| REQ-P001-BR-004 | Order status progression SHALL follow: GENERATED â†’ ACKNOWLEDGED â†’ IN_PRODUCTION â†’ SHIPPED | State machine |
 | REQ-P001-BR-005 | Acknowledge action SHALL set acknowledged_at timestamp | Backend logic |
 
 ### 5.2 Validation Rules
@@ -13206,7 +13283,7 @@ This screen represents the final fulfillment stage where completed orders are sh
 ### 1.4 Navigation Path
 
 ```
-PSP Portal  Shipments (sidebar)  /psp/shipments
+PSP Portal â†’ Shipments (sidebar) â†’ /psp/shipments
 ```
 
 ### 1.5 Related Screens
@@ -13668,7 +13745,7 @@ This screen manages the exception handling workflow for store-reported problems 
 ### 1.4 Navigation Path
 
 ```
-PSP Portal  Issues (sidebar)  /psp/issues
+PSP Portal â†’ Issues (sidebar) â†’ /psp/issues
 ```
 
 ### 1.5 Related Screens
@@ -14136,6 +14213,60 @@ LIMIT :page_size OFFSET :offset
 ---
 
 # Section 9: Store Portal Module
+# Module 09: Store Portal (Store Manager & Operator)
+
+> **Module ID**: 09_StorePortal
+> **Version**: 2.0
+> **Status**: Active
+> **Last Updated**: 2026-01-03
+
+---
+
+## 1. Module Overview
+
+The **Store Portal** is the primary operational interface for retail users (Store Managers and Store Operators). It provides tools for managing campaign execution, verifying compliance, and coordinating team activities within a specific store location.
+
+### 1.1 Core Responsibilities
+- **Campaign Management**: View and execute active assignments.
+- **Compliance**: Upload proof-of-performance photos and attestations.
+- **Team Management**: Invite and manage store-level users.
+- **Reporting**: View compliance scores and historical performance.
+
+---
+
+## 2. Screen Inventory
+
+Detailed specifications for each screen in this module are located in the `screens/` directory:
+
+| Screen ID | Screen Name | Specification File | Screenshot Ref |
+| :--- | :--- | :--- | :--- |
+| **S001** | Dashboard | [S001_Dashboard.md](./screens/S001_Dashboard.md) | `manager_dashboard.png` |
+| **S002** | Campaign History | [S002_Campaign_History.md](./screens/S002_Campaign_History.md) | `manager_campaigns.png` |
+| **S003** | Photo Gallery | [S003_Photo_Gallery.md](./screens/S003_Photo_Gallery.md) | `manager_photos.png` |
+| **S004** | Team Management | [S004_Team_Management.md](./screens/S004_Team_Management.md) | `manager_team.png` |
+| **S005** | Store Reports | [S005_Reports.md](./screens/S005_Reports.md) | `manager_reports.png` |
+| **S006** | Surveys | [S006_Surveys.md](./screens/S006_Surveys.md) | `manager_surveys.png` |
+| **S007** | Store Layout | [S007_Store_Layout.md](./screens/S007_Store_Layout.md) | `manager_layout.png` |
+
+---
+
+## 3. Visual Reference Summary
+
+> **Note**: Full-size high-fidelity wireframes are available in the individual screen specifications linked above.
+
+### 3.1 Primary Views
+| Dashboard | Campaigns |
+| :---: | :---: |
+| ![Dashboard](./screenshots/Store_Manager_Portal/manager_dashboard.png) | ![Campaigns](./screenshots/Store_Manager_Portal/manager_campaigns.png) |
+
+### 3.2 Management Views
+| Team | Reports |
+| :---: | :---: |
+| ![Team](./screenshots/Store_Manager_Portal/manager_team.png) | ![Reports](./screenshots/Store_Manager_Portal/manager_reports.png) |
+
+---
+
+*End of Module Overview*
 
 
 ---
@@ -14158,7 +14289,7 @@ The Store Dashboard serves as the primary landing page for store personnel, prov
 
 ### 1.2 Screenshot Reference
 
-![Store Portal Dashboard](./screenshots/Store_Portal/store_portal_dashboard.png)
+![Store Portal Dashboard](./screenshots/Store_Manager_Portal/manager_dashboard.png)
 
 ### 1.3 Source References
 
@@ -14543,7 +14674,7 @@ The Campaign History screen provides store personnel with a comprehensive view o
 
 ### 1.2 Screenshot Reference
 
-![Store Portal Campaigns](./screenshots/Store_Portal/store_portal_campaigns.png)
+![Store Portal Campaigns](./screenshots/Store_Manager_Portal/manager_campaigns.png)
 
 ### 1.3 Source References
 
@@ -14993,7 +15124,7 @@ The Photo Gallery screen provides store personnel with a centralized view of all
 
 ### 1.4 Screenshot Reference
 
-![Photo Gallery Screen](./screenshots/Store_Portal/store_portal_photos.png)
+![Photo Gallery Screen](./screenshots/Store_Manager_Portal/manager_photos.png)
 
 ---
 
@@ -15485,7 +15616,7 @@ The Team Management screen enables Store Managers to administer their store's te
 
 ### 1.4 Screenshot Reference
 
-![Team Management Screen](./screenshots/Store_Portal/store_portal_team.png)
+![Team Management Screen](./screenshots/Store_Manager_Portal/manager_team.png)
 
 ---
 
@@ -16028,13 +16159,13 @@ This specification defines the functional requirements, data requirements, and u
 
 ### 1.4 Screenshot Reference
 
-![Store Reports Dashboard](./screenshots/Store_Portal/store_portal_reports.png)
+![Store Reports Dashboard](./screenshots/Store_Manager_Portal/manager_reports.png)
 
 *Figure S005-1: Store Reports Dashboard - Analytics and performance metrics interface*
 
 ### 1.5 Screen Context
 
-![Reports](./screenshots/Store_Portal/store_portal_reports.png)
+![Reports](./screenshots/Store_Manager_Portal/manager_reports.png)
 
 ---
 
@@ -16078,7 +16209,7 @@ REQ-S005-SEC-005: Role Enforcement
 
 ### 3.1 Component Hierarchy
 
-![Reports](./screenshots/Store_Portal/store_portal_reports.png)
+![Reports](./screenshots/Store_Manager_Portal/manager_reports.png)
 
 ### 3.2 Component Specifications
 
@@ -16143,7 +16274,7 @@ REQ-S005-SEC-005: Role Enforcement
 ### 3.3 Reports Layout
 
 ### 3.3 Reports Layout
-![Store Reports Wireframe](./screenshots/Store_Portal/store_portal_reports.png)
+![Store Reports Wireframe](./screenshots/Store_Manager_Portal/manager_reports.png)
 
 ---
 
@@ -16508,7 +16639,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 6.2 Request/Response Flow
 
-![Reports](./screenshots/Store_Portal/store_portal_reports.png)
+![Reports](./screenshots/Store_Manager_Portal/manager_reports.png)
 
 ### 6.3 API Requirements
 
@@ -16526,7 +16657,7 @@ Content-Disposition: attachment; filename="store-reports-2024-12-31.csv"
 
 ### 7.1 Screen States
 
-![Reports](./screenshots/Store_Portal/store_portal_reports.png)mermaid
+![Reports](./screenshots/Store_Manager_Portal/manager_reports.png)mermaid
 stateDiagram-v2
     [*] --> LOADING
     LOADING --> SUCCESS: Data Ready
@@ -16692,6 +16823,105 @@ stateDiagram-v2
 
 *Document Status: Draft*
 *IEEE 830 Compliance: Section 3.2 - Specific Requirements / Functional Requirements*
+
+
+---
+# S006 - Surveys Screen Specification
+
+> **Module**: StorePortal
+> **Screen ID**: S006
+> **Route**: `/store/surveys`
+> **Version**: 1.0
+> **Last Updated**: 2026-01-03
+> **IEEE 830 Compliance**: Section 3.2 - Functional Requirements
+
+---
+
+## 1. Screen Overview
+
+### 1.1 Purpose
+The Surveys screen allows Store Managers to access and submit ad-hoc surveys, such as Store Layout confirmations, Exception Reports, and specialized campaign questionnaires.
+
+### 1.2 Screenshot Reference
+![Store Surveys](./screenshots/Store_Manager_Portal/manager_surveys.png)
+
+---
+
+## 2. Screen Inventory & Features
+
+### 2.1 Available Surveys
+- **Exception Report**: Log broken fixtures or missing marketing materials outside of a campaign cycle.
+- **Store Layout Verification**: Confirm current floor plan configuration.
+- **Competitor Analysis**: Upload photos of competitor displays (if assigned).
+
+### 2.2 Functional Requirements
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| REQ-S006-FR-001 | Managers can view history of submitted surveys | Must |
+| REQ-S006-FR-002 | Managers can start a new survey from available templates | Must |
+| REQ-S006-FR-003 | Survey forms support photo uploads | Must |
+
+---
+
+## 3. Data Requirements
+
+### 3.1 API Endpoints
+- `GET /api/stores/{storeId}/surveys/history` - List past submissions
+- `GET /api/surveys/templates` - List active templates for store type
+- `POST /api/surveys/submit` - Submit new response
+
+---
+
+*Document Status: Active*
+
+
+---
+# S007 - Store Layout Screen Specification
+
+> **Module**: StorePortal
+> **Screen ID**: S007
+> **Route**: `/store/layout`
+> **Version**: 1.0
+> **Last Updated**: 2026-01-03
+> **IEEE 830 Compliance**: Section 3.2 - Functional Requirements
+
+---
+
+## 1. Screen Overview
+
+### 1.1 Purpose
+The Store Layout screen provides an interactive visual map of the store's marketing fixtures (Gondolas, Endcaps, Windows). Managers use this to verify slot configurations and view active campaigns mapped to physical locations.
+
+### 1.2 Screenshot Reference
+![Store Layout](./screenshots/Store_Manager_Portal/manager_layout.png)
+
+---
+
+## 2. Features
+
+### 2.1 Interactive Map
+- **Visual Nodes**: Clickable markers for each marketing slot.
+- **Status Indication**: Color-coded markers (Green = Active Campaign, Gray = Vacant).
+- **Tooltips**: Hover details showing slot name and current assignment.
+
+### 2.2 Functional Requirements
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| REQ-S007-FR-001 | Display layout background image specific to store format | Must |
+| REQ-S007-FR-002 | Overlay click targets for all active LocationSlots | Must |
+| REQ-S007-FR-003 | Clicking a slot opens specific assignment details | Should |
+
+---
+
+## 3. Data Requirements
+
+### 3.1 API Endpoints
+- `GET /api/stores/{storeId}/layout` - Fetch map image and slot coordinates
+- `GET /api/stores/{storeId}/slots` - List slot statuses
+
+---
+
+*Document Status: Active*
 
 
 ---
@@ -23787,7 +24017,7 @@ This appendix maintains a chronological record of all changes to the Software Re
    - Store-level execution tracking
 
 2. **Campaign Management**
-   - Full campaign lifecycle (Draft  Published  Completed  Archived)
+   - Full campaign lifecycle (Draft â†’ Published â†’ Completed â†’ Archived)
    - Kit definition with photo requirements
    - Store assignment and targeting
 

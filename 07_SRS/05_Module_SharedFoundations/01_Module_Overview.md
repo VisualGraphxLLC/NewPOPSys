@@ -49,7 +49,24 @@ The SharedFoundations module provides cross-cutting screens and functionality sh
 
 ---
 
-## 3. Module Dependencies
+
+## 3. Visual Reference (Wireframes)
+
+### 3.1 Authentication Flow
+
+| Login Screen | MFA Challenge |
+| :---: | :---: |
+| ![Universal Login](../screenshots/Auth_Login/login.png) | ![MFA Modal](../screenshots/Auth_Login/login_mfa.png) |
+
+### 3.2 Account Recovery
+
+| Forgot Password | Recovery Success |
+| :---: | :---: |
+| ![Forgot PW](../screenshots/Auth_Login/forgot_password.png) | ![Confirmation](../screenshots/Auth_Login/reset_password_sent.png) |
+
+---
+
+## 4. Module Dependencies
 
 ### Required Services
 
