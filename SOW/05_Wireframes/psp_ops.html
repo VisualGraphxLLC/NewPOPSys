@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSP Ops / Admin Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="theme-config.js"></script>
+    <script src="theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #eab308;
+            --primary-light: #facc15;
+            --primary-dark: #ca8a04;
+            --accent: #4f46e5;
+            --text-on-primary: #000000;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        [data-theme="merchpulse"] {
+            --primary: #7C3AED;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5B21B6;
+            --accent: #F59E0B;
+        }
+
+        [data-theme="fieldforge"] {
+            --primary: #3B82F6;
+            --primary-light: #60a5fa;
+            --primary-dark: #1E40AF;
+            --accent: #10B981;
+        }
+
+        [data-theme="nexova"] {
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0F172A;
+            --accent: #06B6D4;
+        }
+
+        [data-theme="prism"] {
+            --primary: #14B8A6;
+            --primary-light: #2DD4BF;
+            --primary-dark: #18181B;
+            --accent: #14B8A6;
+        }
+
+        /* Apply theme colors - Primary (header/nav) */
+        .bg-yellow-800,
+        .bg-yellow-700,
+        .bg-yellow-600,
+        .bg-yellow-500 {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .bg-indigo-900,
+        .bg-indigo-800,
+        .bg-indigo-700 {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .border-indigo-800,
+        .border-indigo-700 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-indigo-700.rounded-full {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-yellow-900:hover,
+        .hover\:bg-yellow-700:hover {
+            background-color: var(--primary) !important;
+        }
+
+        .text-yellow-500,
+        .text-yellow-400 {
+            color: var(--primary-light) !important;
+        }
+
+        .hover\:text-yellow-400:hover {
+            color: var(--accent) !important;
+        }
+
+        .border-yellow-500,
+        .border-yellow-400 {
+            border-color: var(--primary-light) !important;
+        }
+
+        /* Accent colors */
+        .bg-indigo-600,
+        .bg-purple-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-indigo-700:hover,
+        .hover\:bg-purple-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .bg-green-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .text-indigo-600,
+        .text-purple-600 {
+            color: var(--accent) !important;
+        }
+
+        .active-nav {
+            color: var(--primary-light) !important;
+            border-bottom: 2px solid var(--primary-light) !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tooltip Styles - Only active when body has .tooltips-enabled */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltips-enabled .has-tooltip {
+            outline: 2px dashed #eab308;
+            outline-offset: 2px;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tooltip-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tooltip-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .tooltip-toggle.active {
+            background: white;
+            color: #4338ca;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function (e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        font-size: 12px;
+                        line-height: 1.5;
+                        max-width: 320px;
+                        min-width: 200px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function () {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav
+        class="bg-indigo-900 border-b border-indigo-800 h-16 flex items-center px-4 justify-between sticky top-0 z-50 text-white shadow-md">
+        <div class="flex items-center gap-4 cursor-pointer has-tooltip" onclick="nav('view-orders')"
+            data-tooltip="🏭 PSP OPERATIONS PORTAL\n📊 Data: User.role, Brand.*, Campaign.status\n⬅️ Depends: User authentication, Brand tenant setup\n➡️ Blocks: All PSP operations, order fulfillment">
+            <div id="brand-logo" class="flex items-center">
+                <img src="logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium opacity-90">
+            <a href="#" id="link-orders" onclick="nav('view-orders')"
+                class="nav-link text-yellow-400 border-b-2 border-yellow-400 h-16 flex items-center active-nav has-tooltip"
+                data-tooltip="📦 ORDER QUEUE\n📊 Data: StoreOrder.*, OrderLine.*, Campaign.pspCampaignRef, Store.storeNumber\n⬅️ Depends: Campaign published, StoreAssignment created\n➡️ Blocks: Shipment creation, fulfillment workflow">Orders
+                (42)</a>
+            <a href="#" id="link-batches" onclick="nav('view-batches')"
+                class="nav-link hover:text-yellow-400 h-16 flex items-center text-gray-300 has-tooltip"
+                data-tooltip="📋 BATCH MANAGEMENT\n📊 Data: StoreOrder.batchId, StoreOrder.status, OrderLine.*\n⬅️ Depends: Multiple orders in PENDING_PICK status\n➡️ Blocks: Efficient picking, bulk label printing">Batches
+                (8)</a>
+            <a href="#" id="link-issues" onclick="nav('view-issues')"
+                class="nav-link hover:text-yellow-400 h-16 flex items-center text-gray-300 has-tooltip"
+                data-tooltip="⚠️ ISSUES QUEUE\n📊 Data: IssueRequest.*, IssueLine.*, Reorder.*, ReorderLine.*\n⬅️ Depends: Store submitted IssueReport, evidence photos\n➡️ Blocks: Reorder generation, StoreOrder creation">Issues
+                (5)</a>
+            <a href="#" id="link-shipments" onclick="nav('view-shipments')"
+                class="nav-link hover:text-yellow-400 text-gray-300 h-16 flex items-center has-tooltip"
+                data-tooltip="🚚 SHIPMENTS\n📊 Data: Shipment.*, ShipmentLine.*, ShipmentTracking.*, StoreOrder.orderNumber\n⬅️ Depends: StoreOrder status SHIPPED, carrier label created\n➡️ Blocks: Store delivery confirmation, ReceiveVerification">Shipments</a>
+            <div class="w-8 h-8 bg-indigo-700 rounded-full flex items-center justify-center text-xs has-tooltip cursor-pointer"
+                onclick="showUserMenu()"
+                data-tooltip="👤 PSP USER PROFILE\n📊 Data: User.*, Role.permissions, Membership.brandId\n⬅️ Depends: User authentication, role assignment\n➡️ Blocks: User menu, logout, preferences">
+                PSP</div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- Sidebar: Filter -->
+        <div class="lg:col-span-1 space-y-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <h3 class="font-bold text-gray-700 mb-4 border-b pb-2 has-tooltip"
+                    data-tooltip="🔍 QUEUE FILTERS\n📊 Data: User.preferences, Campaign.status, StoreOrder.status\n⬅️ Depends: Active campaigns, user preferences saved\n➡️ Blocks: Filtered queue views, focused workflow">
+                    Queue Filters</h3>
+
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1 has-tooltip"
+                        data-tooltip="📢 CAMPAIGN FILTER\n📊 Data: Campaign.id, Campaign.name, Campaign.status\n⬅️ Depends: Campaign published, StoreAssignment exists\n➡️ Blocks: Campaign-specific queue filtering">Campaign</label>
+                    <select class="w-full p-2 border rounded text-sm bg-gray-50 has-tooltip"
+                        onchange="filterByCampaign(this.value)"
+                        data-tooltip="🔄 CAMPAIGN SELECTOR\n📊 Data: Campaign.id, Campaign.status, StoreOrder.campaignId\n⬅️ Depends: Campaign.status = ACTIVE or SCHEDULED\n➡️ Blocks: Filter orders/issues by campaign">
+                        <option>All Active</option>
+                        <option selected>Spring Global Promo</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1 has-tooltip"
+                        data-tooltip="📋 STATUS FILTER\n📊 Data: StoreOrder.status, StoreOrder.priority\n⬅️ Depends: Order status updates, priority flags\n➡️ Blocks: Status-based queue filtering">Status</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-sm has-tooltip"
+                            data-tooltip="⏳ PENDING REVIEW FILTER\n📊 Data: StoreOrder.status = PENDING_PICK\n⬅️ Depends: StoreOrder status transitions\n➡️ Blocks: Display of pending orders only">
+                            <input type="checkbox" checked class="text-indigo-600 rounded" onchange="filterByStatus()">
+                            Pending Review
+                        </label>
+                        <label class="flex items-center gap-2 text-sm has-tooltip"
+                            data-tooltip="🚨 ESCALATED FILTER\n📊 Data: StoreOrder.priority = HIGH\n⬅️ Depends: Priority flags set by business rules\n➡️ Blocks: Display of high-priority orders only">
+                            <input type="checkbox" class="text-indigo-600 rounded" onchange="filterByStatus()">
+                            Escalated
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Stats</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <div class="bg-green-50 p-2 rounded has-tooltip"
+                            data-tooltip="✅ APPROVAL RATE\n📊 Data: COUNT(PhotoReview.status = APPROVED) / COUNT(PhotoReview.*)\n⬅️ Depends: PhotoReview records, campaign filter\n➡️ Blocks: Quality metrics display">
+                            <div class="text-xl font-bold text-green-700">98%</div>
+                            <div class="text-[10px] text-green-800">Approval Rate</div>
+                        </div>
+                        <div class="bg-red-50 p-2 rounded has-tooltip"
+                            data-tooltip="⏳ PENDING COUNT\n📊 Data: COUNT(StoreOrder.status IN (GENERATED, PENDING_PICK))\n⬅️ Depends: StoreOrder records, status updates\n➡️ Blocks: Pending order count display">
+                            <div class="text-xl font-bold text-red-700">42</div>
+                            <div class="text-[10px] text-red-800">Pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+
+            <!-- VIEW: ORDERS QUEUE (SUPP-016) -->
+            <div id="view-orders" class="view hidden">
+                <div class="flex justify-between items-end border-b pb-2 mb-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Order Queue</h1>
+                        <p class="text-sm text-gray-500">Fulfillment Requests ready for processing (SUPP-016)</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            class="bg-indigo-600 text-white px-3 py-1 rounded text-sm font-bold shadow-sm has-tooltip hover:bg-indigo-700"
+                            onclick="generatePickList()"
+                            data-tooltip="📋 GENERATE PICK LIST\n📊 Data: StoreOrder.*, OrderLine.*, KitItem.sku, Store.shippingAddress\n⬅️ Depends: Orders in PENDING_PICK status, inventory data\n➡️ Blocks: PDF generation, warehouse picking workflow">Get
+                            Pick List</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortTable('orderId')"
+                                    data-tooltip="🔢 ORDER ID COLUMN\n📊 Data: StoreOrder.orderNumber\n⬅️ Depends: StoreOrder creation, auto-increment\n➡️ Blocks: Order sorting, unique identification">
+                                    Order ID ↕</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortTable('type')"
+                                    data-tooltip="📦 ORDER TYPE COLUMN\n📊 Data: StoreOrder.type (INITIAL, REORDER)\n⬅️ Depends: Campaign creation or IssueRequest approval\n➡️ Blocks: Type-based sorting and filtering">
+                                    Type ↕</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortTable('store')"
+                                    data-tooltip="🏪 STORE COLUMN\n📊 Data: Store.storeNumber, Store.name, Store.region\n⬅️ Depends: Store entity, StoreAssignment\n➡️ Blocks: Store-based sorting, profile linking">
+                                    Store ↕</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortTable('lines')"
+                                    data-tooltip="📊 LINE COUNT COLUMN\n📊 Data: COUNT(OrderLine.*) per StoreOrder.id\n⬅️ Depends: OrderLine records linked to order\n➡️ Blocks: Complexity sorting, picking estimation">
+                                    Lines ↕</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortTable('status')"
+                                    data-tooltip="📍 STATUS COLUMN\n📊 Data: StoreOrder.status (GENERATED, PENDING_PICK, SHIPPED, etc.)\n⬅️ Depends: Order state transitions, workflow events\n➡️ Blocks: Status-based sorting and filtering">
+                                    Status ↕</th>
+                                <th class="px-6 py-3 has-tooltip"
+                                    data-tooltip="⚡ ACTIONS COLUMN\n📊 Data: Context-sensitive based on StoreOrder.status\n⬅️ Depends: Current order status, permissions\n➡️ Blocks: Print label, view details, tracking actions">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr id="row-9921" class="hover:bg-gray-50 cursor-pointer"
+                                onclick="showOrderDetails('9921')">
+                                <td class="px-6 py-4 font-mono font-bold has-tooltip"
+                                    data-tooltip="🔍 ORDER ORD-9921\n📊 Data: StoreOrder.*, IssueRequest.id, Reorder.*\n⬅️ Depends: IssueRequest approved, Reorder created\n➡️ Blocks: View order details modal">
+                                    ORD-9921</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                        data-tooltip="🔄 REORDER TYPE\n📊 Data: StoreOrder.type = REORDER, Reorder.*, IssueRequest.id\n⬅️ Depends: IssueRequest.status = APPROVED\n➡️ Blocks: Replacement order fulfillment">REORDER</span>
+                                </td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="🏪 STORE #8822 - PHOENIX\n📊 Data: Store.storeNumber, Store.name, Region.name\n⬅️ Depends: Store entity, Region assignment\n➡️ Blocks: Store profile view, contact info">
+                                    #8822 Phoenix</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="📦 ORDER LINES\n📊 Data: COUNT(OrderLine.*), ReorderLine.kitItemId\n⬅️ Depends: ReorderLine created from IssueLine\n➡️ Blocks: Line item detail view">
+                                    1 Item</td>
+                                <td class="px-6 py-4 text-orange-600 font-bold status-cell has-tooltip"
+                                    data-tooltip="⏳ PENDING PICK STATUS\n📊 Data: StoreOrder.status = PENDING_PICK\n⬅️ Depends: Order acknowledged, ready for fulfillment\n➡️ Blocks: Warehouse pick, label printing">
+                                    Pending Pick</td>
+                                <td class="px-6 py-4"><button
+                                        onclick="updateOrder('9921', 'picked'); event.stopPropagation();"
+                                        class="text-indigo-600 hover:underline action-btn has-tooltip"
+                                        data-tooltip="🖨️ PRINT SHIPPING LABEL\n📊 Data: Shipment.*, ShipmentTracking.*, Store.shippingAddress\n⬅️ Depends: Carrier API, order ready to ship\n➡️ Blocks: Creates Shipment, updates StoreOrder.status to SHIPPED">Print
+                                        Label</button></td>
+                            </tr>
+                            <tr id="row-9922" class="hover:bg-gray-50 cursor-pointer"
+                                onclick="showOrderDetails('9922')">
+                                <td class="px-6 py-4 font-mono font-bold has-tooltip"
+                                    data-tooltip="🔍 ORDER ORD-9922\n📊 Data: StoreOrder.*, StoreAssignment.id, Campaign.id\n⬅️ Depends: Campaign published, StoreAssignment created\n➡️ Blocks: View order details modal">
+                                    ORD-9922</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                        data-tooltip="📢 CAMPAIGN ORDER TYPE\n📊 Data: StoreOrder.type = INITIAL, KitDefinition.*, OrderLine.*\n⬅️ Depends: Campaign.status = ACTIVE, StoreAssignment\n➡️ Blocks: Initial campaign kit fulfillment">CAMPAIGN</span>
+                                </td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="🏪 STORE #1022 - DENVER\n📊 Data: Store.storeNumber, Store.name, Region.name\n⬅️ Depends: Store entity, Region assignment\n➡️ Blocks: Store profile view, contact info">
+                                    #1022 Denver</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="📦 ORDER LINES\n📊 Data: COUNT(OrderLine.*), KitItem.*, AssignmentItem.*\n⬅️ Depends: KitDefinition, OrderLine creation\n➡️ Blocks: Line item detail view">
+                                    14 Items</td>
+                                <td class="px-6 py-4 text-gray-500 status-cell has-tooltip"
+                                    data-tooltip="📋 QUEUED STATUS\n📊 Data: StoreOrder.status = GENERATED\n⬅️ Depends: StoreOrder created, not yet acknowledged\n➡️ Blocks: Transition to PENDING_PICK">
+                                    Queued</td>
+                                <td class="px-6 py-4"><button
+                                        onclick="showOrderDetails('9922'); event.stopPropagation();"
+                                        class="text-indigo-600 hover:underline has-tooltip"
+                                        data-tooltip="📄 VIEW ORDER DETAILS\n📊 Data: StoreOrder.*, OrderLine.*, Store.shippingAddress\n⬅️ Depends: Order and line item data exists\n➡️ Blocks: Order detail modal display">Details</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer" onclick="showOrderDetails('9923')">
+                                <td class="px-6 py-4 font-mono font-bold has-tooltip"
+                                    data-tooltip="🔍 ORDER ORD-9923\n📊 Data: StoreOrder.*, StoreAssignment.id, Campaign.id\n⬅️ Depends: Campaign published, StoreAssignment created\n➡️ Blocks: View order details modal">
+                                    ORD-9923</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                        data-tooltip="📢 CAMPAIGN ORDER TYPE\n📊 Data: StoreOrder.type = INITIAL, KitDefinition.*, OrderLine.*\n⬅️ Depends: Campaign.status = ACTIVE, StoreAssignment\n➡️ Blocks: Initial campaign kit fulfillment">CAMPAIGN</span>
+                                </td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="🏪 STORE #1045 - SEATTLE\n📊 Data: Store.storeNumber, Store.name, Region.name\n⬅️ Depends: Store entity, Region assignment\n➡️ Blocks: Store profile view, contact info">
+                                    #1045 Seattle</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="📦 ORDER LINES\n📊 Data: COUNT(OrderLine.*), KitItem.*, AssignmentItem.*\n⬅️ Depends: KitDefinition, OrderLine creation\n➡️ Blocks: Line item detail view">
+                                    14 Items</td>
+                                <td class="px-6 py-4 text-gray-500 has-tooltip"
+                                    data-tooltip="📋 QUEUED STATUS\n📊 Data: StoreOrder.status = GENERATED\n⬅️ Depends: StoreOrder created, not yet acknowledged\n➡️ Blocks: Transition to PENDING_PICK">
+                                    Queued</td>
+                                <td class="px-6 py-4"><button
+                                        onclick="showOrderDetails('9923'); event.stopPropagation();"
+                                        class="text-indigo-600 hover:underline has-tooltip"
+                                        data-tooltip="📄 VIEW ORDER DETAILS\n📊 Data: StoreOrder.*, OrderLine.*, Store.shippingAddress\n⬅️ Depends: Order and line item data exists\n➡️ Blocks: Order detail modal display">Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW: SHIPMENTS (SUPP-016) -->
+            <div id="view-shipments" class="view hidden">
+                <div class="flex justify-between items-end border-b pb-2 mb-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Outbound Shipments</h1>
+                        <p class="text-sm text-gray-500">Tracking and Carrier integration status</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortShipments('orderId')"
+                                    data-tooltip="🔢 ORDER ID COLUMN\n📊 Data: StoreOrder.orderNumber, Shipment.orderId\n⬅️ Depends: Shipment linked to StoreOrder\n➡️ Blocks: Order-based shipment sorting">
+                                    Order ID ↕</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortShipments('carrier')"
+                                    data-tooltip="🚚 CARRIER COLUMN\n📊 Data: Shipment.carrier, Shipment.serviceLevel\n⬅️ Depends: Carrier selection, service tier chosen\n➡️ Blocks: Carrier-based sorting, tracking integration">
+                                    Carrier ↕</th>
+                                <th class="px-6 py-3 has-tooltip"
+                                    data-tooltip="📦 TRACKING NUMBER COLUMN\n📊 Data: ShipmentTracking.trackingNumber, ShipmentTracking.carrier\n⬅️ Depends: Label created via carrier API\n➡️ Blocks: Carrier tracking page link, status updates">
+                                    Tracking #</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortShipments('date')"
+                                    data-tooltip="📅 SHIPPED DATE COLUMN\n📊 Data: Shipment.shippedAt, Shipment.createdAt\n⬅️ Depends: Shipment created, label printed\n➡️ Blocks: Date-based sorting, SLA tracking">
+                                    Shipped Date ↕</th>
+                                <th class="px-6 py-3 cursor-pointer hover:bg-gray-100 has-tooltip"
+                                    onclick="sortShipments('status')"
+                                    data-tooltip="📍 DELIVERY STATUS COLUMN\n📊 Data: Shipment.status, ShipmentTracking.lastEvent\n⬅️ Depends: Carrier webhook updates, API polling\n➡️ Blocks: Status-based sorting, delivery confirmation">
+                                    Delivery Status ↕</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50 cursor-pointer" onclick="showShipmentDetails('9800')">
+                                <td class="px-6 py-4 font-mono has-tooltip"
+                                    data-tooltip="🔍 ORDER ORD-9800\n📊 Data: StoreOrder.orderNumber, StoreOrder.status\n⬅️ Depends: Order shipped, tracking active\n➡️ Blocks: Order details, shipment history">
+                                    ORD-9800</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="🚚 UPS GROUND SERVICE\n📊 Data: Shipment.carrier = UPS, Shipment.serviceLevel = Ground\n⬅️ Depends: Carrier contract, service selection\n➡️ Blocks: Transit time estimation, cost calculation">
+                                    UPS Ground</td>
+                                <td class="px-6 py-4 font-mono text-xs has-tooltip cursor-pointer hover:underline text-indigo-600"
+                                    onclick="trackShipment('1Z999AA10123456784'); event.stopPropagation();"
+                                    data-tooltip="📦 TRACKING NUMBER\n📊 Data: ShipmentTracking.trackingNumber, ShipmentTracking.carrier\n⬅️ Depends: Label creation, carrier API response\n➡️ Blocks: External tracking page, status updates">
+                                    1Z999AA10123456784</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="📅 SHIP DATE\n📊 Data: Shipment.shippedAt, Shipment.estimatedDelivery\n⬅️ Depends: Label printed, package tendered to carrier\n➡️ Blocks: Transit calculation, SLA monitoring">
+                                    Dec 17, 2025</td>
+                                <td class="px-6 py-4 text-green-600 font-bold has-tooltip"
+                                    data-tooltip="✅ DELIVERED STATUS\n📊 Data: Shipment.status = DELIVERED, ShipmentTracking.deliveredAt\n⬅️ Depends: Carrier confirmation via webhook\n➡️ Blocks: Store notification, ReceiveVerification trigger">
+                                    Delivered</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer" onclick="showShipmentDetails('9801')">
+                                <td class="px-6 py-4 font-mono has-tooltip"
+                                    data-tooltip="🔍 ORDER ORD-9801\n📊 Data: StoreOrder.orderNumber, StoreOrder.status\n⬅️ Depends: Order shipped, tracking active\n➡️ Blocks: Order details, shipment history">
+                                    ORD-9801</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="🚚 FEDEX FREIGHT SERVICE\n📊 Data: Shipment.carrier = FedEx, Shipment.serviceLevel = Freight\n⬅️ Depends: Carrier contract, large order flagging\n➡️ Blocks: Freight scheduling, LTL tracking">
+                                    FedEx Freight</td>
+                                <td class="px-6 py-4 font-mono text-xs has-tooltip cursor-pointer hover:underline text-indigo-600"
+                                    onclick="trackShipment('794801201010'); event.stopPropagation();"
+                                    data-tooltip="📦 TRACKING NUMBER\n📊 Data: ShipmentTracking.trackingNumber, ShipmentTracking.carrier\n⬅️ Depends: Label creation, carrier API response\n➡️ Blocks: External tracking page, status updates">
+                                    794801201010</td>
+                                <td class="px-6 py-4 has-tooltip"
+                                    data-tooltip="📅 SHIP DATE\n📊 Data: Shipment.shippedAt, Shipment.estimatedDelivery\n⬅️ Depends: Label printed, package tendered to carrier\n➡️ Blocks: Transit calculation, SLA monitoring">
+                                    Dec 18, 2025</td>
+                                <td class="px-6 py-4 text-blue-600 font-bold has-tooltip"
+                                    data-tooltip="🚛 IN TRANSIT STATUS\n📊 Data: Shipment.status = IN_TRANSIT, ShipmentTracking.estimatedDelivery\n⬅️ Depends: Carrier scans, webhook updates\n➡️ Blocks: ETA display, delivery notification">
+                                    In Transit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW: ISSUES QUEUE (SUPP-019) -->
+            <div id="view-issues" class="view hidden">
+                <div class="flex justify-between items-end border-b pb-2 mb-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 has-tooltip"
+                            data-tooltip="🔧 ISSUES & REORDERS\n📊 Data: IssueRequest.*, IssueLine.*, Reorder.*, StoreOrder.*\n⬅️ Depends: Store submitted IssueReport, evidence photos\n➡️ Blocks: Reorder approval, new StoreOrder creation">
+                            Issues & Reorders</h1>
+                        <p class="text-sm text-gray-500">Approving damage claims and generating replacement orders
+                            (SUPP-019)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Issue Card 1 -->
+                    <div id="review-card-8822"
+                        class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 has-tooltip"
+                        data-tooltip="📋 ISSUE REQUEST CARD\n📊 Data: IssueRequest.*, IssueLine.*, Store.*, PhotoUpload.evidenceUrl\n⬅️ Depends: Store submitted issue, evidence photo uploaded\n➡️ Blocks: PSP review, approval decision">
+                        <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-gray-800">Store #8822 - Phoenix (South)</span>
+                                <div class="text-xs text-gray-500">Submitted: 4 hours ago</div>
+                            </div>
+                            <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded has-tooltip"
+                                data-tooltip="🔴 REORDER REQUEST\n📊 Data: IssueRequest.status = APPROVAL_PENDING, IssueRequest.type\n⬅️ Depends: Store issue submission, evidence validation\n➡️ Blocks: Approval creates Reorder and StoreOrder">Reorder
+                                Request</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-gray-600 mb-4">Store reported <strong>DAMAGED</strong> item in
+                                Receipt Survey.</p>
+                            <div class="flex gap-4 mb-4">
+                                <img src="https://via.placeholder.com/150?text=Damaged+Box"
+                                    class="h-24 w-24 rounded border object-cover has-tooltip"
+                                    data-tooltip="📷 EVIDENCE PHOTO\n📊 Data: PhotoUpload.url, PhotoUpload.uploadedAt, IssueRequest.evidencePhotoId\n⬅️ Depends: Store uploaded photo via mobile app\n➡️ Blocks: Issue validation, carrier claims, PSP review">
+                                <div>
+                                    <div class="font-bold has-tooltip"
+                                        data-tooltip="📦 AFFECTED ITEM\n📊 Data: IssueLine.kitItemId, KitItem.name, KitItem.sku\n⬅️ Depends: Original OrderLine, KitDefinition\n➡️ Blocks: Reorder item identification, inventory check">
+                                        Item: Standee Display</div>
+                                    <div class="text-sm text-red-600">Reason: Crushed in transit</div>
+                                    <div class="text-xs text-gray-500 mt-1">Cost: $45.00</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button
+                                    class="text-xs bg-indigo-600 text-white px-4 py-2 rounded font-bold hover:bg-indigo-700 has-tooltip"
+                                    data-tooltip="✅ APPROVE REORDER\n📊 Data: Creates Reorder.*, ReorderLine.*, StoreOrder.type = REORDER\n⬅️ Depends: IssueRequest validated, evidence approved\n➡️ Blocks: Creates new StoreOrder, updates IssueRequest.status to APPROVED"
+                                    onclick="approveReorder(8822)">Approve Reorder #9921</button>
+                                <button
+                                    class="text-xs border border-gray-300 text-gray-700 px-4 py-2 rounded font-bold hover:bg-gray-50 has-tooltip"
+                                    data-tooltip="❌ REJECT REQUEST\n📊 Data: Updates IssueRequest.status = REJECTED, IssueRequest.rejectionReason\n⬅️ Depends: PSP review decision, rejection reason provided\n➡️ Blocks: Store notification, case closure, no reorder">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Issue Card 2 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 opacity-60 has-tooltip"
+                        data-tooltip="✅ AUTO-APPROVED ISSUE\n📊 Data: IssueRequest.status = APPROVED, IssueRequest.autoApproved = true\n⬅️ Depends: Issue value < threshold, auto-approval policy\n➡️ Blocks: Automatic Reorder creation, no manual review">
+                        <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-gray-800 has-tooltip"
+                                    data-tooltip="🏪 STORE #1021 - DENVER\n📊 Data: Store.storeNumber, Store.name, Region.name\n⬅️ Depends: Store entity, IssueRequest submission\n➡️ Blocks: Store profile view, issue history">Store
+                                    #1021 - Denver</span>
+                            </div>
+                            <span class="bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded has-tooltip"
+                                data-tooltip="📦 MISSING ITEM TYPE\n📊 Data: IssueRequest.type = MISSING, IssueLine.issueType\n⬅️ Depends: Store reported missing item in shipment\n➡️ Blocks: Auto-approval logic, reorder generation">Missing
+                                Item</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm font-bold has-tooltip"
+                                data-tooltip="🪟 WINDOW CLING SKU\n📊 Data: IssueLine.kitItemId, KitItem.name, KitItem.sku, ReorderLine.quantity\n⬅️ Depends: Original OrderLine, KitDefinition\n➡️ Blocks: Reorder line item creation">
+                                1x Window Cling (Left)</p>
+                            <p class="text-xs text-gray-500 has-tooltip"
+                                data-tooltip="🤖 AUTO-APPROVAL POLICY\n📊 Data: IssueRequest.autoApproved, IssueLine.itemValue, Brand.approvalThreshold\n⬅️ Depends: Business rules, item value calculation\n➡️ Blocks: Immediate Reorder, no manual review required">
+                                Auto-approved by policy (< $20)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: BATCHES (P04) -->
+            <div id="view-batches" class="view hidden">
+                <div class="flex justify-between items-end border-b pb-2 mb-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Batch Management</h1>
+                        <p class="text-sm text-gray-500">Group and process orders for bulk fulfillment (P04)</p>
+                    </div>
+                </div>
+
+                <!-- Batch Generation Logic (New Rule Enforcement) -->
+                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl mb-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="settings-2" class="text-indigo-600 w-5 h-5"></i>
+                        <h3 class="font-bold text-indigo-900 text-sm uppercase">Batch Generation Rules</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Target Campaign</label>
+                            <select id="batch-campaign-select" class="w-full border p-2 rounded text-sm bg-white">
+                                <option value="">Select Campaign...</option>
+                                <option value="Holiday Promo 2025" selected>Holiday Promo 2025 (450 Orders)</option>
+                                <option value="New Year Reset">New Year Reset (Pending)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Material / Spec</label>
+                            <select id="batch-spec-select" class="w-full border p-2 rounded text-sm bg-white">
+                                <option value="all">Mixed (Not Recommended)</option>
+                                <option value="std-box" selected>Standard Box 12x12x4 (Corr.)</option>
+                                <option value="polybag">Polybag Medium</option>
+                                <option value="tube">Poster Tube 36"</option>
+                            </select>
+                        </div>
+                        <button onclick="createSmartBatch()"
+                            class="bg-indigo-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-indigo-700 flex items-center justify-center gap-2"
+                            data-tooltip="⚙️ GENERATE SMART BATCH\n📊 Filter: CampaignId + SpecType\n➡️ Rules: Groups orders with matching shipping profiles">
+                            <i data-lucide="wand-2" class="w-4 h-4"></i> Generate Optimized Batch
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <!-- Filters -->
+                    <div class="p-4 border-b bg-gray-50 flex gap-4 items-center justify-between">
+                        <div class="flex gap-4">
+                            <select class="border rounded px-2 py-1 text-sm text-gray-600" onchange="filterBatches()">
+                                <option>All Statuses</option>
+                                <option>Processing</option>
+                                <option>Ready to Ship</option>
+                                <option>Shipped</option>
+                            </select>
+                            <input type="text" placeholder="Search Batch ID..."
+                                class="border rounded px-2 py-1 text-sm w-64">
+                        </div>
+                        <div class="text-xs text-gray-400 font-mono">Showing active production batches</div>
+                    </div>
+
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3">Batch ID</th>
+                                <th class="px-6 py-3">Campaign / Spec</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3">Created</th>
+                                <th class="px-6 py-3">Count</th>
+                                <th class="px-6 py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100" id="batch-table-body">
+                            <!-- Batch 1 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 font-mono font-bold">BAT-2025-001</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-xs uppercase text-gray-700">Holiday Promo</div>
+                                    <div class="text-[10px] text-gray-500">Standard Box 12x12</div>
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Processing</span>
+                                </td>
+                                <td class="px-6 py-4">Oct 24, 10:00 AM</td>
+                                <td class="px-6 py-4">45 Kits</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <button onclick="printBatch('BAT-2025-001')"
+                                        class="text-indigo-600 hover:text-indigo-900 font-bold text-xs border border-indigo-200 px-2 py-1 rounded">Print
+                                        Labels</button>
+                                </td>
+                            </tr>
+                            <!-- Batch 2 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 font-mono font-bold">BAT-2025-002</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-xs uppercase text-gray-700">Holiday Promo</div>
+                                    <div class="text-[10px] text-gray-500">Standard Box 12x12</div>
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Ready
+                                        to Ship</span></td>
+                                <td class="px-6 py-4">Oct 24, 09:15 AM</td>
+                                <td class="px-6 py-4">22 Kits</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <button onclick="shipBatch(this)"
+                                        class="bg-indigo-600 text-white hover:bg-indigo-700 font-bold text-xs px-2 py-1 rounded">Ship
+                                        Batch</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Init: Show Orders by default
+        nav('view-orders');
+
+        function nav(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(el => el.classList.add('hidden'));
+
+            // Show target view
+            document.getElementById(viewId).classList.remove('hidden');
+
+            // Update Nav State
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('active-nav');
+                el.classList.add('text-gray-300');
+                el.classList.remove('text-yellow-400', 'border-yellow-400', 'border-b-2');
+            });
+
+            // Map viewId to Link ID
+            let linkId = '';
+            if (viewId === 'view-orders') linkId = 'link-orders';
+            if (viewId === 'view-issues') linkId = 'link-issues';
+            if (viewId === 'view-issues') linkId = 'link-issues';
+            if (viewId === 'view-shipments') linkId = 'link-shipments';
+            if (viewId === 'view-batches') linkId = 'link-batches';
+
+            if (linkId) {
+                const el = document.getElementById(linkId);
+                if (el) {
+                    el.classList.add('active-nav', 'text-yellow-400', 'border-yellow-400', 'border-b-2');
+                    el.classList.remove('text-gray-300');
+                }
+            }
+
+            // Re-run icons
+            lucide.createIcons();
+        }
+
+        function updateOrder(id, action) {
+            const row = document.getElementById(`row-${id}`);
+            if (!row) return;
+
+            const statusCell = row.querySelector('.status-cell');
+            const btn = row.querySelector('.action-btn');
+
+            if (action === 'picked') {
+                // Change style to indicate Shipped
+                statusCell.className = "px-6 py-4 text-green-600 font-bold status-cell";
+                statusCell.innerText = "Shipped";
+
+                btn.innerText = "View Tracking";
+                btn.onclick = () => alert("Opens Tracking Modal");
+
+                // Add to Shipments view (visual simulation only)
+                alert("Label Printed! Order moved to Shipments.");
+            }
+        }
+        function approve(id) {
+            const card = document.getElementById(`review-card-${id}`);
+            card.innerHTML = `<div class="p-8 text-center text-green-600 font-bold bg-green-50"><i data-lucide="check-circle" class="inline mb-2"></i><br>Approved! Loading next...</div>`;
+            lucide.createIcons();
+            setTimeout(() => card.remove(), 1000);
+        }
+
+        function reject(id) {
+            const card = document.getElementById(`review-card-${id}`);
+            const reason = prompt("Enter Rejection Reason (e.g. Blurry, Wrong Item):", "Blurry");
+            if (reason) {
+                card.innerHTML = `<div class="p-8 text-center text-red-600 font-bold bg-red-50">
+                    <i data-lucide="x-circle" class="inline mb-2"></i><br>Rejected: "${reason}"<br>
+                    <span class="text-xs text-gray-500">Notification sent to store. Analysis Audit logged.</span>
+                 </div>`;
+                lucide.createIcons();
+                setTimeout(() => card.remove(), 2000);
+            }
+        }
+
+        function approveReorder(id) {
+            const card = document.getElementById(`review-card-${id}`);
+            card.innerHTML = `<div class="p-8 text-center text-indigo-600 font-bold bg-indigo-50">
+                <i data-lucide="truck" class="inline mb-2"></i><br>Reorder #9921 Generated<br>
+                <span class="text-xs text-gray-500">Sent to Split Shipment Logic (SUPP-016)</span>
+             </div>`;
+            lucide.createIcons();
+            setTimeout(() => card.remove(), 2000);
+        }
+
+        // Filter Functions
+        function filterByCampaign(value) {
+            alert(`Filtering by campaign: ${value}\n\nThis would update the order/issue queue to show only items from the selected campaign.`);
+        }
+
+        function filterByStatus() {
+            alert('Status filters updated!\n\nThis would filter the order queue based on checked statuses (Pending Review, Escalated).');
+        }
+
+        // Order Actions
+        function generatePickList() {
+            alert('Pick List Generation\n\nGenerating PDF pick list for all filtered PENDING_PICK orders...\n\n- Format: PDF\n- Contains: SKU, Location, Quantity, Store\n- Integration: Inventory system\n\nRef: SUPP-016');
+        }
+
+        function showOrderDetails(orderId) {
+            alert(`Order Details: ORD-${orderId}\n\nThis would open a modal showing:\n- Full line item list with SKUs\n- Shipping address\n- Order notes\n- Order history/timeline\n- Split shipment details if applicable\n\nRef: SUPP-016`);
+        }
+
+        function sortTable(column) {
+            alert(`Sorting order table by: ${column}\n\nThis would sort the order queue table by the selected column (ascending/descending toggle).\n\nRef: SUPP-016`);
+        }
+
+        // Shipment Actions
+        function showShipmentDetails(orderId) {
+            alert(`Shipment Details: ORD-${orderId}\n\nThis would show:\n- All shipments for this order\n- Multiple tracking numbers if split\n- Carrier details and service level\n- Delivery timeline\n- Package contents (ShipmentLine)\n\nRef: SUPP-016`);
+        }
+
+        function trackShipment(trackingNumber) {
+            alert(`Opening carrier tracking page...\n\nTracking: ${trackingNumber}\n\nThis would open the carrier's tracking page in a new window.\n\nRef: SUPP-016`);
+            // In real app: window.open(`https://carrier.com/track?number=${trackingNumber}`, '_blank');
+        }
+
+        function sortShipments(column) {
+            alert(`Sorting shipment table by: ${column}\n\nThis would sort the shipment table by the selected column (ascending/descending toggle).\n\nRef: SUPP-016`);
+        }
+
+        // User Menu
+        function showUserMenu() {
+            alert('PSP User Menu\n\nOptions:\n- Account Settings\n- Preferences\n- Help Documentation\n- Logout\n\nRef: SUPP-016');
+        }
+        // Batch Actions
+        function createSmartBatch() {
+            const campaign = document.getElementById('batch-campaign-select').value;
+            const spec = document.getElementById('batch-spec-select').value;
+
+            if (!campaign) {
+                alert('⚠️ Please select a Target Campaign first.');
+                return;
+            }
+
+            const id = 'BAT-' + Math.floor(Math.random() * 10000);
+            const tbody = document.getElementById('batch-table-body');
+            const row = document.createElement('tr');
+
+            // Mapping spec to text
+            let specText = "Unknown Spec";
+            if (spec === 'std-box') specText = "Standard Box 12x12";
+            if (spec === 'polybag') specText = "Polybag Medium";
+            if (spec === 'tube') specText = "Poster Tube 36\"";
+
+            row.className = 'hover:bg-gray-50 animate-pulse';
+            row.innerHTML = `
+                <td class="px-6 py-4 font-mono font-bold">${id}</td>
+                <td class="px-6 py-4">
+                    <div class="font-bold text-xs uppercase text-gray-700">${campaign}</div>
+                    <div class="text-[10px] text-gray-500">${specText}</div>
+                </td>
+                <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">Generating...</span></td>
+                <td class="px-6 py-4">Just Now</td>
+                <td class="px-6 py-4">50 Kits (Auto)</td>
+                <td class="px-6 py-4 flex gap-2">
+                    <span class="text-xs text-gray-400">Processing...</span>
+                </td>
+             `;
+            tbody.prepend(row);
+
+            // Simulate async batching
+            setTimeout(() => {
+                row.classList.remove('animate-pulse');
+                row.querySelector('span').className = 'bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold';
+                row.querySelector('span').innerText = 'Processing';
+                row.querySelectorAll('td')[5].innerHTML = `<button onclick="printBatch('${id}')" class="text-indigo-600 hover:text-indigo-900 font-bold text-xs border border-indigo-200 px-2 py-1 rounded">Print Labels</button>`;
+                lucide.createIcons();
+                alert(`✅ Batch ${id} Created\n\n- Campaign: ${campaign}\n- Spec: ${specText}\n- Orders: 50 orders matched and grouped.`);
+            }, 1000);
+        }
+
+        function printBatch(id) {
+            alert(`Generating Bulk PDF for ${id}...\n\nContains 45 Shipping Labels + Packing Slips.\nSent to Printer: Warehouse-Main-01`);
+        }
+
+        function shipBatch(btn) {
+            if (confirm('Confirm bulk shipment of 22 orders? Status will update to SHIPPED.')) {
+                btn.closest('tr').querySelector('span').className = 'bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-bold';
+                btn.closest('tr').querySelector('span').innerText = 'Shipped';
+                btn.remove();
+                alert('Batch Shipped! Tracking numbers generated via Carrier API.');
+            }
+        }
+    </script>
+
+    <!-- Marked.js for Markdown rendering + Document Modal + Sidebar -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="doc-modal.js"></script>
+    <script src="doc-sidebar.js"></script>
+</body>
+
+</html>

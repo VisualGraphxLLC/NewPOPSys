@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns - NewPOPSys</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #8b5cf6;
+            --primary-dark: #6d28d9;
+            --accent: #f59e0b;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        [data-theme="merchpulse"] {
+            --primary: #7C3AED;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5B21B6;
+            --accent: #F59E0B;
+        }
+
+        [data-theme="fieldforge"] {
+            --primary: #3B82F6;
+            --primary-light: #60a5fa;
+            --primary-dark: #1E40AF;
+            --accent: #10B981;
+        }
+
+        [data-theme="nexova"] {
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0F172A;
+            --accent: #06B6D4;
+        }
+
+        [data-theme="prism"] {
+            --primary: #14B8A6;
+            --primary-light: #2DD4BF;
+            --primary-dark: #18181B;
+            --accent: #14B8A6;
+        }
+
+        /* Apply theme colors - Primary */
+        .bg-purple-600,
+        .bg-purple-700 {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-purple-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .text-purple-600,
+        .text-purple-700 {
+            color: var(--primary) !important;
+        }
+
+        .border-purple-600 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-purple-100,
+        .bg-purple-50 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
+        /* Accent colors */
+        .bg-blue-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-blue-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .text-blue-600,
+        .text-blue-700 {
+            color: var(--accent) !important;
+        }
+
+        .bg-green-600,
+        .bg-green-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .text-green-600 {
+            color: var(--accent) !important;
+        }
+
+        /* Tooltip Styles - Only active when body has .tooltips-enabled */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltips-enabled .has-tooltip {
+            outline: 2px dashed #9333ea;
+            outline-offset: 2px;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tooltip-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tooltip-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .tooltip-toggle.active {
+            background: white;
+            color: #7c3aed;
+        }
+
+        .nav-link.active-nav {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function (e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        font-size: 12px;
+                        line-height: 1.5;
+                        max-width: 320px;
+                        min-width: 200px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function () {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- Tooltip Help Banner -->
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="../index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <div id="brand-logo" class="flex items-center">
+                <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+            </div>
+            <div>
+                <span class="font-bold text-gray-700">NewPOPSys Brand</span>
+                <span class="text-sm text-gray-500 ml-2">Brand Administrator</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+            <a href="dashboard.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Dashboard</a>
+            <a href="campaigns.html" class="nav-link active-nav h-16 flex items-center">Campaigns</a>
+            <a href="verification.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Verification
+                (12)</a>
+            <a href="stores.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Stores</a>
+            <a href="surveys.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Surveys</a>
+            <a href="layouts.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Layouts</a>
+            <a href="settings.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Settings</a>
+            <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Campaign Management</h1>
+            <div class="flex gap-2">
+                <button
+                    class="bg-white border text-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 flex items-center gap-2">
+                    <i data-lucide="filter" size="16"></i> Filter
+                </button>
+                <button onclick="window.location.href='campaigns-create.html'"
+                    class="bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-purple-700">
+                    + New Campaign
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <table class="w-full text-sm text-left">
+                <thead class="bg-gray-50 text-gray-500">
+                    <tr>
+                        <th class="px-6 py-3">Campaign Name</th>
+                        <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3">Stores</th>
+                        <th class="px-6 py-3">Dates</th>
+                        <th class="px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-900">Holiday Promo 2025</td>
+                        <td class="px-6 py-4"><span
+                                class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                        </td>
+                        <td class="px-6 py-4">452</td>
+                        <td class="px-6 py-4">Dec 15 - Jan 15</td>
+                        <td class="px-6 py-4 text-purple-600 cursor-pointer text-xs font-bold uppercase"
+                            onclick="window.location.href='index.html'">Dashboard</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-900">New Year Reset</td>
+                        <td class="px-6 py-4"><span
+                                class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">Scheduled</span>
+                        </td>
+                        <td class="px-6 py-4">452</td>
+                        <td class="px-6 py-4">Jan 05 - Jan 30</td>
+                        <td class="px-6 py-4 text-purple-600 cursor-pointer text-xs font-bold uppercase"
+                            onclick="window.location.href='campaigns-create.html'">Edit</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-500">Spring Global Promo 2026</td>
+                        <td class="px-6 py-4"><span
+                                class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Draft</span>
+                        </td>
+                        <td class="px-6 py-4">842 (Est)</td>
+                        <td class="px-6 py-4">Mar 01 - Apr 01</td>
+                        <td class="px-6 py-4 text-purple-600 cursor-pointer text-xs font-bold uppercase"
+                            onclick="window.location.href='campaigns-create.html'">Resume</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

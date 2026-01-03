@@ -1,0 +1,1287 @@
+openapi: 3.1.0
+info:
+  title: NewPOPSys API
+  description: |
+    API for NewPOPSys v1 - POP Campaign Management Platform
+
+    ## Overview
+    This API enables PSPs (Print Service Providers) to integrate with NewPOPSys for:
+    - Receiving campaign and order notifications (outbound webhooks)
+    - Pushing order acknowledgments, shipment updates, and delivery confirmations (inbound API)
+
+    ## Authentication
+    All API requests require authentication via API key in the `X-API-Key` header.
+
+    ## Webhooks
+    Outbound webhooks are signed using HMAC-SHA256. Verify using the `X-VG-Signature` header.
+
+    ## References
+    - SUPP-006: Webhooks and Inbound API Event Contract
+    - SUPP-035: Field-Level Data Model
+  version: 1.0.0
+  contact:
+    name: Visual Graphx Development
+    email: dev@visualgraphx.com
+  license:
+    name: Proprietary
+    identifier: LicenseRef-Proprietary
+
+servers:
+  - url: https://api.newpopsys.com/v1
+    description: Production
+  - url: https://api.staging.newpopsys.com/v1
+    description: Staging
+  - url: http://localhost:3000/api/v1
+    description: Local Development
+
+tags:
+  - name: Orders
+    description: Order acknowledgment and status updates from PSP
+  - name: Shipments
+    description: Shipment creation and delivery updates from PSP
+  - name: Webhooks
+    description: Webhook management and event subscriptions
+  - name: Health
+    description: API health and status checks
+
+paths:
+  # ===========================================
+  # INBOUND API (PSP → NewPOPSys)
+  # ===========================================
+
+  /orders/{orderId}/acknowledge:
+    post:
+      operationId: acknowledgeOrder
+      summary: Acknowledge order receipt
+      description: |
+        PSP acknowledges receipt of an order and optionally provides their internal MIS order reference.
+        This transitions the order status from GENERATED to ACKNOWLEDGED.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderAcknowledgeRequest'
+      responses:
+        '200':
+          description: Order acknowledged successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Order already acknowledged or in invalid state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - ApiKeyAuth: []
+
+  /orders/{orderId}/status:
+    patch:
+      operationId: updateOrderStatus
+      summary: Update order status
+      description: |
+        Update the production/fulfillment status of an order.
+        Valid transitions: ACKNOWLEDGED → IN_PRODUCTION → KITTING → READY_TO_SHIP
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderStatusUpdateRequest'
+      responses:
+        '200':
+          description: Order status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          description: Invalid status transition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - ApiKeyAuth: []
+
+  /orders/{orderId}/shipments:
+    post:
+      operationId: createShipment
+      summary: Create shipment for order
+      description: |
+        Create a new shipment record for an order. Supports partial shipments (split shipments).
+        Automatically updates order status to PARTIALLY_SHIPPED or SHIPPED based on fulfillment.
+      tags:
+        - Shipments
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentCreateRequest'
+      responses:
+        '201':
+          description: Shipment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          description: Invalid shipment data (e.g., quantities exceed order)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - ApiKeyAuth: []
+
+  /shipments/{shipmentId}/delivered:
+    post:
+      operationId: confirmDelivery
+      summary: Confirm shipment delivery
+      description: |
+        Confirm that a shipment has been delivered to the store.
+        Updates shipment status to DELIVERED and may trigger store notification.
+      tags:
+        - Shipments
+      parameters:
+        - $ref: '#/components/parameters/ShipmentIdPath'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryConfirmRequest'
+      responses:
+        '200':
+          description: Delivery confirmed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Shipment already delivered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - ApiKeyAuth: []
+
+  /shipments/{shipmentId}/status:
+    patch:
+      operationId: updateShipmentStatus
+      summary: Update shipment tracking status
+      description: |
+        Update the tracking status of a shipment (e.g., IN_TRANSIT, EXCEPTION).
+      tags:
+        - Shipments
+      parameters:
+        - $ref: '#/components/parameters/ShipmentIdPath'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentStatusUpdateRequest'
+      responses:
+        '200':
+          description: Shipment status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - ApiKeyAuth: []
+
+  # ===========================================
+  # WEBHOOK MANAGEMENT
+  # ===========================================
+
+  /webhooks:
+    get:
+      operationId: listWebhooks
+      summary: List webhook endpoints
+      description: List all registered webhook endpoints for the authenticated tenant.
+      tags:
+        - Webhooks
+      responses:
+        '200':
+          description: List of webhook endpoints
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebhookEndpoint'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+
+    post:
+      operationId: createWebhook
+      summary: Register webhook endpoint
+      description: Register a new webhook endpoint to receive event notifications.
+      tags:
+        - Webhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookCreateRequest'
+      responses:
+        '201':
+          description: Webhook endpoint created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpoint'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - ApiKeyAuth: []
+
+  /webhooks/{webhookId}:
+    get:
+      operationId: getWebhook
+      summary: Get webhook endpoint
+      tags:
+        - Webhooks
+      parameters:
+        - $ref: '#/components/parameters/WebhookIdPath'
+      responses:
+        '200':
+          description: Webhook endpoint details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpoint'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    patch:
+      operationId: updateWebhook
+      summary: Update webhook endpoint
+      tags:
+        - Webhooks
+      parameters:
+        - $ref: '#/components/parameters/WebhookIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookUpdateRequest'
+      responses:
+        '200':
+          description: Webhook endpoint updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpoint'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+    delete:
+      operationId: deleteWebhook
+      summary: Delete webhook endpoint
+      tags:
+        - Webhooks
+      parameters:
+        - $ref: '#/components/parameters/WebhookIdPath'
+      responses:
+        '204':
+          description: Webhook endpoint deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  /webhooks/{webhookId}/test:
+    post:
+      operationId: testWebhook
+      summary: Send test webhook
+      description: Send a test event to verify webhook endpoint configuration.
+      tags:
+        - Webhooks
+      parameters:
+        - $ref: '#/components/parameters/WebhookIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                eventType:
+                  type: string
+                  description: Event type to simulate
+                  example: campaign.published
+              required:
+                - eventType
+      responses:
+        '200':
+          description: Test webhook sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  statusCode:
+                    type: integer
+                  responseTime:
+                    type: integer
+                    description: Response time in milliseconds
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - ApiKeyAuth: []
+
+  # ===========================================
+  # HEALTH CHECK
+  # ===========================================
+
+  /health:
+    get:
+      operationId: healthCheck
+      summary: API health check
+      description: Returns API health status. No authentication required.
+      tags:
+        - Health
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy, degraded]
+                  version:
+                    type: string
+                    example: "1.0.0"
+                  timestamp:
+                    type: string
+                    format: date-time
+
+components:
+  # ===========================================
+  # SECURITY SCHEMES
+  # ===========================================
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: |
+        API key for authentication. Obtain from PSP Admin dashboard.
+        Format: `vg_live_xxxxxxxxxxxx` (production) or `vg_test_xxxxxxxxxxxx` (staging)
+
+  # ===========================================
+  # PARAMETERS
+  # ===========================================
+
+  parameters:
+    OrderIdPath:
+      name: orderId
+      in: path
+      required: true
+      description: Order UUID or order number (e.g., ORD-1001)
+      schema:
+        type: string
+
+    ShipmentIdPath:
+      name: shipmentId
+      in: path
+      required: true
+      description: Shipment UUID
+      schema:
+        type: string
+        format: uuid
+
+    WebhookIdPath:
+      name: webhookId
+      in: path
+      required: true
+      description: Webhook endpoint UUID
+      schema:
+        type: string
+        format: uuid
+
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: |
+        Unique key for idempotent requests. Use a UUID or timestamp-based identifier.
+        Requests with the same key within 24 hours return cached response.
+      schema:
+        type: string
+        minLength: 16
+        maxLength: 64
+        example: "ord-ack-550e8400-e29b-41d4-a716-446655440000"
+
+  # ===========================================
+  # SCHEMAS - Requests
+  # ===========================================
+
+  schemas:
+    OrderAcknowledgeRequest:
+      type: object
+      properties:
+        pspOrderRef:
+          type: string
+          description: PSP's internal MIS order reference
+          maxLength: 100
+          example: "MIS-2024-123456"
+        status:
+          type: string
+          enum: [ACKNOWLEDGED]
+          default: ACKNOWLEDGED
+        notes:
+          type: string
+          description: Optional acknowledgment notes
+          maxLength: 500
+      required:
+        - pspOrderRef
+
+    OrderStatusUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StoreOrderStatus'
+        notes:
+          type: string
+          maxLength: 500
+      required:
+        - status
+
+    ShipmentCreateRequest:
+      type: object
+      properties:
+        carrier:
+          type: string
+          description: Shipping carrier name
+          maxLength: 50
+          example: "UPS"
+        trackingNumbers:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 10
+          description: One or more tracking numbers for this shipment
+          example: ["1Z999AA10123456784"]
+        shippedAt:
+          type: string
+          format: date-time
+          description: Ship date/time. Defaults to now if not provided.
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentLineRequest'
+          minItems: 1
+          description: Items included in this shipment (for split shipments)
+      required:
+        - carrier
+        - trackingNumbers
+
+    ShipmentLineRequest:
+      type: object
+      properties:
+        kitItemId:
+          type: string
+          format: uuid
+          description: Kit item being shipped
+        sku:
+          type: string
+          description: SKU (alternative to kitItemId)
+        quantity:
+          type: integer
+          minimum: 1
+          description: Quantity in this shipment
+      required:
+        - quantity
+
+    DeliveryConfirmRequest:
+      type: object
+      properties:
+        deliveredAt:
+          type: string
+          format: date-time
+          description: Delivery timestamp. Defaults to now if not provided.
+        signedBy:
+          type: string
+          description: Name of person who signed for delivery
+          maxLength: 100
+        proofOfDeliveryUrl:
+          type: string
+          format: uri
+          description: URL to proof of delivery document/image
+      required:
+        - deliveredAt
+
+    ShipmentStatusUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ShipmentStatus'
+        location:
+          type: string
+          description: Current location (for tracking)
+          maxLength: 200
+        notes:
+          type: string
+          maxLength: 500
+      required:
+        - status
+
+    WebhookCreateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: HTTPS endpoint URL
+          example: "https://api.psp.com/webhooks/newpopsys"
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookEventType'
+          minItems: 1
+          description: Event types to subscribe to
+        description:
+          type: string
+          maxLength: 200
+      required:
+        - url
+        - events
+
+    WebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookEventType'
+        isActive:
+          type: boolean
+        description:
+          type: string
+          maxLength: 200
+
+    # ===========================================
+    # SCHEMAS - Responses
+    # ===========================================
+
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        orderNumber:
+          type: string
+          example: "ORD-1001"
+        campaignId:
+          type: string
+          format: uuid
+        storeId:
+          type: string
+          format: uuid
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+        status:
+          $ref: '#/components/schemas/StoreOrderStatus'
+        pspOrderRef:
+          type: string
+          nullable: true
+        acknowledgedAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        store:
+          $ref: '#/components/schemas/StoreRef'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineResponse'
+
+    OrderLineResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        kitItemId:
+          type: string
+          format: uuid
+        sku:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+        quantityShipped:
+          type: integer
+
+    ShipmentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        storeOrderId:
+          type: string
+          format: uuid
+        carrier:
+          type: string
+        trackingNumbers:
+          type: array
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/ShipmentStatus'
+        shippedAt:
+          type: string
+          format: date-time
+          nullable: true
+        deliveredAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentLineResponse'
+
+    ShipmentLineResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        kitItemId:
+          type: string
+          format: uuid
+        sku:
+          type: string
+        quantity:
+          type: integer
+
+    StoreRef:
+      type: object
+      description: Store reference (abbreviated)
+      properties:
+        id:
+          type: string
+          format: uuid
+        storeNumber:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+
+    WebhookEndpoint:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookEventType'
+        isActive:
+          type: boolean
+        description:
+          type: string
+          nullable: true
+        secret:
+          type: string
+          description: Only returned on create. Use for HMAC verification.
+        lastSuccessAt:
+          type: string
+          format: date-time
+          nullable: true
+        lastFailureAt:
+          type: string
+          format: date-time
+          nullable: true
+        failureCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    # ===========================================
+    # SCHEMAS - Webhook Events (Outbound)
+    # ===========================================
+
+    WebhookEventEnvelope:
+      type: object
+      description: |
+        Standard envelope for all outbound webhook events.
+        Verify signature: HMAC-SHA256(secret, JSON.stringify(payload))
+        Compare with X-VG-Signature header.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique event ID (for idempotency)
+        type:
+          $ref: '#/components/schemas/WebhookEventType'
+        timestamp:
+          type: string
+          format: date-time
+        tenantId:
+          type: string
+          format: uuid
+        brandId:
+          type: string
+          format: uuid
+          nullable: true
+        data:
+          type: object
+          description: Event-specific payload
+      required:
+        - id
+        - type
+        - timestamp
+        - tenantId
+        - data
+
+    CampaignPublishedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                pspCampaignRef:
+                  type: string
+                  nullable: true
+                name:
+                  type: string
+                storeCount:
+                  type: integer
+                kitId:
+                  type: string
+                  format: uuid
+                startDate:
+                  type: string
+                  format: date
+                endDate:
+                  type: string
+                  format: date
+
+    OrderGeneratedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                orderNumber:
+                  type: string
+                campaignId:
+                  type: string
+                  format: uuid
+                storeId:
+                  type: string
+                  format: uuid
+                pspOrderRef:
+                  type: string
+                  nullable: true
+                orderType:
+                  $ref: '#/components/schemas/OrderType'
+                store:
+                  $ref: '#/components/schemas/StoreRef'
+                lines:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/OrderLineResponse'
+                shippingAddress:
+                  $ref: '#/components/schemas/ShippingAddress'
+
+    IssueCreatedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                storeAssignmentId:
+                  type: string
+                  format: uuid
+                type:
+                  $ref: '#/components/schemas/IssueType'
+                description:
+                  type: string
+                photoUrl:
+                  type: string
+                  format: uri
+                  nullable: true
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      kitItemId:
+                        type: string
+                        format: uuid
+                      sku:
+                        type: string
+                      quantity:
+                        type: integer
+
+    IssueApprovedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                reorderId:
+                  type: string
+                  format: uuid
+                  description: ID of the generated reorder (if applicable)
+                  nullable: true
+
+    SubmissionReceiptVerifiedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                storeId:
+                  type: string
+                  format: uuid
+                storeAssignmentId:
+                  type: string
+                  format: uuid
+                status:
+                  type: string
+                  enum: [VERIFIED, PARTIAL, ISSUES_REPORTED]
+                allItemsReceived:
+                  type: boolean
+
+    SubmissionInstallCompletedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                storeId:
+                  type: string
+                  format: uuid
+                storeAssignmentId:
+                  type: string
+                  format: uuid
+                photoCount:
+                  type: integer
+                completedAt:
+                  type: string
+                  format: date-time
+
+    PhotoRejectedEvent:
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventEnvelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                assignmentItemId:
+                  type: string
+                  format: uuid
+                storeAssignmentId:
+                  type: string
+                  format: uuid
+                reason:
+                  $ref: '#/components/schemas/RejectionReason'
+                comment:
+                  type: string
+                  nullable: true
+
+    # ===========================================
+    # SCHEMAS - Enums
+    # ===========================================
+
+    StoreOrderStatus:
+      type: string
+      enum:
+        - GENERATED
+        - ACKNOWLEDGED
+        - IN_PRODUCTION
+        - KITTING
+        - READY_TO_SHIP
+        - PARTIALLY_SHIPPED
+        - SHIPPED
+        - DELIVERED
+        - CLOSED
+        - CANCELLED
+
+    OrderType:
+      type: string
+      enum:
+        - INITIAL
+        - REORDER
+
+    ShipmentStatus:
+      type: string
+      enum:
+        - LABEL_CREATED
+        - IN_TRANSIT
+        - DELIVERED
+        - EXCEPTION
+        - RETURNED
+
+    IssueType:
+      type: string
+      enum:
+        - MISSING
+        - DAMAGED
+        - INCORRECT
+        - PACKAGING
+
+    RejectionReason:
+      type: string
+      enum:
+        - BLURRY
+        - WRONG_ANGLE
+        - WRONG_PLACEMENT
+        - DAMAGED
+        - INSUFFICIENT_LIGHTING
+        - OBSTRUCTION
+        - OTHER
+
+    WebhookEventType:
+      type: string
+      enum:
+        - campaign.published
+        - order.generated
+        - issue.created
+        - issue.approved
+        - submission.receipt_verified
+        - submission.install_completed
+        - photo.rejected
+      description: |
+        Available webhook event types:
+        - `campaign.published` - New campaign published with store assignments
+        - `order.generated` - New order generated for a store
+        - `issue.created` - Store reported an issue (missing/damaged items)
+        - `issue.approved` - Issue approved, may trigger reorder
+        - `submission.receipt_verified` - Store verified kit receipt
+        - `submission.install_completed` - Store completed installation with photos
+        - `photo.rejected` - Photo rejected, retake required
+
+    ShippingAddress:
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+          default: "US"
+        contactName:
+          type: string
+          nullable: true
+        contactPhone:
+          type: string
+          nullable: true
+
+    # ===========================================
+    # SCHEMAS - Common
+    # ===========================================
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Machine-readable error code
+              example: "ORDER_NOT_FOUND"
+            message:
+              type: string
+              description: Human-readable error message
+              example: "Order with ID 'abc-123' not found"
+            details:
+              type: object
+              additionalProperties: true
+              description: Additional error context
+          required:
+            - code
+            - message
+
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalItems:
+          type: integer
+        totalPages:
+          type: integer
+
+  # ===========================================
+  # RESPONSES
+  # ===========================================
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "UNAUTHORIZED"
+              message: "Invalid or missing API key"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    TooManyRequests:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+          description: Request limit per minute
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in window
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+          description: Unix timestamp when limit resets
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "RATE_LIMIT_EXCEEDED"
+              message: "Too many requests. Please retry after 60 seconds."
+
+# ===========================================
+# WEBHOOK SIGNATURE VERIFICATION
+# ===========================================
+x-webhook-security:
+  description: |
+    ## Webhook Signature Verification
+
+    All outbound webhooks are signed using HMAC-SHA256.
+
+    ### Headers
+    - `X-VG-Signature`: HMAC signature of the request body
+    - `X-VG-Timestamp`: Unix timestamp of when the webhook was sent
+    - `X-VG-Event-ID`: Unique event ID for idempotency
+
+    ### Verification Steps
+
+    1. Extract the signature from `X-VG-Signature` header
+    2. Get your webhook secret from the dashboard
+    3. Compute HMAC-SHA256: `HMAC(secret, timestamp + "." + body)`
+    4. Compare signatures using constant-time comparison
+    5. Verify timestamp is within 5 minutes to prevent replay attacks
+
+    ### Example (Node.js)
+    ```javascript
+    const crypto = require('crypto');
+
+    function verifyWebhook(req, secret) {
+      const signature = req.headers['x-vg-signature'];
+      const timestamp = req.headers['x-vg-timestamp'];
+      const body = JSON.stringify(req.body);
+
+      // Check timestamp freshness (5 minute window)
+      const now = Math.floor(Date.now() / 1000);
+      if (Math.abs(now - parseInt(timestamp)) > 300) {
+        throw new Error('Webhook timestamp too old');
+      }
+
+      // Compute expected signature
+      const payload = `${timestamp}.${body}`;
+      const expected = crypto
+        .createHmac('sha256', secret)
+        .update(payload)
+        .digest('hex');
+
+      // Constant-time comparison
+      if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
+        throw new Error('Invalid webhook signature');
+      }
+
+      return true;
+    }
+    ```
+
+    ### Retry Policy
+    - Failed deliveries are retried with exponential backoff
+    - Schedule: 1min, 5min, 30min, 2hr, 12hr, 24hr, 48hr, 72hr
+    - After 72 hours, the webhook is marked as failed
+    - Each retry includes the same `X-VG-Event-ID` for deduplication

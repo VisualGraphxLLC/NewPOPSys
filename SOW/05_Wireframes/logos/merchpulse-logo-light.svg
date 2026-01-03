@@ -1,0 +1,20 @@
+<svg viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Logo Icon with white background for visibility -->
+    <rect width="42" height="42" x="4" y="4" rx="9" fill="white"/>
+    <rect width="40" height="40" x="5" y="5" rx="8" fill="url(#merchpulse-grad-light)"/>
+    <defs>
+        <linearGradient id="merchpulse-grad-light" x1="0" y1="0" x2="40" y2="40">
+            <stop stop-color="#5B21B6"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+        </linearGradient>
+    </defs>
+    <!-- Pulse rings -->
+    <circle cx="25" cy="25" r="14" stroke="#F59E0B" stroke-width="2" fill="none"/>
+    <circle cx="25" cy="25" r="7" fill="#F59E0B"/>
+    <!-- Pulse lines -->
+    <path d="M25 8v5M25 37v5M8 25h5M37 25h5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Text - Light version for dark backgrounds -->
+    <text x="55" y="32" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="white">Merch</text>
+    <text x="118" y="32" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#FBBF24">Pulse</text>
+</svg>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deinstall Attestation Screen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="theme-config.js"></script>
+    <script src="theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+        }
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+        [data-theme="merchpulse"] {
+            --primary: #7C3AED;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5B21B6;
+            --accent: #F59E0B;
+        }
+        [data-theme="fieldforge"] {
+            --primary: #3B82F6;
+            --primary-light: #60a5fa;
+            --primary-dark: #1E40AF;
+            --accent: #10B981;
+        }
+        [data-theme="nexova"] {
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0F172A;
+            --accent: #06B6D4;
+        }
+        [data-theme="prism"] {
+            --primary: #14B8A6;
+            --primary-light: #2DD4BF;
+            --primary-dark: #18181B;
+            --accent: #14B8A6;
+        }
+        /* Apply theme colors */
+        .bg-blue-600, .bg-blue-700 { background-color: var(--primary) !important; }
+        .hover\:bg-blue-700:hover { background-color: var(--primary-dark) !important; }
+        .text-blue-600, .text-blue-700 { color: var(--primary) !important; }
+        .border-blue-600, .border-blue-500 { border-color: var(--primary) !important; }
+        .bg-blue-500, .bg-blue-400 { background-color: var(--primary-light) !important; }
+        .text-blue-500 { color: var(--primary-light) !important; }
+        .bg-blue-100, .bg-blue-50 { background-color: color-mix(in srgb, var(--primary) 15%, white) !important; }
+        .ring-blue-500 { --tw-ring-color: var(--primary) !important; }
+        /* Accent colors */
+        .bg-green-600, .bg-green-500 { background-color: var(--accent) !important; }
+        .hover\:bg-green-700:hover { background-color: color-mix(in srgb, var(--accent) 85%, black) !important; }
+        .text-green-600, .text-green-500 { color: var(--accent) !important; }
+
+        /* Base styles */
+        body {
+            background-color: #333;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 50px);
+            padding: 20px;
+        }
+
+        #phone {
+            width: 393px;
+            height: 852px;
+            background: white;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            border: 12px solid #1a1a1a;
+        }
+
+        .screen {
+            height: 100%;
+            overflow-y: auto;
+            background: #f3f4f6;
+        }
+
+        .safe-area-top {
+            height: 54px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 84px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 24px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #6b7280;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Signature Pad Styles */
+        .signature-pad {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+            cursor: crosshair;
+            transition: all 0.2s;
+        }
+
+        .signature-pad:hover {
+            border-color: var(--primary);
+            background: color-mix(in srgb, var(--primary) 5%, white);
+        }
+
+        .signature-pad.signed {
+            border-style: solid;
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        /* Checkbox Styles */
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: #f9fafb;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+        }
+
+        /* Tooltips */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+            outline: 2px dashed #3b82f6;
+            outline-offset: 2px;
+        }
+
+        .tooltip-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tooltip-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .tooltip-toggle.active {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        /* Deinstall-specific phase banner */
+        .phase-banner {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function(e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 10px 14px;
+                        border-radius: 8px;
+                        font-size: 11px;
+                        line-height: 1.4;
+                        max-width: 280px;
+                        min-width: 180px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function() {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="index.html" style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <div class="phone-container">
+    <div id="phone" data-tooltip="📱 DEINSTALL ATTESTATION
+━━━━━━━━━━━━━━━
+Purpose: Manager sign-off for material removal
+Feature: SUPP-019 Deinstall Workflow
+Use Case: Confirm campaign materials removed
+Required: Before deinstall window closes">
+
+        <!-- Status Bar -->
+        <div class="safe-area-top" data-tooltip="📱 STATUS BAR
+━━━━━━━━━━━━━━━
+Component: Mobile status bar
+Position: Sticky at top
+Context: Deinstall attestation flow
+Back: Returns to deinstall tasks">
+            <div class="flex items-center gap-2">
+                <button onclick="history.back()" class="p-1 -ml-1" data-tooltip="⬅️ BACK BUTTON
+━━━━━━━━━━━━━━━
+Action: Return to deinstall tasks
+Saves: Draft state preserved
+Warning: Progress not lost
+API: None (navigation only)">
+                    <i data-lucide="arrow-left" size="20"></i>
+                </button>
+                <span data-tooltip="📋 SCREEN TITLE
+━━━━━━━━━━━━━━━
+Text: Deinstall attestation context
+Shows: Current action
+Purpose: User orientation
+Pattern: Standard mobile header">Deinstall Attestation</span>
+            </div>
+            <div class="flex gap-2 items-center">
+                <i data-lucide="wifi" size="14" data-tooltip="📶 CONNECTIVITY
+━━━━━━━━━━━━━━━
+Status: Online/Offline
+Feature: SUPP-011 PWA
+Attestation: Can work offline
+Sync: Uploads when connected"></i>
+                <i data-lucide="battery" size="14"></i>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen p-4 pb-32" data-tooltip="📜 DEINSTALL ATTESTATION FORM
+━━━━━━━━━━━━━━━
+Purpose: Legal sign-off for material removal
+Captures: Manager confirmation of removal
+Data: DeinstallAttestationRecord entity
+Required: Before deinstall task closes">
+
+            <!-- Deinstall Phase Banner -->
+            <div class="phase-banner" data-tooltip="🔴 DEINSTALL PHASE INDICATOR
+━━━━━━━━━━━━━━━
+📊 Data: Campaign.phase = 'DEINSTALL'
+⬅️ Depends: Campaign period ended
+➡️ Shows: Deinstall window active
+Visual: Red theme for urgency">
+                <i data-lucide="alert-circle" size="18"></i>
+                <span><strong>Campaign Ended</strong> — Materials must be removed by Jan 15</span>
+            </div>
+
+            <!-- Campaign Context Header -->
+            <div class="card mb-4" data-tooltip="📋 CAMPAIGN CONTEXT
+━━━━━━━━━━━━━━━
+📊 Data: Campaign.name, StoreAssignment.id
+⬅️ Depends: Campaign in deinstall phase
+➡️ Blocks: Deinstall attestation context">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900" data-tooltip="📋 CAMPAIGN NAME
+━━━━━━━━━━━━━━━
+📊 Data: Campaign.name
+⬅️ Depends: Campaign created
+➡️ Blocks: Deinstall identification">Holiday Promo 2025</h1>
+                        <p class="text-sm text-gray-500" data-tooltip="🏪 STORE CONTEXT
+━━━━━━━━━━━━━━━
+📊 Data: Store.storeNumber, Store.name
+⬅️ Depends: User authenticated
+➡️ Blocks: Store-specific deinstall">Store #3044 • Good2Go</p>
+                    </div>
+                    <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-1 rounded" data-tooltip="🟠 DEINSTALL STATUS
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallTask.status
+⬅️ Depends: Removal tasks completed
+➡️ Blocks: Ready for attestation">Deinstall</span>
+                </div>
+                <div class="flex items-center gap-4 text-sm text-gray-600 mt-3 pt-3 border-t">
+                    <span class="flex items-center gap-1" data-tooltip="✅ ITEMS REMOVED
+━━━━━━━━━━━━━━━
+📊 Data: COUNT(DeinstallTaskItem.removed)
+⬅️ Depends: Items checked off
+➡️ Blocks: All materials must be removed">
+                        <i data-lucide="trash-2" size="14" class="text-orange-500"></i>
+                        12/12 Removed
+                    </span>
+                    <span class="flex items-center gap-1" data-tooltip="📸 REMOVAL PHOTOS
+━━━━━━━━━━━━━━━
+📊 Data: COUNT(DeinstallPhoto)
+⬅️ Depends: Photos captured (if required)
+➡️ Blocks: Evidence of removal">
+                        <i data-lucide="camera" size="14" class="text-blue-500"></i>
+                        6 Photos
+                    </span>
+                    <span class="flex items-center gap-1" data-tooltip="📅 DEADLINE
+━━━━━━━━━━━━━━━
+📊 Data: Campaign.deinstallDeadline
+⬅️ Depends: Deinstall window config
+➡️ Blocks: Days remaining indicator">
+                        <i data-lucide="clock" size="14" class="text-red-400"></i>
+                        5 days left
+                    </span>
+                </div>
+            </div>
+
+            <!-- Deinstall Attestation Checklist -->
+            <div class="card mb-4" data-tooltip="☑️ DEINSTALL CHECKLIST
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallChecklistItem[]
+⬅️ Depends: Brand requirements (bypass settings)
+➡️ Blocks: All items must be checked">
+                <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3" data-tooltip="📋 SECTION HEADER
+━━━━━━━━━━━━━━━
+Purpose: Deinstall confirmation checklist
+Contains: Required removal confirmations
+Pattern: Grouped checkboxes
+Legal: Binding statements">Removal Confirmation</h2>
+
+                <div class="space-y-2">
+                    <label class="checkbox-item" data-tooltip="☑️ MATERIALS REMOVED
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord.materialsRemoved
+⬅️ Depends: Deinstall tasks complete
+➡️ Blocks: Must confirm for submission
+Legal: Manager attestation">
+                        <input type="checkbox" id="chk-materials" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium text-gray-900">All campaign materials removed</div>
+                            <div class="text-xs text-gray-500">I confirm all POP materials have been taken down</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" data-tooltip="☑️ PHOTOS SHOW REMOVAL
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord.photosVerified
+⬅️ Depends: DeinstallPhoto entities exist
+➡️ Blocks: Photo evidence verified
+Legal: Evidence accuracy statement
+Note: Only shown if bypass_photos = false">
+                        <input type="checkbox" id="chk-photos" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium text-gray-900">Photos accurately show removal</div>
+                            <div class="text-xs text-gray-500">I confirm photos show materials have been removed</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" data-tooltip="☑️ FIXTURES RESTORED
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord.fixturesRestored
+⬅️ Depends: Store layout reset
+➡️ Blocks: Original state confirmed
+Legal: Restoration statement">
+                        <input type="checkbox" id="chk-fixtures" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium text-gray-900">Store fixtures restored to original state</div>
+                            <div class="text-xs text-gray-500">Shelves, displays, and fixtures are back to normal</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" data-tooltip="☑️ REMOVAL MEETS STANDARDS
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord.standardsMet
+⬅️ Depends: Brand deinstall guidelines
+➡️ Blocks: Standards confirmation
+Legal: Compliance attestation">
+                        <input type="checkbox" id="chk-standards" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium text-gray-900">Removal meets brand standards</div>
+                            <div class="text-xs text-gray-500">Deinstall completed per brand guidelines</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Digital Signature Section -->
+            <div class="card mb-4" data-tooltip="✍️ DIGITAL SIGNATURE
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord.signatureData
+⬅️ Depends: Checklist completed
+➡️ Blocks: Required for submission (unless bypass_attestation = true)
+Legal: Electronic signature capture
+Note: Only shown if bypass_attestation = false">
+                <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3" data-tooltip="📝 SIGNATURE HEADER
+━━━━━━━━━━━━━━━
+Purpose: Manager sign-off for removal
+Method: Touch/mouse signature
+Stored: Base64 image data
+Legal: E-signature compliant">Manager Signature</h2>
+
+                <div id="signature-pad" class="signature-pad" onclick="simulateSign()" data-tooltip="✍️ SIGNATURE PAD
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord.signatureData (base64)
+⬅️ Depends: Touch/mouse input
+➡️ Blocks: Submit button enabled
+API: Canvas element for drawing
+Storage: PNG base64 encoded">
+                    <i data-lucide="pen-tool" size="32" class="text-gray-400 mb-2" id="pen-icon"></i>
+                    <span class="text-gray-500 text-sm" id="sig-prompt">Tap to sign</span>
+                </div>
+
+                <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
+                    <span data-tooltip="👤 SIGNER INFO
+━━━━━━━━━━━━━━━
+📊 Data: User.fullName, User.role
+⬅️ Depends: Authenticated session
+➡️ Blocks: Identity verification
+Shows: Who is signing">Signing as: <strong>John Smith, Store Manager</strong></span>
+                    <button onclick="clearSignature()" class="text-blue-600 font-medium" data-tooltip="🔄 CLEAR SIGNATURE
+━━━━━━━━━━━━━━━
+Action: Reset signature pad
+Clears: SignatureData
+Purpose: Redo if needed
+State: Returns to empty">Clear</button>
+                </div>
+            </div>
+
+            <!-- Legal Notice -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6" data-tooltip="⚠️ LEGAL NOTICE
+━━━━━━━━━━━━━━━
+Purpose: Legal disclosure for deinstall
+Content: Removal attestation binding terms
+Required: User awareness
+Compliance: E-signature laws">
+                <div class="flex gap-3">
+                    <i data-lucide="alert-triangle" size="20" class="text-yellow-600 flex-shrink-0 mt-0.5" data-tooltip="⚠️ WARNING ICON
+━━━━━━━━━━━━━━━
+Visual: Attention indicator
+Purpose: Highlight importance
+Legal: Notice emphasis"></i>
+                    <div>
+                        <h3 class="font-semibold text-yellow-800 text-sm" data-tooltip="📜 NOTICE TITLE
+━━━━━━━━━━━━━━━
+Text: Legal notice header
+Purpose: Draw attention
+Pattern: Standard legal format">Important Notice</h3>
+                        <p class="text-xs text-yellow-700 mt-1" data-tooltip="📜 LEGAL TEXT
+━━━━━━━━━━━━━━━
+📊 Data: Static legal disclaimer
+Purpose: Binding statement
+Compliance: Contract law
+Effect: Creates record of deinstall attestation">By signing, you confirm that all campaign materials have been properly removed and the store has been restored to its original state. This attestation is legally binding and will be recorded for compliance purposes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="submit-btn" class="btn-primary" disabled onclick="submitDeinstallAttestation()" data-tooltip="🚀 SUBMIT DEINSTALL COMPLETION
+━━━━━━━━━━━━━━━
+📊 Data: DeinstallAttestationRecord entity created
+⬅️ Depends: All checkboxes + signature
+➡️ Blocks: Deinstall task completion, campaign close
+API: POST /deinstall-attestations
+Creates: DeinstallAttestationRecord with timestamp
+Updates: DeinstallTask.status = 'VERIFIED'">
+                <span class="flex items-center justify-center gap-2">
+                    <i data-lucide="check-circle" size="18"></i>
+                    Submit Deinstall Completion
+                </span>
+            </button>
+
+            <p class="text-center text-xs text-gray-400 mt-3" data-tooltip="ℹ️ HELP TEXT
+━━━━━━━━━━━━━━━
+Purpose: Next steps info
+Context: What happens after
+Flow: Attestation → Verified → Campaign Closed
+Result: Deinstall marked complete">Submitting will finalize the deinstall for this campaign</p>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav" data-tooltip="📱 NAVIGATION BAR
+━━━━━━━━━━━━━━━
+Component: Main app navigation
+Context: Deinstall attestation flow
+Back: Returns to tasks
+Pattern: Standard mobile nav (3 items)">
+            <div class="nav-item cursor-pointer" data-tooltip="🏠 HOME TAB
+━━━━━━━━━━━━━━━
+Action: Return to dashboard
+Saves: Attestation state preserved
+Note: Can resume later">
+                <i data-lucide="home" size="20"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item active cursor-pointer" data-tooltip="📋 TASKS TAB
+━━━━━━━━━━━━━━━
+Action: View all tasks
+Note: Current task highlighted
+Status: Shows deinstall in progress">
+                <i data-lucide="list-checks" size="20"></i>
+                <span>Tasks</span>
+            </div>
+            <div class="nav-item cursor-pointer" data-tooltip="👤 PROFILE TAB
+━━━━━━━━━━━━━━━
+Action: User profile
+Shows: Manager identity
+Settings: Account preferences">
+                <i data-lucide="user" size="20"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        let signatureComplete = false;
+
+        function checkSubmitReady() {
+            const chk1 = document.getElementById('chk-materials').checked;
+            const chk2 = document.getElementById('chk-photos').checked;
+            const chk3 = document.getElementById('chk-fixtures').checked;
+            const chk4 = document.getElementById('chk-standards').checked;
+
+            const allChecked = chk1 && chk2 && chk3 && chk4;
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (allChecked && signatureComplete) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50');
+            }
+        }
+
+        function simulateSign() {
+            const pad = document.getElementById('signature-pad');
+            const prompt = document.getElementById('sig-prompt');
+            const icon = document.getElementById('pen-icon');
+
+            pad.classList.add('signed');
+            prompt.innerHTML = '<span class="text-green-600 font-semibold">✓ Signed by John Smith</span>';
+            icon.style.display = 'none';
+            signatureComplete = true;
+
+            checkSubmitReady();
+        }
+
+        function clearSignature() {
+            const pad = document.getElementById('signature-pad');
+            const prompt = document.getElementById('sig-prompt');
+            const icon = document.getElementById('pen-icon');
+
+            pad.classList.remove('signed');
+            prompt.textContent = 'Tap to sign';
+            icon.style.display = 'block';
+            signatureComplete = false;
+
+            checkSubmitReady();
+        }
+
+        function submitDeinstallAttestation() {
+            // Simulate submission
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerHTML = `
+                <span class="flex items-center justify-center gap-2">
+                    <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                    </svg>
+                    Submitting...
+                </span>
+            `;
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                submitBtn.innerHTML = `
+                    <span class="flex items-center justify-center gap-2">
+                        <i data-lucide="check" size="18"></i>
+                        Deinstall Complete!
+                    </span>
+                `;
+                submitBtn.classList.remove('bg-blue-600');
+                submitBtn.classList.add('bg-green-600');
+                lucide.createIcons();
+
+                // Show success message
+                alert('✅ Deinstall attestation submitted!\n\nCampaign materials removal verified for Store #3044.\n\nThis campaign is now closed.');
+            }, 1500);
+        }
+    </script>
+
+    <!-- Marked.js for Markdown rendering + Document Modal + Sidebar -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="doc-modal.js"></script>
+    <script src="doc-sidebar.js"></script>
+</body>
+
+</html>

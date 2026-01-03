@@ -1,0 +1,89 @@
+%% NewPOPSys v1.38 System Context Diagram
+%% Shows external actors and systems interacting with the platform
+
+graph TB
+    subgraph "External Users"
+        PA[Platform Admin]
+        PSPA[PSP Admin]
+        PO[Production Operator]
+        BA[Brand Admin]
+        CM[Campaign Manager]
+        RM[Regional Manager]
+        SM[Store Manager]
+        SO[Store Operator]
+    end
+
+    subgraph "NewPOPSys Platform"
+        subgraph "Web Application"
+            WA[Admin Console<br/>Next.js]
+            WB[Brand Portal<br/>Next.js]
+            WS[Store PWA<br/>Next.js]
+        end
+
+        subgraph "API Layer"
+            API[REST API<br/>Fastify]
+            WH[Webhook Handler]
+        end
+
+        subgraph "Background Services"
+            BG[Job Workers<br/>BullMQ]
+            NS[Notification Service]
+        end
+
+        subgraph "Data Layer"
+            DB[(PostgreSQL<br/>Primary Store)]
+            CACHE[(Redis<br/>Cache/Queue)]
+            S3[(S3<br/>Asset Storage)]
+        end
+    end
+
+    subgraph "External Systems"
+        MIS[PSP MIS/ERP]
+        SHIP[Shipping Carriers]
+        BRAND[Brand Systems]
+        EMAIL[Email Service<br/>AWS SES]
+        CDN[CloudFront CDN]
+    end
+
+    %% User Connections
+    PA --> WA
+    PSPA --> WA
+    PO --> WA
+    BA --> WB
+    CM --> WB
+    RM --> WB
+    SM --> WS
+    SO --> WS
+
+    %% Internal Connections
+    WA --> API
+    WB --> API
+    WS --> API
+    API --> DB
+    API --> CACHE
+    API --> S3
+    API --> WH
+    BG --> DB
+    BG --> CACHE
+    BG --> S3
+    NS --> EMAIL
+
+    %% External Connections
+    WH <--> MIS
+    SHIP --> API
+    BRAND --> API
+    S3 --> CDN
+    CDN --> WS
+
+    %% Styling
+    classDef userClass fill:#e1f5fe,stroke:#01579b
+    classDef appClass fill:#e8f5e9,stroke:#2e7d32
+    classDef apiClass fill:#fff3e0,stroke:#e65100
+    classDef dataClass fill:#fce4ec,stroke:#c2185b
+    classDef extClass fill:#f3e5f5,stroke:#7b1fa2
+
+    class PA,PSPA,PO,BA,CM,RM,SM,SO userClass
+    class WA,WB,WS appClass
+    class API,WH,BG,NS apiClass
+    class DB,CACHE,S3 dataClass
+    class MIS,SHIP,BRAND,EMAIL,CDN extClass

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Logo Icon with white background for visibility -->
+    <rect width="42" height="42" x="4" y="4" rx="9" fill="white"/>
+    <rect width="40" height="40" x="5" y="5" rx="8" fill="url(#fieldforge-grad-light)"/>
+    <defs>
+        <linearGradient id="fieldforge-grad-light" x1="0" y1="0" x2="40" y2="40">
+            <stop stop-color="#1E40AF"/>
+            <stop offset="1" stop-color="#3B82F6"/>
+        </linearGradient>
+    </defs>
+    <!-- Forge diamond -->
+    <path d="M25 8L10 16v16l15 8 15-8V16L25 8z" fill="#10B981"/>
+    <path d="M25 8v32M10 16l15 8 15-8" stroke="white" stroke-width="1.5"/>
+    <circle cx="25" cy="25" r="5" fill="white"/>
+
+    <!-- Text - Light version for dark backgrounds -->
+    <text x="55" y="32" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="white">Field</text>
+    <text x="105" y="32" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#34D399">Forge</text>
+</svg>

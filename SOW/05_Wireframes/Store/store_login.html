@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Store Execution Portal - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <script src="../offline-manager.js"></script>
+    <script src="../device-ui.js?v=3"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        [data-theme="merchpulse"] {
+            --primary: #7C3AED;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5B21B6;
+            --accent: #F59E0B;
+        }
+
+        [data-theme="fieldforge"] {
+            --primary: #3B82F6;
+            --primary-light: #60a5fa;
+            --primary-dark: #1E40AF;
+            --accent: #10B981;
+        }
+
+        [data-theme="nexova"] {
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0F172A;
+            --accent: #06B6D4;
+        }
+
+        [data-theme="prism"] {
+            --primary: #14B8A6;
+            --primary-light: #2DD4BF;
+            --primary-dark: #18181B;
+            --accent: #14B8A6;
+        }
+
+        /* Apply theme colors - Primary */
+        .bg-blue-600,
+        .bg-blue-700 {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-blue-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .text-blue-600,
+        .text-blue-700 {
+            color: var(--primary) !important;
+        }
+
+        .border-blue-600 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-blue-500,
+        .bg-blue-400 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .text-blue-500 {
+            color: var(--primary-light) !important;
+        }
+
+        .bg-blue-100,
+        .bg-blue-50 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
+        /* Accent colors */
+        .bg-green-600,
+        .bg-green-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-green-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .text-green-600,
+        .text-green-500 {
+            color: var(--accent) !important;
+        }
+
+        .bg-amber-500,
+        .bg-yellow-500 {
+            background-color: var(--accent) !important;
+        }
+
+        /* Base styles */
+        body {
+            background-color: #333;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 50px);
+            padding: 20px;
+        }
+
+        #phone {
+            width: 375px;
+            height: 812px;
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            border: 12px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .safe-area-top {
+            height: 44px;
+            background: white;
+            position: relative;
+            flex: 0 0 auto;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .screen {
+            flex: 1;
+            overflow-y: auto;
+            background: #ffffff;
+            padding: 24px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .login-form-container {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="../index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 Store Login</span>
+    </div>
+
+    <div class="phone-container">
+        <div id="phone">
+            <!-- Status Bar -->
+            <div class="safe-area-top">
+                <span>9:41</span>
+                <div class="flex gap-1">
+                    <i data-lucide="wifi" size="14"></i>
+                    <i data-lucide="battery" size="14"></i>
+                </div>
+            </div>
+
+            <!-- Login Screen -->
+            <div id="screen-login" class="screen flex flex-col justify-center">
+                <div class="login-form-container h-full flex flex-col justify-center">
+                    <div class="mb-12 text-center">
+                        <div id="brand-logo" class="mb-4 flex justify-center">
+                            <!-- Adjusted path for logo -->
+                            <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 48px; width: auto;">
+                        </div>
+                        <p class="text-gray-500">Store Execution Portal</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Store Number</label>
+                            <input type="text" value="3044"
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="e.g. 1024">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Access Code</label>
+                            <input type="password" value="********"
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+
+                        <button onclick="window.location.href='dashboard.html'" class="btn-primary">Sign In</button>
+
+                        <p class="text-center text-xs text-gray-400 mt-4">v1.35 (Pilot Build)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

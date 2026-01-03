@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewPOPSys v1 — Stakeholder Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="theme-config.js"></script>
+    <script src="theme-loader.js"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Theme CSS Variables */
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f1f33;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --text-on-primary: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        /* Theme: ShelfSync (Teal/Cyan) */
+        [data-theme="shelfsync"] {
+            --primary: #012D3A;
+            --primary-light: #00ABB9;
+            --primary-dark: #011820;
+            --accent: #FCD732;
+            --accent-light: #FDE68A;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: MerchPulse (Purple/Citrus) */
+        [data-theme="merchpulse"] {
+            --primary: #5B21B6;
+            --primary-light: #7C3AED;
+            --primary-dark: #3B0F7A;
+            --accent: #F59E0B;
+            --accent-light: #FBBF24;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: FieldForge (Navy/Emerald) */
+        [data-theme="fieldforge"] {
+            --primary: #1E40AF;
+            --primary-light: #3B82F6;
+            --primary-dark: #1E3A8A;
+            --accent: #10B981;
+            --accent-light: #34D399;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: Nexova (Gradient Modern) */
+        [data-theme="nexova"] {
+            --primary: #0F172A;
+            --primary-light: #334155;
+            --primary-dark: #020617;
+            --accent: #06B6D4;
+            --accent-light: #22D3EE;
+            --text-on-primary: #ffffff;
+        }
+
+        /* Theme: PRISM (Monochrome + Teal) */
+        [data-theme="prism"] {
+            --primary: #18181B;
+            --primary-light: #3F3F46;
+            --primary-dark: #09090B;
+            --accent: #14B8A6;
+            --accent-light: #2DD4BF;
+            --text-on-primary: #ffffff;
+        }
+
+        .gradient-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
+            transition: background 0.5s ease;
+        }
+
+        .nav-brand {
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .theme-accent {
+            background-color: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        .theme-accent-text {
+            color: var(--accent);
+        }
+
+        .persona-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .lifecycle-step {
+            position: relative;
+        }
+
+        .lifecycle-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -1.5rem;
+            width: 1rem;
+            height: 2px;
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 768px) {
+            .lifecycle-step:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        /* Theme Switcher Styles */
+        .theme-switcher {
+            position: relative;
+        }
+
+        .appearance-switcher {
+            position: relative;
+        }
+
+        .appearance-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 0.75rem;
+            min-width: 160px;
+            z-index: 100;
+            display: none;
+        }
+
+        .appearance-dropdown.open {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        .appearance-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+
+        .appearance-option:hover {
+            background: #f1f5f9;
+        }
+
+        .appearance-option.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 1rem;
+            min-width: 280px;
+            z-index: 100;
+            display: none;
+        }
+
+        .theme-dropdown.open {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            background: #f1f5f9;
+        }
+
+        .theme-option.active {
+            border-color: var(--accent);
+            background: #f0fdfa;
+        }
+
+        .theme-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-swatch {
+            display: flex;
+            gap: 4px;
+        }
+
+        .theme-swatch span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Logo in nav */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Dynamic Brand Logo -->
+            <div class="brand-logo font-bold text-xl nav-brand" id="nav-brand">
+                <svg id="nav-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Default: NewPOPSys -->
+                    <rect width="32" height="32" rx="6" fill="currentColor" />
+                    <text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold">N</text>
+                </svg>
+                <span id="brand-name">NewPOPSys v1</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex space-x-6 text-sm">
+                    <a href="#overview" class="hover:text-blue-600">Overview</a>
+                    <a href="#wireframes" class="hover:text-blue-600">Wireframes</a>
+                    <a href="#lifecycle" class="hover:text-blue-600">Lifecycle</a>
+                    <a href="#diagrams" class="hover:text-blue-600">Diagrams</a>
+                    <a href="#architecture" class="hover:text-blue-600">Architecture</a>
+                    <a href="#research" class="hover:text-blue-600">Research</a>
+                    <a href="#questions" class="hover:text-blue-600">Questions</a>
+                    <a href="#feedback" class="hover:text-blue-600">Feedback</a>
+                </div>
+
+                <!-- Theme Switcher -->
+                <div class="theme-switcher">
+                    <button id="theme-toggle"
+                        class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition text-sm font-medium">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                        </svg>
+                        Brand
+                    </button>
+
+                    <div id="theme-dropdown" class="theme-dropdown">
+                        <div class="text-xs font-semibold text-gray-500 uppercase mb-3">Choose Brand Theme</div>
+
+                        <!-- Default -->
+                        <div class="theme-option active" data-theme="default" onclick="selectTheme('default')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #1e3a5f, #2d5a87);">
+                                <svg viewBox="0 0 24 24" fill="white" width="20" height="20">
+                                    <rect x="3" y="3" width="18" height="18" rx="3" />
+                                    <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold"
+                                        fill="#1e3a5f">N</text>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">NewPOPSys</div>
+                                <div class="text-xs text-gray-500">Current codename</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#1e3a5f"></span>
+                                <span style="background:#2d5a87"></span>
+                                <span style="background:#3b82f6"></span>
+                            </div>
+                        </div>
+
+                        <!-- ShelfSync -->
+                        <div class="theme-option" data-theme="shelfsync" onclick="selectTheme('shelfsync')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #012D3A, #00ABB9);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <rect x="2" y="6" width="20" height="3" rx="1" fill="#FCD732" />
+                                    <rect x="2" y="11" width="20" height="3" rx="1" fill="white" />
+                                    <rect x="2" y="16" width="20" height="3" rx="1" fill="#FCD732" />
+                                    <circle cx="19" cy="12" r="4" fill="white" stroke="#00ABB9" stroke-width="2" />
+                                    <path d="M17 12h4M19 10v4" stroke="#00ABB9" stroke-width="1.5" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">ShelfSync</div>
+                                <div class="text-xs text-gray-500">Teal + Yellow energy</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#012D3A"></span>
+                                <span style="background:#00ABB9"></span>
+                                <span style="background:#FCD732"></span>
+                            </div>
+                        </div>
+
+                        <!-- MerchPulse -->
+                        <div class="theme-option" data-theme="merchpulse" onclick="selectTheme('merchpulse')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #5B21B6, #7C3AED);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <circle cx="12" cy="12" r="8" stroke="#F59E0B" stroke-width="2" fill="none" />
+                                    <circle cx="12" cy="12" r="4" fill="#F59E0B" />
+                                    <path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke="white" stroke-width="2" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">MerchPulse</div>
+                                <div class="text-xs text-gray-500">Purple + Citrus vibrant</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#5B21B6"></span>
+                                <span style="background:#7C3AED"></span>
+                                <span style="background:#F59E0B"></span>
+                            </div>
+                        </div>
+
+                        <!-- FieldForge -->
+                        <div class="theme-option" data-theme="fieldforge" onclick="selectTheme('fieldforge')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #1E40AF, #3B82F6);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="#10B981" />
+                                    <path d="M12 2v20M2 7l10 5 10-5" stroke="white" stroke-width="1.5" />
+                                    <circle cx="12" cy="12" r="3" fill="white" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">FieldForge</div>
+                                <div class="text-xs text-gray-500">Navy + Emerald power</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#1E40AF"></span>
+                                <span style="background:#3B82F6"></span>
+                                <span style="background:#10B981"></span>
+                            </div>
+                        </div>
+
+                        <!-- Nexova -->
+                        <div class="theme-option" data-theme="nexova" onclick="selectTheme('nexova')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"
+                                        fill="#06B6D4" />
+                                    <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Nexova</div>
+                                <div class="text-xs text-gray-500">Dark + Cyan modern</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#0F172A"></span>
+                                <span style="background:#334155"></span>
+                                <span style="background:#06B6D4"></span>
+                            </div>
+                        </div>
+
+                        <!-- PRISM -->
+                        <div class="theme-option" data-theme="prism" onclick="selectTheme('prism')">
+                            <div class="theme-logo" style="background: linear-gradient(135deg, #18181B, #3F3F46);">
+                                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                                    <polygon points="12,2 22,20 2,20" fill="none" stroke="#14B8A6" stroke-width="2" />
+                                    <polygon points="12,8 17,16 7,16" fill="#14B8A6" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">PRISM</div>
+                                <div class="text-xs text-gray-500">Monochrome + Teal clarity</div>
+                            </div>
+                            <div class="theme-swatch">
+                                <span style="background:#18181B"></span>
+                                <span style="background:#3F3F46"></span>
+                                <span style="background:#14B8A6"></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 pt-3 border-t text-xs text-gray-400 text-center">
+                            Click to preview brand identity
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appearance Mode Switcher -->
+                <div class="appearance-switcher">
+                    <button id="appearance-toggle"
+                        class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition text-sm font-medium">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <path
+                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                        </svg>
+                        Mode
+                    </button>
+
+                    <div id="appearance-dropdown" class="appearance-dropdown">
+                        <div class="appearance-option active" data-mode="light" onclick="setAppearanceMode('light')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="5" />
+                                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2" />
+                            </svg>
+                            Light
+                        </div>
+                        <div class="appearance-option" data-mode="dark" onclick="setAppearanceMode('dark')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+                            Dark
+                        </div>
+                        <div class="appearance-option" data-mode="high-contrast"
+                            onclick="setAppearanceMode('high-contrast')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 2v20M12 2a10 10 0 0 1 0 20" fill="currentColor" />
+                            </svg>
+                            High Contrast
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="overview" class="gradient-hero text-white py-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">NewPOPSys v1</h1>
+            <p class="text-xl md:text-2xl text-blue-100 mb-6">PSP-Led Campaign Orchestration Platform</p>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-10">
+                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                    <h3 class="font-semibold text-lg mb-2">What It Is</h3>
+                    <p class="text-blue-100 text-sm">A modernized platform that helps Print Service Providers
+                        orchestrate POP campaigns from creation through store execution and verification.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                    <h3 class="font-semibold text-lg mb-2">Who It's For</h3>
+                    <p class="text-blue-100 text-sm">PSPs (system owners), Brand Admins (campaign creators), Regional
+                        Managers (oversight), and Store Users (execution).</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                    <h3 class="font-semibold text-lg mb-2">v1 Scope</h3>
+                    <p class="text-blue-100 text-sm">Feature-matched modernization of PrecisionPOP with mobile-first UX,
+                        cleaner workflows, and a scalable foundation.</p>
+                </div>
+            </div>
+
+            <div class="mt-10 flex flex-wrap gap-4 text-sm">
+                <div id="beta-target" class="bg-white/20 px-4 py-2 rounded-full">Beta Target: End of Q1</div>
+                <a id="budget" href="budget-comparison.md"
+                    class="bg-white/20 px-4 py-2 rounded-full hover:bg-white/30 transition-colors cursor-pointer">Budget:
+                    $150,000</a>
+                <a id="sow-version" href="../01_Main_SOW/MASTER_SOW_COMPILED.md"
+                    class="bg-white/20 px-4 py-2 rounded-full hover:bg-white/30 transition-colors">SOW Version: ...</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign Lifecycle -->
+    <section id="lifecycle" class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Campaign Lifecycle</h2>
+            <p class="text-gray-600 mb-10">The core platform loop that every campaign follows.</p>
+
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <div class="lifecycle-step bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+                    <div class="text-2xl mb-2">📝</div>
+                    <div class="font-semibold text-sm">Brand Defines</div>
+                    <div class="text-xs text-gray-500">Campaign + Kit</div>
+                </div>
+                <div class="lifecycle-step bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+                    <div class="text-2xl mb-2">🏬</div>
+                    <div class="font-semibold text-sm">Store Assignment</div>
+                    <div class="text-xs text-gray-500">Rules + Selection</div>
+                </div>
+                <div class="lifecycle-step bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+                    <div class="text-2xl mb-2">📦</div>
+                    <div class="font-semibold text-sm">PSP Fulfillment</div>
+                    <div class="text-xs text-gray-500">Kitting + Shipping</div>
+                </div>
+                <div class="lifecycle-step bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+                    <div class="text-2xl mb-2">🔧</div>
+                    <div class="font-semibold text-sm">Store Execution</div>
+                    <div class="text-xs text-gray-500">Receive → Install</div>
+                </div>
+                <div class="lifecycle-step bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+                    <div class="text-2xl mb-2">📸</div>
+                    <div class="font-semibold text-sm">Verification</div>
+                    <div class="text-xs text-gray-500">Photos + Review</div>
+                </div>
+                <div class="lifecycle-step bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+                    <div class="text-2xl mb-2">📊</div>
+                    <div class="font-semibold text-sm">Visibility</div>
+                    <div class="text-xs text-gray-500">Reporting + Insights</div>
+                </div>
+            </div>
+
+            <!-- Supporting SOW Docs -->
+            <details class="mt-10 bg-white rounded-xl border">
+                <summary class="px-6 py-4 cursor-pointer font-semibold text-gray-700 hover:bg-gray-50 rounded-xl">
+                    📄 Supporting SOW Documents
+                </summary>
+                <div class="px-6 pb-4 grid md:grid-cols-2 gap-3 text-sm">
+                    <a href="../02_SUPPs/Shared_Foundations/SUPP-002 - Shared Foundations - Core Domain Model and State Machines.md"
+                        class="block p-3 bg-gray-50 rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-002</span>
+                        <span class="text-gray-600"> — Core Domain Model & State Machines</span>
+                    </a>
+                    <a href="../02_SUPPs/Shared_Foundations/SUPP-007 - Shared Foundations - Completion Expiration Overrides.md"
+                        class="block p-3 bg-gray-50 rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-007</span>
+                        <span class="text-gray-600"> — Completion, Expiration, Overrides</span>
+                    </a>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Wireframes Section -->
+    <section id="wireframes" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Interactive Wireframes by Module</h2>
+            <p class="text-gray-600 mb-10">Organized by the three main platform modules. Click to explore screens and
+                workflows. Enable "Interactive Mode" for feature details.</p>
+
+            <!-- Authentication Section -->
+            <div class="bg-gradient-to-r from-slate-100 to-gray-100 rounded-xl p-6 mb-8 border border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">🔐</span>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Authentication & Login</h3>
+                            <p class="text-sm text-slate-600">Login form, MFA, SSO, Password Reset, Role Selection</p>
+                        </div>
+                    </div>
+                    <a href="General/login.html"
+                        class="bg-slate-700 text-white px-6 py-2 rounded-lg font-medium hover:bg-slate-800 transition">
+                        View Auth Flows →
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <!-- PSP Module Column -->
+                <div>
+                    <div class="bg-yellow-100 rounded-t-xl px-4 py-3 border-b-2 border-yellow-400">
+                        <h3 class="font-bold text-yellow-900 text-lg">PSP Module</h3>
+                        <p class="text-xs text-yellow-700">Platform & Print Service Provider</p>
+                    </div>
+                    <div class="border border-t-0 border-yellow-200 rounded-b-xl bg-yellow-50 p-4 space-y-4">
+                        <!-- Personas Section -->
+                        <details class="bg-white rounded-lg shadow-sm">
+                            <summary
+                                class="px-4 py-3 cursor-pointer font-semibold text-yellow-800 text-sm flex items-center gap-2">
+                                <span>👥</span> User Roles (3)
+                            </summary>
+                            <div class="px-4 pb-4 space-y-3 border-t border-yellow-100">
+                                <div class="pt-3">
+                                    <p class="font-medium text-yellow-800 text-sm">Platform Admin</p>
+                                    <p class="text-xs text-gray-500">All Privileged + Impersonate</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Full system config, tenant mgmt</li>
+                                        <li>• User impersonation for support</li>
+                                    </ul>
+                                </div>
+                                <div class="border-t border-yellow-100 pt-3">
+                                    <p class="font-medium text-yellow-800 text-sm">PSP Admin</p>
+                                    <p class="text-xs text-gray-500">PSP All Privileged</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Brand onboarding, PSP settings</li>
+                                        <li>• User management, reports</li>
+                                    </ul>
+                                </div>
+                                <div class="border-t border-yellow-100 pt-3">
+                                    <p class="font-medium text-yellow-800 text-sm">Production Operator</p>
+                                    <p class="text-xs text-gray-500">Status & Shipping Updates</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Order statuses, shipments</li>
+                                        <li>• Process batches, view queues</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </details>
+                        <!-- PSP Ops Wireframe -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">👷</span>
+                                <h4 class="font-semibold text-yellow-900">PSP Operations</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> All PSP Roles</p>
+                            <p class="text-xs text-gray-500 mb-3">Orders, Issues, Shipments, Batches</p>
+                            <a href="PSP/orders.html"
+                                class="block bg-yellow-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-yellow-700">
+                                Launch →
+                            </a>
+                        </div>
+                        <!-- PSP Admin Portal -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">⚙️</span>
+                                <h4 class="font-semibold text-yellow-900">PSP Admin Portal</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> Platform Admin, PSP Admin</p>
+                            <p class="text-xs text-gray-500 mb-3">Tenant config, brand onboarding, user management</p>
+                            <a href="PSP/admin_dashboard.html"
+                                class="block bg-yellow-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-yellow-700">
+                                Launch →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Module Column -->
+                <div>
+                    <div class="bg-purple-100 rounded-t-xl px-4 py-3 border-b-2 border-purple-400">
+                        <h3 class="font-bold text-purple-900 text-lg">Brand Module</h3>
+                        <p class="text-xs text-purple-700">Brand & Campaign Management</p>
+                    </div>
+                    <div class="border border-t-0 border-purple-200 rounded-b-xl bg-purple-50 p-4 space-y-4">
+                        <!-- Personas Section -->
+                        <details class="bg-white rounded-lg shadow-sm">
+                            <summary
+                                class="px-4 py-3 cursor-pointer font-semibold text-purple-800 text-sm flex items-center gap-2">
+                                <span>👥</span> User Roles (3)
+                            </summary>
+                            <div class="px-4 pb-4 space-y-3 border-t border-purple-100">
+                                <div class="pt-3">
+                                    <p class="font-medium text-purple-800 text-sm">Brand Admin</p>
+                                    <p class="text-xs text-gray-500">Brand Level Privileged</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Full brand config, all campaigns</li>
+                                        <li>• Store mgmt, user permissions</li>
+                                    </ul>
+                                </div>
+                                <div class="border-t border-purple-100 pt-3">
+                                    <p class="font-medium text-purple-800 text-sm">Campaign Manager</p>
+                                    <p class="text-xs text-gray-500">Must be assigned to campaigns</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Build & manage campaigns</li>
+                                        <li>• Define kits, photo rules, proofs</li>
+                                    </ul>
+                                </div>
+                                <div class="border-t border-purple-100 pt-3">
+                                    <p class="font-medium text-purple-800 text-sm">Regional Manager</p>
+                                    <p class="text-xs text-gray-500">Store Compliance for segment</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Oversee assigned stores</li>
+                                        <li>• Exception queue, approvals</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </details>
+                        <!-- Brand Admin Portal -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">🖥️</span>
+                                <h4 class="font-semibold text-purple-900">Brand Admin Portal</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> Brand Admin, Campaign Manager
+                            </p>
+                            <p class="text-xs text-gray-500 mb-3">Campaigns, Kits, Store Selection, Verification</p>
+                            <a href="Brand/dashboard.html"
+                                class="block bg-purple-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-purple-700">
+                                Launch →
+                            </a>
+                        </div>
+                        <!-- Regional Manager Dashboard -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">🗺️</span>
+                                <h4 class="font-semibold text-purple-900">Regional Dashboard</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> Regional Manager</p>
+                            <p class="text-xs text-gray-500 mb-3">Exception queue, store compliance, regional KPIs</p>
+                            <a href="Brand/regional_dashboard.html"
+                                class="block bg-purple-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-purple-700">
+                                Launch →
+                            </a>
+                        </div>
+                        <!-- Store Surveys & Layout Builder -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">📋</span>
+                                <h4 class="font-semibold text-purple-900">Surveys & Layouts</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> Brand Admin, Store Manager</p>
+                            <p class="text-xs text-gray-500 mb-3">Survey Builder, Store Layouts, Photo Rules, Responses
+                            </p>
+                            <a href="Brand/surveys.html"
+                                class="block bg-purple-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-purple-700">
+                                Launch →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Store Module Column -->
+                <div>
+                    <div class="bg-blue-100 rounded-t-xl px-4 py-3 border-b-2 border-blue-400">
+                        <h3 class="font-bold text-blue-900 text-lg">Store Module</h3>
+                        <p class="text-xs text-blue-700">Store Execution</p>
+                    </div>
+                    <div class="border border-t-0 border-blue-200 rounded-b-xl bg-blue-50 p-4 space-y-4">
+                        <!-- Personas Section -->
+                        <details class="bg-white rounded-lg shadow-sm">
+                            <summary
+                                class="px-4 py-3 cursor-pointer font-semibold text-blue-800 text-sm flex items-center gap-2">
+                                <span>👥</span> User Roles (2)
+                            </summary>
+                            <div class="px-4 pb-4 space-y-3 border-t border-blue-100">
+                                <div class="pt-3">
+                                    <p class="font-medium text-teal-800 text-sm">Store Manager</p>
+                                    <p class="text-xs text-gray-500">Full Store Privileges</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Manage store team</li>
+                                        <li>• Approve replacements, full access</li>
+                                    </ul>
+                                </div>
+                                <div class="border-t border-blue-100 pt-3">
+                                    <p class="font-medium text-blue-800 text-sm">Store Operator</p>
+                                    <p class="text-xs text-gray-500">View Only + Execution</p>
+                                    <ul class="text-xs text-gray-600 mt-1 ml-3">
+                                        <li>• Complete surveys, update status</li>
+                                        <li>• Request replacements (approval req)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </details>
+                        <!-- Store Manager Portal -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">🏪</span>
+                                <h4 class="font-semibold text-teal-900">Store Manager Portal</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> Store Manager</p>
+                            <p class="text-xs text-gray-500 mb-3">Dashboard, Team, Campaigns, Reports</p>
+                            <a href="Store/manager_dashboard.html"
+                                class="block bg-teal-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-teal-700">
+                                Launch →
+                            </a>
+                        </div>
+                        <!-- Store Execution Portal -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">📱</span>
+                                <h4 class="font-semibold text-blue-900">Store Execution Portal</h4>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2"><strong>Users:</strong> All Store Roles</p>
+                            <p class="text-xs text-gray-500 mb-3">Receipt, Install, Photos, Surveys, Attestation</p>
+                            <a href="Store/dashboard.html"
+                                class="block bg-blue-600 text-white text-center py-2 text-sm rounded font-medium hover:bg-blue-700">
+                                Launch →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Supporting SOW Docs by Module -->
+            <details class="mt-6 bg-gray-50 rounded-xl border">
+                <summary class="px-6 py-4 cursor-pointer font-semibold text-gray-700 hover:bg-gray-100 rounded-xl">
+                    📄 Supporting SOW Documents by Module
+                </summary>
+                <div class="px-6 pb-4 space-y-4">
+                    <!-- PSP Module Docs -->
+                    <div>
+                        <p class="font-medium text-yellow-800 mb-2 text-sm">PSP Operations Module</p>
+                        <div class="grid md:grid-cols-3 gap-2 text-sm">
+                            <a href="../02_SUPPs/PSP_Operations_Module/SUPP-016 - PSP Operations Module - Orders Shipments Batches PSP Ops.md"
+                                class="block p-2 bg-white rounded border hover:border-yellow-400 text-xs">
+                                <span class="font-medium text-yellow-700">SUPP-016</span> Orders, Shipments, Batches
+                            </a>
+                            <a href="../02_SUPPs/PSP_Operations_Module/SUPP-018 - PSP Operations Module - Verification Photo Review Retake.md"
+                                class="block p-2 bg-white rounded border hover:border-yellow-400 text-xs">
+                                <span class="font-medium text-yellow-700">SUPP-018</span> Verification, Photo Review
+                            </a>
+                            <a href="../02_SUPPs/PSP_Operations_Module/SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall.md"
+                                class="block p-2 bg-white rounded border hover:border-yellow-400 text-xs">
+                                <span class="font-medium text-yellow-700">SUPP-019</span> Issues, Reorders, Deinstall
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Brand Module Docs -->
+                    <div>
+                        <p class="font-medium text-purple-800 mb-2 text-sm">Brand Admin Module</p>
+                        <div class="grid md:grid-cols-3 gap-2 text-sm">
+                            <a href="../02_SUPPs/Brand_Admin_Module/SUPP-013 - Brand Admin Module - Stores Regions Groups.md"
+                                class="block p-2 bg-white rounded border hover:border-purple-400 text-xs">
+                                <span class="font-medium text-purple-700">SUPP-013</span> Stores, Regions, Groups
+                            </a>
+                            <a href="../02_SUPPs/Brand_Admin_Module/SUPP-014 - Brand Admin Module - Survey Builder Layout Photo Rules.md"
+                                class="block p-2 bg-white rounded border hover:border-purple-400 text-xs">
+                                <span class="font-medium text-purple-700">SUPP-014</span> Survey Builder, Photo Rules
+                            </a>
+                            <a href="../02_SUPPs/Brand_Admin_Module/SUPP-015 - Brand Admin Module - Campaigns Kits Assignment.md"
+                                class="block p-2 bg-white rounded border hover:border-purple-400 text-xs">
+                                <span class="font-medium text-purple-700">SUPP-015</span> Campaigns, Kits, Assignment
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Store Module Docs -->
+                    <div>
+                        <p class="font-medium text-blue-800 mb-2 text-sm">Store Execution Module</p>
+                        <div class="grid md:grid-cols-3 gap-2 text-sm">
+                            <a href="../02_SUPPs/Store_Execution_Module/SUPP-017 - Store Execution Module - Store Execution Proof Capture.md"
+                                class="block p-2 bg-white rounded border hover:border-blue-400 text-xs">
+                                <span class="font-medium text-blue-700">SUPP-017</span> Store Execution, Proof Capture
+                            </a>
+                            <a href="../02_SUPPs/Store_Execution_Module/SUPP-011 - Store Execution Module - Offline and Sync Strategy.md"
+                                class="block p-2 bg-white rounded border hover:border-blue-400 text-xs">
+                                <span class="font-medium text-blue-700">SUPP-011</span> Offline & Sync Strategy
+                            </a>
+                            <a href="../02_SUPPs/Screens_Interfaces/SUPP-036 - Screens - Interfaces - Screens Onboarding and Store Foundation.md"
+                                class="block p-2 bg-white rounded border hover:border-blue-400 text-xs">
+                                <span class="font-medium text-blue-700">SUPP-036</span> Onboarding & Store Screens
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Architecture Diagrams Section -->
+    <section id="diagrams" class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Architecture Diagrams</h2>
+            <p class="text-gray-600 mb-10">Interactive Mermaid diagrams organized by category. Click any diagram to
+                view.</p>
+
+            <!-- State Diagrams Swim Lane -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">State Diagrams</div>
+                    <div class="flex-1 h-px bg-blue-200"></div>
+                    <span class="text-xs text-gray-500">Entity lifecycles and transitions</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <a href="diagrams/08-campaign-lifecycle.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📋</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Campaign
+                            Lifecycle</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Draft to archive</p>
+                    </a>
+                    <a href="diagrams/02-fulfillment-status.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📦</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Fulfillment
+                            Status</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Shipment & delivery</p>
+                    </a>
+                    <a href="diagrams/07-store-assignment-status.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🏬</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Store
+                            Assignment</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Execution states</p>
+                    </a>
+                    <a href="diagrams/05-assignment-item-status.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🏷️</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Assignment
+                            Item</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Item lifecycle</p>
+                    </a>
+                    <a href="diagrams/06-issue-request-status.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">⚠️</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Issue
+                            Request</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Reorder workflow</p>
+                    </a>
+                    <a href="diagrams/11-photo-review-status.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-blue-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📸</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-blue-700">Photo Review
+                        </h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Review states</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Flow Charts Swim Lane -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">Flow Charts</div>
+                    <div class="flex-1 h-px bg-purple-200"></div>
+                    <span class="text-xs text-gray-500">Process flows and data movement</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <a href="diagrams/09-campaign-flow.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🔄</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Campaign
+                            Flow</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">End-to-end flow</p>
+                    </a>
+                    <a href="diagrams/01-rollup-architecture.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📊</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Roll-up
+                            Architecture</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Qty aggregation</p>
+                    </a>
+                    <a href="diagrams/04-storephase-derivation.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🧮</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">StorePhase
+                            Derivation</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Phase computation</p>
+                    </a>
+                    <a href="diagrams/10-module-handoffs.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🤝</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Module
+                            Hand-offs</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Portal ownership</p>
+                    </a>
+                    <a href="diagrams/15-store-selection-flow.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🎯</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">Store
+                            Selection</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Targeting UX</p>
+                    </a>
+                    <a href="diagrams/16-newpopsys-v1-flow.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-purple-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🔀</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-purple-700">System
+                            Flow</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">End-to-end orchestration</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Architecture Diagrams Swim Lane -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-teal-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">Architecture</div>
+                    <div class="flex-1 h-px bg-teal-200"></div>
+                    <span class="text-xs text-gray-500">System structure and relationships</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <a href="diagrams/12-personas-by-module.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">👥</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Personas by
+                            Module</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Role assignments</p>
+                    </a>
+                    <a href="diagrams/13-status-interrelation.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🔗</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Status
+                            Interrelation</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Cross-module status</p>
+                    </a>
+                    <a href="diagrams/14-promo-item-slot.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🧩</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Promo Item -
+                            Slot</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Item/slot binding</p>
+                    </a>
+                    <a href="diagrams/17-core-data-model.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-teal-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">🗄️</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-teal-700">Core Data
+                            Model</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Entity relationships</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sequence Diagrams Swim Lane -->
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">Sequences</div>
+                    <div class="flex-1 h-px bg-orange-200"></div>
+                    <span class="text-xs text-gray-500">Interaction flows between components</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <a href="diagrams/03-partial-shipment-sequence.md"
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md hover:border-orange-400 border-2 border-transparent transition-all group">
+                        <div class="text-2xl mb-2 text-center">📬</div>
+                        <h4 class="font-medium text-gray-800 text-sm text-center group-hover:text-orange-700">Partial
+                            Shipment Exception</h4>
+                        <p class="text-xs text-gray-500 text-center mt-1">Exception handling</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section id="architecture" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Technical Architecture</h2>
+            <p class="text-gray-600 mb-10">Database schema and API specifications that power the platform.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Database Model -->
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🗄️</span>
+                        <div>
+                            <h3 class="font-bold text-emerald-900 text-xl">Database Model</h3>
+                            <p class="text-sm text-emerald-700">PostgreSQL schema design</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Complete database architecture including schemas,
+                        relationships, constraints, indexes, and seed data organized by module.</p>
+
+                    <div class="space-y-2 mb-4">
+                        <a href="../06_Database_Model/README.md"
+                            class="block bg-white rounded-lg p-3 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-emerald-800">📖 Database Overview</span>
+                            <span class="text-xs text-gray-500 block">Architecture & conventions</span>
+                        </a>
+                        <a href="../06_Database_Model/FOUNDATION_ANALYSIS.md"
+                            class="block bg-white rounded-lg p-3 border border-emerald-200 hover:border-emerald-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-emerald-800">🏗️ Foundation Analysis</span>
+                            <span class="text-xs text-gray-500 block">Core entities & relationships</span>
+                        </a>
+                    </div>
+
+                    <details class="bg-white rounded-lg border border-emerald-200">
+                        <summary class="px-4 py-3 cursor-pointer font-semibold text-emerald-800 text-sm">
+                            📂 Module Schemas
+                        </summary>
+                        <div class="px-4 pb-3 space-y-2 border-t border-emerald-100 pt-3">
+                            <a href="../06_Database_Model/PSP_MODULE_ANALYSIS.md"
+                                class="block text-sm text-emerald-700 hover:text-emerald-900">• PSP Module Analysis</a>
+                            <a href="../06_Database_Model/BRAND_MODULE_ANALYSIS.md"
+                                class="block text-sm text-emerald-700 hover:text-emerald-900">• Brand Module
+                                Analysis</a>
+                            <a href="../06_Database_Model/STORE_MODULE_ANALYSIS.md"
+                                class="block text-sm text-emerald-700 hover:text-emerald-900">• Store Module
+                                Analysis</a>
+                            <a href="../06_Database_Model/01_Schema/"
+                                class="block text-sm text-emerald-700 hover:text-emerald-900">• Schema Definitions</a>
+                            <a href="../06_Database_Model/02_Relationships/"
+                                class="block text-sm text-emerald-700 hover:text-emerald-900">• Relationships</a>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- API Model -->
+                <div class="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🔌</span>
+                        <div>
+                            <h3 class="font-bold text-indigo-900 text-xl">API Specification</h3>
+                            <p class="text-sm text-indigo-700">OpenAPI 3.0 REST API</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Complete REST API specification with endpoints,
+                        request/response schemas, authentication, and integration patterns.</p>
+
+                    <div class="space-y-2 mb-4">
+                        <a href="../06_API/README.md"
+                            class="block bg-white rounded-lg p-3 border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-indigo-800">📖 API Overview</span>
+                            <span class="text-xs text-gray-500 block">Endpoints & authentication</span>
+                        </a>
+                        <a href="../06_API/openapi.yaml"
+                            class="block bg-white rounded-lg p-3 border border-indigo-200 hover:border-indigo-400 hover:shadow-sm transition-all">
+                            <span class="font-medium text-indigo-800">📋 OpenAPI Spec</span>
+                            <span class="text-xs text-gray-500 block">Full API definition (YAML)</span>
+                        </a>
+                    </div>
+
+                    <div class="bg-white rounded-lg border border-indigo-200 p-4">
+                        <p class="text-sm text-indigo-800 font-medium mb-2">🔗 API Features</p>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• RESTful endpoints by module</li>
+                            <li>• JWT authentication</li>
+                            <li>• Webhook integrations</li>
+                            <li>• Rate limiting & pagination</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Research Section -->
+    <section id="research" class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Market Research & Branding</h2>
+            <p class="text-gray-600 mb-10">Competitive analysis and brand identity exploration for product positioning.
+            </p>
+
+            <div class="bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-3xl">📊</span>
+                    <div>
+                        <h3 class="font-bold text-rose-900 text-xl">Market Analysis & Branding</h3>
+                        <p class="text-sm text-rose-700">Competitive landscape & identity options</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Research into the POP/retail execution software market, competitor
+                    analysis, and proposed brand identity directions.</p>
+
+                <a href="../Reports/Market_Analysis_and_Branding.md"
+                    class="inline-flex items-center gap-2 bg-rose-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-rose-700 transition-colors">
+                    View Full Report →
+                </a>
+
+                <div class="mt-4 grid md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-lg p-4 border border-rose-200">
+                        <p class="font-medium text-rose-800 text-sm mb-1">🎯 Target Market</p>
+                        <p class="text-xs text-gray-600">Print service providers & brand merchandising teams</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 border border-rose-200">
+                        <p class="font-medium text-rose-800 text-sm mb-1">🏆 Differentiators</p>
+                        <p class="text-xs text-gray-600">Photo verification, offline-first mobile, PSP workflow</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 border border-rose-200">
+                        <p class="font-medium text-rose-800 text-sm mb-1">🎨 Brand Options</p>
+                        <p class="text-xs text-gray-600">6 proposed brand identities with themes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stakeholder Questions Section -->
+    <section id="questions" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Questions for Stakeholders</h2>
+            <p class="text-gray-600 mb-10">We need your input on these items before finalizing the build. Please review
+                and share your thoughts.</p>
+
+            <div class="space-y-6">
+                <!-- Question 1 -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+                    <div class="flex items-start gap-4">
+                        <span class="bg-yellow-400 text-yellow-900 font-bold px-3 py-1 rounded-full text-sm">Q1</span>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Regional Hierarchy Structure</h3>
+                            <p class="text-gray-700 mb-3">The SOW supports a multi-level geographic hierarchy (Region -
+                                District - Territory). For Good2Go's stores across the US:</p>
+                            <ul class="text-sm text-gray-600 space-y-1 ml-4 list-disc">
+                                <li>How many levels deep is your actual hierarchy?</li>
+                                <li>What are the actual level names used (Region, District, Territory, Area, etc.)?</li>
+                                <li>Do different brands have different structures we need to accommodate?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-purple-50 border border-purple-200 rounded-xl p-6">
+                    <div class="flex items-start gap-4">
+                        <span class="bg-purple-400 text-purple-900 font-bold px-3 py-1 rounded-full text-sm">Q2</span>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Photo Verification Preferences</h3>
+                            <p class="text-gray-700 mb-3">Two verification modes are supported: STRICT (manual review
+                                required) and FAST (auto-approve with spot checks).</p>
+                            <ul class="text-sm text-gray-600 space-y-1 ml-4 list-disc">
+                                <li>Which mode would you default to for pilot campaigns?</li>
+                                <li>Should brands be able to switch modes mid-campaign?</li>
+                                <li>What rejection reasons are most common today that we should pre-populate?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                    <div class="flex items-start gap-4">
+                        <span class="bg-blue-400 text-blue-900 font-bold px-3 py-1 rounded-full text-sm">Q3</span>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Third-Party Installer Support</h3>
+                            <p class="text-gray-700 mb-3">The SOW notes that stores may "hire installers" to facilitate
+                                rollouts, but installer identity tracking is out of scope for v1.</p>
+                            <ul class="text-sm text-gray-600 space-y-1 ml-4 list-disc">
+                                <li>Is this acceptable for pilot, or is installer tracking a hard requirement?</li>
+                                <li>Do installers need their own login, or do they work under the store's account?</li>
+                                <li>What percentage of installs are done by third-party vs. store staff?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-teal-50 border border-teal-200 rounded-xl p-6">
+                    <div class="flex items-start gap-4">
+                        <span class="bg-teal-400 text-teal-900 font-bold px-3 py-1 rounded-full text-sm">Q4</span>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Notification Preferences</h3>
+                            <p class="text-gray-700 mb-3">v1 uses email for store notifications. For pilot users:</p>
+                            <ul class="text-sm text-gray-600 space-y-1 ml-4 list-disc">
+                                <li>What's the preferred notification cadence? (Immediate, daily digest, weekly?)</li>
+                                <li>Should stores get SMS in addition to email?</li>
+                                <li>Who at the store should receive campaign notifications? (Manager only, or all
+                                    staff?)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <div class="flex items-start gap-4">
+                        <span class="bg-green-400 text-green-900 font-bold px-3 py-1 rounded-full text-sm">Q5</span>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Reorder Approval Thresholds</h3>
+                            <p class="text-gray-700 mb-3">Reorders can be auto-approved below a threshold or require
+                                manual review above it.</p>
+                            <ul class="text-sm text-gray-600 space-y-1 ml-4 list-disc">
+                                <li>What's a reasonable auto-approve threshold? (e.g., items less than $X, or less than
+                                    N items)</li>
+                                <li>Should thresholds be per-campaign or per-brand?</li>
+                                <li>Who should approve reorders above threshold? (Brand Admin, Regional Manager, PSP?)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supporting SOW Docs -->
+            <details class="mt-10 bg-gray-50 rounded-xl border">
+                <summary class="px-6 py-4 cursor-pointer font-semibold text-gray-700 hover:bg-gray-100 rounded-xl">
+                    📄 Related SOW Documents
+                </summary>
+                <div class="px-6 pb-4 grid md:grid-cols-2 gap-3 text-sm">
+                    <a href="../02_SUPPs/Shared_Foundations/SUPP-004 - Shared Foundations - Notifications and Escalation Matrix.md"
+                        class="block p-3 bg-white rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-004</span>
+                        <span class="text-gray-600"> — Notifications & Escalation Matrix</span>
+                    </a>
+                    <a href="../02_SUPPs/Shared_Foundations/SUPP-006 - Shared Foundations - Webhooks and Inbound API Event Contract.md"
+                        class="block p-3 bg-white rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-006</span>
+                        <span class="text-gray-600"> — Webhooks & API Event Contract</span>
+                    </a>
+                    <a href="../02_SUPPs/PSP_Operations_Module/SUPP-019 - PSP Operations Module - Issues Reorders Expiration Deinstall.md"
+                        class="block p-3 bg-white rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-019</span>
+                        <span class="text-gray-600"> — Issues, Reorders, Deinstall</span>
+                    </a>
+                    <a href="../02_SUPPs/Brand_Admin_Module/SUPP-013 - Brand Admin Module - Stores Regions Groups.md"
+                        class="block p-3 bg-white rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-013</span>
+                        <span class="text-gray-600"> — Stores, Regions, Groups</span>
+                    </a>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- v1 Scope Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">v1 Scope Summary</h2>
+            <p class="text-gray-600 mb-10">What's included and what's intentionally deferred.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <h3 class="font-bold text-green-700 text-lg mb-4 flex items-center gap-2">
+                        <span class="text-xl">✓</span> Included in v1
+                    </h3>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li>• Campaign management (campaigns, store assignment, timelines)</li>
+                        <li>• Store profiles and attributes</li>
+                        <li>• Surveys with modernized UX & progressive disclosure</li>
+                        <li>• Kits and kit contents (including large kits)</li>
+                        <li>• Order/fulfillment intake for PSP operations</li>
+                        <li>• Execution status tracking (item and kit level)</li>
+                        <li>• Issue reporting (missing/damaged) and reorder signaling</li>
+                        <li>• Photo upload and verification artifacts</li>
+                        <li>• Activity logging and audit history</li>
+                        <li>• Role-based access (PSP admin, brand, regional, store)</li>
+                        <li>• Baseline reporting for all personas</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-500 text-lg mb-4 flex items-center gap-2">
+                        <span class="text-xl">◦</span> Not in v1 (Future)
+                    </h3>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li>• Installer marketplace / bidding system</li>
+                        <li>• Full PSP MIS (costing, accounting, scheduling)</li>
+                        <li>• Advanced analytics/benchmarking</li>
+                        <li>• Long-term object storage and archival</li>
+                        <li>• AI automation features (beyond scaffolding)</li>
+                    </ul>
+                    <div class="mt-6 p-4 bg-gray-50 rounded-lg text-xs text-gray-600">
+                        <strong>Data Retention (v1):</strong> Operational project data retained for 90 days after
+                        completion. Export option offered before deletion.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supporting SOW Docs -->
+            <details class="mt-10 bg-white rounded-xl border">
+                <summary class="px-6 py-4 cursor-pointer font-semibold text-gray-700 hover:bg-gray-50 rounded-xl">
+                    📄 Supporting SOW Documents
+                </summary>
+                <div class="px-6 pb-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                    <a href="../02_SUPPs/Shared_Foundations/SUPP-008 - Shared Foundations - Data Retention Classification Policy Option A.md"
+                        class="block p-3 bg-gray-50 rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-008</span>
+                        <span class="text-gray-600"> — Data Retention Policy</span>
+                    </a>
+                    <a href="../02_SUPPs/Shared_Foundations/SUPP-005 - Shared Foundations - Exports Reports Output Contracts.md"
+                        class="block p-3 bg-gray-50 rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-005</span>
+                        <span class="text-gray-600"> — Exports & Reports</span>
+                    </a>
+                    <a href="../02_SUPPs/Platform_Ops_Agent_Harness/SUPP-035 - Platform Ops - Agent Harness - Field Level Data Model Tables Fields Enums.md"
+                        class="block p-3 bg-gray-50 rounded-lg border hover:border-blue-300 hover:shadow-sm">
+                        <span class="font-medium text-blue-700">SUPP-035</span>
+                        <span class="text-gray-600"> — Data Model & Enums</span>
+                    </a>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="py-16 bg-blue-900 text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">Stakeholder Feedback</h2>
+
+            <!-- Development Notice -->
+            <div class="bg-yellow-500/20 border border-yellow-400/50 rounded-xl p-6 mb-8 text-left">
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">🚧</span>
+                    <div>
+                        <h3 class="font-bold text-yellow-300 mb-2">This is a Development Demo</h3>
+                        <p class="text-yellow-100 text-sm mb-2">The SOW is actively being developed. This demo serves as
+                            a <strong>north star alignment tool</strong> — a shared vision we're building toward while
+                            the technical specifications continue to evolve.</p>
+                        <p class="text-yellow-100/80 text-sm">What you see here represents our current understanding.
+                            Your feedback will directly shape the final product. Nothing is set in stone.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-blue-200 mb-8">Your input shapes the final product. Please review the wireframes and share
+                your thoughts.</p>
+
+            <div class="bg-white/10 backdrop-blur rounded-xl p-8 text-left">
+                <h3 class="font-semibold text-lg mb-4">How to Provide Feedback</h3>
+                <ol class="space-y-3 text-blue-100">
+                    <li><strong>1. Explore the wireframes</strong> — Click each portal above and navigate through the
+                        screens. Enable "Interactive Mode" to see feature details.</li>
+                    <li><strong>2. Note your observations</strong> — Consider: Does the workflow make sense? Is anything
+                        missing? Are the screens clear?</li>
+                    <li><strong>3. Share your feedback</strong> — Send your comments to the project team via email or
+                        your usual communication channel. Include the screen name and specific element when referencing
+                        issues.</li>
+                </ol>
+                <div class="mt-6 p-4 bg-white/10 rounded-lg text-sm">
+                    <strong>Tip:</strong> When describing feedback, reference the portal name (e.g., "Brand Admin
+                    Portal") and screen/view name (e.g., "Create Campaign wizard, step 2") to help us locate the exact
+                    area.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+            <p>NewPOPSys v1 Stakeholder Review | <a id="footer-version" href="../01_Main_SOW/MASTER_SOW_COMPILED.md"
+                    class="hover:text-white transition-colors">SOW v1.36</a> Alignment</p>
+            <p class="mt-2"><a href="autocoder.html" class="hover:text-white transition-colors">AutoCoder</a> a ServFlow
+                project | ServFlow Development</p>
+        </div>
+    </footer>
+
+    <!-- Marked.js for Markdown rendering + Document Modal + Sidebar -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="doc-modal.js"></script>
+    <script src="doc-sidebar.js"></script>
+
+    <script>
+        // Load version from VERSION.json
+        fetch('../VERSION.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sow-version').textContent = `SOW Version: ${data.version}`;
+                document.getElementById('beta-target').textContent = `Beta Target: ${data.betaTarget}`;
+                document.getElementById('budget').textContent = `Budget: ${data.budget}`;
+                document.getElementById('footer-version').textContent = `SOW v${data.version}`;
+            })
+            .catch(err => {
+                console.warn('Could not load VERSION.json:', err);
+                document.getElementById('sow-version').textContent = 'SOW Version: 1.36';
+            });
+
+        // Dropdown Toggle Handlers
+        document.getElementById('theme-toggle').addEventListener('click', function (e) {
+            e.stopPropagation();
+            document.getElementById('theme-dropdown').classList.toggle('open');
+            document.getElementById('appearance-dropdown').classList.remove('open');
+        });
+
+        document.getElementById('appearance-toggle').addEventListener('click', function (e) {
+            e.stopPropagation();
+            document.getElementById('appearance-dropdown').classList.toggle('open');
+            document.getElementById('theme-dropdown').classList.remove('open');
+        });
+
+        // Prevent dropdowns from closing when clicking inside
+        document.getElementById('theme-dropdown').addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        document.getElementById('appearance-dropdown').addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function () {
+            document.getElementById('theme-dropdown').classList.remove('open');
+            document.getElementById('appearance-dropdown').classList.remove('open');
+        });
+
+        // Theme selection handler - uses unified theme-loader.js
+        function selectTheme(themeName) {
+            // Use the unified setTheme from theme-loader.js
+            if (window.setTheme) {
+                window.setTheme(themeName);
+            }
+
+            // Update nav logo with inline SVG from config
+            const config = window.THEME_CONFIG || window.getThemeConfig();
+            if (config && config.brands[themeName] && config.brands[themeName].logoSvg) {
+                const navLogo = document.getElementById('nav-logo');
+                if (navLogo) {
+                    navLogo.outerHTML = config.brands[themeName].logoSvg.replace('viewBox="0 0 32 32"', 'id="nav-logo" viewBox="0 0 32 32"');
+                }
+            }
+
+            // Close dropdown
+            document.getElementById('theme-dropdown').classList.remove('open');
+        }
+
+        // Appearance mode handler - uses unified theme-loader.js
+        function setAppearanceMode(mode) {
+            if (window.setAppearance) {
+                window.setAppearance(mode);
+            }
+
+            // Update active state in dropdown
+            document.querySelectorAll('.appearance-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.mode === mode);
+            });
+
+            // Close dropdown
+            document.getElementById('appearance-dropdown').classList.remove('open');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+            const savedAppearance = localStorage.getItem('appearanceMode') || 'light';
+
+            // Update dropdown active states
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.theme === savedTheme);
+            });
+
+            document.querySelectorAll('.appearance-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.mode === savedAppearance);
+            });
+
+            // Update nav logo with inline SVG
+            const config = window.THEME_CONFIG;
+            if (config && config.brands[savedTheme] && config.brands[savedTheme].logoSvg) {
+                const navLogo = document.getElementById('nav-logo');
+                if (navLogo) {
+                    navLogo.outerHTML = config.brands[savedTheme].logoSvg.replace('viewBox="0 0 32 32"', 'id="nav-logo" viewBox="0 0 32 32"');
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

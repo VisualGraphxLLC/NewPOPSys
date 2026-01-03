@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Manager Portal Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #0d9488;
+            --primary-light: #14b8a6;
+            --primary-dark: #0f766e;
+            --accent: #f59e0b;
+            --text-on-primary: #ffffff;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        [data-theme="merchpulse"] {
+            --primary: #7C3AED;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5B21B6;
+            --accent: #F59E0B;
+        }
+
+        [data-theme="fieldforge"] {
+            --primary: #3B82F6;
+            --primary-light: #60a5fa;
+            --primary-dark: #1E40AF;
+            --accent: #10B981;
+        }
+
+        [data-theme="nexova"] {
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0F172A;
+            --accent: #06B6D4;
+        }
+
+        [data-theme="prism"] {
+            --primary: #14B8A6;
+            --primary-light: #2DD4BF;
+            --primary-dark: #18181B;
+            --accent: #14B8A6;
+        }
+
+        /* Apply theme colors - Primary */
+        .bg-teal-600,
+        .bg-teal-700,
+        .bg-teal-800 {
+            background-color: var(--primary) !important;
+        }
+
+        .hover\:bg-teal-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .text-teal-600,
+        .text-teal-700 {
+            color: var(--primary) !important;
+        }
+
+        .border-teal-600 {
+            border-color: var(--primary) !important;
+        }
+
+        .bg-teal-100,
+        .bg-teal-50 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
+        /* Accent colors */
+        .bg-amber-500,
+        .bg-orange-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .bg-green-600,
+        .bg-green-500 {
+            background-color: var(--accent) !important;
+        }
+
+        .text-amber-600,
+        .text-orange-600 {
+            color: var(--accent) !important;
+        }
+
+        /* Tooltip Styles - Only active when body has .tooltips-enabled */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltips-enabled .has-tooltip {
+            outline: 2px dashed #14b8a6;
+            outline-offset: 2px;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tooltip-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tooltip-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .tooltip-toggle.active {
+            background: white;
+            color: #0d9488;
+        }
+    </style>
+    <script>
+        // Tooltip positioning and toggle functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Toggle functionality
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            // Dynamic tooltip positioning
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function (e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+
+                    // Remove any existing tooltip
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    // Create tooltip element
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        font-size: 12px;
+                        line-height: 1.5;
+                        max-width: 320px;
+                        min-width: 200px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    // Position tooltip
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    // Keep on screen - horizontal
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+
+                    // Keep on screen - vertical (flip to bottom if needed)
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function () {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="../index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-4 cursor-pointer has-tooltip" onclick="nav('view-dashboard')"
+            data-tooltip="🏪 STORE IDENTIFIER\n📊 Data: Store.id, Store.name, StoreIdAlias.externalId\n⬅️ Depends: User.storeId from JWT authentication\n➡️ Blocks: All store-scoped queries and actions">
+            <div id="brand-logo" class="flex items-center">
+                <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+            </div>
+            <div>
+                <span class="font-bold text-gray-700">STR-001</span>
+                <span class="text-sm text-gray-500 ml-2">Acme Downtown</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+            <a href="#" id="link-dashboard" onclick="nav('view-dashboard')"
+                class="nav-link hover:text-teal-600 active-nav text-teal-600 border-b-2 border-teal-600 h-16 flex items-center">Dashboard</a>
+            <a href="#" id="link-campaigns" onclick="nav('view-campaigns')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Campaigns</a>
+            <a href="#" id="link-photos" onclick="nav('view-photos')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Photos</a>
+            <a href="#" id="link-team" onclick="nav('view-team')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Team</a>
+            <a href="#" id="link-surveys" onclick="nav('view-surveys')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Surveys</a>
+            <a href="#" id="link-layout" onclick="nav('view-layout')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Store Layout</a>
+            <a href="#" id="link-reports" onclick="nav('view-reports')"
+                class="nav-link hover:text-teal-600 h-16 flex items-center">Reports</a>
+            <div class="relative has-tooltip"
+                data-tooltip="🔔 NOTIFICATIONS\n📊 Data: COUNT(Notification WHERE readStatus=false AND User.id)\n⬅️ Depends: PhotoReview.status=REJECTED, RetakeRequest created\n➡️ Blocks: User awareness of retake requests">
+                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+                <div
+                    class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                    2</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-8">
+
+        <!-- VIEW: DASHBOARD -->
+        <div id="view-dashboard" class="view block">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Store Dashboard</h1>
+                <div class="flex gap-2">
+                    <button
+                        class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
+                        data-tooltip="📱 MOBILE APP LINK\n📊 Data: User.id, Store.id for deep link context\n⬅️ Depends: Mobile app installation on device\n➡️ Blocks: PhotoUpload, CompletionSubmission, ReceiveVerification">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i> Open Mobile App
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📊 ACTIVE CAMPAIGNS KPI\n📊 Data: COUNT(StoreAssignment WHERE status IN (IN_PROGRESS, SUBMITTED_FOR_REVIEW, REWORK_REQUESTED) AND Store.id)\n⬅️ Depends: Store assigned to campaigns\n➡️ Blocks: Workload visibility and prioritization">
+                    <div class="text-sm text-gray-500 mb-1">Active Campaigns</div>
+                    <div class="text-3xl font-bold text-teal-600">3</div>
+                    <div class="text-teal-600 text-xs mt-2 font-medium">1 needs attention</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="⚠️ PENDING ACTIONS KPI\n📊 Data: COUNT(PhotoReview WHERE status=REJECTED) + COUNT(LocationSlot WHERE PhotoUpload IS NULL)\n⬅️ Depends: PhotoReview decisions, Shipment.status=DELIVERED\n➡️ Blocks: StoreAssignment.status=COMPLETE">
+                    <div class="text-sm text-gray-500 mb-1">Pending Actions</div>
+                    <div class="text-3xl font-bold text-yellow-600">5</div>
+                    <div class="text-yellow-600 text-xs mt-2 font-medium">1 retake, 4 photos</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="✅ COMPLETED CAMPAIGNS\n📊 Data: COUNT(StoreAssignment WHERE status=COMPLETE AND completedAt >= MONTH_START)\n⬅️ Depends: All PhotoReview.status=APPROVED for assignment\n➡️ Blocks: Monthly performance reports">
+                    <div class="text-sm text-gray-500 mb-1">Completed This Month</div>
+                    <div class="text-3xl font-bold text-gray-900">12</div>
+                    <div class="text-green-600 text-xs mt-2 font-medium">↑ 3 from last month</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📈 COMPLIANCE RATE\n📊 Data: COUNT(StoreAssignment WHERE completedAt <= Campaign.endDate) / COUNT(StoreAssignment WHERE status=COMPLETE)\n⬅️ Depends: StoreAssignment.completedAt, Campaign.endDate\n➡️ Blocks: Store performance ranking and reports">
+                    <div class="text-sm text-gray-500 mb-1">Compliance Rate</div>
+                    <div class="text-3xl font-bold text-green-600">94%</div>
+                    <div class="text-green-600 text-xs mt-2 font-medium">↑ 5% vs network avg</div>
+                </div>
+            </div>
+
+            <!-- Active Campaigns -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                        data-tooltip="📋 ACTIVE CAMPAIGNS LIST\n📊 Data: StoreAssignment JOIN Campaign WHERE status NOT IN (COMPLETE) AND Store.id\n⬅️ Depends: Campaign published, Store in SelectionRecipe\n➡️ Blocks: Store execution workflow visibility">
+                        Active Campaigns</div>
+                    <div class="divide-y divide-gray-100">
+                        <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-campaigns')"
+                            data-tooltip="🎯 CAMPAIGN CARD\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Campaign.endDate, COUNT(PhotoUpload)\n⬅️ Depends: Store assigned to campaign\n➡️ Blocks: PhotoUpload submission, campaign completion">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <div class="font-medium text-gray-900">Summer Promo 2025</div>
+                                    <div class="text-sm text-red-600 mt-1 cursor-pointer hover:underline flex items-center gap-1"
+                                        onclick="event.stopPropagation(); openRetakeModal('Window Poster', 'Wrong Angle', 'retake-1')">
+                                        ⚠️ 1 photo needs retake</div>
+                                </div>
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="📊 INSTALLING STATUS\n📊 Data: StoreAssignment.executionStatus=IN_PROGRESS\n⬅️ Depends: ReceiveVerification completed\n➡️ Blocks: CompletionSubmission, PhotoUpload uploads">Installing</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1 has-tooltip"
+                                    data-tooltip="📈 PROGRESS BAR\n📊 Data: COUNT(PhotoUpload WHERE PhotoReview.status=APPROVED) / COUNT(LocationSlot)\n⬅️ Depends: LocationSlot defined, PhotoUpload submitted\n➡️ Blocks: Visual completion tracking">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-teal-500 h-2 rounded-full" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500">80%</span>
+                                <span class="text-sm text-gray-400 has-tooltip"
+                                    data-tooltip="⏰ DUE DATE\n📊 Data: Campaign.endDate, DATEDIFF(Campaign.endDate, NOW())\n⬅️ Depends: Campaign.endDate set by brand\n➡️ Blocks: On-time completion tracking">Due:
+                                    5 days</span>
+                                <div class="flex items-center gap-3">
+                                    <button
+                                        onclick="event.stopPropagation(); openAssignModal('Summer Promo 2025', 'campaign-1')"
+                                        class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                        <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                    </button>
+                                    <span class="text-gray-300">|</span>
+                                    <button class="text-gray-500 font-medium text-sm has-tooltip"
+                                        data-tooltip="▶️ CONTINUE ACTION\n📊 Data: StoreAssignment.id, Campaign.id for deep link\n⬅️ Depends: Mobile app installed\n➡️ Blocks: PhotoUpload, CompletionSubmission actions">Continue
+                                        →</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-campaigns')"
+                            data-tooltip="🎯 CAMPAIGN CARD - RECEIVING\n📊 Data: Campaign.name, StoreAssignment.executionStatus, Shipment.deliveredAt\n⬅️ Depends: Shipment.status=DELIVERED\n➡️ Blocks: ReceiveVerification, installation phase">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <div class="font-medium text-gray-900">Holiday Display</div>
+                                    <div class="text-sm text-green-600 mt-1 has-tooltip"
+                                        data-tooltip="📦 DELIVERY NOTIFICATION\n📊 Data: Shipment.status=DELIVERED, ShipmentTracking.deliveredAt\n⬅️ Depends: Carrier webhook, StoreOrder fulfilled\n➡️ Blocks: ReceiveVerification becomes available">
+                                        📦 Shipment delivered</div>
+                                </div>
+                                <span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="📊 RECEIVING STATUS\n📊 Data: StoreAssignment.executionStatus (state machine phase)\n⬅️ Depends: Shipment.status=DELIVERED\n➡️ Blocks: ReceiveVerification required before IN_PROGRESS">Receiving</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-teal-500 h-2 rounded-full" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500">20%</span>
+                                <span class="text-sm text-gray-400">Due: 12 days</span>
+                                <div class="flex items-center gap-3">
+                                    <button
+                                        onclick="event.stopPropagation(); openAssignModal('Holiday Display', 'campaign-2')"
+                                        class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                        <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                    </button>
+                                    <span class="text-gray-300">|</span>
+                                    <button class="text-teal-600 font-medium text-sm has-tooltip"
+                                        data-tooltip="▶️ START RECEIPT SURVEY\n📊 Data: StoreAssignment.id, KitDefinition items for checklist\n⬅️ Depends: Shipment.status=DELIVERED\n➡️ Blocks: ReceiveVerification creation, IssueReport if needed">Start
+                                        →</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 hover:bg-gray-50 cursor-pointer has-tooltip" onclick="nav('view-campaigns')"
+                            data-tooltip="🎯 CAMPAIGN CARD - AWAITING\n📊 Data: Campaign.name, StoreOrder.pspOrderRef, Shipment.trackingNumber\n⬅️ Depends: StoreOrder created and acknowledged by PSP\n➡️ Blocks: Shipment.status=DELIVERED triggers next phase">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <div class="font-medium text-gray-900">Back to School</div>
+                                    <div class="text-sm text-gray-500 mt-1 has-tooltip"
+                                        data-tooltip="🚚 IN TRANSIT STATUS\n📊 Data: Shipment.status=IN_TRANSIT, ShipmentTracking.lastUpdate\n⬅️ Depends: Carrier API webhooks\n➡️ Blocks: Awaiting Shipment.status=DELIVERED">
+                                        🚚 Shipment in transit</div>
+                                </div>
+                                <span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="📊 AWAITING STATUS\n📊 Data: StoreAssignment.executionStatus (awaiting shipment)\n⬅️ Depends: StoreOrder.pspAcknowledgedAt confirmed\n➡️ Blocks: No action until Shipment.status=DELIVERED">Awaiting</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-gray-300 h-2 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500">0%</span>
+                                <span class="text-sm text-gray-400">Due: 21 days</span>
+                                <div class="flex items-center gap-3">
+                                    <button
+                                        onclick="event.stopPropagation(); openAssignModal('Back to School', 'campaign-3')"
+                                        class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                        <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                    </button>
+                                    <span class="text-gray-300">|</span>
+                                    <button class="text-gray-400 font-medium text-sm has-tooltip"
+                                        data-tooltip="👁️ VIEW DETAILS\n📊 Data: Campaign details, KitDefinition, ShipmentTracking.estimatedDelivery\n⬅️ Depends: StoreAssignment exists\n➡️ Blocks: View-only, no actions until delivered">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Actions & Activity -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 flex justify-between has-tooltip"
+                            data-tooltip="📝 PENDING ACTIONS\n📊 Data: COUNT(RetakeRequest) + COUNT(Shipment WHERE status=DELIVERED AND no ReceiveVerification) + COUNT(LocationSlot WHERE PhotoUpload IS NULL)\n⬅️ Depends: PhotoReview, Shipment, StoreAssignment states\n➡️ Blocks: StoreAssignment.status=COMPLETE">
+                            Pending Actions
+                            <span
+                                class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">5</span>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            <div class="flex items-center gap-3 p-2 bg-red-50 rounded-lg has-tooltip"
+                                data-tooltip="🔴 PHOTO RETAKE REQUIRED\n📊 Data: PhotoReview.status=REJECTED, RetakeRequest.reason, LocationSlot.name\n⬅️ Depends: PhotoReview by admin\n➡️ Blocks: New PhotoUpload required, StoreAssignment.status=COMPLETE">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="camera" class="w-4 h-4 text-red-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-medium text-gray-900">1 photo retake needed</div>
+                                    <div class="text-xs text-gray-500">Summer Promo</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-2 bg-green-50 rounded-lg has-tooltip"
+                                data-tooltip="📦 SHIPMENT VERIFICATION\n📊 Data: Shipment.status=DELIVERED, KitDefinition.items for checklist\n⬅️ Depends: ShipmentTracking.deliveredAt confirmed\n➡️ Blocks: ReceiveVerification, IssueReport, install phase">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="package" class="w-4 h-4 text-green-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-medium text-gray-900">1 shipment to verify</div>
+                                    <div class="text-xs text-gray-500">Holiday Display</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-2 bg-blue-50 rounded-lg has-tooltip"
+                                data-tooltip="📷 PENDING PHOTOS\n📊 Data: COUNT(LocationSlot WHERE PhotoUpload IS NULL AND StoreLayout.id)\n⬅️ Depends: ReceiveVerification.status=COMPLETE\n➡️ Blocks: CompletionSubmission, StoreAssignment.status=COMPLETE">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="camera" class="w-4 h-4 text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-medium text-gray-900">3 photos to capture</div>
+                                    <div class="text-xs text-gray-500">Summer Promo</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-3 border-t border-gray-100">
+                            <button class="text-teal-600 text-sm font-medium has-tooltip"
+                                data-tooltip="📋 VIEW ALL TASKS\n📊 Data: All RetakeRequest, pending LocationSlot, unverified Shipment\n⬅️ Depends: Active StoreAssignments\n➡️ Blocks: Comprehensive task list view">View
+                                All Tasks →</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                            data-tooltip="📜 RECENT ACTIVITY FEED\n📊 Data: AuditEvent WHERE Store.id ORDER BY createdAt DESC LIMIT 10\n⬅️ Depends: PhotoUpload, ReceiveVerification, Shipment events\n➡️ Blocks: Activity visibility and audit trail">
+                            Recent Activity</div>
+                        <div class="p-4 space-y-4">
+                            <div class="flex gap-3 has-tooltip"
+                                data-tooltip="✅ PHOTO APPROVED EVENT\n📊 Data: AuditEvent.action=PHOTO_APPROVED, PhotoUpload.id, LocationSlot.name, User.actorType\n⬅️ Depends: PhotoReview.status=APPROVED decision\n➡️ Blocks: LocationSlot completion, progress tracking">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                                <div>
+                                    <div class="text-sm text-gray-900">Photo approved</div>
+                                    <div class="text-xs text-gray-500">Today, 2:30 PM • Window Poster</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 has-tooltip"
+                                data-tooltip="📤 PHOTOS SUBMITTED EVENT\n📊 Data: AuditEvent.action=PHOTOS_SUBMITTED, COUNT(PhotoUpload), Campaign.name, User.uploadedBy\n⬅️ Depends: Mobile app PhotoUpload submission\n➡️ Blocks: PhotoReview queue, admin verification">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                                <div>
+                                    <div class="text-sm text-gray-900">4 photos submitted</div>
+                                    <div class="text-xs text-gray-500">Yesterday • Summer Promo</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 has-tooltip"
+                                data-tooltip="📦 SHIPMENT RECEIVED EVENT\n📊 Data: AuditEvent.action=SHIPMENT_DELIVERED, Shipment.id, ShipmentTracking.deliveredAt\n⬅️ Depends: Carrier webhook, PSP integration\n➡️ Blocks: ReceiveVerification becomes available">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                                <div>
+                                    <div class="text-sm text-gray-900">Shipment received</div>
+                                    <div class="text-xs text-gray-500">Dec 15 • Holiday Display</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Status (Manager Only) -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                    data-tooltip="👥 TEAM STATUS (Manager Only)\n📊 Data: User JOIN Membership WHERE Store.id AND Role.permissions\n⬅️ Depends: User authentication, Membership.role=MANAGER\n➡️ Blocks: Team activity metrics, photo attribution">
+                    Team Status</div>
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="👤 TEAM MEMBER\n📊 Data: User.name\n⬅️ Depends: User registration\n➡️ Blocks: Activity attribution">
+                                Team Member</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="🔑 USER ROLE\n📊 Data: Membership.role (MANAGER or USER)\n⬅️ Depends: Role assignment\n➡️ Blocks: Permission grants">
+                                Role</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="⏰ LAST ACTIVITY\n📊 Data: User.lastActivityAt\n⬅️ Depends: User actions logged\n➡️ Blocks: Activity monitoring">
+                                Last Active</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📷 PHOTOS UPLOADED\n📊 Data: COUNT(PhotoUpload WHERE uploadedBy=User.id AND createdAt >= 30_DAYS_AGO)\n⬅️ Depends: PhotoUpload.uploadedBy\n➡️ Blocks: Contribution metrics">
+                                Photos (30d)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Jane Smith (You)</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold">Manager</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Now</td>
+                            <td class="px-6 py-4">12</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">John Doe</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Yesterday</td>
+                            <td class="px-6 py-4">24</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Mike Johnson</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Dec 12</td>
+                            <td class="px-6 py-4">8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: CAMPAIGNS HISTORY -->
+        <div id="view-campaigns" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Campaign History</h1>
+                <button
+                    class="bg-white border text-gray-600 px-3 py-2 rounded text-sm flex items-center gap-2 has-tooltip"
+                    data-tooltip="📥 EXPORT CAMPAIGNS\n📊 Data: StoreAssignment, Campaign, PhotoUpload counts, completion metrics\n⬅️ Depends: Active filter selections\n➡️ Blocks: Download CSV/XLSX/PDF report">
+                    <i data-lucide="download" class="w-4 h-4"></i> Export
+                </button>
+            </div>
+
+            <!-- Status Tabs -->
+            <div class="flex gap-4 mb-6">
+                <button class="px-4 py-2 bg-teal-100 text-teal-800 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="🔵 ACTIVE FILTER\n📊 Data: COUNT(StoreAssignment WHERE executionStatus IN (IN_PROGRESS, SUBMITTED_FOR_REVIEW, REWORK_REQUESTED))\n⬅️ Depends: StoreAssignment state machine\n➡️ Blocks: Filter view to active campaigns only">Active
+                    (3)</button>
+                <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="✅ COMPLETED FILTER\n📊 Data: COUNT(StoreAssignment WHERE executionStatus=COMPLETE)\n⬅️ Depends: All PhotoReview.status=APPROVED\n➡️ Blocks: Filter view to completed campaigns only">Completed
+                    (47)</button>
+                <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="📋 ALL CAMPAIGNS\n📊 Data: COUNT(StoreAssignment) all statuses\n⬅️ Depends: StoreAssignment records exist\n➡️ Blocks: Show complete campaign history">All</button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 w-8 has-tooltip"
+                                data-tooltip="🔽 EXPAND/COLLAPSE\n📊 Data: UI state toggle\n⬅️ Depends: Row click event\n➡️ Blocks: Extended details panel visibility">
+                            </th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📋 CAMPAIGN NAME\n📊 Data: Campaign.name\n⬅️ Depends: Brand admin campaign creation\n➡️ Blocks: Campaign identification">
+                                Campaign</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📊 CAMPAIGN STATUS\n📊 Data: StoreAssignment.executionStatus (state machine)\n⬅️ Depends: Workflow progression\n➡️ Blocks: Status-based filtering and actions">
+                                Status</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📈 PROGRESS\n📊 Data: COUNT(PhotoReview WHERE status=APPROVED) / COUNT(LocationSlot)\n⬅️ Depends: PhotoUpload, PhotoReview\n➡️ Blocks: Completion percentage tracking">
+                                Progress</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📅 CAMPAIGN DATES\n📊 Data: Campaign.startDate, Campaign.endDate\n⬅️ Depends: Brand sets campaign window\n➡️ Blocks: Deadline and urgency calculations">
+                                Dates</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="✅ COMPLETION INFO\n📊 Data: StoreAssignment.completedAt, Campaign.endDate comparison\n⬅️ Depends: CompletionSubmission approved\n➡️ Blocks: On-time compliance tracking">
+                                Completed</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="⚙️ ACTIONS\n📊 Data: Assignment, Retake triggers\n⬅️ Depends: User permissions\n➡️ Blocks: Workflow progression">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🎯 ACTIVE CAMPAIGN ROW
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Summer Promo 2025
+Status: Installing (80% complete)
+Action: Click to view details
+Alerts: 1 photo retake required">
+                            <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Summer Promo 2025</td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Installing</span>
+                                <div class="text-xs text-red-600 mt-1 cursor-pointer hover:underline flex items-center gap-1"
+                                    onclick="event.stopPropagation(); openRetakeModal('Window Poster', 'Wrong Angle', 'retake-row-1')">
+                                    ⚠️ 1 Retake</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-24 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-teal-500 h-2 rounded-full" style="width: 80%"></div>
+                                    </div>
+                                    <span class="text-xs text-gray-500">80%</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Jun 15 - Jul 15</td>
+                            <td class="px-6 py-4 text-gray-400">-</td>
+                            <td class="px-6 py-4">
+                                <button
+                                    onclick="event.stopPropagation(); openAssignModal('Summer Promo 2025', 'campaign-row-1')"
+                                    class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                    <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🎯 ACTIVE CAMPAIGN ROW
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Holiday Display
+Status: Receiving (shipment delivered)
+Action: Click to view and start receipt survey
+Next: Verify kit contents">
+                            <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Holiday Display</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Receiving</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-24 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-teal-500 h-2 rounded-full" style="width: 20%"></div>
+                                    </div>
+                                    <span class="text-xs text-gray-500">20%</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Nov 20 - Dec 31</td>
+                            <td class="px-6 py-4 text-gray-400">-</td>
+                            <td class="px-6 py-4">
+                                <button
+                                    onclick="event.stopPropagation(); openAssignModal('Holiday Display', 'campaign-row-2')"
+                                    class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                    <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-50 has-tooltip" data-tooltip="✅ COMPLETED CAMPAIGN (EXPANDED)
+━━━━━━━━━━━━━━━━━━━━
+Campaign: Spring Sale 2025
+Status: Complete (on-time)
+Completed: Apr 5 (10 days early)
+Click: Collapse details panel
+Details: Shown below this row">
+                            <td class="px-6 py-4"><i data-lucide="chevron-down" class="w-4 h-4 text-gray-600"></i></td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Spring Sale 2025</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="✅ COMPLETE STATUS
+━━━━━━━━━━━━━━━━━━━━
+Status: StoreAssignment.status = COMPLETE
+Completed: All items installed and approved
+Photos: All photos approved
+Issues: None">✓ Complete</span></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-24 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                    <span class="text-xs text-gray-500">100%</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Mar 1 - Apr 15</td>
+                            <td class="px-6 py-4 text-green-600 has-tooltip" data-tooltip="✅ ON-TIME COMPLETION
+━━━━━━━━━━━━━━━━━━━━
+Completed: Apr 5, 2025
+Deadline: Apr 15, 2025
+Status: 10 days early
+Impact: Positive compliance contribution">Apr 5 ✓ On Time</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 font-medium text-sm has-tooltip"
+                                    data-tooltip="Already assigned">
+                                    <i data-lucide="check" class="w-3 h-3"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-50 border-l-4 border-teal-500">
+                            <td colspan="7" class="px-6 py-4">
+                                <div class="ml-6 p-4 bg-white rounded-lg border border-gray-200">
+                                    <div class="grid grid-cols-4 gap-4 mb-4">
+                                        <div class="has-tooltip" data-tooltip="✅ COMPLETION DATE
+━━━━━━━━━━━━━━━━━━━━
+Data: StoreAssignment.completed_at
+Status: On-time (10 days early)
+Deadline: Apr 15, 2025">
+                                            <div class="text-xs text-gray-500">Completed</div>
+                                            <div class="font-medium">Apr 5, 2025</div>
+                                            <div class="text-xs text-green-600">On Time ✓</div>
+                                        </div>
+                                        <div class="has-tooltip" data-tooltip="📦 ITEMS INSTALLED
+━━━━━━━━━━━━━━━━━━━━
+Data: AssignmentItem completion count
+Calculation: completed / total
+Source: KitDefinition items
+Status: 100% installed">
+                                            <div class="text-xs text-gray-500">Items Installed</div>
+                                            <div class="font-medium">4 of 4</div>
+                                        </div>
+                                        <div class="has-tooltip" data-tooltip="📷 PHOTO APPROVALS
+━━━━━━━━━━━━━━━━━━━━
+Data: PhotoUpload.review_status = APPROVED
+Count: All required photos approved
+Review: PSP/Brand admin verified
+Quality: Passed quality checks">
+                                            <div class="text-xs text-gray-500">Photos</div>
+                                            <div class="font-medium">8 approved</div>
+                                        </div>
+                                        <div class="has-tooltip" data-tooltip="⚠️ ISSUES REPORTED
+━━━━━━━━━━━━━━━━━━━━
+Data: IssueRequest count for campaign
+Types: Missing, damaged, wrong items
+Reorders: Triggered by approved issues
+Count: None for this campaign">
+                                            <div class="text-xs text-gray-500">Issues</div>
+                                            <div class="font-medium">0</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="nav('view-photos')"
+                                            class="text-teal-600 text-sm font-medium has-tooltip" data-tooltip="📷 VIEW PHOTOS
+━━━━━━━━━━━━━━━━━━━━
+Action: Navigate to photo gallery
+Filter: Pre-filtered to this campaign
+Shows: All approved install photos
+Click: View photo details">View Photos →</button>
+                                        <span class="text-gray-300">|</span>
+                                        <button class="text-teal-600 text-sm font-medium has-tooltip" data-tooltip="📋 VIEW DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Action: Show campaign detail view
+Data: Full assignment breakdown
+Includes: Items, dates, timeline, audit log
+Export: Available from detail view">View Details →</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer">
+                            <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Winter Promo 2024</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">✓
+                                    Complete</span></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-24 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                    <span class="text-xs text-gray-500">100%</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Dec 1 - Jan 15</td>
+                            <td class="px-6 py-4 text-green-600">Jan 10 ✓ On Time</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 font-medium text-sm has-tooltip"
+                                    data-tooltip="Already assigned">
+                                    <i data-lucide="check" class="w-3 h-3"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: PHOTOS -->
+        <div id="view-photos" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Photo Gallery</h1>
+                    <div class="text-sm text-gray-500 mt-1 has-tooltip"
+                        data-tooltip="📊 PHOTO STATUS SUMMARY\n📊 Data: COUNT(PhotoReview) by status (APPROVED, PENDING, REJECTED) WHERE Store.id\n⬅️ Depends: PhotoUpload, PhotoReview records\n➡️ Blocks: Photo quality metrics visibility">
+                        Approved: 45 | Pending: 3 | Rejected: 2</div>
+                </div>
+                <button
+                    class="bg-white border text-gray-600 px-3 py-2 rounded text-sm flex items-center gap-2 has-tooltip"
+                    data-tooltip="📥 DOWNLOAD ALL PHOTOS\n📊 Data: PhotoUpload.mediaUrl (respecting filters)\n⬅️ Depends: PhotoUpload records, S3 media storage\n➡️ Blocks: ZIP download of photo files">
+                    <i data-lucide="download" class="w-4 h-4"></i> Download All
+                </button>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex gap-4 mb-6 flex-wrap">
+                <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                    data-tooltip="🔍 CAMPAIGN FILTER\n📊 Data: DISTINCT(Campaign.name) FROM PhotoUpload JOIN StoreAssignment\n⬅️ Depends: PhotoUpload.storeAssignmentId\n➡️ Blocks: Filter photos by campaign">
+                    <option>All Campaigns</option>
+                    <option>Summer Promo 2025</option>
+                    <option>Holiday Display</option>
+                </select>
+                <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                    data-tooltip="🔍 STATUS FILTER\n📊 Data: PhotoReview.status (APPROVED, PENDING, REJECTED)\n⬅️ Depends: PhotoReview decisions\n➡️ Blocks: Filter photos by review status">
+                    <option>All Status</option>
+                    <option>✓ Approved</option>
+                    <option>⏳ Pending</option>
+                    <option>✕ Rejected</option>
+                </select>
+                <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                    data-tooltip="🔍 DATE FILTER\n📊 Data: PhotoUpload.createdAt (time range filter)\n⬅️ Depends: PhotoUpload timestamps\n➡️ Blocks: Filter photos by upload date">
+                    <option>Last 30 Days</option>
+                    <option>Last 7 Days</option>
+                    <option>Last 90 Days</option>
+                </select>
+                <div class="flex border border-gray-200 rounded-lg overflow-hidden has-tooltip"
+                    data-tooltip="👁️ VIEW MODE TOGGLE\n📊 Data: User preference state (grid/list)\n⬅️ Depends: User selection\n➡️ Blocks: Photo display layout mode">
+                    <button class="px-3 py-2 bg-teal-100 text-teal-800"><i data-lucide="grid"
+                            class="w-4 h-4"></i></button>
+                    <button class="px-3 py-2 text-gray-500 hover:bg-gray-50"><i data-lucide="list"
+                            class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <!-- Photo Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Photo Card - Approved -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition has-tooltip"
+                    data-tooltip="✅ APPROVED PHOTO\n📊 Data: PhotoUpload.mediaUrl, PhotoReview.status=APPROVED, LocationSlot.name, User.uploadedBy\n⬅️ Depends: PhotoReview by admin\n➡️ Blocks: LocationSlot marked complete, progress tracking">
+                    <div class="aspect-square bg-gray-100 relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                            <i data-lucide="image" class="w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center has-tooltip"
+                            data-tooltip="✅ APPROVED\n📊 Data: PhotoReview.status=APPROVED, PhotoReview.reviewedBy, PhotoReview.reviewedAt\n⬅️ Depends: Admin quality review\n➡️ Blocks: Photo counts toward completion">
+                            <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="text-sm font-medium text-gray-900 truncate">Window Poster</div>
+                        <div class="text-xs text-gray-500">Summer Promo</div>
+                        <div class="text-xs text-gray-400 mt-1">Jun 15 • John D.</div>
+                    </div>
+                </div>
+                <!-- Photo Card - Approved -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition has-tooltip"
+                    data-tooltip="✅ APPROVED PHOTO
+━━━━━━━━━━━━━━━━━━━━
+Item: End Cap Display
+Campaign: Summer Promo 2025
+Status: APPROVED
+Uploaded: Jun 15 by Jane S.
+Click: View full-size + details">
+                    <div class="aspect-square bg-gray-100 relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                            <i data-lucide="image" class="w-12 h-12"></i>
+                        </div>
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                            <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="text-sm font-medium text-gray-900 truncate">End Cap Display</div>
+                        <div class="text-xs text-gray-500">Summer Promo</div>
+                        <div class="text-xs text-gray-400 mt-1">Jun 15 • Jane S.</div>
+                    </div>
+                </div>
+                <!-- Photo Card - Pending -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition has-tooltip"
+                    data-tooltip="⏳ PENDING REVIEW\n📊 Data: PhotoUpload.mediaUrl, PhotoReview.status=PENDING, LocationSlot.name, PhotoUpload.createdAt\n⬅️ Depends: PhotoUpload submitted from mobile\n➡️ Blocks: Awaiting PhotoReview decision">
+                    <div class="aspect-square bg-gray-100 relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                            <i data-lucide="image" class="w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-2 right-2 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center has-tooltip"
+                            data-tooltip="⏳ PENDING\n📊 Data: PhotoReview.status=PENDING, PhotoReview.createdAt\n⬅️ Depends: PhotoUpload submission\n➡️ Blocks: Awaiting admin APPROVED or REJECTED decision">
+                            <i data-lucide="clock" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="text-sm font-medium text-gray-900 truncate">Counter Display</div>
+                        <div class="text-xs text-gray-500">Summer Promo</div>
+                        <div class="text-xs text-gray-400 mt-1">Jun 16 • Mike J.</div>
+                    </div>
+                </div>
+                <!-- Photo Card - Rejected -->
+                <div class="bg-white rounded-xl shadow-sm border border-red-200 overflow-hidden cursor-pointer hover:shadow-md transition has-tooltip group"
+                    data-tooltip="❌ REJECTED - RETAKE REQUIRED\n📊 Data: PhotoUpload (superseded), PhotoReview.status=REJECTED, RetakeRequest.reason, LocationSlot.name\n⬅️ Depends: Admin PhotoReview rejection\n➡️ Blocks: New PhotoUpload required, StoreAssignment completion"
+                    onclick="openRetakeModal('Window Poster', 'Wrong Angle', 'photo-card-1')">
+                    <div class="aspect-square bg-red-50 relative group-hover:opacity-90 transition">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                            <i data-lucide="image" class="w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-2 right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center has-tooltip"
+                            data-tooltip="❌ REJECTED\n📊 Data: PhotoReview.status=REJECTED, RetakeRequest.reason, PhotoReview.reviewedBy\n⬅️ Depends: Admin quality review failed\n➡️ Blocks: Creates RetakeRequest, notification sent">
+                            <i data-lucide="x" class="w-4 h-4 text-white"></i>
+                        </div>
+                        <!-- Retake Overlay Button (Visible on Hover) -->
+                        <div
+                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/10">
+                            <button
+                                class="bg-white text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1">
+                                <i data-lucide="refresh-cw" class="w-3 h-3"></i> Assign Retake
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="text-sm font-medium text-gray-900 truncate">Window Poster</div>
+                        <div class="text-xs text-red-600 has-tooltip font-bold"
+                            data-tooltip="🔴 REJECTION REASON\n📊 Data: RetakeRequest.reason (enum), PhotoReview.comments\n⬅️ Depends: Admin PhotoReview decision\n➡️ Blocks: Guides store retake action">
+                            Wrong Angle</div>
+                        <div class="text-xs text-gray-400 mt-1">Jun 10 • John D.</div>
+                    </div>
+                </div>
+                <!-- More photo cards -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition">
+                    <div class="aspect-square bg-gray-100 relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                            <i data-lucide="image" class="w-12 h-12"></i>
+                        </div>
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                            <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="text-sm font-medium text-gray-900 truncate">Standee</div>
+                        <div class="text-xs text-gray-500">Spring Sale</div>
+                        <div class="text-xs text-gray-400 mt-1">Apr 2 • Jane S.</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition">
+                    <div class="aspect-square bg-gray-100 relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                            <i data-lucide="image" class="w-12 h-12"></i>
+                        </div>
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                            <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <div class="text-sm font-medium text-gray-900 truncate">Checkout Counter</div>
+                        <div class="text-xs text-gray-500">Spring Sale</div>
+                        <div class="text-xs text-gray-400 mt-1">Apr 1 • Mike J.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button class="text-teal-600 font-medium has-tooltip" data-tooltip="📄 LOAD MORE PHOTOS
+━━━━━━━━━━━━━━━━━━━━
+Action: Paginate next batch
+Size: 24 photos per page
+Filter: Respects active filters
+Performance: Lazy-loaded for speed">Load More Photos</button>
+            </div>
+        </div>
+
+        <!-- VIEW: TEAM -->
+        <div id="view-team" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Team Management</h1>
+                <button
+                    class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
+                    data-tooltip="➕ INVITE TEAM MEMBER\n📊 Data: Creates User, Membership records with Role assignment\n⬅️ Depends: Membership.role=MANAGER permission, email service\n➡️ Blocks: User registration, team member access">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i> Invite Member
+                </button>
+            </div>
+
+            <!-- Active Members -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                    data-tooltip="👥 ACTIVE TEAM MEMBERS\n📊 Data: COUNT(User JOIN Membership WHERE Store.id AND User.status=ACTIVE)\n⬅️ Depends: User invitation accepted, Membership created\n➡️ Blocks: Team roster, activity attribution">
+                    Active Members (4)</div>
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="👤 USER NAME\n📊 Data: User.name\n⬅️ Depends: User registration\n➡️ Blocks: User identification in UI">
+                                Name</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="📧 EMAIL ADDRESS\n📊 Data: User.email (unique)\n⬅️ Depends: User registration, email verification\n➡️ Blocks: Login authentication, notifications">
+                                Email</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="🔑 USER ROLE\n📊 Data: Membership.role (MANAGER or USER)\n⬅️ Depends: Role assignment on invitation\n➡️ Blocks: Permission grants per RBAC matrix">
+                                Role</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="⏰ LAST ACTIVITY\n📊 Data: User.lastActivityAt\n⬅️ Depends: User login and actions tracked\n➡️ Blocks: Activity monitoring, engagement tracking">
+                                Last Active</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="⚙️ ACTIONS\n📊 Data: Membership update, AuditEvent logged\n⬅️ Depends: Manager role permission\n➡️ Blocks: Role changes, deactivation">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 has-tooltip" data-tooltip="👤 CURRENT USER (MANAGER)
+━━━━━━━━━━━━━━━━━━━━
+User: You (logged in user)
+Role: Manager
+Permissions: Full store access
+Cannot: Edit own account from this view">
+                            <td class="px-6 py-4 font-medium text-gray-900">Jane Smith (You)</td>
+                            <td class="px-6 py-4 text-gray-500">jane@store.com</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="👑 MANAGER ROLE
+━━━━━━━━━━━━━━━━━━━━
+Permissions: Full store access
+Can: Invite members, assign roles
+Can: View all photos and reports
+Can: Manage team members
+Limit: 1-2 managers per store">Manager</span></td>
+                            <td class="px-6 py-4 text-gray-500">Now</td>
+                            <td class="px-6 py-4 text-gray-400">-</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 has-tooltip" data-tooltip="👤 TEAM MEMBER
+━━━━━━━━━━━━━━━━━━━━
+User: John Doe
+Role: User (standard permissions)
+Activity: Last active yesterday
+Action: Click Edit to modify role/status">
+                            <td class="px-6 py-4 font-medium text-gray-900">John Doe</td>
+                            <td class="px-6 py-4 text-gray-500">john@store.com</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="👤 USER ROLE
+━━━━━━━━━━━━━━━━━━━━
+Permissions: Photo capture + view
+Can: Upload photos via mobile app
+Can: Complete receipt surveys
+Cannot: Invite members, view reports
+Default: Role for store staff">User</span></td>
+                            <td class="px-6 py-4 text-gray-500">Yesterday</td>
+                            <td class="px-6 py-4"><button class="text-teal-600 font-medium has-tooltip" data-tooltip="✏️ EDIT USER
+━━━━━━━━━━━━━━━━━━━━
+Action: Modify user settings
+Options: Change role, deactivate
+Access: Manager only
+Audit: Change logged to AuditEvent">Edit</button></td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Mike Johnson</td>
+                            <td class="px-6 py-4 text-gray-500">mike@store.com</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Dec 12</td>
+                            <td class="px-6 py-4"><button class="text-teal-600 font-medium">Edit</button></td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Sarah Wilson</td>
+                            <td class="px-6 py-4 text-gray-500">sarah@store.com</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Dec 10</td>
+                            <td class="px-6 py-4"><button class="text-teal-600 font-medium">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pending Invitations -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📨 PENDING INVITATIONS
+━━━━━━━━━━━━━━━━━━━━
+Feature: Sent but not accepted invites
+Data: Invitation WHERE status = PENDING
+Expiry: Auto-expire after 7 days
+Action: Resend or cancel invitation">Pending Invitations (1)</div>
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📧 INVITED EMAIL
+━━━━━━━━━━━━━━━━━━━━
+Data: Invitation.email
+Status: Email sent, awaiting acceptance
+Link: Unique invitation token sent">Email</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🔑 INVITED ROLE
+━━━━━━━━━━━━━━━━━━━━
+Data: Invitation.role
+Assigned: Upon acceptance
+Manager: Requires approval
+User: Auto-approved">Role</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📅 INVITATION SENT
+━━━━━━━━━━━━━━━━━━━━
+Data: Invitation.created_at
+Sent: Invitation email dispatched
+Tracking: Email delivery confirmed">Invited</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⏰ EXPIRATION DATE
+━━━━━━━━━━━━━━━━━━━━
+Data: Invitation.expires_at
+Duration: 7 days from sent
+Auto: Cleanup on expiry
+Resend: Extends expiry">Expires</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚙️ INVITATION ACTIONS
+━━━━━━━━━━━━━━━━━━━━
+Resend: Send new invitation email
+Cancel: Invalidate invitation link
+Access: Manager only">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 has-tooltip" data-tooltip="📨 PENDING INVITATION
+━━━━━━━━━━━━━━━━━━━━
+Email: newmember@store.com
+Role: User (upon acceptance)
+Sent: Dec 15
+Expires: Dec 22 (7 days)
+Actions: Resend or cancel invitation">
+                            <td class="px-6 py-4 text-gray-900">newmember@store.com</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">User</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Dec 15</td>
+                            <td class="px-6 py-4 text-gray-500">Dec 22</td>
+                            <td class="px-6 py-4">
+                                <button class="text-teal-600 font-medium mr-3 has-tooltip" data-tooltip="📧 RESEND INVITATION
+━━━━━━━━━━━━━━━━━━━━
+Action: Send new invitation email
+Effect: Extends expiry by 7 days
+Use: If original email not received
+Delivery: Via SUPP-027 email service">Resend</button>
+                                <button class="text-red-600 font-medium has-tooltip" data-tooltip="❌ CANCEL INVITATION
+━━━━━━━━━━━━━━━━━━━━
+Action: Invalidate invitation link
+Effect: User cannot accept
+Cleanup: Removed from pending list
+Reversible: Can re-invite later">Cancel</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Team Activity -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📊 TEAM ACTIVITY METRICS
+━━━━━━━━━━━━━━━━━━━━
+Feature: Individual contribution tracking
+Period: Last 30 days
+Data: Activity counts per user
+Use: Performance monitoring
+Access: Manager only view">Team Activity (Last 30 Days)</div>
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="👤 TEAM MEMBER
+━━━━━━━━━━━━━━━━━━━━
+Data: User.name
+Filter: Active members only
+Period: Last 30 days activity">Member</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📷 PHOTOS UPLOADED
+━━━━━━━━━━━━━━━━━━━━
+Data: COUNT(PhotoUpload) by user
+Period: Last 30 days
+Includes: All statuses
+Attribution: uploaded_by field">Photos</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📦 RECEIPT SURVEYS
+━━━━━━━━━━━━━━━━━━━━
+Data: COUNT(ReceiveVerification) by user
+Period: Last 30 days
+Action: Receipt confirmations completed
+Stage: Stage 1 of two-stage model">Receipts</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="✅ INSTALL COMPLETIONS
+━━━━━━━━━━━━━━━━━━━━
+Data: COUNT(CompletionSubmission) by user
+Period: Last 30 days
+Action: Full campaign completions
+Stage: Stage 2 of two-stage model">Installs</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚠️ ISSUES REPORTED
+━━━━━━━━━━━━━━━━━━━━
+Data: COUNT(IssueReport) by user
+Period: Last 30 days
+Types: Missing, damaged items
+Impact: May require reorders">Issues</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Jane Smith</td>
+                            <td class="px-6 py-4">12</td>
+                            <td class="px-6 py-4">3</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">0</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">John Doe</td>
+                            <td class="px-6 py-4">24</td>
+                            <td class="px-6 py-4">5</td>
+                            <td class="px-6 py-4">4</td>
+                            <td class="px-6 py-4">1</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Mike Johnson</td>
+                            <td class="px-6 py-4">8</td>
+                            <td class="px-6 py-4">2</td>
+                            <td class="px-6 py-4">1</td>
+                            <td class="px-6 py-4">0</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Sarah Wilson</td>
+                            <td class="px-6 py-4">15</td>
+                            <td class="px-6 py-4">4</td>
+                            <td class="px-6 py-4">3</td>
+                            <td class="px-6 py-4">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: REPORTS -->
+        <div id="view-reports" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Store Reports</h1>
+                <div class="flex gap-2">
+                    <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white has-tooltip"
+                        data-tooltip="📅 REPORT PERIOD\n📊 Data: Date range filter for all queries\n⬅️ Depends: User selection\n➡️ Blocks: All report metrics filtered by date">
+                        <option>Last 90 Days</option>
+                        <option>Last 30 Days</option>
+                        <option>Last 365 Days</option>
+                    </select>
+                    <button class="bg-white border text-gray-600 px-3 py-2 text-sm flex items-center gap-2 has-tooltip"
+                        data-tooltip="📥 EXPORT REPORTS\n📊 Data: Aggregated metrics from StoreAssignment, PhotoUpload, PhotoReview, AuditEvent\n⬅️ Depends: Selected date range and filters\n➡️ Blocks: Download report in CSV/XLSX/PDF format">
+                        <i data-lucide="download" class="w-4 h-4"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Tabs -->
+            <div class="flex gap-4 mb-6">
+                <button class="px-4 py-2 bg-teal-100 text-teal-800 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="📊 OVERVIEW TAB
+━━━━━━━━━━━━━━━━━━━━
+View: High-level store metrics
+Includes: KPIs, charts, trends
+Comparison: vs network average
+Period: Selected date range">Overview</button>
+                <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="📋 CAMPAIGNS TAB
+━━━━━━━━━━━━━━━━━━━━
+View: Campaign performance details
+Data: Per-campaign metrics
+Includes: Completion rates, timelines
+Period: Selected date range">Campaigns</button>
+                <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="📷 PHOTOS TAB
+━━━━━━━━━━━━━━━━━━━━
+View: Photo quality metrics
+Data: Approval/rejection rates
+Includes: Rejection reasons breakdown
+Period: Selected date range">Photos</button>
+                <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium text-sm has-tooltip"
+                    data-tooltip="👥 TEAM TAB
+━━━━━━━━━━━━━━━━━━━━
+View: Team performance metrics
+Data: Individual contributions
+Includes: Activity levels, efficiency
+Period: Selected date range">Team</button>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📊 COMPLIANCE RATE\n📊 Data: COUNT(StoreAssignment WHERE completedAt <= Campaign.endDate) / COUNT(StoreAssignment WHERE status=COMPLETE)\n⬅️ Depends: StoreAssignment.completedAt, Campaign.endDate\n➡️ Blocks: Store performance ranking">
+                    <div class="text-sm text-gray-500 mb-1">Compliance Rate</div>
+                    <div class="text-3xl font-bold text-green-600">94%</div>
+                    <div class="text-green-600 text-xs mt-2 font-medium">↑ 3% vs last period</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="⏱️ ON-TIME RATE\n📊 Data: COUNT(StoreAssignment WHERE completedAt <= Campaign.endDate) / COUNT(StoreAssignment WHERE status=COMPLETE)\n⬅️ Depends: Completion timestamps vs campaign deadlines\n➡️ Blocks: Performance ranking, compliance metrics">
+                    <div class="text-sm text-gray-500 mb-1">On-Time Rate</div>
+                    <div class="text-3xl font-bold text-green-600">88%</div>
+                    <div class="text-green-600 text-xs mt-2 font-medium">↑ 5% vs last period</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📷 PHOTO APPROVAL RATE\n📊 Data: COUNT(PhotoReview WHERE status=APPROVED) / COUNT(PhotoUpload)\n⬅️ Depends: PhotoReview decisions by admins\n➡️ Blocks: Photo quality metrics, retake rate analysis">
+                    <div class="text-sm text-gray-500 mb-1">Photo Approval</div>
+                    <div class="text-3xl font-bold text-yellow-600">97%</div>
+                    <div class="text-red-600 text-xs mt-2 font-medium">↓ 1% vs last period</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 has-tooltip"
+                    data-tooltip="📅 AVG COMPLETION TIME\n📊 Data: AVG(StoreAssignment.completedAt - Campaign.startDate) in days\n⬅️ Depends: StoreAssignment.completedAt timestamps\n➡️ Blocks: Efficiency metrics, network comparisons">
+                    <div class="text-sm text-gray-500 mb-1">Avg Completion</div>
+                    <div class="text-3xl font-bold text-gray-900">4.2 days</div>
+                    <div class="text-green-600 text-xs mt-2 font-medium">↓ 0.5 days faster</div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Trend Chart Placeholder -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                        data-tooltip="📈 PERFORMANCE TREND CHART\n📊 Data: Time-series compliance rate from StoreAssignment metrics\n⬅️ Depends: Historical StoreAssignment.completedAt data\n➡️ Blocks: Trend visualization, period comparisons">
+                        Performance Trend</div>
+                    <div class="p-6">
+                        <div class="h-48 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400">
+                            <div class="text-center">
+                                <i data-lucide="trending-up" class="w-12 h-12 mx-auto mb-2"></i>
+                                <div>Line chart: Compliance over time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rejection Reasons -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                        data-tooltip="🔴 REJECTION REASONS BREAKDOWN\n📊 Data: COUNT(RetakeRequest.reason) grouped by reason enum, percentage distribution\n⬅️ Depends: PhotoReview.status=REJECTED, RetakeRequest records\n➡️ Blocks: Quality improvement insights">
+                        Photo Rejection Reasons</div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 has-tooltip"
+                                data-tooltip="🔴 WRONG ANGLE (45%)\n📊 Data: COUNT(RetakeRequest WHERE reason=WRONG_ANGLE) / total rejections\n⬅️ Depends: PhotoReview rejection decisions\n➡️ Blocks: Training focus, quality improvement">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="flex-1">Wrong Angle</div>
+                                <div class="font-medium">45%</div>
+                            </div>
+                            <div class="flex items-center gap-3 has-tooltip" data-tooltip="🟠 TOO DARK (30%)
+━━━━━━━━━━━━━━━━━━━━
+Reason: Insufficient lighting in photo
+Impact: Second most common issue
+Remedy: Use flash or better lighting
+Data: PhotoReview.rejection_reason = TOO_DARK">
+                                <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                                <div class="flex-1">Too Dark</div>
+                                <div class="font-medium">30%</div>
+                            </div>
+                            <div class="flex items-center gap-3 has-tooltip" data-tooltip="🟡 BLURRY (15%)
+━━━━━━━━━━━━━━━━━━━━
+Reason: Photo out of focus
+Impact: Third most common issue
+Remedy: Ensure focus before capture
+Data: PhotoReview.rejection_reason = BLURRY">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="flex-1">Blurry</div>
+                                <div class="font-medium">15%</div>
+                            </div>
+                            <div class="flex items-center gap-3 has-tooltip" data-tooltip="⚪ OTHER REASONS (10%)
+━━━━━━━━━━━━━━━━━━━━
+Reason: Miscellaneous rejection causes
+Includes: Damaged, wrong placement, etc.
+Data: PhotoReview.rejection_reason = OTHER">
+                                <div class="w-3 h-3 bg-gray-400 rounded-full"></div>
+                                <div class="flex-1">Other</div>
+                                <div class="font-medium">10%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Contribution -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip"
+                    data-tooltip="👥 TEAM CONTRIBUTION CHART\n📊 Data: SUM(PhotoUpload + ReceiveVerification + CompletionSubmission) per User, percentage distribution\n⬅️ Depends: User.uploadedBy attribution on all actions\n➡️ Blocks: Team performance visibility">
+                    Team Contribution</div>
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 has-tooltip" data-tooltip="👤 JANE S. CONTRIBUTION (35%)
+━━━━━━━━━━━━━━━━━━━━
+Member: Jane S. (Manager)
+Share: 35% of team activities
+Rank: #1 contributor
+Period: Selected date range">
+                            <div class="w-24 text-sm font-medium">Jane S.</div>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-teal-500 h-4 rounded-full" style="width: 35%"></div>
+                            </div>
+                            <div class="w-12 text-right text-sm font-medium">35%</div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-24 text-sm font-medium">John D.</div>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-teal-500 h-4 rounded-full" style="width: 28%"></div>
+                            </div>
+                            <div class="w-12 text-right text-sm font-medium">28%</div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-24 text-sm font-medium">Mike J.</div>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-teal-500 h-4 rounded-full" style="width: 22%"></div>
+                            </div>
+                            <div class="w-12 text-right text-sm font-medium">22%</div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-24 text-sm font-medium">Sarah W.</div>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-teal-500 h-4 rounded-full" style="width: 15%"></div>
+                            </div>
+                            <div class="w-12 text-right text-sm font-medium">15%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Campaigns Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 has-tooltip" data-tooltip="📊 CAMPAIGN PERFORMANCE TABLE
+━━━━━━━━━━━━━━━━━━━━
+Feature: Per-campaign summary metrics
+Data: Completed campaigns only
+Includes: Completion status, photos, issues
+Period: Selected date range
+Sort: Most recent first">Campaign Performance</div>
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📋 CAMPAIGN NAME
+━━━━━━━━━━━━━━━━━━━━
+Data: Campaign.name
+Filter: Completed campaigns
+Period: Selected date range">Campaign</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="✅ COMPLETION STATUS
+━━━━━━━━━━━━━━━━━━━━
+Data: StoreAssignment.status = COMPLETE
+Yes: Campaign completed
+No: Incomplete or cancelled">Completed</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⏰ ON-TIME STATUS
+━━━━━━━━━━━━━━━━━━━━
+Calculation: completed_at <= install_end_date
+Yes: Completed before deadline
+Late: Completed after deadline
+Impact: Affects compliance rate">On-Time</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📷 PHOTO COUNT
+━━━━━━━━━━━━━━━━━━━━
+Data: COUNT(PhotoUpload) for campaign
+Status: Approved photos only
+Quality: Passed admin review">Photos</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="⚠️ ISSUE COUNT
+━━━━━━━━━━━━━━━━━━━━
+Data: COUNT(IssueRequest) for campaign
+Types: Missing, damaged items
+Impact: May require reorders
+Higher: More operational challenges">Issues</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Summer Promo</td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4">8</td>
+                            <td class="px-6 py-4">0</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Spring Sale</td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4">6</td>
+                            <td class="px-6 py-4">1</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Winter Display</td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4"><span class="text-red-600">✕ Late</span></td>
+                            <td class="px-6 py-4">7</td>
+                            <td class="px-6 py-4">0</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">Fall Campaign</td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4"><span class="text-green-600">✓ Yes</span></td>
+                            <td class="px-6 py-4">5</td>
+                            <td class="px-6 py-4">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: SURVEYS (Store Level) -->
+        <div id="view-surveys" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Survey History & Workflows</h1>
+                    <p class="text-sm text-gray-500 mt-1">Review submitted surveys and complete pending workflow
+                        requirements</p>
+                </div>
+                <button
+                    class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2">
+                    <i data-lucide="plus" size="18"></i> New Exception Survey
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500 font-bold uppercase text-[10px]">
+                        <tr>
+                            <th class="px-6 py-4">Survey Type</th>
+                            <th class="px-6 py-4">Related To</th>
+                            <th class="px-6 py-4">Submitted By</th>
+                            <th class="px-6 py-4">Date</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Store Layout Survey</div>
+                                <div class="text-[10px] text-gray-400 font-mono">LTS-Q1-2025</div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600">Quarterly Reset</td>
+                            <td class="px-6 py-4 text-gray-600">Jane Smith</td>
+                            <td class="px-6 py-4 text-gray-600">Dec 15, 2025</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-[10px] font-bold">APPROVED</span>
+                            </td>
+                            <td class="px-6 py-4 text-teal-600 font-bold cursor-pointer hover:underline">View Results
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Damaged Kit Exception</div>
+                                <div class="text-[10px] text-gray-400 font-mono">EXC-88219</div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600">Holiday Display</td>
+                            <td class="px-6 py-4 text-gray-600">John Doe</td>
+                            <td class="px-6 py-4 text-gray-600">Dec 18, 2025</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-[10px] font-bold">IN
+                                    REVIEW</span></td>
+                            <td class="px-6 py-4 text-teal-600 font-bold cursor-pointer hover:underline">Track Progress
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: STORE LAYOUT VIEWER -->
+        <div id="view-layout" class="view hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Interactive Store Layout</h1>
+                    <p class="text-sm text-gray-500 mt-1">Visual map of kit placements and photo verification points</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="window.print()"
+                        class="bg-white border text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2">
+                        <i data-lucide="printer" size="18"></i> Print Map
+                    </button>
+                    <button onclick="window.location.href='../Brand/surveys.html'"
+                        class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700">Update
+                        Layout</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Layout Map -->
+                <!-- Layout Map -->
+                <div class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-200 p-8 h-[700px] relative overflow-hidden flex items-center justify-center"
+                    style="background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 20px 20px;">
+                    <!-- Visual Floor Plan -->
+                    <div
+                        class="relative bg-white shadow-xl rounded-sm border-2 border-gray-200 w-[600px] h-[500px] p-6">
+                        <!-- Structural Elements -->
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-4 border-t-2 border-gray-300 bg-gray-50 flex items-center justify-center text-[10px] font-bold uppercase">
+                            Entrance</div>
+
+                        <!-- Shelving Units (Walls/Fixtures) -->
+                        <div
+                            class="absolute top-20 left-20 w-8 h-48 bg-gray-100 border border-gray-300 rounded opacity-60 flex items-center justify-center">
+                            <span class="rotate-90 text-[8px] text-gray-400 font-bold uppercase">Aisle A</span>
+                        </div>
+                        <div
+                            class="absolute top-20 left-48 w-8 h-48 bg-gray-100 border border-gray-300 rounded opacity-60 flex items-center justify-center">
+                            <span class="rotate-90 text-[8px] text-gray-400 font-bold uppercase">Aisle B</span>
+                        </div>
+
+                        <!-- Checkout Area -->
+                        <div
+                            class="absolute bottom-10 left-10 w-32 h-16 bg-blue-50 border border-blue-100 rounded-lg flex items-center justify-center gap-2">
+                            <i data-lucide="credit-card" class="w-3 h-3 text-blue-300"></i>
+                            <span class="text-[8px] font-bold text-blue-400 uppercase">Checkout</span>
+                        </div>
+
+                        <!-- Hotspots: Status Aware -->
+                        <!-- 1: Verified (Compliance Green) -->
+                        <div onmouseenter="showPointPreview(event, '1')" onmouseleave="hidePointPreview()"
+                            onclick="togglePointPreview(event, '1')"
+                            class="absolute top-10 left-10 w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
+                            1</div>
+
+                        <!-- 2: Ready for Install (Awaiting Installation Survey) -->
+                        <div onmouseenter="showPointPreview(event, '2')" onmouseleave="hidePointPreview()"
+                            onclick="togglePointPreview(event, '2')"
+                            class="absolute top-1/2 left-1/2 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg cursor-pointer hover:scale-125 transition-transform z-30 border-2 border-white">
+                            2</div>
+
+                        <!-- 3: Exception Reported (Missing/Awaiting Supplemental Order) -->
+                        <div onmouseenter="showPointPreview(event, '3')" onmouseleave="hidePointPreview()"
+                            onclick="togglePointPreview(event, '3')"
+                            class="absolute bottom-20 right-20 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xs animate-pulse shadow-lg cursor-pointer hover:scale-125 transition-transform z-30">
+                            3
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Point Details (Sidebar) -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <h3 class="font-bold text-gray-900 mb-4 text-sm">Location Points</h3>
+                        <div class="space-y-3">
+                            <div class="p-3 border rounded-lg bg-green-50 border-green-200 flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    1</div>
+                                <div class="flex-1">
+                                    <div class="text-xs font-bold text-gray-900">Main Window</div>
+                                    <div class="text-[10px] text-green-700 font-bold uppercase tracking-tight">Verified
+                                        (Compliant)</div>
+                                </div>
+                                <i data-lucide="check-circle" size="14" class="text-green-600"></i>
+                            </div>
+                            <div class="p-3 border rounded-lg bg-teal-50 border-teal-200 flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    2</div>
+                                <div class="flex-1">
+                                    <div class="text-xs font-bold text-gray-900">End-Cap Box</div>
+                                    <div class="text-[10px] text-teal-700 font-bold uppercase tracking-tight">Ready for
+                                        Install</div>
+                                </div>
+                                <i data-lucide="chevron-right" size="14" class="text-teal-600"></i>
+                            </div>
+                            <div class="p-3 border rounded-lg bg-orange-50 border-orange-200 flex items-center gap-3">
+                                <div
+                                    class="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                                    3</div>
+                                <div class="flex-1">
+                                    <div class="text-xs font-bold text-gray-900">Side Table</div>
+                                    <div class="text-[10px] text-orange-700 font-bold uppercase tracking-tight italic">
+                                        Waiting for Re-shipment</div>
+                                </div>
+                                <i data-lucide="package" size="14" class="text-orange-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- Close container -->
+
+    <!-- HotSpot Visual Preview (Floating) -->
+    <div id="point-preview"
+        class="fixed hidden z-[3000] w-64 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden pointer-events-none transition-all duration-200 scale-95 opacity-0">
+        <div class="relative aspect-video bg-slate-100">
+            <img id="preview-img" src="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-3 left-3">
+                <div id="preview-label" class="text-[10px] font-bold text-white uppercase tracking-wider mb-1">Point #1
+                </div>
+                <div id="preview-desc" class="text-[11px] text-white/90 font-medium leading-none">Main Entrance Window
+                </div>
+            </div>
+        </div>
+        <div class="p-3 flex items-center justify-between bg-white">
+            <div id="preview-status" class="flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-tighter">
+                <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                Verified
+            </div>
+            <span id="preview-date" class="text-[9px] text-slate-400 font-bold">DEC 20, 2025</span>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Simple navigation
+        function nav(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('block');
+                v.classList.add('hidden');
+            });
+            // Show target view
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
+            });
+
+            const linkMap = {
+                'view-dashboard': 'link-dashboard',
+                'view-campaigns': 'link-campaigns',
+                'view-photos': 'link-photos',
+                'view-team': 'link-team',
+                'view-surveys': 'link-surveys',
+                'view-layout': 'link-layout',
+                'view-reports': 'link-reports'
+            };
+
+            if (linkMap[viewId]) {
+                const activeLink = document.getElementById(linkMap[viewId]);
+                if (activeLink) {
+                    activeLink.classList.add('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
+                }
+            }
+
+            // Re-initialize icons for new view
+            lucide.createIcons();
+        }
+
+        function showPointPreview(e, id) {
+            if (isShowingSticky) return;
+            updatePreview(e, id);
+        }
+
+        let isShowingSticky = false;
+        function togglePointPreview(e, id) {
+            isShowingSticky = !isShowingSticky;
+            if (isShowingSticky) {
+                updatePreview(e, id);
+                document.getElementById('point-preview').classList.remove('pointer-events-none');
+            } else {
+                hidePointPreview();
+            }
+        }
+
+        function updatePreview(e, id) {
+            const preview = document.getElementById('point-preview');
+            const img = document.getElementById('preview-img');
+            const label = document.getElementById('preview-label');
+            const desc = document.getElementById('preview-desc');
+            const status = document.getElementById('preview-status');
+
+            const data = {
+                '1': { label: 'Point #1', desc: 'Main Entrance Window', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=400', color: 'green' },
+                '2': { label: 'Point #2', desc: 'Aisle B End-cap', img: 'https://images.unsplash.com/photo-1534452286302-3f538743ae2f?auto=format&fit=crop&q=80&w=400', color: 'green' },
+                '3': { label: 'Point #3', desc: 'Side Table', img: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&q=80&w=400', color: 'yellow' }
+            };
+
+            const item = data[id];
+            img.src = item.img;
+            label.innerText = item.label;
+            desc.innerText = item.desc;
+            status.innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-${item.color === 'yellow' ? 'amber' : 'green'}-500"></div> ${item.color === 'green' ? 'Approved' : 'Action Req.'}`;
+            status.className = `flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-tighter text-${item.color === 'yellow' ? 'amber' : 'green'}-600`;
+
+            preview.classList.remove('hidden');
+
+            // Position logic
+            const rect = e.target.getBoundingClientRect();
+            preview.style.left = (rect.left + 30) + 'px';
+            preview.style.top = (rect.top - 50) + 'px';
+
+            requestAnimationFrame(() => {
+                preview.classList.remove('scale-95', 'opacity-0');
+                preview.classList.add('scale-100', 'opacity-100');
+            });
+        }
+
+        function hidePointPreview() {
+            if (isShowingSticky) return;
+            const preview = document.getElementById('point-preview');
+            preview.classList.add('scale-95', 'opacity-0');
+            preview.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                if (preview.classList.contains('opacity-0')) {
+                    preview.classList.add('hidden');
+                    preview.classList.add('pointer-events-none');
+                }
+            }, 200);
+        }
+    </script>
+
+
+    <!-- MODAL: ASSIGN TEAM MEMBER -->
+    <div id="modal-assign-campaign"
+        class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden scale-95 opacity-0 transition-all duration-200"
+            id="modal-assign-content">
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-gray-800">Assign Campaign</h3>
+                <button onclick="closeModal('modal-assign-campaign')" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-600 mb-4">Select a team member to lead execution for <span
+                        id="assign-campaign-name" class="font-bold text-gray-800">Campaign Name</span>.</p>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Team Member</label>
+                        <select id="assign-member-select"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                            <option value="">Select a user...</option>
+                            <option value="John Doe">John Doe (User)</option>
+                            <option value="Mike Johnson">Mike Johnson (User)</option>
+                            <option value="Sarah Wilson">Sarah Wilson (User)</option>
+                            <option value="Jane Smith">Jane Smith (Manager)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+                <button onclick="closeModal('modal-assign-campaign')"
+                    class="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
+                <button onclick="confirmAssignment()"
+                    class="px-4 py-2 bg-teal-600 text-white font-medium hover:bg-teal-700 rounded-lg shadow-sm flex items-center gap-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i> Confirm Assignment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: RETAKE REQUEST -->
+    <div id="modal-retake-request"
+        class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full overflow-hidden scale-95 opacity-0 transition-all duration-200"
+            id="modal-retake-content">
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                        <i data-lucide="camera" class="w-4 h-4 text-red-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800">Process Retake Request</h3>
+                </div>
+                <button onclick="closeModal('modal-retake-request')" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <!-- Context -->
+                <div class="flex gap-4 mb-6 bg-red-50 p-4 rounded-lg border border-red-100">
+                    <div
+                        class="w-20 h-20 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center relative overflow-hidden">
+                        <i data-lucide="image" class="text-gray-400"></i>
+                        <div class="absolute inset-0 bg-black/10 flex items-center justify-center">
+                            <div class="bg-white/90 px-2 py-1 rounded text-[10px] font-bold text-red-600">REJECTED</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold text-gray-900" id="retake-item-name">Window Poster</div>
+                        <div class="text-xs text-red-600 font-bold mt-1" id="retake-reason">Reason: Wrong Angle</div>
+                        <p class="text-xs text-gray-600 mt-2 italic">"Please ensure the entire poster is visible and not
+                            cut
+                            off."</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Assign Retake To</label>
+                        <select id="retake-assign-select"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                            <option value="original">Original Uploader (John Doe)</option>
+                            <option value="Mike Johnson">Mike Johnson</option>
+                            <option value="Sarah Wilson">Sarah Wilson</option>
+                            <option value="Jane Smith">Jane Smith (You)</option>
+                        </select>
+                        <p class="text-xs text-gray-400 mt-1">Responsible for capturing the corrected photo.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Instructions
+                            (Optional)</label>
+                        <textarea
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none"
+                            rows="2" placeholder="Add specific guidance..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+                <button onclick="closeModal('modal-retake-request')"
+                    class="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
+                <button onclick="confirmRetake()"
+                    class="px-4 py-2 bg-red-600 text-white font-medium hover:bg-red-700 rounded-lg shadow-sm flex items-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> Send Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[200] space-y-3 pointer-events-none"></div>
+
+    <script>
+        // Modal & Toast Logic
+        let activeCampaignId = null;
+        let activeRetakeId = null;
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            const bgClass = type === 'success' ? 'bg-gray-900' : 'bg-red-600';
+            const icon = type === 'success' ? 'check-circle' : 'alert-circle';
+
+            toast.className = `${bgClass} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 transform transition-all duration-300 translate-y-10 opacity-0 pointer-events-auto min-w-[300px]`;
+            toast.innerHTML = `
+                <i data-lucide="${icon}" class="w-5 h-5 text-white/80"></i>
+                <span class="font-medium text-sm">${message}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            });
+
+            // Remove
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('div[id^="modal-"]'); // Select inner content div
+
+            modal.classList.remove('hidden');
+            // Animate content
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('div[id^="modal-"]');
+
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Assignment Logic
+        function openAssignModal(campaignName, cardId) {
+            document.getElementById('assign-campaign-name').innerText = campaignName;
+            activeCampaignId = cardId; // Store element ID to update status if needed
+            openModal('modal-assign-campaign');
+        }
+
+        function confirmAssignment() {
+            const assignee = document.getElementById('assign-member-select').value;
+            if (!assignee) {
+                alert('Please select a team member.');
+                return;
+            }
+
+            closeModal('modal-assign-campaign');
+            showToast(`Campaign assigned to ${assignee}`);
+
+            // In a real app, this would update the backend. 
+            // Here we could visually update the UI if we had a specific target element.
+        }
+
+        // Retake Logic
+        function openRetakeModal(itemName, reason, contextId) {
+            document.getElementById('retake-item-name').innerText = itemName;
+            document.getElementById('retake-reason').innerText = `Reason: ${reason}`;
+            activeRetakeId = contextId;
+            openModal('modal-retake-request');
+        }
+
+        function confirmRetake() {
+            const assignee = document.getElementById('retake-assign-select').value;
+            const assigneeName = assignee === 'original' ? 'John Doe' : assignee;
+
+            closeModal('modal-retake-request');
+            showToast(`Retake request sent to ${assigneeName}`);
+        }
+    </script>
+
+    <!-- Marked.js for Markdown rendering + Document Modal + Sidebar -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="doc-modal.js"></script>
+    <script src="doc-sidebar.js"></script>
+</body>
+
+</html>
