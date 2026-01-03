@@ -112,34 +112,46 @@ class DeviceManager {
             }
 
             /* Tablet Landscape (iPad) - Similar to Desktop */
-            body.device-tablet-landscape {
-                background-color: #f3f4f6;
+            /* Tablet Landscape (iPad) */
+            body.device-tablet-landscape #phone {
+                width: 1024px;
+                height: 768px;
+                border-radius: 24px;
+                border: 14px solid #1a1a1a;
+                box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+                margin: auto;
             }
 
             body.device-tablet-landscape .phone-container {
-                background-color: transparent;
-                padding: 0;
-                min-height: auto;
-                display: block;
-            }
-
-            body.device-tablet-landscape #phone {
-                width: 100%;
-                height: auto;
+                background-color: #333;
+                padding: 40px;
                 min-height: calc(100vh - 50px);
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: auto;
             }
 
             body.device-tablet-landscape .safe-area-top {
-                height: 56px;
-                background: white;
+                height: 48px;
+                padding: 0 24px;
                 border-bottom: 1px solid #e5e7eb;
-                padding: 0 32px;
-                font-size: 16px;
-                width: 100%;
-                box-sizing: border-box;
+            }
+
+            body.device-tablet-landscape .screen {
+                height: auto !important;
+                padding: 24px !important;
+                overflow-y: auto;
+            }
+
+            /* Ensure content fits */
+            body.device-tablet-landscape .bottom-nav {
+                height: 70px;
+                padding-bottom: 12px;
+            }
+
+            body.device-tablet-landscape .dashboard-campaigns {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             body.device-tablet-landscape .bottom-nav {
