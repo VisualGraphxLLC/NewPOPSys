@@ -12,9 +12,9 @@
     <style>
         /* Theme CSS Variables */
         :root {
-            --primary: #0d9488;
-            --primary-light: #14b8a6;
-            --primary-dark: #0f766e;
+            --primary: #7c3aed;
+            --primary-light: #8b5cf6;
+            --primary-dark: #6d28d9;
             --accent: #f59e0b;
             --text-on-primary: #ffffff;
         }
@@ -301,7 +301,8 @@
             </svg>
             Index
         </a>
-        <span style="margin-left: 8px;">Store Surveys & Layout Builder - Brand Admin & Store Level Views</span>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
     </div>
 
@@ -316,8 +317,8 @@ Blocks: All brand-scoped operations">
                 <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
             </div>
             <div>
-                <span class="font-bold text-gray-700">Acme Corporation</span>
-                <span class="text-sm text-gray-500 ml-2">Brand Admin</span>
+                <span class="font-bold text-gray-700">NewPOPSys Brand</span>
+                <span class="text-sm text-gray-500 ml-2">Brand Administrator</span>
             </div>
         </div>
         <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
@@ -365,7 +366,7 @@ Data: SurveyTemplate definition
 Blocks: Creates new SurveyTemplate">
                         <i data-lucide="upload" class="w-4 h-4"></i> Import
                     </button>
-                    <button
+                    <button onclick="document.getElementById('new-survey-modal').classList.remove('hidden')"
                         class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
                         data-tooltip="CREATE SURVEY TEMPLATE
 Action: Create new SurveyTemplate
@@ -429,8 +430,13 @@ Version: 2.1 (published)
 Fields: 12 form fields
 Used in: 247 stores
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900"><span
-                                    class="text-teal-600 font-black">MASTER</span> Default Store Layout Survey</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="lock" class="w-3 h-3 text-teal-600"></i>
+                                    <span>Default Store Layout Survey</span>
+                                </div>
+                                <div class="text-[10px] text-teal-600 font-bold ml-5">SYNCED: Master v2.1</div>
+                            </td>
                             <td class="px-6 py-4"><span
                                     class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
                             </td>
@@ -727,9 +733,14 @@ Store: Master Layout Truth">
                                                 class="w-3 h-3 text-gray-400"></i></button>
                                     </div>
                                 </div>
-                                <div class="font-bold text-gray-900">Stage 1: Receipt Checklist</div>
-                                <div class="text-xs text-gray-500 mb-4 font-medium italic">Dynamically populates from
-                                    Campaign Kit Items</div>
+                                <div class="font-bold text-gray-900 flex items-center gap-2">
+                                    <i data-lucide="lock" class="w-3 h-3 text-blue-600"></i>
+                                    Stage 1: Receipt Checklist
+                                </div>
+                                <div
+                                    class="text-xs text-blue-600 mb-4 font-bold uppercase tracking-wider flex items-center gap-1">
+                                    <i data-lucide="link" class="w-3 h-3"></i> Inherited from Master
+                                </div>
 
                                 <div class="space-y-2 opacity-60">
                                     <div
@@ -1823,6 +1834,86 @@ Use: Assign to surveys/items">
         });
     </script>
 
+    <!-- New Survey Modal -->
+    <div id="new-survey-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-[100] flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 overflow-hidden">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="font-bold text-lg text-gray-800">Create New Survey Template</h3>
+                <button onclick="document.getElementById('new-survey-modal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-8">
+                <div class="space-y-4">
+                    <!-- Option 1: Master -->
+                    <label
+                        class="block border-2 border-teal-500 bg-teal-50 rounded-lg p-4 cursor-pointer relative hover:shadow-md transition-shadow">
+                        <input type="radio" name="source" class="absolute right-4 top-4 text-teal-600 w-5 h-5" checked>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-600">
+                                <i data-lucide="library" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900 mb-1">Use a Master Template</div>
+                                <div class="text-sm text-gray-600 mb-2">Start with a standardized template provided by
+                                    the PSP. Ensures compliance and easier updates.</div>
+                                <select class="w-full mt-2 border-gray-300 rounded-md text-sm p-2 bg-white">
+                                    <option>Standard Retail Layout v3.0 (Recommended)</option>
+                                    <option>Express Kiosk Survey v1.2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -top-3 -right-3 bg-teal-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">
+                            RECOMMENDED</div>
+                    </label>
+
+                    <!-- Option 2: Clone -->
+                    <label
+                        class="block border border-gray-200 rounded-lg p-4 cursor-pointer hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="source" class="absolute right-4 top-4 text-gray-300 w-5 h-5">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
+                                <i data-lucide="copy" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900 mb-1">Clone Existing Survey</div>
+                                <div class="text-sm text-gray-500">Duplicate one of your existing surveys as a starting
+                                    point.</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <!-- Option 3: Scratch -->
+                    <label
+                        class="block border border-gray-200 rounded-lg p-4 cursor-pointer hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="source" class="absolute right-4 top-4 text-gray-300 w-5 h-5">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
+                                <i data-lucide="file-plus" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900 mb-1">Start from Scratch</div>
+                                <div class="text-sm text-gray-500">Build a completely new survey with a blank canvas.
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-end gap-3">
+                <button onclick="document.getElementById('new-survey-modal').classList.add('hidden')"
+                    class="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
+                <button class="px-6 py-2 bg-teal-600 text-white font-bold rounded-lg hover:bg-teal-700 shadow-sm">Create
+                    Survey</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

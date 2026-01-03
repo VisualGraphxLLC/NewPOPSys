@@ -10,6 +10,7 @@
 ## Purpose
 
 Canonical domain model and state machines for v1. Anchors data modeling, API contracts, reporting, and agentic development.
+**Update v0.6:** Refactored for "Master vs Instance" inheritance model (PSP Assist / Brand Owner).
 
 ---
 
@@ -46,14 +47,17 @@ Campaign → Store Assignment → Orders/Shipments (PSP) → Store Execution →
 | `StoreIdAlias` | External ID mapping (brand's store #) |
 
 ### Surveys & Layouts
+### Surveys & Layouts
 | Entity | Purpose |
 |--------|---------|
-| `SurveyTemplate` | Reusable survey definition |
-| `SurveyVersion` | Immutable snapshot of template |
-| `StoreLayout` | Store's physical ad locations |
-| `LocationSlot` | Specific placement in store |
+| `MasterSurveyTemplate` | **PSP Owned:** Standard survey definition (e.g., "Standard Retail Audit") |
+| `BrandSurveyTemplate` | **Brand Owned:** Campaign-specific survey. Can sync from Master or be custom. |
+| `SurveyVersion` | Immutable snapshot of a BrandSurveyTemplate |
+| `MasterStoreLayout` | **PSP Owned:** Standard layout definition (e.g., "Mall Kiosk", "Flagship") |
+| `StoreLayout` | **Brand Owned:** Actual layout assigned to a specific store. Inherits from Master. |
+| `LocationSlot` | Specific placement in store. Includes spatial data (`x`, `y`, `z`, `width`, `depth`, `shape`). |
 | `PhotoRule` | Photo requirements per location |
-| `StoreSurveyResponse` | Store's answers to survey |
+| `StoreSurveyResponse` | Store's answers to survey (linked to BrandSurveyTemplate) |
 
 ### Campaigns & Kits
 | Entity | Purpose |

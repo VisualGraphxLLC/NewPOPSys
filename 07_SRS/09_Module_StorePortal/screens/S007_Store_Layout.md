@@ -12,7 +12,7 @@
 ## 1. Screen Overview
 
 ### 1.1 Purpose
-The Store Layout screen provides an interactive visual map of the store's marketing fixtures (Gondolas, Endcaps, Windows). Managers use this to verify slot configurations and view active campaigns mapped to physical locations.
+The Store Layout screen provides an interactive visual map of the store's marketing fixtures (Gondolas, Endcaps, Windows). Managers use this to verify slot configurations and view active campaigns mapped to physical locations. The layout definition is managed by the Brand (**StoreLayout** entity).
 
 ### 1.2 Screenshot Reference
 ![Store Layout](../../screenshots/Store_Manager_Portal/manager_layout.png)
@@ -21,8 +21,9 @@ The Store Layout screen provides an interactive visual map of the store's market
 
 ## 2. Features
 
-### 2.1 Interactive Map
-- **Visual Nodes**: Clickable markers for each marketing slot.
+### 2.1 Interactive Map (Grid View)
+- **Top-Down Render**: Renders the store's walls, zones, and fixtures based on the Grid Layout definition.
+- **Visual Nodes**: Clickable markers for each marketing slot, positioned accurately (`x`, `y`).
 - **Status Indication**: Color-coded markers (Green = Active Campaign, Gray = Vacant).
 - **Tooltips**: Hover details showing slot name and current assignment.
 

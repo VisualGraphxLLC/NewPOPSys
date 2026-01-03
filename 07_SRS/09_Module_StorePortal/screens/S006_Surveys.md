@@ -12,7 +12,7 @@
 ## 1. Screen Overview
 
 ### 1.1 Purpose
-The Surveys screen allows Store Managers to access and submit ad-hoc surveys, such as Store Layout confirmations, Exception Reports, and specialized campaign questionnaires.
+The Surveys screen allows Store Managers to access and submit ad-hoc surveys, such as Store Layout confirmations, Exception Reports, and specialized campaign questionnaires. These surveys are defined by the Brand (via **BrandSurveyTemplate**), potentially inheriting from a Global Master.
 
 ### 1.2 Screenshot Reference
 ![Store Surveys](../../screenshots/Store_Manager_Portal/manager_surveys.png)
