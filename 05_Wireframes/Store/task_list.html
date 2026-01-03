@@ -625,11 +625,11 @@
 
         // Initialize view based on state
         function init() {
-            updateDesktopView();
-
             // Retake Logic
             const urlParams = new URLSearchParams(window.location.search);
             const isRetake = urlParams.get('retake') === 'true';
+
+            updateDesktopView(isRetake);
 
             if (isRetake) {
                 // Unlock Install logic specifically for Retake
@@ -744,7 +744,7 @@
             }
         }
 
-        function updateDesktopView() {
+        function updateDesktopView(isRetake = false) {
             // Updated Receive
             if (receiptComplete) {
                 const btn = document.getElementById('desktop-btn-receive');
@@ -779,7 +779,7 @@
             }
 
             // Updated Install
-            if (installComplete) {
+            if (installComplete && !isRetake) {
                 const btn = document.getElementById('desktop-btn-install');
                 if (btn) {
                     btn.innerHTML = '<i data-lucide="check" size="16"></i> Installed';
@@ -807,6 +807,19 @@
                     btnAttest.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
                     btnAttest.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-sm');
                     btnAttest.textContent = 'Sign Attestation';
+                }
+            } else if (isRetake) {
+                // Ensure Attest is LOCKED during retake
+                const taskAttest = document.getElementById('desktop-task-attest');
+                const btnAttest = document.getElementById('desktop-btn-attest');
+                if (taskAttest) {
+                    taskAttest.classList.add('opacity-75', 'bg-gray-50');
+                    taskAttest.classList.remove('bg-white');
+                }
+                if (btnAttest) {
+                    btnAttest.disabled = true;
+                    btnAttest.classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+                    btnAttest.textContent = 'Locked';
                 }
             }
 
