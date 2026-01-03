@@ -1,6 +1,6 @@
 # NewPOPSys — SOW Documentation
 
-> **Version**: 1.37 (2025-12-20)
+> **Version**: 1.38 (2026-01-03)
 > **Status**: v1 Locked — Ready for Development
 > **Beta Target**: End of Q1
 
@@ -23,45 +23,17 @@ PSP-Led Campaign Orchestration Platform — complete Statement of Work documenta
 ## Folder Structure
 
 ```
-SOW/
+.
 ├── 00_Index/               # Document registry, framework, Q&A gates, glossary
 ├── 01_Main_SOW/            # Compiled Master SOW
 ├── 02_SUPPs/               # Supplemental Specifications (by module)
-│   ├── Shared_Foundations/
-│   ├── Store_Execution_Module/
-│   ├── Brand_Admin_Module/
-│   ├── PSP_Operations_Module/
-│   ├── Platform_Ops_Agent_Harness/
-│   └── Screens_Interfaces/
 ├── 03_Templates/           # SOW templates for agentic development
 ├── 04_Reference/           # Reference materials & legacy docs
-│   └── Legacy_PrecisionPOP/
 ├── 05_Wireframes/          # Interactive HTML prototypes
 ├── 06_API/                 # OpenAPI specification
 ├── 06_Database_Model/      # Schema, relationships, indexes, seed data
-│   ├── 01_Schema/
-│   ├── 02_Relationships/
-│   ├── 04_Indexes/
-│   ├── 05_Seed_Data/
-│   └── 07_Validation/
 ├── 06_Screen_Specs/        # Detailed screen specifications (M/B/P/S series)
 ├── Post_v1/                # Future vision: v2-v4 roadmap & capabilities
-│   ├── 01_SaaS_Evolution/
-│   ├── 02_Capability_Pillars/
-│   ├── 03_Phase_Roadmaps/
-│   ├── 04_Revenue_Models/
-│   ├── 05_Competitive_Analysis/
-│   ├── 06_Development_Scope/
-│   ├── 07_Agent_Harnesses/
-│   ├── 08_Risk_Analysis/
-│   ├── 09_Go_to_Market/
-│   ├── 10_Investment/
-│   ├── 11_Legal_Compliance/
-│   ├── 12_Operations/
-│   ├── 13_Technical_Architecture/
-│   ├── 14_Modular_Architecture/
-│   ├── 15_Internationalization/
-│   └── 16_Analytics/
 ├── Reports/                # Analysis & strategy reports
 ├── 99_Archive/             # Archived versions (ZIP)
 └── VERSION.json            # Central version tracking
@@ -87,9 +59,9 @@ SOW/
 | Series | Module | Screens |
 |--------|--------|---------|
 | **M** | Mobile Store App | M01-M08: Login, Dashboard, Surveys, Photo Capture, Tasks, Profile |
-| **B** | Brand Admin | B01-B07: Dashboard, Campaigns, Store Selection, Kit Definition, Review |
-| **P** | PSP Operations | P01-P03: Order Queue, Shipments, Issues |
-| **S** | Store Portal | S01-S05: Dashboard, Campaign History, Photos, Team, Reports |
+| **B** | Brand Admin | B01-B07: Dashboard, Campaigns, Store Selection, Kit Definition, Review; **B08-B09: Surveys & Layouts** |
+| **P** | PSP Operations | P01-P03: Order Queue, Shipments; **A007: Global Templates** |
+| **S** | Store Portal | S01-S05: Dashboard, Campaign History, Photos, Team, Reports; **S06-S07: Survey & Layout View** |
 
 ---
 
@@ -141,7 +113,11 @@ The [Post_v1](Post_v1/) folder contains strategic planning for future releases:
 
 NewPOPSys v1 is a modernized campaign orchestration platform that helps Print Service Providers (PSPs) manage POP campaigns from creation through store execution and verification.
 
-**Core Loop**: Campaign → Store Assignment → PSP Fulfillment → Store Execution → Verification → Visibility
+**Core Workflow**:
+1.  **PSP Definition**: PSP defines Master Survey Templates & Layouts (`MasterSurveyTemplate`).
+2.  **Brand Adoption**: Brands inherit Masters to create their own Instances (`BrandSurveyTemplate`).
+3.  **Digital Twin**: Brands map store layouts using a Grid Graphics Builder (spatial data).
+4.  **Campaign Loop**: Campaign → Store Assignment → Fulfillment → Execution → Verification.
 
 **User Personas**:
 - PSP Level: Platform Admin, PSP Admin, Production Operator, Support Agent
