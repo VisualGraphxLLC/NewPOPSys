@@ -411,10 +411,6 @@
 
             // Linear Flow for Desktop
             if (document.body.classList.contains('device-desktop')) {
-                // Check if attestation page exists/layout is ready logic? 
-                // We'll assume standard flow: Receipt -> Install -> Attest
-                window.location.href = 'attestion.html'; // Typo in filename in task_list? No, task_list says 'attestation.html'
-                // Wait, let's use 'attestation.html'
                 window.location.href = 'attestation.html';
             } else {
                 window.location.href = 'task_list.html';
@@ -425,8 +421,113 @@
             // Visual feedback for desktop demo
             el.innerHTML = '<div class="text-green-600 flex flex-col items-center"><i data-lucide="check" size="32"></i><span class="font-bold">Uploaded</span></div>';
             lucide.createIcons();
-            el.parentElement.classList.remove('bg-blue-50', 'border-blue-300');
+            el.parentElement.classList.remove('bg-blue-50', 'border-blue-300', 'bg-red-50', 'border-red-300');
             el.parentElement.classList.add('bg-white', 'border-gray-200');
+
+            // If in retake mode, remove rejection text if present
+            const rejectMsg = el.parentElement.querySelector('.text-red-600');
+            if (rejectMsg) rejectMsg.remove();
+        }
+
+        // Initialize Retake Mode
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('mode') === 'retake') {
+                enableRetakeMode();
+            }
+        });
+
+        function enableRetakeMode() {
+            // 1. Update Headers
+            // Mobile
+            const mobileHeader = document.querySelector('#screen-install h1');
+            if (mobileHeader) mobileHeader.innerText = 'Retake Required';
+
+            // Desktop
+            const desktopHeader = document.querySelector('.desktop-view-container h1');
+            if (desktopHeader) desktopHeader.innerText = 'Retake Validation';
+            const desktopSub = document.querySelector('.desktop-view-container p.text-gray-500');
+            if (desktopSub) desktopSub.innerHTML = '<span class="text-red-600 font-bold">Action Needed:</span> Replace rejected photos.';
+
+            // 2. Target Specific Item (Mocking "Window Cling (Right)" as the rejected one)
+            updateRejectedItem('Window Cling (Right)', 'Wrong Angle');
+        }
+
+        function updateRejectedItem(itemName, reason) {
+            // We need to find the card containing this text. 
+            // This is a rough visual simulation since we don't have unique IDs on these demo cards.
+
+            // Helper to process a card
+            const processCard = (card, isDesktop = false) => {
+                const badge = card.querySelector('span.rounded, span.rounded-full');
+                if (badge) {
+                    badge.className = isDesktop
+                        ? 'bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-bold'
+                        : 'bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded';
+                    badge.innerText = 'Rejected';
+                }
+
+                // Update container styles
+                if (isDesktop) {
+                    card.classList.remove('bg-blue-50', 'border-blue-300');
+                    card.classList.add('bg-red-50', 'border-red-300');
+
+                    // Add Reason Text
+                    const container = card.querySelector('.aspect-video');
+                    if (container) {
+                        container.classList.remove('border-blue-200', 'hover:border-blue-400');
+                        container.classList.add('border-red-300', 'hover:border-red-400');
+                        const icon = container.querySelector('i');
+                        if (icon) icon.classList.replace('text-blue-400', 'text-red-400');
+                        const text = container.querySelector('.text-blue-600');
+                        if (text) {
+                            text.className = 'text-red-600 font-bold';
+                            text.innerText = 'Retake Photo';
+                        }
+
+                        // Insert Reason
+                        const reasonDiv = document.createElement('div');
+                        reasonDiv.className = 'mt-2 text-xs text-red-600 font-medium text-center';
+                        reasonDiv.innerHTML = `Reason: ${reason}`;
+                        container.appendChild(reasonDiv);
+                    }
+                } else {
+                    // Mobile Card
+                    const btn = card.querySelector('button');
+                    if (btn) {
+                        btn.classList.remove('border-blue-300', 'text-blue-500', 'hover:bg-blue-50');
+                        btn.classList.add('border-red-300', 'text-red-500', 'hover:bg-red-50');
+
+                        const icon = btn.querySelector('i');
+                        // Refresh icon if needed, or just leave camera
+
+                        const span = btn.querySelector('span');
+                        if (span) span.innerText = 'Retake Photo';
+
+                        // Add Reason
+                        const reasonP = document.createElement('p');
+                        reasonP.className = 'text-xs text-red-600 font-bold mt-2 text-center';
+                        reasonP.innerText = `Reason: ${reason}`;
+                        btn.appendChild(reasonP);
+                    }
+                }
+            };
+
+            // Find all h4 or divs with item name
+            const headings = document.querySelectorAll('h4, .font-medium');
+            headings.forEach(h => {
+                if (h.innerText.includes(itemName)) {
+                    // Walk up to find the card container
+                    // Desktop: .bg-white.p-4.rounded-xl
+                    // Mobile: .card
+                    const card = h.closest('.card') || h.closest('.bg-blue-50');
+
+                    if (card) {
+                        const isDesktop = card.classList.contains('bg-blue-50'); // Heuristic based on current markup
+                        processCard(card, isDesktop || card.classList.contains('border-blue-300'));
+                    }
+                }
+            });
         }
     </script>
 </body>
