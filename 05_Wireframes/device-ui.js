@@ -248,17 +248,8 @@ class DeviceManager {
                 z-index: 1001; /* Above nav */
             }
 
-            body.device-desktop #phone {
-                width: 100%;
-                height: auto;
-                min-height: 100vh;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
-                display: flex;
-                flex-direction: column;
-            }
-
+            /* REMOVED LEGACY STRETCHING CSS TO PREVENT 'BIG PHONE' LOOK */
+            
             /* Hide Mobile Status Bar */
             body.device-desktop .safe-area-top {
                 display: none;
