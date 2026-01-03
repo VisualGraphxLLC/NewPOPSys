@@ -22,7 +22,7 @@ class DeviceManager {
         const style = document.createElement('style');
         style.id = 'device-manager-styles';
         style.textContent = `
-            /* Device Manager UI Controls */
+            /* Device Manager UI Controls - Floating Fallback */
             .device-controls {
                 position: fixed;
                 bottom: 20px;
@@ -237,26 +237,91 @@ class DeviceManager {
     }
 
     injectControls() {
-        if (document.querySelector('.device-controls')) return;
+        // Prevent duplicate injection
+        if (document.querySelector('.device-controls-header')) return;
 
+        const banner = document.querySelector('.tooltip-help-banner');
+        
+        // Create controls container
         const container = document.createElement('div');
-        container.className = 'device-controls';
+        container.className = 'device-controls-header';
+        
+        const btnStyle = `
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            height: 24px;
+            width: 24px;
+        `;
+
+        container.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 16px;
+            padding-left: 16px;
+            border-left: 1px solid rgba(255,255,255,0.3);
+        `;
+
         container.innerHTML = `
-            <button class="device-btn" onclick="deviceManager.setDevice('mobile')" title="Mobile">
-                <i data-lucide="smartphone" size="20"></i>
+            <button class="device-btn-header" onclick="deviceManager.setDevice('mobile')" title="Mobile" style="${btnStyle}">
+                <i data-lucide="smartphone" size="14"></i>
             </button>
-            <button class="device-btn" onclick="deviceManager.setDevice('tablet')" title="Tablet Portrait">
-                <i data-lucide="tablet" size="20"></i>
+            <button class="device-btn-header" onclick="deviceManager.setDevice('tablet')" title="Tablet Portrait" style="${btnStyle}">
+                <i data-lucide="tablet" size="14"></i>
             </button>
-            <button class="device-btn" onclick="deviceManager.setDevice('tablet-landscape')" title="Tablet Landscape">
-                <i data-lucide="monitor" size="20" style="transform: rotate(90deg)"></i>
+            <button class="device-btn-header" onclick="deviceManager.setDevice('tablet-landscape')" title="Tablet Landscape" style="${btnStyle}">
+                <i data-lucide="tablet" size="14" style="transform: rotate(90deg)"></i>
             </button>
-            <button class="device-btn" onclick="deviceManager.setDevice('desktop')" title="Desktop">
-                <i data-lucide="monitor" size="20"></i>
+            <button class="device-btn-header" onclick="deviceManager.setDevice('desktop')" title="Desktop" style="${btnStyle}">
+                <i data-lucide="monitor" size="14"></i>
             </button>
         `;
-        document.body.appendChild(container);
+
+        if (banner) {
+            banner.appendChild(container);
+        } else {
+            // Fallback to floating if no banner exists (though we should add banners)
+            container.className = 'device-controls'; // Use old class for floating style
+            container.style.cssText = '';
+            // Reset button styles for floating
+            const floatBtnStyle = ''; 
+            container.innerHTML = container.innerHTML.replace(/style="[^"]*"/g, ''); // Strip inline styles for floating fallback
+            
+            // Re-add floating specific structure if needed, or just revert to old method for fallback
+            // For now, let's keep it simple: if no banner, use the old floating fixed implementation
+            const floatContainer = document.createElement('div');
+            floatContainer.className = 'device-controls';
+            floatContainer.innerHTML = `
+                <button class="device-btn" onclick="deviceManager.setDevice('mobile')" title="Mobile"><i data-lucide="smartphone" size="20"></i></button>
+                <button class="device-btn" onclick="deviceManager.setDevice('tablet')" title="Tablet Portrait"><i data-lucide="tablet" size="20"></i></button>
+                <button class="device-btn" onclick="deviceManager.setDevice('tablet-landscape')" title="Tablet Landscape"><i data-lucide="tablet" size="20" style="transform: rotate(90deg)"></i></button>
+                <button class="device-btn" onclick="deviceManager.setDevice('desktop')" title="Desktop"><i data-lucide="monitor" size="20"></i></button>
+            `;
+            document.body.appendChild(floatContainer);
+            if (window.lucide) window.lucide.createIcons();
+            return;
+        }
+
         if (window.lucide) window.lucide.createIcons();
+        
+        // Add active state handling style
+        const activeStyle = document.createElement('style');
+        activeStyle.textContent = `
+            .device-btn-header.active {
+                background: white !important;
+                color: var(--primary) !important;
+                border-color: white !important;
+            }
+        `;
+        document.head.appendChild(activeStyle);
     }
 
     setDevice(device) {
@@ -269,8 +334,8 @@ class DeviceManager {
         this.currentDevice = device;
 
         // Update active button state
-        document.querySelectorAll('.device-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.querySelector(`.device-btn[onclick*="'${device}'"]`);
+        document.querySelectorAll('.device-btn, .device-btn-header').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`.device-btn[onclick*="'${device}'"], .device-btn-header[onclick*="'${device}'"]`);
         if (activeBtn) activeBtn.classList.add('active');
 
         // Re-render icons if needed
