@@ -385,6 +385,23 @@ class DeviceManager {
     }
 
     setDevice(device) {
+        if (device === 'desktop') {
+            // Check if we are already on the manager dashboard
+            if (!window.location.pathname.includes('manager_dashboard.html')) {
+                // Redirect to manager dashboard
+                window.location.href = 'manager_dashboard.html';
+                return;
+            }
+        } else {
+            // If we are on manager dashboard and switching to mobile/tablet, redirect back to standard dashboard
+            if (window.location.pathname.includes('manager_dashboard.html')) {
+                localStorage.setItem('storeAppDevice', device);
+                window.location.href = 'dashboard.html';
+                return;
+            }
+        }
+
+        // Standard device switching for standard pages
         // Update body class
         document.body.classList.remove('device-mobile', 'device-tablet', 'device-tablet-landscape', 'device-desktop');
         document.body.classList.add('device-' + device);
