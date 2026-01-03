@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Network - NewPOPSys</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Shared CSS */
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #8b5cf6;
+            --primary-dark: #6d28d9;
+            --accent: #f59e0b;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        .bg-purple-600 {
+            background-color: var(--primary) !important;
+        }
+
+        .text-purple-600 {
+            color: var(--primary) !important;
+        }
+
+        .border-purple-600 {
+            border-color: var(--primary) !important;
+        }
+
+        .hover\:bg-purple-700:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .block {
+            display: block;
+        }
+
+        .nav-link.active-nav {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- Tooltip Help Banner -->
+    <div
+        class="bg-gradient-to-r from-purple-900 to-purple-600 text-white px-4 py-2 text-center text-xs flex justify-center items-center gap-4">
+        <a href="../General/login.html"
+            class="flex items-center gap-1 bg-white/20 px-2 py-1 rounded hover:bg-white/30 transition">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Logout
+        </a>
+        <span class="font-medium">Brand Administrator View</span>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <img src="../logos/newpopsys-logo.svg" alt="Logo" class="h-8 w-auto">
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+            <a href="dashboard.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Dashboard</a>
+            <a href="campaigns.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Campaigns</a>
+            <a href="verification.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Verification
+                (12)</a>
+            <a href="stores.html" class="nav-link active-nav h-16 flex items-center">Stores</a>
+            <a href="surveys.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Surveys</a>
+            <a href="layouts.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Layouts</a>
+            <a href="settings.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Settings</a>
+            <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-8">
+
+        <!-- VIEW: STORES LIST -->
+        <div id="view-stores" class="view block">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Store Network</h1>
+                    <p class="text-sm text-gray-500 mt-1">Manage all store locations, groupings, and regional
+                        assignments</p>
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="bg-white border text-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 flex items-center gap-2"
+                        onclick="alert('Opens store search: by number, name, city, region')">
+                        <i data-lucide="search" size="16"></i> Search
+                    </button>
+                    <button
+                        class="bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-purple-700 flex items-center gap-2">
+                        <i data-lucide="plus" size="16"></i> Add Store
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="text-xs font-bold text-gray-400 uppercase">Total Stores</div>
+                    <div class="text-2xl font-bold">452</div>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="text-xs font-bold text-gray-400 uppercase">Compliance Score</div>
+                    <div class="text-2xl font-bold text-green-600">94.2%</div>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="text-xs font-bold text-gray-400 uppercase">Pending Surveys</div>
+                    <div class="text-2xl font-bold text-yellow-600">18</div>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="text-xs font-bold text-gray-400 uppercase">Active Issues</div>
+                    <div class="text-2xl font-bold text-red-600">5</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500 font-bold uppercase text-[10px]">
+                        <tr>
+                            <th class="px-6 py-4">Store #</th>
+                            <th class="px-6 py-4">Store Name</th>
+                            <th class="px-6 py-4">Location</th>
+                            <th class="px-6 py-4">Region</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 cursor-pointer">
+                            <td onclick="nav('view-store-detail')"
+                                class="px-6 py-4 font-bold text-purple-600 hover:underline cursor-pointer">1044</td>
+                            <td onclick="nav('view-store-detail')"
+                                class="px-6 py-4 font-medium text-gray-900 hover:text-purple-600 cursor-pointer">Seattle
+                                Flagship</td>
+                            <td class="px-6 py-4 text-gray-600">Seattle, WA</td>
+                            <td class="px-6 py-4 text-gray-600">West Coast</td>
+                            <td class="px-6 py-4 text-green-600 font-bold">Active</td>
+                            <td class="px-6 py-4 text-gray-800">
+                                <div class="flex gap-3">
+                                    <button onclick="window.location.href='layouts.html'"
+                                        class="text-purple-600 hover:text-purple-900"><i data-lucide="map"
+                                            size="16"></i></button>
+                                    <button onclick="window.location.href='surveys.html'"
+                                        class="text-gray-400 hover:text-purple-600"><i data-lucide="clipboard-list"
+                                            size="16"></i></button>
+                                    <button class="text-gray-400 hover:text-purple-600"><i data-lucide="more-horizontal"
+                                            size="16"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer border-l-4 border-red-500">
+                            <td onclick="nav('view-store-detail')" class="px-6 py-4 font-bold text-purple-600">8822</td>
+                            <td onclick="nav('view-store-detail')" class="px-6 py-4 font-medium text-gray-900">Phoenix
+                                Downtown</td>
+                            <td class="px-6 py-4 text-gray-600">Phoenix, AZ</td>
+                            <td class="px-6 py-4 text-gray-600">South</td>
+                            <td class="px-6 py-4 text-red-600 font-bold">Issue Reported</td>
+                            <td class="px-6 py-4 text-gray-800">
+                                <div class="flex gap-3">
+                                    <button onclick="window.location.href='layouts.html'"
+                                        class="text-purple-600 hover:text-purple-900"><i data-lucide="map"
+                                            size="16"></i></button>
+                                    <button onclick="window.location.href='surveys.html'"
+                                        class="text-gray-400 hover:text-purple-600"><i data-lucide="clipboard-list"
+                                            size="16"></i></button>
+                                    <button class="text-gray-400 hover:text-purple-600"><i data-lucide="more-horizontal"
+                                            size="16"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer">
+                            <td class="px-6 py-4 font-bold text-purple-600">3044</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Portland Central</td>
+                            <td class="px-6 py-4 text-gray-600">Portland, OR</td>
+                            <td class="px-6 py-4 text-gray-600">West Coast</td>
+                            <td class="px-6 py-4 text-green-600 font-bold">Active</td>
+                            <td class="px-6 py-4 text-gray-800">
+                                <div class="flex gap-3">
+                                    <button onclick="window.location.href='layouts.html'"
+                                        class="text-purple-600 hover:text-purple-900"><i data-lucide="map"
+                                            size="16"></i></button>
+                                    <button onclick="window.location.href='surveys.html'"
+                                        class="text-gray-400 hover:text-purple-600"><i data-lucide="clipboard-list"
+                                            size="16"></i></button>
+                                    <button class="text-gray-400 hover:text-purple-600"><i data-lucide="more-horizontal"
+                                            size="16"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer">
+                            <td class="px-6 py-4 font-bold text-purple-600">2155</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">Denver Heights</td>
+                            <td class="px-6 py-4 text-gray-600">Denver, CO</td>
+                            <td class="px-6 py-4 text-gray-600">Mountain</td>
+                            <td class="px-6 py-4 text-green-600 font-bold">Active</td>
+                            <td class="px-6 py-4 text-gray-800">
+                                <div class="flex gap-3">
+                                    <button onclick="window.location.href='layouts.html'"
+                                        class="text-purple-600 hover:text-purple-900"><i data-lucide="map"
+                                            size="16"></i></button>
+                                    <button onclick="window.location.href='surveys.html'"
+                                        class="text-gray-400 hover:text-purple-600"><i data-lucide="clipboard-list"
+                                            size="16"></i></button>
+                                    <button class="text-gray-400 hover:text-purple-600"><i data-lucide="more-horizontal"
+                                            size="16"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div
+                    class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-between items-center text-xs text-gray-500 font-medium">
+                    <span>Showing 4 of 452 stores</span>
+                    <div class="flex gap-2">
+                        <button class="bg-white border px-2 py-1 rounded">Previous</button>
+                        <button class="bg-white border px-2 py-1 rounded">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: STORE DETAIL (Deep Dive) -->
+        <div id="view-store-detail" class="view hidden">
+            <div class="flex items-center gap-4 mb-6">
+                <button onclick="nav('view-stores')" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                    <i data-lucide="arrow-left" size="20"></i>
+                </button>
+                <div>
+                    <div class="flex items-center gap-3">
+                        <h1 class="text-2xl font-bold text-gray-900">Seattle Flagship</h1>
+                        <span
+                            class="bg-green-100 text-green-800 text-xs font-bold px-2 py-0.5 rounded-full">STR-1044</span>
+                    </div>
+                    <p class="text-sm text-gray-500">2201 Westlake Ave, Seattle, WA 98121</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Store Stats -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-700 text-xs uppercase mb-4">Store Metadata</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-bold uppercase">Region</div>
+                                <div class="text-sm font-medium">West Coast / Pacific NW</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-bold uppercase">Store Manager</div>
+                                <div class="text-sm font-medium">Jane Smith</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-bold uppercase">Last Survey</div>
+                                <div class="text-sm font-medium">Dec 15, 2025 (Standard Layout)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-700 text-xs uppercase mb-4">Compliance Health</h3>
+                        <div class="text-3xl font-bold text-green-600 mb-2">98.2%</div>
+                        <div class="w-full bg-gray-100 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 98%"></div>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-2">Top 5% of network. No late submissions in 6 months.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Detail Content Placeholder -->
+                <div
+                    class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-8 min-h-[400px] flex items-center justify-center text-gray-400">
+                    <div class="text-center">
+                        <i data-lucide="bar-chart-2" size="48" class="mx-auto mb-4 opacity-50"></i>
+                        <p>Extended store analytics and history would appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function nav(viewId) {
+            document.querySelectorAll('.view').forEach(el => el.classList.add('hidden'));
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
