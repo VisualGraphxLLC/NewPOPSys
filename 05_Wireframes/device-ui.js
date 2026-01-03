@@ -93,11 +93,17 @@ class DeviceManager {
                 height: 852px;
                 border-radius: 47px;
                 border: 12px solid #1a1a1a;
+                flex-shrink: 0; /* Prevent shrinking */
             }
 
             body.device-mobile .phone-container {
-                background-color: #333;
+                background-color: #333 !important;
                 padding: 20px;
+                display: flex !important;
+                justify-content: center !important;
+                width: 100%;
+                box-sizing: border-box;
+                min-height: 100vh;
             }
 
             /* Tablet Portrait (iPad) */
@@ -106,13 +112,18 @@ class DeviceManager {
                 height: 1180px;
                 border-radius: 24px;
                 border: 14px solid #1a1a1a;
+                flex-shrink: 0;
             }
 
             body.device-tablet .phone-container {
-                background-color: #333;
+                background-color: #333 !important;
                 padding: 20px;
                 min-height: calc(100vh - 50px);
                 overflow: auto;
+                display: flex !important;
+                justify-content: center !important;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             body.device-tablet .safe-area-top {
