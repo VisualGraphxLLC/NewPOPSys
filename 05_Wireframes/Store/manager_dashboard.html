@@ -605,6 +605,9 @@
                             <th class="px-6 py-3 has-tooltip"
                                 data-tooltip="✅ COMPLETION INFO\n📊 Data: StoreAssignment.completedAt, Campaign.endDate comparison\n⬅️ Depends: CompletionSubmission approved\n➡️ Blocks: On-time compliance tracking">
                                 Completed</th>
+                            <th class="px-6 py-3 has-tooltip"
+                                data-tooltip="⚙️ ACTIONS\n📊 Data: Assignment, Retake triggers\n⬅️ Depends: User permissions\n➡️ Blocks: Workflow progression">
+                                Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -616,8 +619,12 @@ Action: Click to view details
 Alerts: 1 photo retake required">
                             <td class="px-6 py-4"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i></td>
                             <td class="px-6 py-4 font-medium text-gray-900">Summer Promo 2025</td>
-                            <td class="px-6 py-4"><span
+                            <td class="px-6 py-4">
+                                <span
                                     class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Installing</span>
+                                <div class="text-xs text-red-600 mt-1 cursor-pointer hover:underline flex items-center gap-1"
+                                    onclick="event.stopPropagation(); openRetakeModal('Window Poster', 'Wrong Angle', 'retake-row-1')">
+                                    ⚠️ 1 Retake</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
@@ -629,6 +636,13 @@ Alerts: 1 photo retake required">
                             </td>
                             <td class="px-6 py-4 text-gray-500">Jun 15 - Jul 15</td>
                             <td class="px-6 py-4 text-gray-400">-</td>
+                            <td class="px-6 py-4">
+                                <button
+                                    onclick="event.stopPropagation(); openAssignModal('Summer Promo 2025', 'campaign-row-1')"
+                                    class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                    <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                </button>
+                            </td>
                         </tr>
                         <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="🎯 ACTIVE CAMPAIGN ROW
 ━━━━━━━━━━━━━━━━━━━━
@@ -651,6 +665,13 @@ Next: Verify kit contents">
                             </td>
                             <td class="px-6 py-4 text-gray-500">Nov 20 - Dec 31</td>
                             <td class="px-6 py-4 text-gray-400">-</td>
+                            <td class="px-6 py-4">
+                                <button
+                                    onclick="event.stopPropagation(); openAssignModal('Holiday Display', 'campaign-row-2')"
+                                    class="text-teal-600 font-medium text-sm hover:underline flex items-center gap-1">
+                                    <i data-lucide="user-plus" class="w-3 h-3"></i> Assign
+                                </button>
+                            </td>
                         </tr>
                         <tr class="bg-gray-50 has-tooltip" data-tooltip="✅ COMPLETED CAMPAIGN (EXPANDED)
 ━━━━━━━━━━━━━━━━━━━━
@@ -684,9 +705,15 @@ Completed: Apr 5, 2025
 Deadline: Apr 15, 2025
 Status: 10 days early
 Impact: Positive compliance contribution">Apr 5 ✓ On Time</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 font-medium text-sm has-tooltip"
+                                    data-tooltip="Already assigned">
+                                    <i data-lucide="check" class="w-3 h-3"></i>
+                                </button>
+                            </td>
                         </tr>
                         <tr class="bg-gray-50 border-l-4 border-teal-500">
-                            <td colspan="6" class="px-6 py-4">
+                            <td colspan="7" class="px-6 py-4">
                                 <div class="ml-6 p-4 bg-white rounded-lg border border-gray-200">
                                     <div class="grid grid-cols-4 gap-4 mb-4">
                                         <div class="has-tooltip" data-tooltip="✅ COMPLETION DATE
@@ -761,6 +788,12 @@ Export: Available from detail view">View Details →</button>
                             </td>
                             <td class="px-6 py-4 text-gray-500">Dec 1 - Jan 15</td>
                             <td class="px-6 py-4 text-green-600">Jan 10 ✓ On Time</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 font-medium text-sm has-tooltip"
+                                    data-tooltip="Already assigned">
+                                    <i data-lucide="check" class="w-3 h-3"></i>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

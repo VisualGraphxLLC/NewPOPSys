@@ -627,7 +627,48 @@
         function init() {
             updateDesktopView();
 
-            // Mobile restore state from localStorage
+            // Retake Logic
+            const urlParams = new URLSearchParams(window.location.search);
+            const isRetake = urlParams.get('retake') === 'true';
+
+            if (isRetake) {
+                // Unlock Install logic specifically for Retake
+                const taskInstall = document.getElementById('desktop-task-install');
+                const btnInstall = document.getElementById('desktop-btn-install');
+
+                if (taskInstall) {
+                    taskInstall.classList.remove('opacity-75', 'bg-gray-50');
+                    taskInstall.classList.add('bg-white');
+
+                    // Add Rejected Badge
+                    const titleArea = taskInstall.querySelector('.flex.items-center.gap-3');
+                    if (titleArea) {
+                        const existingBadge = titleArea.querySelector('.bg-red-100');
+                        if (!existingBadge) {
+                            const badge = document.createElement('span');
+                            badge.className = 'bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase ml-2';
+                            badge.innerHTML = '⚠️ Rejected';
+                            titleArea.appendChild(badge);
+                        }
+                    }
+
+                    // Update Description
+                    const desc = taskInstall.querySelector('p');
+                    if (desc) desc.innerHTML = '<span class="text-red-600 font-medium">Reason: Wrong Angle. Please retake photo.</span>';
+                }
+
+                if (btnInstall) {
+                    btnInstall.disabled = false;
+                    btnInstall.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed', 'bg-green-600', 'bg-blue-600');
+                    btnInstall.classList.add('bg-red-600', 'text-white', 'hover:bg-red-700', 'shadow-sm');
+                    btnInstall.innerHTML = '<i data-lucide="camera" size="16"></i> Retake Photo';
+                    // Allow navigation
+                    btnInstall.onclick = function () { window.location.href = 'install.html?mode=retake'; };
+                }
+
+                return; // Stop standard state processing to enforce retake view
+            }
+
             if (receiptComplete) {
                 // Mark Receive tab as complete
                 markTabComplete('receive');

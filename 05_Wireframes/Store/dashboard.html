@@ -204,6 +204,27 @@
                         <div>
                             <h2 class="text-lg font-semibold text-gray-800 mb-3">Active Campaigns</h2>
                             <div class="dashboard-campaigns">
+                                <!-- Campaign Card: Retake Required -->
+                                <div class="card cursor-pointer hover:bg-red-50 transition border-l-4 border-red-500"
+                                    onclick="window.location.href='task_list.html?retake=true'">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <span
+                                            class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded flex items-center gap-1">
+                                            <i data-lucide="alert-circle" size="12"></i> Retake Required
+                                        </span>
+                                        <span class="text-xs text-gray-500">Due: ASAP</span>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-900">Summer Promo 2025</h3>
+                                    <p class="text-sm text-gray-600 mb-3">Window Poster: Wrong Angle</p>
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                                        <div class="bg-red-500 h-2.5 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-red-600 font-medium">
+                                        <span>Action Needed</span>
+                                        <span>1 Photo Rejected</span>
+                                    </div>
+                                </div>
+
                                 <!-- Campaign Card -->
                                 <div class="card cursor-pointer hover:bg-gray-50 transition"
                                     onclick="window.location.href='task_list.html'">
