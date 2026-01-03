@@ -16,6 +16,33 @@ class DeviceManager {
         this.setDevice(this.currentDevice);
     }
 
+    // ... (lines 19-386 remain unchanged) ...
+
+    setDevice(device) {
+        // Standard device switching
+        // Update body class
+        document.body.classList.remove('device-mobile', 'device-tablet', 'device-tablet-landscape', 'device-desktop');
+        document.body.classList.add('device-' + device);
+        
+        // Save preference
+        localStorage.setItem('storeAppDevice', device);
+        this.currentDevice = device;
+
+        // Update active button state
+        document.querySelectorAll('.device-btn, .device-btn-header').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`.device-btn[onclick*="'${device}'"], .device-btn-header[onclick*="'${device}'"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // Re-render icons if needed
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    init() {
+        this.injectCSS();
+        this.injectControls();
+        this.setDevice(this.currentDevice);
+    }
+
     injectCSS() {
         if (document.getElementById('device-manager-styles')) return;
 
@@ -385,23 +412,7 @@ class DeviceManager {
     }
 
     setDevice(device) {
-        if (device === 'desktop') {
-            // Check if we are already on the manager dashboard
-            if (!window.location.pathname.includes('manager_dashboard.html')) {
-                // Redirect to manager dashboard
-                window.location.href = 'manager_dashboard.html';
-                return;
-            }
-        } else {
-            // If we are on manager dashboard and switching to mobile/tablet, redirect back to standard dashboard
-            if (window.location.pathname.includes('manager_dashboard.html')) {
-                localStorage.setItem('storeAppDevice', device);
-                window.location.href = 'dashboard.html';
-                return;
-            }
-        }
-
-        // Standard device switching for standard pages
+        // Standard device switching
         // Update body class
         document.body.classList.remove('device-mobile', 'device-tablet', 'device-tablet-landscape', 'device-desktop');
         document.body.classList.add('device-' + device);
