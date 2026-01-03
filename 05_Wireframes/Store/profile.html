@@ -265,8 +265,8 @@
         <div class="max-w-4xl mx-auto p-8">
             <div class="flex justify-between items-end mb-8">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Store Profile</h1>
-                    <p class="text-gray-500 mt-1">Manage store details and team access</p>
+                    <h1 class="text-3xl font-bold text-gray-900">My Profile</h1>
+                    <p class="text-gray-500 mt-1">Manage your personal account and preferences</p>
                 </div>
                 <button onclick="window.location.href='../General/login.html'"
                     class="px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 flex items-center gap-2">
@@ -283,62 +283,69 @@
                             <div class="w-24 h-24 bg-white rounded-xl shadow-lg p-1">
                                 <div
                                     class="w-full h-full bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 font-bold text-2xl">
-                                    G2G
+                                    CD
                                 </div>
                             </div>
                             <div class="mb-1">
-                                <h2 class="text-2xl font-bold text-gray-900">Good2Go #3044</h2>
-                                <p class="text-gray-500">Springfield Region • Tier 1 Location</p>
+                                <h2 class="text-2xl font-bold text-gray-900">Chris Doe</h2>
+                                <p class="text-gray-500">Store Associate • Good2Go #3044</p>
                             </div>
                         </div>
                         <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Edit
-                            Details</button>
+                            Profile</button>
                     </div>
 
                     <!-- Tabs -->
                     <div class="flex gap-8 border-b border-gray-200 text-sm font-medium text-gray-500 mb-8">
                         <button class="pb-3 border-b-2 border-blue-600 text-blue-600">Overview</button>
-                        <button class="pb-3 hover:text-gray-700">Team Members</button>
-                        <button class="pb-3 hover:text-gray-700">Device Settings</button>
-                        <button class="pb-3 hover:text-gray-700">Notifications</button>
+                        <button class="pb-3 hover:text-gray-700">My Stats</button>
+                        <button class="pb-3 hover:text-gray-700">Preferences</button>
+                        <button class="pb-3 hover:text-gray-700">Security</button>
                     </div>
 
                     <!-- Grid Content -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h3 class="font-bold text-gray-900 mb-4">Location Details</h3>
+                            <h3 class="font-bold text-gray-900 mb-4">Personal Details</h3>
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Address</label>
-                                    <div class="text-gray-900">123 Market St, Springfield, IL 62704</div>
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Full Name</label>
+                                    <div class="text-gray-900">Chris Doe</div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Phone</label>
-                                    <div class="text-gray-900">(555) 123-4567</div>
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Email</label>
+                                    <div class="text-gray-900">chris.doe@good2go.com</div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Store
-                                        Manager</label>
-                                    <div class="text-gray-900">Sarah Jenkins</div>
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Role</label>
+                                    <div class="text-gray-900">Store Associate</div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase">Employee
+                                        ID</label>
+                                    <div class="text-gray-900">#89102</div>
                                 </div>
                             </div>
                         </div>
 
                         <div>
-                            <h3 class="font-bold text-gray-900 mb-4">System Status</h3>
-                            <div class="space-y-4">
-                                <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                    <span class="text-gray-600">App Version</span>
-                                    <span class="font-mono text-sm">v1.35.0</span>
+                            <h3 class="font-bold text-gray-900 mb-4">Performance Stats</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-blue-50 rounded-lg">
+                                    <div class="text-blue-600 font-bold text-2xl">12</div>
+                                    <div class="text-sm text-gray-600">Campaigns Completed</div>
                                 </div>
-                                <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                    <span class="text-gray-600">Last Sync</span>
-                                    <span class="text-green-600 text-sm flex items-center gap-1"><i data-lucide="check"
-                                            size="12"></i> Just now</span>
+                                <div class="p-4 bg-green-50 rounded-lg">
+                                    <div class="text-green-600 font-bold text-2xl">98%</div>
+                                    <div class="text-sm text-gray-600">Accuracy Score</div>
                                 </div>
-                                <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                    <span class="text-gray-600">Offline Mode</span>
-                                    <span class="text-gray-900 text-sm">Disabled</span>
+                                <div class="p-4 bg-gray-50 rounded-lg col-span-2">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <i data-lucide="award" class="text-yellow-500" size="18"></i>
+                                        <span class="font-bold text-gray-700">Top Performer</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">You are in the top 10% of associates in your region
+                                        this quarter.</p>
                                 </div>
                             </div>
                         </div>
