@@ -168,89 +168,273 @@
     </div>
 
 
-    <div class="phone-container">
-        <div id="phone">
-            <!-- Status Bar -->
-            <div class="safe-area-top">
-                <span>9:42</span>
-                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+    <!-- MOBILE VIEW CONTAINER -->
+    <div class="mobile-view-container">
+        <div class="phone-container">
+            <div id="phone">
+                <!-- Status Bar -->
+                <div class="safe-area-top">
+                    <span>9:42</span>
+                    <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                    </div>
+                </div>
+
+                <!-- Screen Content -->
+                <div id="screen-dashboard" class="screen">
+                    <h1 class="text-2xl font-bold text-gray-900 mb-4">Good2Go #3044</h1>
+
+                    <!-- Alert Banner -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="text-yellow-400" size="20"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-yellow-700">
+                                    Shipment arriving today via UPS.<br>
+                                    <span class="font-bold cursor-pointer underline"
+                                        onclick="window.location.href='receipt.html'">Verify Receipt →</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="text-lg font-semibold text-gray-800 mb-3">Active Campaigns</h2>
+
+                    <div class="dashboard-campaigns">
+                        <!-- Campaign Card -->
+                        <div class="card cursor-pointer hover:bg-gray-50 transition"
+                            onclick="window.location.href='task_list.html'">
+                            <div class="flex justify-between items-start mb-2">
+                                <span
+                                    class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Action
+                                    Required</span>
+                                <span class="text-xs text-gray-500">Start: Dec 20</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Holiday Promo 2025</h3>
+                            <p class="text-sm text-gray-600 mb-3">Kit: Standard + Window Clings</p>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>Receipt Pending</span>
+                                <span>1/5 Tasks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="text-lg font-semibold text-gray-800 mb-3 mt-6">Past Campaigns</h2>
+
+                    <div class="dashboard-campaigns">
+                        <div class="card opacity-60">
+                            <div class="flex justify-between items-start mb-2">
+                                <span
+                                    class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
+                                <span class="text-xs text-gray-500">Nov 15, 2024</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Fall Refresh 2024</h3>
+                            <p class="text-sm text-gray-600 mb-3">Kit: Window Display</p>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                                <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Nav -->
+                <div class="bottom-nav">
+                    <div class="nav-item active" onclick="window.location.reload()">
+                        <i data-lucide="home" size="20"></i>
+                        <span>Home</span>
+                    </div>
+                    <div class="nav-item" onclick="window.location.href='task_list.html'">
+                        <i data-lucide="list-checks" size="20"></i>
+                        <span>Tasks</span>
+                    </div>
+                    <div class="nav-item" onclick="window.location.href='profile.html'">
+                        <i data-lucide="user" size="20"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESKTOP VIEW CONTAINER - High Fidelity Dashboard -->
+    <div class="desktop-view-container">
+        <!-- Top Navigation (Matches Manager Dashboard Style) -->
+        <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <div id="brand-logo-desktop" class="flex items-center">
+                    <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+                </div>
+                <div>
+                    <span class="font-bold text-gray-700">Good2Go #3044</span>
+                    <span class="text-sm text-gray-500 ml-2">Store Execution Portal</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+                <a href="#" class="text-blue-600 border-b-2 border-blue-600 h-16 flex items-center">Dashboard</a>
+                <a href="task_list.html" class="hover:text-blue-600 h-16 flex items-center">My Tasks</a>
+                <a href="verified_photos.html" class="hover:text-blue-600 h-16 flex items-center">History</a>
+                <a href="profile.html" class="hover:text-blue-600 h-16 flex items-center">Profile</a>
+                <div class="relative">
+                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i data-lucide="bell" size="16"></i>
+                    </div>
+                    <div
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                        1</div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Store Dashboard</h1>
+                <div class="text-sm text-gray-500">Welcome back, Team Member</div>
+            </div>
+
+            <!-- Highlights Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- KPI 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-blue-50 rounded-lg">
+                            <i data-lucide="target" class="text-blue-600" size="24"></i>
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full">Active</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">1</div>
+                    <div class="text-sm text-gray-500">Active Campaign</div>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-yellow-50 rounded-lg">
+                            <i data-lucide="clock" class="text-yellow-600" size="24"></i>
+                        </div>
+                        <span
+                            class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Pending</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">4</div>
+                    <div class="text-sm text-gray-500">Tasks Remaining</div>
+                    <div class="text-xs text-red-500 mt-1">1 Shipment Receipt Overdue</div>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-green-50 rounded-lg">
+                            <i data-lucide="check-circle" class="text-green-600" size="24"></i>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Month</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">92%</div>
+                    <div class="text-sm text-gray-500">Execution Score</div>
                 </div>
             </div>
 
-            <!-- Screen Content -->
-            <div id="screen-dashboard" class="screen">
-                <h1 class="text-2xl font-bold text-gray-900 mb-4">Good2Go #3044</h1>
-
-                <!-- Alert Banner -->
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i data-lucide="alert-triangle" class="text-yellow-400" size="20"></i>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Column -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Urgent Actions -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div
+                            class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700 flex justify-between items-center">
+                            <span>Priority Actions</span>
+                            <span class="text-xs font-normal text-gray-500">Sorted by urgency</span>
                         </div>
-                        <div class="ml-3">
-                            <p class="text-sm text-yellow-700">
-                                Shipment arriving today via UPS.<br>
-                                <span class="font-bold cursor-pointer underline"
-                                    onclick="window.location.href='receipt.html'">Verify Receipt →</span>
-                            </p>
+                        <div class="divide-y divide-gray-100">
+                            <!-- Action Item -->
+                            <div class="p-4 hover:bg-gray-50 flex items-center gap-4 cursor-pointer"
+                                onclick="window.location.href='receipt.html'">
+                                <div class="p-3 bg-red-50 rounded-lg flex-shrink-0">
+                                    <i data-lucide="package-alert" class="text-red-600" size="20"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-900">Verify Shipment Receipt</div>
+                                    <div class="text-sm text-gray-500">Holiday Promo 2025 • UPS Delivery</div>
+                                </div>
+                                <button
+                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">Start</button>
+                            </div>
+
+                            <!-- Action Item -->
+                            <div class="p-4 hover:bg-gray-50 flex items-center gap-4 cursor-pointer"
+                                onclick="window.location.href='task_list.html'">
+                                <div class="p-3 bg-blue-50 rounded-lg flex-shrink-0">
+                                    <i data-lucide="camera" class="text-blue-600" size="20"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-900">Capture Window Display</div>
+                                    <div class="text-sm text-gray-500">Holiday Promo 2025 • Front Window</div>
+                                </div>
+                                <button
+                                    class="px-4 py-2 border border-gray-200 text-gray-600 text-sm rounded-lg hover:bg-gray-50">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Campaigns List -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 font-bold text-gray-700">Active Campaigns</div>
+                        <div class="p-6">
+                            <div class="flex items-start gap-6">
+                                <img src="https://images.unsplash.com/photo-1513297887119-d46091b24bfa?w=150&h=150&fit=crop"
+                                    class="w-24 h-24 rounded-lg object-cover bg-gray-100">
+                                <div class="flex-1">
+                                    <div class="flex justify-between">
+                                        <h3 class="text-lg font-bold text-gray-900">Holiday Promo 2025</h3>
+                                        <span class="text-sm text-gray-500">Due in 5 days</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mt-1 mb-3">Install styling kits A and B in the main
+                                        aisle and front window.</p>
+
+                                    <div class="w-full bg-gray-100 rounded-full h-2 mb-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 20%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-500">
+                                        <span>20% Complete</span>
+                                        <span>4 Tasks Remaining</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <h2 class="text-lg font-semibold text-gray-800 mb-3">Active Campaigns</h2>
-
-                <div class="dashboard-campaigns">
-                    <!-- Campaign Card -->
-                    <div class="card cursor-pointer hover:bg-gray-50 transition"
-                        onclick="window.location.href='task_list.html'">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Action
-                                Required</span>
-                            <span class="text-xs text-gray-500">Start: Dec 20</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">Holiday Promo 2025</h3>
-                        <p class="text-sm text-gray-600 mb-3">Kit: Standard + Window Clings</p>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
-                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 15%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-500">
-                            <span>Receipt Pending</span>
-                            <span>1/5 Tasks</span>
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-6 text-white shadow-lg">
+                        <h3 class="font-bold text-lg mb-2">Store Team</h3>
+                        <p class="text-blue-100 text-sm mb-4">Your store execution stats are in the top 10% this week!
+                        </p>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="flex -space-x-2">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-white/20 border-2 border-blue-600 flex items-center justify-center text-xs">
+                                    JS</div>
+                                <div
+                                    class="w-8 h-8 rounded-full bg-white/20 border-2 border-blue-600 flex items-center justify-center text-xs">
+                                    JD</div>
+                            </div>
+                            <span class="text-xs text-blue-100">+2 others active</span>
                         </div>
                     </div>
-                </div>
 
-                <h2 class="text-lg font-semibold text-gray-800 mb-3 mt-6">Past Campaigns</h2>
-
-                <div class="dashboard-campaigns">
-                    <div class="card opacity-60">
-                        <div class="flex justify-between items-start mb-2">
-                            <span
-                                class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
-                            <span class="text-xs text-gray-500">Nov 15, 2024</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">Fall Refresh 2024</h3>
-                        <p class="text-sm text-gray-600 mb-3">Kit: Window Display</p>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
-                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
-                        </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <h4 class="font-bold text-gray-700 mb-3 text-sm">Quick Links</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="text-blue-600 hover:underline flex items-center gap-2"><i
+                                        data-lucide="file-text" size="14"></i> Guide: Holiday Instal.</a></li>
+                            <li><a href="#" class="text-blue-600 hover:underline flex items-center gap-2"><i
+                                        data-lucide="phone" size="14"></i> Support Hotline</a></li>
+                            <li><a href="#" class="text-blue-600 hover:underline flex items-center gap-2"><i
+                                        data-lucide="printer" size="14"></i> Print Shipping Lbl</a></li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-
-            <!-- Bottom Nav -->
-            <div class="bottom-nav">
-                <div class="nav-item active" onclick="window.location.reload()">
-                    <i data-lucide="home" size="20"></i>
-                    <span>Home</span>
-                </div>
-                <div class="nav-item" onclick="window.location.href='task_list.html'">
-                    <i data-lucide="list-checks" size="20"></i>
-                    <span>Tasks</span>
-                </div>
-                <div class="nav-item" onclick="window.location.href='profile.html'">
-                    <i data-lucide="user" size="20"></i>
-                    <span>Profile</span>
                 </div>
             </div>
         </div>
