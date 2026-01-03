@@ -94,6 +94,15 @@ class OfflineManager {
             // Fallback for non-phone layouts
             document.body.prepend(banner);
         }
+
+        // AGENT FIX: Inject a second banner instance for Desktop View if it exists
+        // This ensures visibility when Mobile View (and thus #phone) is hidden
+        const desktopContainer = document.querySelector('.desktop-view-container');
+        if (desktopContainer) {
+            const desktopBanner = banner.cloneNode(true);
+            // Insert at the very top of desert container, or before the nav
+            desktopContainer.prepend(desktopBanner);
+        }
         
         if (window.lucide) window.lucide.createIcons();
     }
