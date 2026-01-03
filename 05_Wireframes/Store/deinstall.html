@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Store Portal - Deinstall</title>
+    <title>Store Portal - Deinstall (v4)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="../theme-config.js"></script>
     <script src="../theme-loader.js"></script>
     <script src="../offline-manager.js"></script>
-    <script src="../device-ui.js?v=3"></script>
+    <script src="../device-ui.js?v=4"></script>
     <style>
         /* Theme CSS Variables */
         :root {
@@ -27,6 +27,36 @@
             --accent: #FCD732;
         }
 
+        .bg-orange-600 {
+            background-color: #ea580c;
+        }
+
+        .text-orange-600 {
+            color: #ea580c;
+        }
+
+        .bg-orange-50 {
+            background-color: #fff7ed;
+        }
+
+        .border-orange-200 {
+            border-color: #fed7aa;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #333;
             min-height: 100vh;
@@ -34,6 +64,7 @@
             font-family: system-ui, -apple-system, sans-serif;
         }
 
+        /* Mobile View Styles */
         .phone-container {
             display: flex;
             justify-content: center;
@@ -94,10 +125,6 @@
             cursor: pointer;
         }
 
-        .bg-orange-600 {
-            background-color: #ea580c;
-        }
-
         .bottom-nav {
             height: 80px;
             background: white;
@@ -124,20 +151,6 @@
         .nav-item.active {
             color: var(--primary);
         }
-
-        .tooltip-help-banner {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-            color: white;
-            padding: 8px 16px;
-            text-align: center;
-            font-size: 13px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            width: 100%;
-            box-sizing: border-box;
-        }
     </style>
 </head>
 
@@ -154,94 +167,244 @@
         </a>
         <span style="margin-left: 8px;">💡 Store Portal</span>
     </div>
-    <div class="phone-container">
-        <div id="phone">
-            <div class="safe-area-top">
-                <span>9:42</span>
-                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+
+    <!-- MOBILE VIEW CONTAINER -->
+    <div class="mobile-view-container">
+        <div class="phone-container">
+            <div id="phone">
+                <div class="safe-area-top">
+                    <span>9:42</span>
+                    <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                    </div>
+                </div>
+
+                <div id="screen-deinstall" class="screen">
+                    <div class="flex items-center mb-4">
+                        <button onclick="window.history.back()" class="p-2 -ml-2"><i
+                                data-lucide="arrow-left"></i></button>
+                        <h1 class="text-lg font-bold ml-2">Remove Materials</h1>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5 text-orange-600"></i>
+                            <div>
+                                <p class="text-sm font-medium text-orange-800">Deadline: <span class="font-bold">Jan 15,
+                                        2026</span></p>
+                                <p class="text-xs text-orange-600">13 days remaining</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm font-medium text-gray-600">Progress</span>
+                        <span class="text-sm font-bold text-orange-600">25%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                        <div class="bg-orange-500 h-2 rounded-full" style="width: 25%"></div>
+                    </div>
+
+                    <!-- Group: Windows (Removal) -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Slot: Front Windows
+                        </h3>
+                        <div class="card border-l-4 border-green-500">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h4 class="font-bold">Window Cling (Left)</h4>
+                                    <p class="text-xs text-gray-500">Peel carefully.</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded">Removed</span>
+                            </div>
+                            <div
+                                class="bg-gray-100 rounded h-24 flex items-center justify-center border-2 border-dashed border-gray-300">
+                                <img src="https://via.placeholder.com/300x100?text=Empty+Window+Photo"
+                                    class="h-full w-full object-cover rounded">
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h4 class="font-bold">Window Cling (Right)</h4>
+                                    <p class="text-xs text-gray-500">Peel carefully.</p>
+                                </div>
+                                <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded">Pending</span>
+                            </div>
+                            <button
+                                class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
+                                onclick="window.location.href='capture_flow.html'">
+                                <i data-lucide="camera" size="24"></i>
+                                <span class="text-sm font-medium">Photo Empty Location</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pb-8">
+                        <button onclick="window.location.href='deinstall_attestation.html'"
+                            class="btn-primary bg-orange-600 hover:bg-orange-700 cursor-pointer">Complete Removal &
+                            Attest</button>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
+                            size="20"></i><span>Home</span></div>
+                    <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
+                            data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
+                    <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
+                            size="20"></i><span>Profile</span></div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div id="screen-deinstall" class="screen">
-                <div class="flex items-center mb-4">
-                    <button onclick="window.history.back()" class="p-2 -ml-2"><i data-lucide="arrow-left"></i></button>
-                    <h1 class="text-lg font-bold ml-2">Remove Materials</h1>
+    <!-- DESKTOP VIEW CONTAINER - Removal Verification -->
+    <div class="desktop-view-container">
+        <!-- Top Navigation (Standard) -->
+        <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <div id="brand-logo-desktop" class="flex items-center">
+                    <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
                 </div>
-
-                <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="clock" class="w-5 h-5 text-orange-600"></i>
-                        <div>
-                            <p class="text-sm font-medium text-orange-800">Deadline: <span class="font-bold">Jan 15,
-                                    2026</span></p>
-                            <p class="text-xs text-orange-600">13 days remaining</p>
-                        </div>
+                <div>
+                    <span class="font-bold text-gray-700">Good2Go #3044</span>
+                    <span class="text-sm text-gray-500 ml-2">Store Execution Portal</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+                <a href="dashboard.html" class="hover:text-blue-600 h-16 flex items-center">Dashboard</a>
+                <a href="task_list.html" class="text-blue-600 border-b-2 border-blue-600 h-16 flex items-center">My
+                    Tasks</a>
+                <a href="verified_photos.html" class="hover:text-blue-600 h-16 flex items-center">History</a>
+                <a href="profile.html" class="hover:text-blue-600 h-16 flex items-center">Profile</a>
+                <div class="relative">
+                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i data-lucide="bell" size="16"></i>
                     </div>
                 </div>
+            </div>
+        </nav>
 
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-sm font-medium text-gray-600">Progress</span>
-                    <span class="text-sm font-bold text-orange-600">25%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
-                    <div class="bg-orange-500 h-2 rounded-full" style="width: 25%"></div>
-                </div>
-
-                <!-- Group: Windows (Removal) -->
-                <div class="mb-6">
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Slot: Front Windows</h3>
-                    <div class="card border-l-4 border-green-500">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h4 class="font-bold">Window Cling (Left)</h4>
-                                <p class="text-xs text-gray-500">Peel carefully.</p>
-                            </div>
-                            <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded">Removed</span>
-                        </div>
-                        <div
-                            class="bg-gray-100 rounded h-24 flex items-center justify-center border-2 border-dashed border-gray-300">
-                            <img src="https://via.placeholder.com/300x100?text=Empty+Window+Photo"
-                                class="h-full w-full object-cover rounded">
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h4 class="font-bold">Window Cling (Right)</h4>
-                                <p class="text-xs text-gray-500">Peel carefully.</p>
-                            </div>
-                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded">Pending</span>
-                        </div>
-                        <button
-                            class="w-full h-24 bg-white border-2 border-dashed border-orange-300 rounded-lg flex flex-col items-center justify-center text-orange-500 gap-2 hover:bg-orange-50 transition cursor-pointer"
-                            onclick="window.location.href='capture_flow.html'">
-                            <i data-lucide="camera" size="24"></i>
-                            <span class="text-sm font-medium">Photo Empty Location</span>
-                        </button>
+        <div class="max-w-7xl mx-auto p-8">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <button onclick="window.location.href='task_list.html'"
+                        class="p-2 bg-white rounded-lg border border-gray-200 hover:bg-gray-50">
+                        <i data-lucide="arrow-left" class="text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Campaign Removal</h1>
+                        <p class="text-gray-500 text-sm">Verify removal of all campaign materials</p>
                     </div>
                 </div>
-
-                <div class="pb-8">
+                <div>
                     <button onclick="window.location.href='deinstall_attestation.html'"
-                        class="btn-primary bg-orange-600 hover:bg-orange-700 cursor-pointer">Complete Removal &
-                        Attest</button>
+                        class="px-6 py-2 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 shadow-sm flex items-center gap-2">
+                        <i data-lucide="check-circle" size="18"></i> Complete Removal
+                    </button>
                 </div>
             </div>
 
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
-                        size="20"></i><span>Home</span></div>
-                <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
-                        data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
-                <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
-                        size="20"></i><span>Profile</span></div>
+            <!-- Deadline Alert -->
+            <div class="flex items-center gap-3 p-4 bg-orange-50 border border-orange-100 rounded-lg mb-8">
+                <i data-lucide="alert-triangle" class="text-orange-600"></i>
+                <div class="text-sm text-orange-900">
+                    <span class="font-bold">Action Required:</span> All materials must be removed by Jan 15, 2026.
+                    Failure to comply may result in audit flags.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Removal Slots -->
+                <div class="lg:col-span-2 space-y-8">
+
+                    <!-- Slot Group 1 -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Front Windows</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Photo Card 1 (Done) -->
+                            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="font-medium text-gray-800">Window Cling (Left)</div>
+                                        <div class="text-xs text-gray-500">Verify empty glass</div>
+                                    </div>
+                                    <span
+                                        class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-bold">Removed</span>
+                                </div>
+                                <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden relative group">
+                                    <img src="https://via.placeholder.com/400x225?text=Empty+Window+Photo"
+                                        class="w-full h-full object-cover">
+                                    <div
+                                        class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                        <button
+                                            class="text-white bg-black bg-opacity-50 px-3 py-1 rounded text-sm hover:bg-white hover:text-black transition">Replace</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Photo Card 2 (Pending) -->
+                            <div
+                                class="bg-white p-4 rounded-xl border border-dashed border-orange-300 shadow-sm bg-orange-50">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="font-medium text-gray-800">Window Cling (Right)</div>
+                                        <div class="text-xs text-orange-600">Upload empty glass photo</div>
+                                    </div>
+                                    <span
+                                        class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full font-bold">Pending</span>
+                                </div>
+                                <div class="aspect-video bg-white rounded-lg border-2 border-dashed border-orange-200 flex flex-col items-center justify-center cursor-pointer hover:border-orange-400 transition"
+                                    onclick="simulateUpload(this)">
+                                    <i data-lucide="trash-2" class="text-orange-400 mb-2" size="32"></i>
+                                    <span class="text-sm text-orange-600 font-medium">Verify Removal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right: Guide -->
+                <div class="lg:col-span-1">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 sticky top-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-gray-200 rounded-lg text-gray-600">
+                                <i data-lucide="info" size="24"></i>
+                            </div>
+                            <h2 class="text-lg font-bold text-gray-900">Removal Instructions</h2>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">Clean Glass Surface</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-3">Peel window clings slowly to avoid
+                                    residue. Use provided scraper blade if necessary. Upload a photo of the clear glass.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">Disposal</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-3">Cardboard displays can be
+                                    recycled. Clings and plastic film must be discarded in general waste.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
+
+        function simulateUpload(el) {
+            el.innerHTML = '<div class="text-green-600 flex flex-col items-center"><i data-lucide="check" size="32"></i><span class="font-bold">Verified</span></div>';
+            lucide.createIcons();
+            el.parentElement.classList.remove('bg-orange-50', 'border-orange-300');
+            el.parentElement.classList.add('bg-white', 'border-gray-200');
+        }
     </script>
 </body>
 
