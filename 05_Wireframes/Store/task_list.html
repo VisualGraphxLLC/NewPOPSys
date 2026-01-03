@@ -500,7 +500,8 @@
                         <!-- Tasks Table/Grid -->
                         <div class="divide-y divide-gray-100">
                             <!-- Task 1 -->
-                            <div class="p-6 hover:bg-gray-50 transition flex items-center gap-6">
+                            <div id="desktop-task-receive"
+                                class="p-6 hover:bg-gray-50 transition flex items-center gap-6">
                                 <div
                                     class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
                                     <i data-lucide="package" size="20"></i>
@@ -515,38 +516,37 @@
                                         Counter Display, Flyers.</p>
                                 </div>
                                 <div>
-                                    <button onclick="window.location.href='receipt.html'"
+                                    <button id="desktop-btn-receive" onclick="window.location.href='receipt.html'"
                                         class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-sm">
                                         Start Verification
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Task 2 (Locked) -->
-                            <div class="p-6 bg-gray-50 flex items-center gap-6 opacity-75">
+                            <!-- Task 2 (Install) -->
+                            <div id="desktop-task-install" class="p-6 bg-gray-50 flex items-center gap-6 opacity-75">
                                 <div
                                     class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 text-gray-400">
-                                    <i data-lucide="hammer" size="20"></i>
-                                    <!-- Changed from wrench to hammer for variety/test, Lucide wrench is fine too -->
-                                    <!-- Using standard wrench for consistency if needed, sticking to wrench below -->
+                                    <i data-lucide="wrench" size="20"></i>
                                 </div>
                                 <div class="flex-1">
                                     <div class="flex items-center gap-3">
                                         <h3 class="font-semibold text-gray-500">2. Install Materials</h3>
-                                        <i data-lucide="lock" size="14" class="text-gray-400"></i>
+                                        <i data-lucide="lock" size="14" class="text-gray-400 lock-icon"></i>
                                     </div>
                                     <p class="text-sm text-gray-400 mt-1">Requires Receipt Verification completion.</p>
                                 </div>
                                 <div>
-                                    <button
+                                    <button id="desktop-btn-install" disabled
+                                        onclick="window.location.href='install.html'"
                                         class="px-5 py-2.5 bg-gray-200 text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed">
                                         Locked
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Task 3 (Locked) -->
-                            <div class="p-6 bg-gray-50 flex items-center gap-6 opacity-75">
+                            <!-- Task 3 (Attest) -->
+                            <div id="desktop-task-attest" class="p-6 bg-gray-50 flex items-center gap-6 opacity-75">
                                 <div
                                     class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 text-gray-400">
                                     <i data-lucide="check-circle" size="20"></i>
@@ -554,14 +554,39 @@
                                 <div class="flex-1">
                                     <div class="flex items-center gap-3">
                                         <h3 class="font-semibold text-gray-500">3. Attestation</h3>
-                                        <i data-lucide="lock" size="14" class="text-gray-400"></i>
+                                        <i data-lucide="lock" size="14" class="text-gray-400 lock-icon"></i>
                                     </div>
                                     <p class="text-sm text-gray-400 mt-1">Sign-off by Store Manager.</p>
                                 </div>
                                 <div>
-                                    <button
+                                    <button id="desktop-btn-attest" disabled
+                                        onclick="window.location.href='attestation.html'"
                                         class="px-5 py-2.5 bg-gray-200 text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed">
                                         Locked
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Task 4 (Deinstall) - Initially Hidden -->
+                            <div id="desktop-task-deinstall"
+                                class="p-6 bg-orange-50 flex items-center gap-6 hidden border-t border-orange-200">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 text-orange-600">
+                                    <i data-lucide="trash-2" size="20"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3">
+                                        <h3 class="font-semibold text-gray-900">4. Campaign Removal</h3>
+                                        <span
+                                            class="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Action
+                                            Required</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1">Remove all materials and verify cleanup.</p>
+                                </div>
+                                <div>
+                                    <button id="desktop-btn-deinstall" onclick="window.location.href='deinstall.html'"
+                                        class="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg shadow-sm">
+                                        Start Removal
                                     </button>
                                 </div>
                             </div>
@@ -595,11 +620,14 @@
         let receiptComplete = localStorage.getItem('receiptComplete') === 'true';
         let installComplete = localStorage.getItem('installComplete') === 'true';
         let deinstallPhase = localStorage.getItem('deinstallPhase') === 'true';
-        let signatureComplete = localStorage.getItem('signatureComplete') === 'true'; // Added missing var
+        let signatureComplete = localStorage.getItem('signatureComplete') === 'true';
+        let deinstallComplete = localStorage.getItem('deinstallComplete') === 'true';
 
         // Initialize view based on state
         function init() {
-            // Restore state from localStorage
+            updateDesktopView();
+
+            // Mobile restore state from localStorage
             if (receiptComplete) {
                 // Mark Receive tab as complete
                 markTabComplete('receive');
@@ -649,6 +677,10 @@
                 }
             }
 
+            if (signatureComplete) {
+                markTabComplete('attest');
+            }
+
             // Check for Deinstall Phase
             if (deinstallPhase) {
                 const btn = document.getElementById('tab-deinstall');
@@ -657,14 +689,112 @@
 
                 // If everything else is done, switch to Deinstall
                 // Assuming deinstallComplete is false for now
-                if (installComplete && signatureComplete) {
+                if (installComplete && signatureComplete && !deinstallComplete) {
                     const deinstLocked = document.getElementById('deinstall-content-locked');
                     const deinstActive = document.getElementById('deinstall-content-active');
                     if (deinstLocked) deinstLocked.classList.add('hidden');
                     if (deinstActive) deinstActive.classList.remove('hidden');
                     switchTaskTab('deinstall');
                 }
+
+                if (deinstallComplete) {
+                    markTabComplete('deinstall');
+                }
             }
+        }
+
+        function updateDesktopView() {
+            // Updated Receive
+            if (receiptComplete) {
+                const btn = document.getElementById('desktop-btn-receive');
+                if (btn) {
+                    btn.innerHTML = '<i data-lucide="check" size="16"></i> Verified';
+                    btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                    btn.classList.add('bg-green-600', 'text-white', 'hover:bg-green-700');
+                }
+
+                // Unlock Install
+                const taskInstall = document.getElementById('desktop-task-install');
+                const btnInstall = document.getElementById('desktop-btn-install');
+                if (taskInstall) {
+                    taskInstall.classList.remove('opacity-75', 'bg-gray-50');
+                    taskInstall.classList.add('bg-white');
+
+                    // Enhance text
+                    const title = taskInstall.querySelector('h3');
+                    if (title) {
+                        title.classList.remove('text-gray-500');
+                        title.classList.add('text-gray-900');
+                    }
+                    const lock = taskInstall.querySelector('.lock-icon');
+                    if (lock) lock.classList.add('hidden');
+                }
+                if (btnInstall) {
+                    btnInstall.disabled = false;
+                    btnInstall.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+                    btnInstall.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-sm');
+                    btnInstall.textContent = 'Start Installation';
+                }
+            }
+
+            // Updated Install
+            if (installComplete) {
+                const btn = document.getElementById('desktop-btn-install');
+                if (btn) {
+                    btn.innerHTML = '<i data-lucide="check" size="16"></i> Installed';
+                    btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                    btn.classList.add('bg-green-600', 'text-white', 'hover:bg-green-700');
+                }
+
+                // Unlock Attest
+                const taskAttest = document.getElementById('desktop-task-attest');
+                const btnAttest = document.getElementById('desktop-btn-attest');
+                if (taskAttest) {
+                    taskAttest.classList.remove('opacity-75', 'bg-gray-50');
+                    taskAttest.classList.add('bg-white');
+
+                    const title = taskAttest.querySelector('h3');
+                    if (title) {
+                        title.classList.remove('text-gray-500');
+                        title.classList.add('text-gray-900');
+                    }
+                    const lock = taskAttest.querySelector('.lock-icon');
+                    if (lock) lock.classList.add('hidden');
+                }
+                if (btnAttest) {
+                    btnAttest.disabled = false;
+                    btnAttest.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+                    btnAttest.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-sm');
+                    btnAttest.textContent = 'Sign Attestation';
+                }
+            }
+
+            // Updated Attest
+            if (signatureComplete) {
+                const btn = document.getElementById('desktop-btn-attest');
+                if (btn) {
+                    btn.innerHTML = '<i data-lucide="check-all" size="16"></i> Signed';
+                    btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                    btn.classList.add('bg-green-600', 'text-white', 'hover:bg-green-700');
+                }
+            }
+
+            // Deinstall Phase
+            if (deinstallPhase) {
+                const row = document.getElementById('desktop-task-deinstall');
+                if (row) row.classList.remove('hidden');
+
+                if (deinstallComplete) {
+                    const btn = document.getElementById('desktop-btn-deinstall');
+                    if (btn) {
+                        btn.innerHTML = '<i data-lucide="trash" size="16"></i> Removed';
+                        btn.classList.remove('bg-orange-600', 'hover:bg-orange-700');
+                        btn.classList.add('bg-green-600', 'text-white', 'hover:bg-green-700');
+                    }
+                }
+            }
+
+            lucide.createIcons();
         }
 
         function switchTaskTab(tabName) {

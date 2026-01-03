@@ -181,72 +181,198 @@
         </a>
         <span style="margin-left: 8px;">💡 Store Portal</span>
     </div>
-    <div class="phone-container">
-        <div id="phone">
-            <div class="safe-area-top">
-                <span>9:42</span>
-                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+    <!-- MOBILE VIEW CONTAINER -->
+    <div class="mobile-view-container">
+        <div class="phone-container">
+            <div id="phone">
+                <div class="safe-area-top">
+                    <span>9:42</span>
+                    <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                    </div>
+                </div>
+
+                <div id="screen-attestation" class="screen">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button onclick="window.history.back()" class="p-2 -ml-2"><i
+                                data-lucide="arrow-left"></i></button>
+                        <h1 class="text-2xl font-bold">Attest Completion</h1>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i></div>
+                            <div>
+                                <div class="font-bold text-lg">Holiday Promo 2025</div>
+                                <div class="text-sm text-gray-500">Store #4521 - Downtown</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="attestation-checklist" class="card mb-4">
+                        <h2 class="font-bold mb-4">I confirm the following:</h2>
+                        <label class="checkbox-item">
+                            <input type="checkbox" onchange="checkSubmitReady()">
+                            <div>
+                                <div class="font-medium">All materials installed</div>
+                                <div class="text-sm text-gray-500">Per instructions</div>
+                            </div>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" onchange="checkSubmitReady()">
+                            <div>
+                                <div class="font-medium">Photos represent installation</div>
+                                <div class="text-sm text-gray-500">Accurate and clear</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="card mb-4">
+                        <h2 class="font-bold mb-2">Digital Signature</h2>
+                        <div id="signature-pad" class="signature-pad" onclick="simulateSign()">
+                            <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                            <span class="text-gray-400 text-sm">Tap to sign</span>
+                        </div>
+                        <button onclick="clearSignature()" class="text-sm text-blue-600 mt-2">Clear Signature</button>
+                    </div>
+
+                    <div class="w-full p-4 mt-6">
+                        <button id="attestation-submit" onclick="submitAttestation()" disabled
+                            class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed">Submit
+                            Attestation</button>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
+                            size="20"></i><span>Home</span></div>
+                    <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
+                            data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
+                    <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
+                            size="20"></i><span>Profile</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESKTOP VIEW CONTAINER -->
+    <div class="desktop-view-container">
+        <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <div id="brand-logo-desktop" class="flex items-center">
+                    <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+                </div>
+                <div>
+                    <span class="font-bold text-gray-700">Good2Go #3044</span>
+                    <span class="text-sm text-gray-500 ml-2">Store Execution Portal</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+                <a href="dashboard.html" class="hover:text-blue-600 h-16 flex items-center">Dashboard</a>
+                <a href="task_list.html" class="text-blue-600 border-b-2 border-blue-600 h-16 flex items-center">My
+                    Tasks</a>
+                <a href="verified_photos.html" class="hover:text-blue-600 h-16 flex items-center">History</a>
+                <a href="profile.html" class="hover:text-blue-600 h-16 flex items-center">Profile</a>
+                <div class="relative">
+                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i data-lucide="bell" size="16"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-4xl mx-auto p-8">
+            <div class="flex items-center gap-4 mb-8">
+                <button onclick="window.history.back()"
+                    class="p-2 bg-white rounded-lg border border-gray-200 hover:bg-gray-50">
+                    <i data-lucide="arrow-left" class="text-gray-600"></i>
+                </button>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Campaign Completion Attestation</h1>
+                    <p class="text-sm text-gray-500">Final verification for Holiday Promo 2025</p>
                 </div>
             </div>
 
-            <div id="screen-attestation" class="screen">
-                <div class="flex items-center gap-3 mb-6">
-                    <button onclick="window.history.back()" class="p-2 -ml-2"><i data-lucide="arrow-left"></i></button>
-                    <h1 class="text-2xl font-bold">Attest Completion</h1>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><i
-                                data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i></div>
-                        <div>
-                            <div class="font-bold text-lg">Holiday Promo 2025</div>
-                            <div class="text-sm text-gray-500">Store #4521 - Downtown</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Summary Card -->
+                <div class="md:col-span-1">
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Ready to Submit?</h3>
+                        <p class="text-sm text-blue-800 mb-4">By signing, you confirm that all 5 display units have been
+                            set up according to the planogram and photos have been uploaded.</p>
+                        <div class="text-xs text-blue-600 font-mono bg-white p-2 rounded border border-blue-200">
+                            Ref: CAM-2025-HOL-001
                         </div>
                     </div>
                 </div>
 
-                <div id="attestation-checklist" class="card mb-4">
-                    <h2 class="font-bold mb-4">I confirm the following:</h2>
-                    <label class="checkbox-item">
-                        <input type="checkbox" onchange="checkSubmitReady()">
-                        <div>
-                            <div class="font-medium">All materials installed</div>
-                            <div class="text-sm text-gray-500">Per instructions</div>
-                        </div>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" onchange="checkSubmitReady()">
-                        <div>
-                            <div class="font-medium">Photos represent installation</div>
-                            <div class="text-sm text-gray-500">Accurate and clear</div>
-                        </div>
-                    </label>
-                </div>
+                <!-- Attestation Form -->
+                <div class="md:col-span-2">
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                        <div class="p-6 border-b border-gray-100">
+                            <h2 class="font-bold text-lg mb-4">I confirm the following:</h2>
 
-                <div class="card mb-4">
-                    <h2 class="font-bold mb-2">Digital Signature</h2>
-                    <div id="signature-pad" class="signature-pad" onclick="simulateSign()">
-                        <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
-                        <span class="text-gray-400 text-sm">Tap to sign</span>
+                            <div class="space-y-4">
+                                <label
+                                    class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-transparent hover:border-gray-200 transition">
+                                    <input type="checkbox" class="desktop-checkbox mt-1 w-5 h-5 text-blue-600 rounded"
+                                        onchange="checkSubmitReady()">
+                                    <div>
+                                        <div class="font-medium text-gray-900">All materials installed</div>
+                                        <div class="text-sm text-gray-500">I have received and installed all components
+                                            of the display kit.</div>
+                                    </div>
+                                </label>
+
+                                <label
+                                    class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-transparent hover:border-gray-200 transition">
+                                    <input type="checkbox" class="desktop-checkbox mt-1 w-5 h-5 text-blue-600 rounded"
+                                        onchange="checkSubmitReady()">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Photos represent installation</div>
+                                        <div class="text-sm text-gray-500">The photos uploaded are recent, accurate, and
+                                            clearly show the completed work.</div>
+                                    </div>
+                                </label>
+
+                                <label
+                                    class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-transparent hover:border-gray-200 transition">
+                                    <input type="checkbox" class="desktop-checkbox mt-1 w-5 h-5 text-blue-600 rounded"
+                                        onchange="checkSubmitReady()">
+                                    <div>
+                                        <div class="font-medium text-gray-900">Compliance Verified</div>
+                                        <div class="text-sm text-gray-500">The installation meets all safety and
+                                            placement guidelines.</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="p-6 bg-gray-50">
+                            <h2 class="font-bold text-lg mb-4">Digital Signature</h2>
+                            <div id="desktop-signature-pad"
+                                class="border-2 border-dashed border-gray-300 rounded-lg h-40 bg-white flex flex-col items-center justify-center cursor-crosshair hover:border-blue-400 transition"
+                                onclick="simulateSign(true)">
+                                <div class="initial-state flex flex-col items-center">
+                                    <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                                    <span class="text-gray-500 text-sm">Click to Sign</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <button onclick="clearSignature(true)"
+                                    class="text-sm text-gray-500 hover:text-red-600 font-medium">Clear
+                                    Signature</button>
+                                <button id="desktop-attestation-submit" onclick="submitAttestation()" disabled
+                                    class="px-8 py-3 bg-gray-300 text-gray-500 font-bold rounded-lg opacity-50 cursor-not-allowed transition-all">
+                                    Complete & Submit
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button onclick="clearSignature()" class="text-sm text-blue-600 mt-2">Clear Signature</button>
                 </div>
-
-                <div class="w-full p-4 mt-6">
-                    <button id="attestation-submit" onclick="submitAttestation()" disabled
-                        class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed">Submit
-                        Attestation</button>
-                </div>
-            </div>
-
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
-                        size="20"></i><span>Home</span></div>
-                <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
-                        data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
-                <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
-                        size="20"></i><span>Profile</span></div>
             </div>
         </div>
     </div>
@@ -256,40 +382,97 @@
         let signatureComplete = false;
 
         function checkSubmitReady() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-            const btn = document.getElementById('attestation-submit');
+            // Mobile checks
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.desktop-checkbox)');
+            const mobileAllChecked = Array.from(checkboxes).length > 0 && Array.from(checkboxes).every(cb => cb.checked);
 
-            if (allChecked && signatureComplete) {
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            // Desktop checks
+            const desktopCheckboxes = document.querySelectorAll('.desktop-checkbox');
+            const desktopAllChecked = Array.from(desktopCheckboxes).length > 0 && Array.from(desktopCheckboxes).every(cb => cb.checked);
+
+            const btn = document.getElementById('attestation-submit');
+            const desktopBtn = document.getElementById('desktop-attestation-submit');
+
+            // Determine which view we are in/which button to unlock
+            if (mobileAllChecked && signatureComplete) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
             } else {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+
+            if (desktopAllChecked && signatureComplete) {
+                if (desktopBtn) {
+                    desktopBtn.disabled = false;
+                    desktopBtn.classList.remove('bg-gray-300', 'text-gray-500', 'opacity-50', 'cursor-not-allowed');
+                    desktopBtn.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+                }
+            } else {
+                if (desktopBtn) {
+                    desktopBtn.disabled = true;
+                    desktopBtn.classList.add('bg-gray-300', 'text-gray-500', 'opacity-50', 'cursor-not-allowed');
+                    desktopBtn.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+                }
             }
         }
 
-        function simulateSign() {
-            const pad = document.getElementById('signature-pad');
-            pad.classList.add('signed');
-            pad.innerHTML = '<div class="text-green-600 font-bold">✓ Signed</div>';
-            signatureComplete = true;
-            checkSubmitReady();
+        function simulateSign(isDesktop = false) {
+            const padId = isDesktop ? 'desktop-signature-pad' : 'signature-pad';
+            const pad = document.getElementById(padId);
+
+            if (pad) {
+                if (isDesktop) {
+                    pad.classList.remove('border-dashed', 'border-gray-300');
+                    pad.classList.add('border-solid', 'border-green-500', 'bg-green-50');
+                    pad.innerHTML = '<div class="text-green-600 font-bold flex flex-col items-center"><i data-lucide="check-circle" size="32" class="mb-2"></i><span>Manager Signed: Chris.Doe</span><span class="text-xs text-gray-500 font-normal">' + new Date().toLocaleString() + '</span></div>';
+                } else {
+                    pad.classList.add('signed');
+                    pad.innerHTML = '<div class="text-green-600 font-bold">✓ Signed</div>';
+                }
+                signatureComplete = true;
+                checkSubmitReady();
+                lucide.createIcons();
+            }
         }
 
-        function clearSignature() {
-            const pad = document.getElementById('signature-pad');
-            pad.classList.remove('signed');
-            pad.innerHTML = '<i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i><span class="text-gray-400 text-sm">Tap to sign</span>';
-            lucide.createIcons();
-            signatureComplete = false;
-            checkSubmitReady();
+        function clearSignature(isDesktop = false) {
+            const padId = isDesktop ? 'desktop-signature-pad' : 'signature-pad';
+            const pad = document.getElementById(padId);
+
+            if (pad) {
+                if (isDesktop) {
+                    pad.classList.add('border-dashed', 'border-gray-300');
+                    pad.classList.remove('border-solid', 'border-green-500', 'bg-green-50');
+                    pad.innerHTML = '<div class="initial-state flex flex-col items-center"><i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i><span class="text-gray-500 text-sm">Click to Sign</span></div>';
+                } else {
+                    pad.classList.remove('signed');
+                    pad.innerHTML = '<i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i><span class="text-gray-400 text-sm">Tap to sign</span>';
+                }
+                signatureComplete = false;
+                checkSubmitReady();
+                lucide.createIcons();
+            }
         }
 
         function submitAttestation() {
-            localStorage.setItem('installComplete', 'true'); // Ensure install marked done
-            alert('Attestation Submitted!');
-            window.location.href = 'task_list.html';
+            localStorage.setItem('signatureComplete', 'true');
+            // If we want to simulate linear progression, this is the end of the line for "Install" phase.
+            // Next up would be "Deinstall" if campaign is over.
+
+            // For desktop linear flow, maybe we want to go back to task list to see the "Completed" state
+            // OR go to dashboard.
+            if (document.body.classList.contains('device-desktop')) {
+                alert('Attestation Submitted Successfully!');
+                window.location.href = 'task_list.html';
+            } else {
+                alert('Attestation Submitted!');
+                window.location.href = 'task_list.html';
+            }
         }
     </script>
 </body>

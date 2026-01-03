@@ -419,21 +419,28 @@
         }
 
         function completeReceipt() {
-            // Visual feedback for desktop
+            // Update Data
+            localStorage.setItem('receiptComplete', 'true');
+
+            // Visual feedback
             const btn = event?.currentTarget;
             if (btn && btn.classList.contains('bg-blue-600')) {
                 btn.innerHTML = '<i data-lucide="check" size="18"></i> Verified!';
                 btn.classList.remove('bg-blue-600');
                 btn.classList.add('bg-green-600');
                 lucide.createIcons();
-                setTimeout(() => {
-                    localStorage.setItem('receiptComplete', 'true');
-                    window.location.href = 'task_list.html';
-                }, 800);
-            } else {
-                localStorage.setItem('receiptComplete', 'true');
-                window.location.href = 'task_list.html';
             }
+
+            // Navigation Logic
+            setTimeout(() => {
+                // If on Desktop, linear flow to Install
+                if (document.body.classList.contains('device-desktop')) {
+                    window.location.href = 'install.html';
+                } else {
+                    // Mobile flow returns to list to pick next task
+                    window.location.href = 'task_list.html';
+                }
+            }, 800);
         }
 
         /* Desktop Simulation: Auto-checks boxes to show "Scanner" effect */

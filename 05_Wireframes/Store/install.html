@@ -408,7 +408,17 @@
 
         function completeInstall() {
             localStorage.setItem('installComplete', 'true');
-            window.location.href = 'task_list.html';
+
+            // Linear Flow for Desktop
+            if (document.body.classList.contains('device-desktop')) {
+                // Check if attestation page exists/layout is ready logic? 
+                // We'll assume standard flow: Receipt -> Install -> Attest
+                window.location.href = 'attestion.html'; // Typo in filename in task_list? No, task_list says 'attestation.html'
+                // Wait, let's use 'attestation.html'
+                window.location.href = 'attestation.html';
+            } else {
+                window.location.href = 'task_list.html';
+            }
         }
 
         function simulateUpload(el) {
