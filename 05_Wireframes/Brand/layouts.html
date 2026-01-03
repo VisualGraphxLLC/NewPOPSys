@@ -261,10 +261,19 @@
                     versions</p>
             </div>
             <div class="flex gap-2">
-                <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
+                <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-[200px]">
                     <option>Store #1044 - Seattle</option>
                     <option>Store #8822 - Phoenix</option>
                     <option>Store #3044 - Portland</option>
+                </select>
+                <!-- Zone/Floor Selector -->
+                <select
+                    class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-[160px] text-gray-700 font-medium">
+                    <option value="main">Main Floor (Zone A)</option>
+                    <option value="exterior">Exterior / Pump</option>
+                    <option value="level2">Level 2</option>
+                    <option value="stock">Stockroom</option>
+                    <option value="new">+ Add New Zone</option>
                 </select>
                 <button onclick="window.location.href='surveys.html'"
                     class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 flex items-center gap-2">

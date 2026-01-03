@@ -22,6 +22,7 @@ The BrandAdmin module provides brand-level administration capabilities for manag
 | Store Administration | Manage store profiles, groupings, and regional assignments |
 | User Management | Administer brand users, roles, and permissions |
 | Reporting & Analytics | Access performance dashboards and generate reports |
+| Store Layouts | Grid-based graphics builder for Defining execution zones (Multi-Zone/Floor) |
 
 ### Target Users
 
@@ -42,8 +43,7 @@ The BrandAdmin module provides brand-level administration capabilities for manag
 | A004 | Store Management | `/admin/stores` | Planned | P2 |
 | A005 | User Management | `/admin/users` | Planned | P2 |
 | A006 | Reports & Analytics | `/admin/reports` | Planned | P2 |
-| A007 | Reserved | — | Reserved | — |
-| A008 | Reserved | — | Reserved | — |
+| A007 | Store Layouts | `/admin/layouts` | Wireframe | P1 |
 | A009 | Reserved | — | Reserved | — |
 | A010 | Reserved | — | Reserved | — |
 
