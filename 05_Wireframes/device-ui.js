@@ -209,6 +209,18 @@ class DeviceManager {
                 grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
                 gap: 16px;
             }
+            
+            /* Tablet Landscape Specific Column Layout */
+            body.device-tablet-landscape .tablet-col-layout {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+                align-items: start;
+            }
+            
+            body.device-tablet-landscape .mt-6.tablet\:mt-0 {
+                margin-top: 0 !important;
+            }
 
             /* Desktop (Full Screen) */
             /* Desktop (Full Screen Web Layout) */
