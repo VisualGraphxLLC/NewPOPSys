@@ -13,6 +13,8 @@ PSP-Led Campaign Orchestration Platform — complete Statement of Work documenta
 | Document | Purpose |
 |----------|---------|
 | [Master SOW](01_Main_SOW/MASTER_SOW_COMPILED.md) | Complete compiled v1 specification |
+| [SRS](07_SRS/COMPILED_SRS.md) | Software Requirements Specification |
+| [Dev Guide](08_Dev_Planning/DEV_GUIDE_FULL.md) | Technical Implementation Guide |
 | [Document Index](00_Index/00_DOC_INDEX.md) | Registry of all documents with versions |
 | [Interactive Wireframes](05_Wireframes/index.html) | Visual prototypes for stakeholder review |
 | [API Reference](06_API/README.md) | OpenAPI specification |
@@ -33,6 +35,8 @@ PSP-Led Campaign Orchestration Platform — complete Statement of Work documenta
 ├── 06_API/                 # OpenAPI specification
 ├── 06_Database_Model/      # Schema, relationships, indexes, seed data
 ├── 06_Screen_Specs/        # Detailed screen specifications (M/B/P/S series)
+├── 07_SRS/                 # Software Requirements Specification
+├── 08_Dev_Planning/        # Development guides and technical specs
 ├── Post_v1/                # Future vision: v2-v4 roadmap & capabilities
 ├── Reports/                # Analysis & strategy reports
 ├── 99_Archive/             # Archived versions (ZIP)
