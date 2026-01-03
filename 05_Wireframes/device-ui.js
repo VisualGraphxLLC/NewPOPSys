@@ -151,6 +151,7 @@ class DeviceManager {
 
             /* Tablet Landscape (iPad) - Similar to Desktop */
             /* Tablet Landscape (iPad) */
+            /* Tablet Landscape (iPad) */
             body.device-tablet-landscape #phone {
                 width: 1024px;
                 height: 768px;
@@ -158,16 +159,21 @@ class DeviceManager {
                 border: 14px solid #1a1a1a;
                 box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
                 margin: auto;
+                position: relative; /* Ensure absolute children stay inside */
+                flex-shrink: 0;
+                overflow: hidden; /* Clip content to rounded corners */
             }
 
             body.device-tablet-landscape .phone-container {
-                background-color: #333;
+                background-color: #333 !important;
                 padding: 40px;
-                min-height: calc(100vh - 50px);
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                min-height: 100vh;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 overflow: auto;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             body.device-tablet-landscape .safe-area-top {
@@ -177,48 +183,30 @@ class DeviceManager {
             }
 
             body.device-tablet-landscape .screen {
-                height: auto !important;
+                height: calc(100% - 48px - 70px) !important; /* Total - header - nav */
+                overflow-y: auto !important;
                 padding: 24px !important;
-                overflow-y: auto;
-            }
-
-            /* Ensure content fits */
-            body.device-tablet-landscape .bottom-nav {
-                height: 70px;
-                padding-bottom: 12px;
-            }
-
-            body.device-tablet-landscape .dashboard-campaigns {
-                grid-template-columns: repeat(2, 1fr);
+                padding-bottom: 24px !important;
             }
 
             body.device-tablet-landscape .bottom-nav {
-                position: fixed;
+                position: absolute;
                 bottom: 0;
                 left: 0;
-                right: 0;
-                height: 64px;
-                padding-bottom: 8px;
+                width: 100%;
+                height: 70px;
                 background: white;
                 border-top: 1px solid #e5e7eb;
-                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            body.device-tablet-landscape .screen {
-                max-width: 1000px;
-                margin: 0 auto;
-                padding: 32px !important;
-                padding-bottom: 100px !important;
-                min-height: calc(100vh - 170px);
-                width: 100%;
-                box-sizing: border-box;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding-bottom: 0; /* Reset */
+                z-index: 10;
             }
 
             body.device-tablet-landscape .dashboard-campaigns {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
                 gap: 16px;
             }
 
