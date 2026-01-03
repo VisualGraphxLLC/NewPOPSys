@@ -213,16 +213,34 @@ class DeviceManager {
 
             /* Desktop (Full Screen) */
             /* Desktop (Full Screen Web Layout) */
+            /* Desktop (Full Screen Web Layout) */
             body.device-desktop {
                 background-color: #f3f4f6;
+                overflow-y: auto;
             }
 
-            body.device-desktop .phone-container {
-                background-color: transparent;
-                padding: 0;
-                min-height: auto;
-                display: block;
+            /* View Toggling - The Clean Approach */
+            /* Default: Mobile Container Visible, Desktop Hidden */
+            .desktop-view-container {
+                display: none !important;
             }
+            .mobile-view-container {
+                display: flex !important; /* Or block depending on layout */
+            }
+
+            /* Desktop Mode: Switch Visibility */
+            body.device-desktop .mobile-view-container {
+                display: none !important;
+            }
+            body.device-desktop .desktop-view-container {
+                display: block !important;
+            }
+
+            /* Basic Desktop Resets */
+            body.device-desktop .phone-container {
+                display: none; /* redundant safety */
+            }
+
 
             body.device-desktop .tooltip-help-banner {
                 position: sticky;
