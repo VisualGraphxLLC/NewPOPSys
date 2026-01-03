@@ -632,7 +632,7 @@
             updateDesktopView(isRetake);
 
             if (isRetake) {
-                // 1. Hide irrelevant tasks (Receive, Attest, Deinstall)
+                // 1. Hide irrelevant tasks (Desktop)
                 const tasksToHide = ['desktop-task-receive', 'desktop-task-attest', 'desktop-task-deinstall',
                     'desktop-btn-receive', 'desktop-btn-attest'];
 
@@ -640,6 +640,48 @@
                     const el = document.getElementById(id);
                     if (el) el.style.display = 'none';
                 });
+
+                // 2. Hide irrelevant tabs (Mobile)
+                const mobileIdsToHide = ['tab-receive', 'tab-attest', 'tab-deinstall'];
+                mobileIdsToHide.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+
+                // 3. Force Mobile Install Tab Active & Renamed
+                const mobileInstallTab = document.getElementById('tab-install');
+                if (mobileInstallTab) {
+                    mobileInstallTab.innerHTML = '<i data-lucide="camera" class="w-4 h-4 inline mr-1"></i> Retake';
+                    mobileInstallTab.classList.remove('text-gray-400', 'cursor-not-allowed');
+                    mobileInstallTab.classList.add('text-red-600', 'bg-red-50', 'border-red-200');
+                    switchTaskTab('install'); // Force switch
+                }
+
+                // 4. Update Mobile Install Card Content
+                const mobileInstallActive = document.getElementById('install-content-active');
+                if (mobileInstallActive) {
+                    mobileInstallActive.classList.remove('hidden');
+                    document.getElementById('install-content-locked').classList.add('hidden');
+
+                    const title = mobileInstallActive.querySelector('h3');
+                    if (title) title.innerText = 'Retake Validation';
+
+                    const desc = mobileInstallActive.querySelector('p');
+                    if (desc) desc.innerHTML = '<span class="text-red-600 font-bold">Action Needed:</span> Replace rejected photos.';
+
+                    const badge = mobileInstallActive.querySelector('.bg-blue-100');
+                    if (badge) {
+                        badge.className = 'ml-auto bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded';
+                        badge.innerText = 'Rejected';
+                    }
+
+                    const btn = mobileInstallActive.querySelector('button');
+                    if (btn) {
+                        btn.innerHTML = 'Retake Photo';
+                        btn.onclick = function () { window.location.href = 'install.html?mode=retake'; };
+                        btn.className = 'btn-primary bg-red-600 hover:bg-red-700';
+                    }
+                }
 
                 // Unlock Install logic specifically for Retake
                 const taskInstall = document.getElementById('desktop-task-install');
