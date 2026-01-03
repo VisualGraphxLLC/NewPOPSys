@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Store Portal - Attestation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        body {
+            background-color: #333;
+            min-height: 100vh;
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #phone {
+            width: 375px;
+            height: 812px;
+            background: #f3f4f6;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            border: 12px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .safe-area-top {
+            height: 44px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .screen {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .checkbox-item:last-child {
+            border-bottom: none;
+        }
+
+        .signature-pad {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+            cursor: crosshair;
+        }
+
+        .signature-pad.signed {
+            border-style: solid;
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .bottom-nav {
+            height: 80px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #6b7280;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="phone-container">
+        <div id="phone">
+            <div class="safe-area-top">
+                <span>9:42</span>
+                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                </div>
+            </div>
+
+            <div id="screen-attestation" class="screen">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="window.history.back()" class="p-2 -ml-2"><i data-lucide="arrow-left"></i></button>
+                    <h1 class="text-2xl font-bold">Attest Completion</h1>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><i
+                                data-lucide="clipboard-check" class="w-6 h-6 text-blue-600"></i></div>
+                        <div>
+                            <div class="font-bold text-lg">Holiday Promo 2025</div>
+                            <div class="text-sm text-gray-500">Store #4521 - Downtown</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="attestation-checklist" class="card mb-4">
+                    <h2 class="font-bold mb-4">I confirm the following:</h2>
+                    <label class="checkbox-item">
+                        <input type="checkbox" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium">All materials installed</div>
+                            <div class="text-sm text-gray-500">Per instructions</div>
+                        </div>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" onchange="checkSubmitReady()">
+                        <div>
+                            <div class="font-medium">Photos represent installation</div>
+                            <div class="text-sm text-gray-500">Accurate and clear</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card mb-4">
+                    <h2 class="font-bold mb-2">Digital Signature</h2>
+                    <div id="signature-pad" class="signature-pad" onclick="simulateSign()">
+                        <i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i>
+                        <span class="text-gray-400 text-sm">Tap to sign</span>
+                    </div>
+                    <button onclick="clearSignature()" class="text-sm text-blue-600 mt-2">Clear Signature</button>
+                </div>
+
+                <div class="w-full p-4 mt-6">
+                    <button id="attestation-submit" onclick="submitAttestation()" disabled
+                        class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed">Submit
+                        Attestation</button>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
+                        size="20"></i><span>Home</span></div>
+                <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
+                        data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
+                <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
+                        size="20"></i><span>Profile</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        let signatureComplete = false;
+
+        function checkSubmitReady() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            const btn = document.getElementById('attestation-submit');
+
+            if (allChecked && signatureComplete) {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function simulateSign() {
+            const pad = document.getElementById('signature-pad');
+            pad.classList.add('signed');
+            pad.innerHTML = '<div class="text-green-600 font-bold">✓ Signed</div>';
+            signatureComplete = true;
+            checkSubmitReady();
+        }
+
+        function clearSignature() {
+            const pad = document.getElementById('signature-pad');
+            pad.classList.remove('signed');
+            pad.innerHTML = '<i data-lucide="pen-tool" class="w-8 h-8 text-gray-400 mb-2"></i><span class="text-gray-400 text-sm">Tap to sign</span>';
+            lucide.createIcons();
+            signatureComplete = false;
+            checkSubmitReady();
+        }
+
+        function submitAttestation() {
+            localStorage.setItem('installComplete', 'true'); // Ensure install marked done
+            alert('Attestation Submitted!');
+            window.location.href = 'task_list.html';
+        }
+    </script>
+</body>
+
+</html>

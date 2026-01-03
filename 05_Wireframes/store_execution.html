@@ -2115,6 +2115,67 @@ Blocks: None (terminal state)">
                 </div>
             </div>
 
+            <!-- SCREEN: RETAKE FLOW (M08) -->
+            <div id="screen-retake"
+                class="screen p-0 bg-white z-50 flex flex-col items-center justify-center text-center hidden"
+                data-tooltip="⚠️ RETAKE FLOW (M08)\n━━━━━━━━━━━━━━━\nPurpose: Loop for rejected photos\nData: IssueRequest.rejectionReason\nDepends: PhotoReview = REJECTED\nBlocks: Task completion">
+
+                <div class="flex-1 flex flex-col items-center justify-center p-8 w-full">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6 animate-pulse">
+                        <i data-lucide="alert-triangle" class="w-10 h-10 text-red-600"></i>
+                    </div>
+
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">Photo Rejected</h1>
+                    <p class="text-gray-500 mb-6">The photo you submitted was not accepted by the audit team.</p>
+
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-4 w-full text-left mb-6">
+                        <span class="text-xs font-bold text-red-800 uppercase">Reason for Rejection</span>
+                        <div class="flex items-start gap-3 mt-2">
+                            <i data-lucide="x" class="w-5 h-5 text-red-600 mt-0.5"></i>
+                            <div>
+                                <strong class="text-red-900">Image Blur / Low Quality</strong>
+                                <p class="text-sm text-red-700 mt-1">Please hold the camera steady and ensure good
+                                    lighting.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Evidence Comparison -->
+                    <div class="grid grid-cols-2 gap-4 w-full mb-8">
+                        <div>
+                            <div
+                                class="aspect-square bg-gray-100 rounded-lg overflow-hidden border-2 border-red-400 relative">
+                                <img src="https://via.placeholder.com/150?text=Rejected"
+                                    class="w-full h-full object-cover opacity-50">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <i data-lucide="x" class="w-12 h-12 text-red-600 drop-shadow-md"></i>
+                                </div>
+                            </div>
+                            <div class="text-xs font-bold text-center mt-2 text-red-600">Your Photo</div>
+                        </div>
+                        <div>
+                            <div
+                                class="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200 relative">
+                                <img src="https://via.placeholder.com/150?text=Reference"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-xs font-bold text-center mt-2 text-green-600">Reference</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full p-6 bg-white border-t border-gray-100 mt-auto">
+                    <button onclick="nav('screen-camera-capture')"
+                        class="w-full py-4 bg-red-600 text-white rounded-xl font-bold text-lg shadow-lg hover:bg-red-700 transition mb-4">
+                        Retake Photo
+                    </button>
+                    <button onclick="alert('Appeal sent to supervisor.')"
+                        class="text-sm text-gray-400 font-medium hover:text-red-600">
+                        This is a mistake? Appeal
+                    </button>
+                </div>
+            </div>
+
             <!-- Bottom Navigation -->
             <div class="bottom-nav" data-tooltip="📱 BOTTOM NAVIGATION
 ━━━━━━━━━━━━━━━

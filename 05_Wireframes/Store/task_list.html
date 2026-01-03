@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Store Portal - Tasks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables - Duplicated for standalone */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary) !important;
+        }
+
+        .text-blue-600 {
+            color: var(--primary) !important;
+        }
+
+        .bg-blue-100 {
+            background-color: color-mix(in srgb, var(--primary) 15%, white) !important;
+        }
+
+        .bg-orange-600 {
+            background-color: #ea580c;
+        }
+
+        .text-orange-600 {
+            color: #ea580c;
+        }
+
+        .bg-orange-100 {
+            background-color: #ffedd5;
+        }
+
+        .bg-green-600 {
+            background-color: #16a34a;
+        }
+
+        .text-green-600 {
+            color: #16a34a;
+        }
+
+        .bg-green-100 {
+            background-color: #dcfce7;
+        }
+
+        body {
+            background-color: #333;
+            min-height: 100vh;
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #phone {
+            width: 375px;
+            height: 812px;
+            background: #f3f4f6;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            border: 12px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .safe-area-top {
+            height: 44px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .screen {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .cursor-not-allowed {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .bottom-nav {
+            height: 80px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #6b7280;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tooltip-help-banner">
+        <a href="../index.html" style="color: white; font-weight: bold; text-decoration: none;">← Index</a> | Campaign
+        Tasks
+    </div>
+
+    <div class="phone-container">
+        <div id="phone">
+            <!-- Status Bar -->
+            <div class="safe-area-top">
+                <span>9:42</span>
+                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                </div>
+            </div>
+
+            <!-- Screen Content -->
+            <div id="screen-tasks" class="screen">
+                <div class="mb-4">
+                    <button onclick="window.location.href='dashboard.html'"
+                        class="text-sm text-gray-500 mb-2 flex items-center gap-1">
+                        <i data-lucide="arrow-left" size="14"></i> Back to Dashboard
+                    </button>
+                    <h1 class="text-2xl font-bold">Holiday Promo 2025</h1>
+                    <p class="text-sm text-gray-500">Complete each step in sequence</p>
+                </div>
+
+                <!-- Progress Tabs -->
+                <div class="flex mb-4 bg-gray-100 rounded-lg p-1">
+                    <button id="tab-receive" onclick="switchTaskTab('receive')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium bg-white shadow text-blue-600 cursor-pointer">
+                        <i data-lucide="package" class="w-4 h-4 inline mr-1"></i> Receive
+                    </button>
+                    <button id="tab-install" onclick="switchTaskTab('install')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed">
+                        <i data-lucide="wrench" class="w-4 h-4 inline mr-1"></i> Install
+                    </button>
+                    <button id="tab-attest" onclick="switchTaskTab('attest')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed">
+                        <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i> Attest
+                    </button>
+                    <button id="tab-deinstall" onclick="switchTaskTab('deinstall')"
+                        class="flex-1 py-2 px-3 rounded-md text-sm font-medium text-gray-400 cursor-not-allowed hidden">
+                        <i data-lucide="trash-2" class="w-4 h-4 inline mr-1"></i> Deinstall
+                    </button>
+                </div>
+
+                <!-- Tab Content: Receive -->
+                <div id="task-tab-receive" class="task-tab-content">
+                    <div class="card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2"><i data-lucide="package"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold">Verify Shipment Receipt</h3>
+                                <p class="text-xs text-gray-500">Confirm materials arrived intact</p>
+                            </div>
+                            <span class="ml-auto bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">Due
+                                Today</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                            <div class="text-sm font-medium mb-2">Shipment Contents:</div>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Window Clings (2)</li>
+                                <li>• Counter Display</li>
+                                <li>• Promotional Flyers (50)</li>
+                            </ul>
+                        </div>
+                        <button onclick="window.location.href='receipt.html'" class="btn-primary">Start
+                            Verification</button>
+                    </div>
+                </div>
+
+                <!-- Receive Completed (Hidden) -->
+                <div id="task-tab-receive-complete" class="hidden">
+                    <div class="card bg-green-50 border-green-200">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2"><i data-lucide="check"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold text-green-700">Receipt Verified</h3>
+                                <p class="text-xs text-green-600">All items confirmed received</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Install -->
+                <div id="task-tab-install" class="task-tab-content hidden">
+                    <div id="install-content-locked" class="card bg-gray-50 opacity-60">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-gray-200 text-gray-400 rounded-full p-2"><i data-lucide="lock"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold text-gray-400">Install Materials</h3>
+                                <p class="text-xs text-gray-400">Complete receipt verification first</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="install-content-active" class="card hidden">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2"><i data-lucide="wrench"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold">Install Materials</h3>
+                                <p class="text-xs text-gray-500">Place items and capture photos</p>
+                            </div>
+                            <span
+                                class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
+                        </div>
+                        <button onclick="window.location.href='install.html'" class="btn-primary">Start
+                            Installation</button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Attest -->
+                <div id="task-tab-attest" class="task-tab-content hidden">
+                    <div id="attest-content-locked" class="card bg-gray-50 opacity-60">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-gray-200 text-gray-400 rounded-full p-2"><i data-lucide="lock"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold text-gray-400">Attest Completion</h3>
+                                <p class="text-xs text-gray-400">Complete installation first</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="attest-content-active" class="card hidden">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2"><i data-lucide="check-circle"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold">Complete Attestation</h3>
+                                <p class="text-xs text-gray-500">Sign off on campaign completion</p>
+                            </div>
+                            <span
+                                class="ml-auto bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Ready</span>
+                        </div>
+                        <button onclick="window.location.href='attestation.html'" class="btn-primary">Complete
+                            Attestation</button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Deinstall -->
+                <div id="task-tab-deinstall" class="task-tab-content hidden">
+                    <div id="deinstall-content-locked" class="card bg-gray-50 opacity-60">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-gray-200 text-gray-400 rounded-full p-2"><i data-lucide="lock"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold text-gray-400">Deinstall Materials</h3>
+                                <p class="text-xs text-gray-400">Campaign still active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="deinstall-content-active" class="card hidden">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-orange-100 text-orange-600 rounded-full p-2"><i data-lucide="trash-2"
+                                    class="w-5 h-5"></i></div>
+                            <div>
+                                <h3 class="font-bold">Remove Materials</h3>
+                                <p class="text-xs text-gray-500">Campaign ended</p>
+                            </div>
+                            <span
+                                class="ml-auto bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded">Action
+                                Required</span>
+                        </div>
+                        <button onclick="window.location.href='deinstall.html'"
+                            class="btn-primary bg-orange-600 hover:bg-orange-700">Start Deinstall</button>
+                    </div>
+                </div>
+
+                <!-- Demo Link for Deinstall -->
+                <div class="mt-8 pt-4 border-t text-center">
+                    <button onclick="enterDeinstallMode()" class="text-xs text-gray-400 underline">Demo: Activate
+                        Deinstall Phase</button>
+                </div>
+            </div>
+
+            <!-- Bottom Nav -->
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="window.location.href='dashboard.html'">
+                    <i data-lucide="home" size="20"></i>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item active" onclick="window.location.reload()">
+                    <i data-lucide="list-checks" size="20"></i>
+                    <span>Tasks</span>
+                </div>
+                <div class="nav-item" onclick="window.location.href='profile.html'">
+                    <i data-lucide="user" size="20"></i>
+                    <span>Profile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Mock State - In a real app this would come from backend/local storage
+        let receiptComplete = localStorage.getItem('receiptComplete') === 'true';
+        let installComplete = localStorage.getItem('installComplete') === 'true';
+        let deinstallPhase = localStorage.getItem('deinstallPhase') === 'true';
+
+        // Initialize view based on state
+        function init() {
+            if (receiptComplete) {
+                document.getElementById('task-tab-receive').classList.add('hidden');
+                document.getElementById('task-tab-receive-complete').classList.remove('hidden');
+
+                // Update tabs
+                markTabComplete('receive');
+                unlockTab('install');
+
+                // Show install active
+                document.getElementById('install-content-locked').classList.add('hidden');
+                document.getElementById('install-content-active').classList.remove('hidden');
+            }
+
+            if (installComplete) {
+                markTabComplete('install');
+                unlockTab('attest');
+
+                document.getElementById('install-content-active').classList.add('hidden'); // Hide active install card if done? Or show "Done" card?
+                // For simplicity, just unlock attest
+                document.getElementById('attest-content-locked').classList.add('hidden');
+                document.getElementById('attest-content-active').classList.remove('hidden');
+            }
+
+            if (deinstallPhase) {
+                const btn = document.getElementById('tab-deinstall');
+                btn.classList.remove('hidden');
+                unlockTab('deinstall');
+                document.getElementById('deinstall-content-locked').classList.add('hidden');
+                document.getElementById('deinstall-content-active').classList.remove('hidden');
+            }
+        }
+
+        function switchTaskTab(tabName) {
+            // Basic guard clauses
+            if (tabName === 'install' && !receiptComplete) { alert('Complete receipt first'); return; }
+            if (tabName === 'attest' && !installComplete) { alert('Complete install first'); return; }
+            if (tabName === 'deinstall' && !deinstallPhase) { alert('Campaign active'); return; }
+
+            // Hide all content
+            document.querySelectorAll('.task-tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('task-tab-receive-complete').classList.add('hidden');
+
+            // Show selected
+            if (tabName === 'receive' && receiptComplete) {
+                document.getElementById('task-tab-receive-complete').classList.remove('hidden');
+            } else {
+                const content = document.getElementById('task-tab-' + tabName);
+                if (content) content.classList.remove('hidden');
+            }
+
+            // Update Tab Styles (Check if active)
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow', 'text-blue-600', 'text-orange-600');
+                if (btn.id === 'tab-' + tabName) {
+                    btn.classList.add('bg-white', 'shadow', 'text-blue-600');
+                }
+            });
+            // Re-apply success colors if needed (simplified for this demo)
+            init();
+        }
+
+        function unlockTab(name) {
+            const btn = document.getElementById('tab-' + name);
+            btn.classList.remove('cursor-not-allowed', 'text-gray-400');
+            btn.classList.add('text-blue-600'); // Default active color
+        }
+
+        function markTabComplete(name) {
+            const btn = document.getElementById('tab-' + name);
+            btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i> ${name.charAt(0).toUpperCase() + name.slice(1)}`;
+            btn.classList.add('text-green-600');
+        }
+
+        function enterDeinstallMode() {
+            localStorage.setItem('deinstallPhase', 'true');
+            window.location.reload();
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

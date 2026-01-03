@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Store Portal - Retake Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        body {
+            background-color: #333;
+            min-height: 100vh;
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #phone {
+            width: 375px;
+            height: 812px;
+            background: #f3f4f6;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            border: 12px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .safe-area-top {
+            height: 44px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .screen {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .bottom-nav {
+            height: 80px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #6b7280;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="phone-container">
+        <div id="phone">
+            <div class="safe-area-top">
+                <span>9:42</span>
+                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                </div>
+            </div>
+
+            <div id="screen-retake" class="screen">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="window.history.back()" class="p-2 -ml-2"><i data-lucide="arrow-left"></i></button>
+                    <h1 class="text-2xl font-bold">Retake Request</h1>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="alert-circle" class="text-red-500" size="20"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-bold text-red-800">Photo Rejected</h3>
+                            <p class="text-sm text-red-700 mt-1">
+                                The photo for "Front Windows (Left)" was rejected by QA.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold mb-2">Reviewer Feedback:</h3>
+                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg italic border text-sm mb-4">
+                        "Photo is too blurry and dark. Please ensure the entire window cling is visible and use flash if
+                        needed."
+                    </p>
+
+                    <div class="mb-4">
+                        <h4 class="font-medium text-sm text-gray-500 mb-2">Original Photo:</h4>
+                        <div class="relative h-40 bg-gray-100 rounded-lg overflow-hidden border">
+                            <img src="https://via.placeholder.com/300x160?text=Blurry+Cling"
+                                class="w-full h-full object-cover opacity-50">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">REJECTED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="w-full text-left card flex items-center justify-between hover:bg-gray-50 transition"
+                    onclick="window.location.href='capture_flow.html'">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                            <i data-lucide="camera" size="20"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-900">Take New Photo</div>
+                            <div class="text-xs text-gray-500">Tap to open camera</div>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-right" class="text-gray-400"></i>
+                </button>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
+                        size="20"></i><span>Home</span></div>
+                <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
+                        data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
+                <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
+                        size="20"></i><span>Profile</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

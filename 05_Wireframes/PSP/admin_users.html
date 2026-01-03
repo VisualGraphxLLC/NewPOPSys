@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSP Admin Portal - Users</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #eab308;
+            --primary-light: #facc15;
+            --primary-dark: #ca8a04;
+            --accent: #4f46e5;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        /* Apply theme colors - Primary (header/nav) */
+        .bg-yellow-800,
+        .bg-yellow-700,
+        .bg-yellow-600,
+        .bg-yellow-500 {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .hover\:bg-yellow-900:hover,
+        .hover\:bg-yellow-700:hover {
+            background-color: var(--primary) !important;
+        }
+
+        .text-yellow-500,
+        .text-yellow-400,
+        .text-yellow-100 {
+            color: var(--primary-light) !important;
+        }
+
+        .hover\:text-yellow-100:hover {
+            color: var(--accent) !important;
+        }
+
+        .border-yellow-700,
+        .border-yellow-600,
+        .border-yellow-500,
+        .border-yellow-400 {
+            border-color: var(--primary) !important;
+        }
+
+        /* Apply theme colors - Accent (buttons) */
+        .bg-purple-600,
+        .bg-indigo-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-purple-700:hover,
+        .hover\:bg-indigo-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .active-nav {
+            color: var(--primary-light) !important;
+            border-bottom: 2px solid var(--primary-light) !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tooltip Styles - Only active when body has .tooltips-enabled */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltips-enabled .has-tooltip {
+            outline: 2px dashed #eab308;
+            outline-offset: 2px;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tooltip-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tooltip-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .tooltip-toggle.active {
+            background: white;
+            color: #ca8a04;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                el.addEventListener('mouseenter', function (e) {
+                    if (!document.body.classList.contains('tooltips-enabled')) return;
+                    const existing = document.querySelector('.dynamic-tooltip');
+                    if (existing) existing.remove();
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'dynamic-tooltip';
+                    tooltip.innerHTML = this.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+                    tooltip.style.cssText = `
+                        position: fixed;
+                        background: #1e293b;
+                        color: white;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        font-size: 12px;
+                        line-height: 1.5;
+                        max-width: 320px;
+                        min-width: 200px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(tooltip);
+
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.left = left + 'px';
+                });
+
+                el.addEventListener('mouseleave', function () {
+                    const tooltip = document.querySelector('.dynamic-tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="../index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            feature details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav
+        class="bg-yellow-600 border-b border-yellow-700 h-16 flex items-center px-4 justify-between sticky top-0 z-50 text-white shadow-md">
+        <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='admin_dashboard.html'">
+            <div id="brand-logo" class="flex items-center">
+                <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium opacity-90">
+            <a href="admin_dashboard.html" id="link-dashboard"
+                class="nav-link text-yellow-100 hover:text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="📊 DASHBOARD
+━━━━━━━━━━━━━━━━━━━━
+Feature: PSP tenant overview
+Data: Brand count, user count, stats
+Access: Platform Admin, PSP Admin">Dashboard</a>
+            <a href="admin_dashboard.html" id="link-brands"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="🏢 TENANT MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━
+Feature: Brand tenant config
+Data: Brand table, settings
+Actions: Onboard, configure, manage">Brands</a>
+            <a href="admin_surveys.html" id="link-survey-templates"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip"
+                data-tooltip="📋 SURVEY TEMPLATES\nGo to Survey Templates">Survey
+                Templates</a>
+            <a href="#" id="link-users" onclick="return false;"
+                class="nav-link text-white border-b-2 border-white h-16 flex items-center active-nav has-tooltip"
+                data-tooltip="👥 USER MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━
+Feature: User & role administration
+Data: User table, Role enum
+Actions: Invite, edit, deactivate
+Ref: SUPP-003 RBAC Matrix">Users</a>
+            <a href="admin_dashboard.html" id="link-settings"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="🔧 PSP SETTINGS
+━━━━━━━━━━━━━━━━━━━━
+Feature: PSP-level configuration">Settings</a>
+            <a href="admin_dashboard.html" id="link-exports"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="📥 EXPORTS & REPORTS
+━━━━━━━━━━━━━━━━━━━━
+Feature: Data export management">Reports</a>
+            <a href="admin_dashboard.html" id="link-audit"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center has-tooltip" data-tooltip="🔍 SECURITY & AUDIT
+━━━━━━━━━━━━━━━━━━━━
+Feature: Audit log access">Audit</a>
+            <div class="w-8 h-8 bg-yellow-700 rounded-full flex items-center justify-center text-xs font-bold">PA</div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-6">
+
+        <!-- VIEW: USERS -->
+        <div id="view-users" class="view">
+            <div class="flex justify-between items-end border-b pb-2 mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 has-tooltip" data-tooltip="👥 USER MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━
+Feature: User & role administration
+Data: User table
+Roles: Platform Admin, PSP Admin, etc.
+Ref: SUPP-003 RBAC Matrix">User Management</h1>
+                    <p class="text-sm text-gray-500">Invite and manage user access across all brands</p>
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-50 has-tooltip"
+                        data-tooltip="🔍 FILTER USERS
+━━━━━━━━━━━━━━━━━━━━
+Filter by: Role, Brand, Status
+Search: Name, email
+Sort: Name, last active, role">
+                        <i data-lucide="filter" size="16" class="inline"></i> Filter
+                    </button>
+                    <button onclick="showModal('user-invite-modal')"
+                        class="bg-yellow-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-yellow-700 has-tooltip"
+                        data-tooltip="➕ INVITE USER
+━━━━━━━━━━━━━━━━━━━━
+Action: Send user invitation
+Required: Email, role, brand/scope
+Creates: User record + email invite
+Ref: SUPP-003">+ Invite User</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="👤 USER INFO
+━━━━━━━━━━━━━━━━━━━━
+Data: User.firstName, lastName, email
+Display: Name + email address
+Unique: Email is unique per tenant">User</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🔐 ROLE
+━━━━━━━━━━━━━━━━━━━━
+Values: Platform Admin, PSP Admin,
+Brand Admin, Campaign Manager, etc.
+Data: User.role enum
+Ref: SUPP-003 RBAC Matrix">Role</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🏢 BRAND / SCOPE
+━━━━━━━━━━━━━━━━━━━━
+Access scope for user
+PSP-wide: All brands in tenant
+Brand-specific: Single brand only
+Data: User.brandId (nullable)">Brand / Scope</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="📊 STATUS
+━━━━━━━━━━━━━━━━━━━━
+Values: Active, Inactive, Pending
+Active: Can login and access
+Inactive: Account disabled
+Pending: Invite sent, not accepted">Status</th>
+                            <th class="px-6 py-3 has-tooltip" data-tooltip="🕐 LAST ACTIVE
+━━━━━━━━━━━━━━━━━━━━
+Last successful login/activity
+Data: User.lastActiveAt
+Format: Relative time display
+Security: Identify inactive accounts">Last Active</th>
+                            <th class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 JOHN DAVIS
+━━━━━━━━━━━━━━━━━━━━
+Role: Platform Admin (highest)
+Scope: All brands (PSP-wide)
+Status: Active
+Last seen: 5 min ago
+⚡ Can impersonate other users">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        JD</div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">John Davis</div>
+                                        <div class="text-xs text-gray-500">john.davis@visualgraphx.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="🔐 PLATFORM ADMIN
+━━━━━━━━━━━━━━━━━━━━
+Highest privilege level
+Capabilities: All + Impersonate
+Scope: PSP tenant-wide
+Ref: SUPP-003">Platform Admin</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Visual Graphx (All)</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
+                            <td class="px-6 py-4">5 min ago</td>
+                            <td class="px-6 py-4">
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 MARIA SANTOS
+━━━━━━━━━━━━━━━━━━━━
+Role: PSP Admin
+Scope: All brands (PSP-wide)
+Status: Active
+Last seen: 2 hours ago">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        MS</div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">Maria Santos</div>
+                                        <div class="text-xs text-gray-500">maria@visualgraphx.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="⚙️ PSP ADMIN
+━━━━━━━━━━━━━━━━━━━━
+PSP administration privileges
+Capabilities: Brand onboarding, settings
+Scope: PSP tenant (no impersonate)
+Ref: SUPP-003">PSP Admin</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Visual Graphx (All)</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
+                            <td class="px-6 py-4">2 hours ago</td>
+                            <td class="px-6 py-4">
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="👤 SARAH CHEN
+━━━━━━━━━━━━━━━━━━━━
+Role: Brand Admin
+Scope: Good2Go only
+Status: Active
+Last seen: 1 day ago">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        SC</div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">Sarah Chen</div>
+                                        <div class="text-xs text-gray-500">sarah.chen@good2go.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="📢 BRAND ADMIN
+━━━━━━━━━━━━━━━━━━━━
+Brand-level administration
+Capabilities: Full brand config
+Scope: Single brand tenant
+Ref: SUPP-003">Brand Admin</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">Good2Go</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                            </td>
+                            <td class="px-6 py-4">1 day ago</td>
+                            <td class="px-6 py-4">
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 opacity-60 cursor-pointer has-tooltip" data-tooltip="👤 TOM WILSON
+━━━━━━━━━━━━━━━━━━━━
+Role: Campaign Manager
+Scope: RetailCo only
+Status: Inactive (disabled)
+Last seen: 3 weeks ago
+⚠️ Consider reactivating or removing">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs font-bold">
+                                        TW</div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">Tom Wilson</div>
+                                        <div class="text-xs text-gray-500">tom.wilson@retailco.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold has-tooltip"
+                                    data-tooltip="📋 CAMPAIGN MANAGER
+━━━━━━━━━━━━━━━━━━━━
+Campaign management privileges
+Capabilities: Create, edit campaigns
+Scope: Assigned brand only
+Ref: SUPP-003">Campaign Manager</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">RetailCo</td>
+                            <td class="px-6 py-4"><span
+                                    class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-bold">Inactive</span>
+                            </td>
+                            <td class="px-6 py-4">3 weeks ago</td>
+                            <td class="px-6 py-4">
+                                <button onclick="showModal('user-edit-modal')"
+                                    class="text-yellow-600 hover:underline font-bold text-xs">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-4 flex justify-between items-center">
+                <div class="text-sm text-gray-500">Showing 1-4 of 247 users</div>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">Previous</button>
+                    <button class="px-3 py-1 bg-yellow-600 text-white rounded text-sm font-bold">1</button>
+                    <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">2</button>
+                    <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">Next</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODALS -->
+
+    <!-- User Invite Modal -->
+    <div id="user-invite-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-900">Invite New User</h2>
+                <button onclick="closeModal('user-invite-modal')" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" size="24"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
+                    <input type="email" placeholder="user@example.com"
+                        class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Role</label>
+                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
+                        <option>Platform Admin</option>
+                        <option>PSP Admin</option>
+                        <option>Production Operator</option>
+                        <option>Brand Admin</option>
+                        <option>Campaign Manager</option>
+                        <option>Regional Manager</option>
+                        <option>Store Manager</option>
+                        <option>Store Operator</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Brand / Scope</label>
+                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
+                        <option>Visual Graphx (PSP-wide)</option>
+                        <option>Good2Go</option>
+                        <option>RetailCo</option>
+                        <option>StoreMax</option>
+                    </select>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 p-3 rounded text-xs text-blue-700">
+                    <i data-lucide="info" size="14" class="inline mr-1"></i>
+                    An invitation email will be sent with a secure link to complete registration.
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-2">
+                <button onclick="closeModal('user-invite-modal')"
+                    class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
+                <button onclick="closeModal('user-invite-modal')"
+                    class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Send
+                    Invitation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Edit Modal -->
+    <div id="user-edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-900">Edit User</h2>
+                <button onclick="closeModal('user-edit-modal')" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" size="24"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">First Name</label>
+                        <input type="text" value="John"
+                            class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Last Name</label>
+                        <input type="text" value="Davis"
+                            class="w-full p-2 border rounded focus:ring-yellow-500 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
+                    <input type="email" value="john.davis@visualgraphx.com" readonly
+                        class="w-full p-2 border rounded bg-gray-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Role</label>
+                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
+                        <option selected>Platform Admin</option>
+                        <option>PSP Admin</option>
+                        <option>Production Operator</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Status</label>
+                    <select class="w-full p-2 border rounded focus:ring-yellow-500 outline-none bg-white">
+                        <option selected>Active</option>
+                        <option>Inactive</option>
+                        <option>Suspended</option>
+                    </select>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-between">
+                <button
+                    class="px-4 py-2 bg-red-50 text-red-700 border border-red-200 rounded text-sm hover:bg-red-100">Deactivate
+                    User</button>
+                <div class="flex gap-2">
+                    <button onclick="closeModal('user-edit-modal')"
+                        class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Cancel</button>
+                    <button onclick="closeModal('user-edit-modal')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Save
+                        Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+            lucide.createIcons();
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../doc-modal.js"></script>
+    <script src="../doc-sidebar.js"></script>
+</body>
+
+</html>

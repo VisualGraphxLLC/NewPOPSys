@@ -1434,6 +1434,114 @@
 
     </div> <!-- Close container -->
 
+    <!-- VIEW: SETTINGS (SET-1..5) -->
+    <div id="view-settings" class="view hidden">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Brand Settings</h1>
+                <p class="text-sm text-gray-500 mt-1">Configure global rules, compliance thresholds, and brand identity
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Sidebar Nav (SET-1) -->
+            <div class="md:col-span-1 space-y-2">
+                <div class="bg-white p-2 rounded-lg border border-gray-200 shadow-sm">
+                    <div
+                        class="p-2 bg-purple-50 text-purple-700 font-bold rounded text-sm mb-1 cursor-pointer flex justify-between">
+                        <span>General Identity</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                    <div class="p-2 hover:bg-gray-50 text-gray-600 font-medium rounded text-sm mb-1 cursor-pointer flex justify-between"
+                        onclick="alert('Switch to compliance rules')">
+                        <span>Compliance Logic</span>
+                    </div>
+                    <div class="p-2 hover:bg-gray-50 text-gray-600 font-medium rounded text-sm mb-1 cursor-pointer flex justify-between"
+                        onclick="alert('Switch to user management')">
+                        <span>User Management</span>
+                        <span class="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[10px]">12</span>
+                    </div>
+                    <div class="p-2 hover:bg-gray-50 text-gray-600 font-medium rounded text-sm mb-1 cursor-pointer flex justify-between"
+                        onclick="alert('Switch to notifications')">
+                        <span>Notifications</span>
+                    </div>
+                    <div class="p-2 hover:bg-gray-50 text-gray-600 font-medium rounded text-sm mb-1 cursor-pointer flex justify-between"
+                        onclick="alert('Switch to audit log')">
+                        <span>Audit Log</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area (SET-2 Users) -->
+            <div class="md:col-span-3 space-y-6">
+                <!-- Branding Card -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-6">
+                    <h2 class="font-bold text-gray-800 mb-4 border-b pb-2">Global Identity</h2>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Brand Name</label>
+                            <input type="text" value="NewPOPSys Brand" class="w-full border p-2 rounded text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Support Email</label>
+                            <input type="email" value="support@brand.com" class="w-full border p-2 rounded text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Preview (SET-2) -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b flex justify-between items-center bg-gray-50">
+                        <div>
+                            <h3 class="font-bold text-gray-800">User Management</h3>
+                            <p class="text-xs text-gray-500">Active users with access to this brand portal</p>
+                        </div>
+                        <button
+                            class="bg-purple-600 text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-purple-700 block">
+                            Invite User
+                        </button>
+                    </div>
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3">User</th>
+                                <th class="px-6 py-3">Role</th>
+                                <th class="px-6 py-3">Last Login</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Sarah Jenkins<br><span
+                                        class="text-xs text-gray-400">sarah@brand.com</span></td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-[10px] font-bold">ADMIN</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-500">2 mins ago</td>
+                                <td class="px-6 py-4 text-green-600 font-bold text-xs">Active</td>
+                                <td class="px-6 py-4 text-gray-400 hover:text-purple-600 cursor-pointer"><i
+                                        data-lucide="more-horizontal" class="w-4 h-4"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-medium">Mike Ross<br><span
+                                        class="text-xs text-gray-400">mike.ross@brand.com</span></td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[10px] font-bold">REGIONAL</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-500">Yesterday</td>
+                                <td class="px-6 py-4 text-green-600 font-bold text-xs">Active</td>
+                                <td class="px-6 py-4 text-gray-400 hover:text-purple-600 cursor-pointer"><i
+                                        data-lucide="more-horizontal" class="w-4 h-4"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- HotSpot Visual Preview (Floating) -->
     <div id="point-preview"
         class="fixed hidden z-[3000] w-64 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden pointer-events-none transition-all duration-200 scale-95 opacity-0">

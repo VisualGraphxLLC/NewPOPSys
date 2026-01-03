@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification - NewPOPSys</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #8b5cf6;
+            --primary-dark: #6d28d9;
+            --accent: #f59e0b;
+        }
+
+        .bg-purple-600 {
+            background-color: var(--primary) !important;
+        }
+
+        .text-purple-600 {
+            color: var(--primary) !important;
+        }
+
+        .nav-link.active-nav {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- Navbar -->
+    <div
+        class="bg-gradient-to-r from-purple-900 to-purple-600 text-white px-4 py-2 text-center text-xs flex justify-center items-center gap-4">
+        <a href="../General/login.html"
+            class="flex items-center gap-1 bg-white/20 px-2 py-1 rounded hover:bg-white/30 transition">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+            </svg> Logout
+        </a>
+        <span class="font-medium">Brand Administrator View</span>
+    </div>
+    <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <img src="../logos/newpopsys-logo.svg" alt="Logo" class="h-8 w-auto">
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+            <a href="index.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Dashboard</a>
+            <a href="campaigns.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Campaigns</a>
+            <a href="verification.html" class="nav-link active-nav h-16 flex items-center">Verification (12)</a>
+            <a href="stores.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Stores</a>
+            <a href="surveys.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Surveys</a>
+            <a href="layouts.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Layouts</a>
+            <a href="settings.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Settings</a>
+            <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-8">
+        <div class="flex justify-between items-end border-b pb-2 mb-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Verification Queue</h1>
+                <p class="text-sm text-gray-500">Reviewing store submissions for compliance (SUPP-018)</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="bg-white border text-gray-600 px-3 py-1 rounded text-sm hover:bg-gray-50">Grid
+                    View</button>
+                <button class="bg-purple-100 text-purple-700 px-3 py-1 rounded text-sm font-bold">Stream View</button>
+            </div>
+        </div>
+
+        <!-- Review Card -->
+        <div id="review-card-1" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+            <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center">
+                <div>
+                    <span class="font-bold text-gray-800">Store #1044 - Seattle (West)</span>
+                    <div class="text-xs text-gray-500">Submitted: 2 hours ago • <span class="text-blue-600">Attempt
+                            #1</span></div>
+                </div>
+                <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">Pending Review</span>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Photo Evidence -->
+                <div class="space-y-2">
+                    <div class="relative group cursor-pointer" onclick="alert('Opens lightbox')">
+                        <img src="https://via.placeholder.com/600x400?text=Store+Window+Photo"
+                            class="rounded-lg shadow-sm border w-full object-cover h-64">
+                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">Front
+                            Window (Left)</div>
+                    </div>
+                    <p class="text-xs text-center text-gray-400">Click to zoom / compare with guide</p>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-gray-700 mb-2">Review Criteria</h4>
+                        <ul class="text-sm space-y-2 mb-6">
+                            <li class="flex items-center gap-2 text-gray-600"><i data-lucide="check-circle" size="16"
+                                    class="text-green-500"></i> Correct Item (Window Cling)</li>
+                            <li class="flex items-center gap-2 text-gray-600"><i data-lucide="check-circle" size="16"
+                                    class="text-green-500"></i> Centered on glass</li>
+                            <li class="flex items-center gap-2 text-gray-600"><i data-lucide="help-circle" size="16"
+                                    class="text-gray-400"></i> No bubbles/wrinkles visible</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button
+                            class="flex-1 bg-red-50 text-red-700 border border-red-200 py-3 rounded-lg font-bold hover:bg-red-100 flex items-center justify-center gap-2"
+                            onclick="alert('Reject!')">
+                            <i data-lucide="x" size="18"></i> Reject
+                        </button>
+                        <button
+                            class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 flex items-center justify-center gap-2"
+                            onclick="alert('Approved!')">
+                            <i data-lucide="check" size="18"></i> Approve
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
