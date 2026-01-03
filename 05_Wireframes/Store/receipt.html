@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Store Portal - Verify Receipt</title>
+    <title>Store Portal - Verify Receipt (v4)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="../theme-config.js"></script>
     <script src="../theme-loader.js"></script>
     <script src="../offline-manager.js"></script>
-    <script src="../device-ui.js?v=3"></script>
+    <script src="../device-ui.js?v=4"></script>
     <style>
         /* Theme CSS Variables */
         :root {
@@ -56,6 +56,7 @@
             font-family: system-ui, -apple-system, sans-serif;
         }
 
+        /* Mobile View Styles */
         .phone-container {
             display: flex;
             justify-content: center;
@@ -146,6 +147,14 @@
         .nav-item.active {
             color: var(--primary);
         }
+
+        /* Desktop Specific Styles */
+        .desktop-view-container .btn-primary {
+            background: var(--primary);
+            width: auto;
+            display: inline-block;
+            padding: 10px 24px;
+        }
     </style>
 </head>
 
@@ -162,79 +171,240 @@
         </a>
         <span style="margin-left: 8px;">💡 Store Portal</span>
     </div>
-    <div class="phone-container">
-        <div id="phone">
-            <!-- Status Bar -->
-            <div class="safe-area-top">
-                <span>9:42</span>
-                <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+
+    <!-- MOBILE VIEW CONTAINER -->
+    <div class="mobile-view-container">
+        <div class="phone-container">
+            <div id="phone">
+                <!-- Status Bar -->
+                <div class="safe-area-top">
+                    <span>9:42</span>
+                    <div class="flex gap-1"><i data-lucide="wifi" size="14"></i><i data-lucide="battery" size="14"></i>
+                    </div>
+                </div>
+
+                <div id="screen-receipt" class="screen">
+                    <div class="flex items-center mb-4">
+                        <button onclick="window.history.back()" class="p-2 -ml-2"><i
+                                data-lucide="arrow-left"></i></button>
+                        <h1 class="text-lg font-bold ml-2">Verify Receipt</h1>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+                        <div class="text-sm text-gray-500 mb-1">Holiday Promo 2025</div>
+                        <div class="font-medium">Tracking: 1Z999AA10123456784</div>
+                        <div class="text-green-600 text-sm font-semibold mt-1">Delivered Today</div>
+                    </div>
+
+                    <h3 class="font-semibold text-gray-700 mb-3">Contents Checklist</h3>
+
+                    <div class="space-y-3">
+                        <!-- Item 1 -->
+                        <div class="card flex items-center justify-between">
+                            <div>
+                                <div class="font-bold">Window Cling (L)</div>
+                                <div class="text-xs text-gray-500">Qty: 2 • SKU: WIN-001</div>
+                            </div>
+                            <input type="checkbox"
+                                class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer">
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="card flex items-center justify-between">
+                            <div>
+                                <div class="font-bold">Register Mat</div>
+                                <div class="text-xs text-gray-500">Qty: 1 • SKU: MAT-004</div>
+                            </div>
+                            <input type="checkbox"
+                                class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer">
+                        </div>
+                        <!-- Item 3 (Issue) -->
+                        <div class="card">
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <div class="font-bold">Aisle Danglers</div>
+                                    <div class="text-xs text-gray-500">Qty: 5 • SKU: DNG-002</div>
+                                </div>
+                                <input type="checkbox" id="chk-dangle"
+                                    class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+                                    onchange="toggleIssue(this)">
+                            </div>
+                            <div id="issue-panel" class="hidden mt-2 pt-2 border-t border-gray-100">
+                                <button class="text-sm text-red-600 font-medium flex items-center gap-1 cursor-pointer">
+                                    <i data-lucide="alert-circle" size="14"></i> Report Missing/Damaged
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8">
+                        <button onclick="completeReceipt()" class="btn-primary">Confirm Receipt</button>
+                        <p class="text-xs text-gray-400 mt-2">Proceeds to Install Phase</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Nav -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
+                            size="20"></i><span>Home</span></div>
+                    <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
+                            data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
+                    <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
+                            size="20"></i><span>Profile</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESKTOP VIEW CONTAINER - Shipment Manifest -->
+    <div class="desktop-view-container">
+        <!-- Top Navigation (Standard) -->
+        <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <div id="brand-logo-desktop" class="flex items-center">
+                    <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+                </div>
+                <div>
+                    <span class="font-bold text-gray-700">Good2Go #3044</span>
+                    <span class="text-sm text-gray-500 ml-2">Store Execution Portal</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
+                <a href="dashboard.html" class="hover:text-blue-600 h-16 flex items-center">Dashboard</a>
+                <a href="task_list.html" class="text-blue-600 border-b-2 border-blue-600 h-16 flex items-center">My
+                    Tasks</a>
+                <a href="verified_photos.html" class="hover:text-blue-600 h-16 flex items-center">History</a>
+                <a href="profile.html" class="hover:text-blue-600 h-16 flex items-center">Profile</a>
+                <div class="relative">
+                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i data-lucide="bell" size="16"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto p-8">
+            <div class="flex items-center gap-4 mb-8">
+                <button onclick="window.location.href='task_list.html'"
+                    class="p-2 bg-white rounded-lg border border-gray-200 hover:bg-gray-50">
+                    <i data-lucide="arrow-left" class="text-gray-600"></i>
+                </button>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Shipment Verification</h1>
+                    <p class="text-gray-500 text-sm">Task 1 of 3 • Holiday Promo 2025</p>
                 </div>
             </div>
 
-            <div id="screen-receipt" class="screen">
-                <div class="flex items-center mb-4">
-                    <button onclick="window.history.back()" class="p-2 -ml-2"><i data-lucide="arrow-left"></i></button>
-                    <h1 class="text-lg font-bold ml-2">Verify Receipt</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Manifest -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                            <span class="font-bold text-gray-700">Packing List / Manifest</span>
+                            <span class="text-sm text-gray-500">Tracking: 1Z999AA10123456784</span>
+                        </div>
+
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
+                                <tr>
+                                    <th class="px-6 py-3">Item Name</th>
+                                    <th class="px-6 py-3">SKU</th>
+                                    <th class="px-6 py-3">Expected Qty</th>
+                                    <th class="px-6 py-3 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <!-- Item 1 -->
+                                <tr class="bg-white hover:bg-blue-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center text-blue-600">
+                                            <i data-lucide="box" size="14"></i>
+                                        </div>
+                                        Window Cling (Large)
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500">WIN-001</td>
+                                    <td class="px-6 py-4 text-gray-900 font-bold">2</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="checkbox"
+                                            class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer mx-auto d-checkbox">
+                                    </td>
+                                </tr>
+                                <!-- Item 2 -->
+                                <tr class="bg-white hover:bg-blue-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center text-blue-600">
+                                            <i data-lucide="box" size="14"></i>
+                                        </div>
+                                        Register Mat
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500">MAT-004</td>
+                                    <td class="px-6 py-4 text-gray-900 font-bold">1</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="checkbox"
+                                            class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer mx-auto d-checkbox">
+                                    </td>
+                                </tr>
+                                <!-- Item 3 -->
+                                <tr class="bg-white hover:bg-blue-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center text-blue-600">
+                                            <i data-lucide="box" size="14"></i>
+                                        </div>
+                                        Aisle Danglers
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500">DNG-002</td>
+                                    <td class="px-6 py-4 text-gray-900 font-bold">5</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="checkbox"
+                                            class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer mx-auto d-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
-                    <div class="text-sm text-gray-500 mb-1">Holiday Promo 2025</div>
-                    <div class="font-medium">Tracking: 1Z999AA10123456784</div>
-                    <div class="text-green-600 text-sm font-semibold mt-1">Delivered Today</div>
-                </div>
+                <!-- Right: Action Panel -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Quick Verify -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900 mb-4">Action Required</h3>
+                        <p class="text-sm text-gray-500 mb-6">Verify all items against the packing slip. Report any
+                            discrepancies immediately.</p>
 
-                <h3 class="font-semibold text-gray-700 mb-3">Contents Checklist</h3>
+                        <div class="flex flex-col gap-3">
+                            <button onclick="simulateScanAll()"
+                                class="w-full py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 border border-gray-300 flex justify-center items-center gap-2">
+                                <i data-lucide="scan-barcode" size="18"></i> Simulate Scanner Input
+                            </button>
 
-                <div class="space-y-3">
-                    <!-- Item 1 -->
-                    <div class="card flex items-center justify-between">
-                        <div>
-                            <div class="font-bold">Window Cling (L)</div>
-                            <div class="text-xs text-gray-500">Qty: 2 • SKU: WIN-001</div>
-                        </div>
-                        <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer">
-                    </div>
-                    <!-- Item 2 -->
-                    <div class="card flex items-center justify-between">
-                        <div>
-                            <div class="font-bold">Register Mat</div>
-                            <div class="text-xs text-gray-500">Qty: 1 • SKU: MAT-004</div>
-                        </div>
-                        <input type="checkbox" class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer">
-                    </div>
-                    <!-- Item 3 (Issue) -->
-                    <div class="card">
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
-                                <div class="font-bold">Aisle Danglers</div>
-                                <div class="text-xs text-gray-500">Qty: 5 • SKU: DNG-002</div>
+                            <div class="relative py-2">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-200"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-white text-gray-500">Or</span>
+                                </div>
                             </div>
-                            <input type="checkbox" id="chk-dangle"
-                                class="w-6 h-6 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
-                                onchange="toggleIssue(this)">
-                        </div>
-                        <div id="issue-panel" class="hidden mt-2 pt-2 border-t border-gray-100">
-                            <button class="text-sm text-red-600 font-medium flex items-center gap-1 cursor-pointer">
-                                <i data-lucide="alert-circle" size="14"></i> Report Missing/Damaged
+
+                            <button onclick="completeReceipt()"
+                                class="w-full py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 shadow-sm flex justify-center items-center gap-2">
+                                <i data-lucide="check-circle" size="18"></i> Confirm All Received
                             </button>
                         </div>
                     </div>
-                </div>
 
-                <div class="text-center mt-8">
-                    <button onclick="completeReceipt()" class="btn-primary">Confirm Receipt</button>
-                    <p class="text-xs text-gray-400 mt-2">Proceeds to Install Phase</p>
+                    <!-- Support Info -->
+                    <div class="bg-blue-50 rounded-xl border border-blue-100 p-6">
+                        <h4 class="font-bold text-blue-900 mb-2 flex items-center gap-2"><i data-lucide="help-circle"
+                                size="16"></i> Missing Items?</h4>
+                        <p class="text-xs text-blue-800 mb-4">If items are damaged or missing, do not complete
+                            verification. Contact support immediately.</p>
+                        <button class="text-sm text-blue-700 font-medium hover:underline">Open Support Ticket</button>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Bottom Nav -->
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="window.location.href='dashboard.html'"><i data-lucide="home"
-                        size="20"></i><span>Home</span></div>
-                <div class="nav-item active" onclick="window.location.href='task_list.html'"><i
-                        data-lucide="list-checks" size="20"></i><span>Tasks</span></div>
-                <div class="nav-item" onclick="window.location.href='profile.html'"><i data-lucide="user"
-                        size="20"></i><span>Profile</span></div>
             </div>
         </div>
     </div>
@@ -249,8 +419,33 @@
         }
 
         function completeReceipt() {
-            localStorage.setItem('receiptComplete', 'true');
-            window.location.href = 'task_list.html';
+            // Visual feedback for desktop
+            const btn = event?.currentTarget;
+            if (btn && btn.classList.contains('bg-blue-600')) {
+                btn.innerHTML = '<i data-lucide="check" size="18"></i> Verified!';
+                btn.classList.remove('bg-blue-600');
+                btn.classList.add('bg-green-600');
+                lucide.createIcons();
+                setTimeout(() => {
+                    localStorage.setItem('receiptComplete', 'true');
+                    window.location.href = 'task_list.html';
+                }, 800);
+            } else {
+                localStorage.setItem('receiptComplete', 'true');
+                window.location.href = 'task_list.html';
+            }
+        }
+
+        /* Desktop Simulation: Auto-checks boxes to show "Scanner" effect */
+        function simulateScanAll() {
+            const checkboxes = document.querySelectorAll('.d-checkbox');
+            let delay = 0;
+            checkboxes.forEach(chk => {
+                setTimeout(() => {
+                    chk.checked = true;
+                }, delay);
+                delay += 300;
+            });
         }
     </script>
 </body>
