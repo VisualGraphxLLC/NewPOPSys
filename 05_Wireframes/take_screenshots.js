@@ -14,7 +14,19 @@ async function run() {
         'psp_ops.html',
         'regional_dashboard.html',
         'store_portal.html',
-        'store_surveys.html'
+        'store_surveys.html',
+        'General/login.html',
+        'General/forgot_password.html',
+        'Brand/dashboard.html',
+        'Brand/stores.html',
+        'Brand/layouts.html',
+        'Store/dashboard.html',
+        'Store/task_list.html',
+        'Store/receipt.html',
+        'Store/install.html',
+        'Store/attestation.html',
+        'Store/deinstall.html',
+        'Store/profile.html'
     ];
     const outputDir = 'E:\\Docker\\PopSystem\\SOW\\07_Dev_Plan\\screenshots';
     

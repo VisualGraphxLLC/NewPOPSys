@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="../theme-config.js"></script>
     <script src="../theme-loader.js"></script>
+    <script src="../offline-manager.js"></script>
     <style>
         /* Theme CSS Variables - Duplicated for standalone */
         :root {
@@ -379,35 +380,60 @@
 
         // Initialize view based on state
         function init() {
+            // Restore state from localStorage
             if (receiptComplete) {
+                // Mark Receive tab as complete
+                markTabComplete('receive');
+
+                // Show completed content for Receive
                 document.getElementById('task-tab-receive').classList.add('hidden');
                 document.getElementById('task-tab-receive-complete').classList.remove('hidden');
 
-                // Update tabs
-                markTabComplete('receive');
+                // Unlock Install tab
                 unlockTab('install');
 
-                // Show install active
-                document.getElementById('install-content-locked').classList.add('hidden');
-                document.getElementById('install-content-active').classList.remove('hidden');
+                // Logic: If install is NOT complete, switch to Install tab
+                if (!installComplete) {
+                    // Ensure Install content is active
+                    document.getElementById('install-content-locked').classList.add('hidden');
+                    document.getElementById('install-content-active').classList.remove('hidden');
+
+                    // Switch tab view
+                    switchTaskTab('install');
+                }
             }
 
             if (installComplete) {
                 markTabComplete('install');
                 unlockTab('attest');
 
-                document.getElementById('install-content-active').classList.add('hidden'); // Hide active install card if done? Or show "Done" card?
-                // For simplicity, just unlock attest
-                document.getElementById('attest-content-locked').classList.add('hidden');
-                document.getElementById('attest-content-active').classList.remove('hidden');
+                // Show completed content for Install
+                document.getElementById('install-content-active').classList.add('hidden');
+                document.getElementById('install-content-complete').classList.remove('hidden');
+
+                // Logic: If attest is NOT complete, switch to Attest tab
+                if (!signatureComplete) { // Assuming signatureComplete tracks attestation
+                    // Ensure Attest content is active
+                    document.getElementById('attest-content-locked').classList.add('hidden');
+                    document.getElementById('attest-content-active').classList.remove('hidden');
+
+                    // Switch tab view
+                    switchTaskTab('attest');
+                }
             }
 
+            // Check for Deinstall Phase
             if (deinstallPhase) {
                 const btn = document.getElementById('tab-deinstall');
                 btn.classList.remove('hidden');
                 unlockTab('deinstall');
-                document.getElementById('deinstall-content-locked').classList.add('hidden');
-                document.getElementById('deinstall-content-active').classList.remove('hidden');
+
+                // If everything else is done, switch to Deinstall
+                if (installComplete && signatureComplete && !deinstallComplete) { // hypothetical var names
+                    document.getElementById('deinstall-content-locked').classList.add('hidden');
+                    document.getElementById('deinstall-content-active').classList.remove('hidden');
+                    switchTaskTab('deinstall');
+                }
             }
         }
 
