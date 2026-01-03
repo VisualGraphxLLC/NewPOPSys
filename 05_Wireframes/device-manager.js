@@ -185,6 +185,7 @@ class DeviceManager {
             }
 
             /* Desktop (Full Screen) */
+            /* Desktop (Full Screen Web Layout) */
             body.device-desktop {
                 background-color: #f3f4f6;
             }
@@ -196,53 +197,100 @@ class DeviceManager {
                 display: block;
             }
 
+            body.device-desktop .tooltip-help-banner {
+                position: sticky;
+                top: 0;
+                z-index: 1001; /* Above nav */
+            }
+
             body.device-desktop #phone {
                 width: 100%;
                 height: auto;
-                min-height: calc(100vh - 50px);
+                min-height: 100vh;
                 border-radius: 0;
                 border: none;
                 box-shadow: none;
+                display: flex;
+                flex-direction: column;
             }
 
+            /* Hide Mobile Status Bar */
             body.device-desktop .safe-area-top {
-                height: 56px;
-                background: white;
-                border-bottom: 1px solid #e5e7eb;
-                padding: 0 32px;
-                font-size: 16px;
-                width: 100%;
-                box-sizing: border-box;
+                display: none;
             }
 
+            /* Transform Bottom Nav into Top Navigation Bar */
             body.device-desktop .bottom-nav {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                order: -1; /* Move to top */
+                position: sticky;
+                top: 32px; /* Below banner (approx) */
+                z-index: 1000;
                 height: 64px;
-                padding-bottom: 8px;
                 background: white;
-                border-top: 1px solid #e5e7eb;
-                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-                width: 100%;
-                box-sizing: border-box;
+                border-top: none;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 0 40px;
+                display: flex;
+                justify-content: flex-start; /* Left align items */
+                gap: 40px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             }
 
+            body.device-desktop .nav-item {
+                flex-direction: row; /* Horizontal layout */
+                gap: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 8px 16px;
+                border-radius: 6px;
+                transition: all 0.2s;
+            }
+
+            body.device-desktop .nav-item:hover {
+                background-color: #f3f4f6;
+                color: var(--primary);
+            }
+
+            body.device-desktop .nav-item.active {
+                color: var(--primary);
+                background-color: #eff6ff; 
+            }
+            
+            /* Add logos or spacers if needed, but for now we re-purpose existing items */
+
+            /* Main Content Area */
             body.device-desktop .screen {
-                max-width: 1200px;
+                order: 2; /* Below nav */
+                max-width: 1280px; /* Standard Desktop Container */
                 margin: 0 auto;
-                padding: 32px !important;
+                padding: 40px !important;
                 padding-bottom: 100px !important;
-                min-height: calc(100vh - 170px);
+                height: auto !important;
+                overflow: visible !important;
+                background: transparent !important; /* Let body bg show */
                 width: 100%;
                 box-sizing: border-box;
             }
 
+            /* Specific Page Overrides for Desktop */
+            
+            /* Dashboard Grid */
             body.device-desktop .dashboard-campaigns {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-                gap: 16px;
+                gap: 24px;
+            }
+
+            /* Profile Page Alignment */
+            body.device-desktop #screen-profile {
+                max-width: 800px;
+            }
+
+            /* Tasks List */
+            body.device-desktop #screen-tasks .task-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
             }
         `;
         document.head.appendChild(style);
