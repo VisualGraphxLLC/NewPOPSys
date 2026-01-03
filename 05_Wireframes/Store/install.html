@@ -407,6 +407,26 @@
         lucide.createIcons();
 
         function completeInstall() {
+            // Check for Retake first
+            const urlParams = new URLSearchParams(window.location.search);
+            const isRetake = urlParams.get('mode') === 'retake';
+
+            if (isRetake) {
+                // Submit Retake Logic
+                // For prototype, setting a flag and returning to dashboard or task list with success msg
+                localStorage.setItem('retakeSubmitted', 'true'); // Optional: for dashboard toast
+
+                // Alert for demo purposes
+                alert('Retake Submitted Successfully!');
+
+                if (document.body.classList.contains('device-desktop')) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+                return;
+            }
+
             localStorage.setItem('installComplete', 'true');
 
             // Linear Flow for Desktop
@@ -444,10 +464,20 @@
             if (mobileHeader) mobileHeader.innerText = 'Retake Required';
 
             // Desktop
+            // Desktop
             const desktopHeader = document.querySelector('.desktop-view-container h1');
             if (desktopHeader) desktopHeader.innerText = 'Retake Validation';
             const desktopSub = document.querySelector('.desktop-view-container p.text-gray-500');
             if (desktopSub) desktopSub.innerHTML = '<span class="text-red-600 font-bold">Action Needed:</span> Replace rejected photos.';
+
+            // Change Main Action Button
+            const btns = document.querySelectorAll('button.btn-primary, button.bg-green-600');
+            btns.forEach(btn => {
+                if (btn.innerText.includes('Complete')) {
+                    btn.innerHTML = '<i data-lucide="send" size="18"></i> Submit Retake';
+                    // Ensure it calls completeInstall() which now handles the redirect
+                }
+            });
 
             // 2. Target Specific Item (Mocking "Window Cling (Right)" as the rejected one)
             updateRejectedItem('Window Cling (Right)', 'Wrong Angle');

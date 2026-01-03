@@ -632,6 +632,15 @@
             updateDesktopView(isRetake);
 
             if (isRetake) {
+                // 1. Hide irrelevant tasks (Receive, Attest, Deinstall)
+                const tasksToHide = ['desktop-task-receive', 'desktop-task-attest', 'desktop-task-deinstall',
+                    'desktop-btn-receive', 'desktop-btn-attest'];
+
+                tasksToHide.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+
                 // Unlock Install logic specifically for Retake
                 const taskInstall = document.getElementById('desktop-task-install');
                 const btnInstall = document.getElementById('desktop-btn-install');
@@ -639,6 +648,10 @@
                 if (taskInstall) {
                     taskInstall.classList.remove('opacity-75', 'bg-gray-50');
                     taskInstall.classList.add('bg-white');
+
+                    // Update Title to "Retake Validation"
+                    const title = taskInstall.querySelector('h3');
+                    if (title) title.innerText = '2. Retake Validation';
 
                     // Add Rejected Badge
                     const titleArea = taskInstall.querySelector('.flex.items-center.gap-3');
