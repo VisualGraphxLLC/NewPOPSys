@@ -270,12 +270,14 @@
             // Show selected view
             document.getElementById(viewId).classList.remove('hidden');
             // Update nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
+            document.querySelectorAll('.sub-nav-link').forEach(link => {
+                link.classList.remove('text-teal-600', 'border-b-2', 'border-teal-600', 'font-bold');
+                link.classList.add('text-gray-500', 'border-transparent');
             });
             const activeLink = document.getElementById('link-' + viewId.replace('view-', ''));
             if (activeLink) {
-                activeLink.classList.add('active-nav', 'text-teal-600', 'border-b-2', 'border-teal-600');
+                activeLink.classList.remove('text-gray-500', 'border-transparent');
+                activeLink.classList.add('text-teal-600', 'border-b-2', 'border-teal-600', 'font-bold');
             }
             // Re-initialize icons
             lucide.createIcons();
@@ -307,12 +309,9 @@
     </div>
 
     <!-- Top Navigation -->
+    <!-- Top Navigation -->
     <nav class="bg-white border-b border-gray-200 h-16 flex items-center px-8 justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-4 cursor-pointer has-tooltip" data-tooltip="BRAND ADMIN PORTAL
-Brand: Acme Corporation
-Data: Brand.id, Brand.name
-Depends: User.brandId from JWT
-Blocks: All brand-scoped operations">
+        <div class="flex items-center gap-4">
             <div id="brand-logo" class="flex items-center">
                 <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
             </div>
@@ -322,106 +321,269 @@ Blocks: All brand-scoped operations">
             </div>
         </div>
         <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
-            <a href="#" id="link-survey-builder" onclick="nav('view-survey-builder')"
-                class="nav-link hover:text-teal-600 active-nav text-teal-600 border-b-2 border-teal-600 h-16 flex items-center">Survey
-                Builder</a>
-            <a href="layouts.html" class="nav-link hover:text-teal-600 h-16 flex items-center">Store Layouts</a>
-            <a href="#" id="link-survey-responses" onclick="nav('view-survey-responses')"
-                class="nav-link hover:text-teal-600 h-16 flex items-center">Survey Responses</a>
-            <a href="#" id="link-photo-rules" onclick="nav('view-photo-rules')"
-                class="nav-link hover:text-teal-600 h-16 flex items-center">Photo Rules</a>
-            <div class="relative has-tooltip" data-tooltip="NOTIFICATIONS
-Data: COUNT(Notification WHERE readStatus=false)
-Depends: Survey submissions, layout updates
-Blocks: User awareness of pending items">
-                <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                    <i data-lucide="bell" class="w-4 h-4 text-gray-500"></i>
-                </div>
-                <div
-                    class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
-                    3</div>
-            </div>
+            <a href="dashboard.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Dashboard</a>
+            <a href="campaigns.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Campaigns</a>
+            <a href="verification.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Verification
+                (12)</a>
+            <a href="stores.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Stores</a>
+            <a href="surveys.html"
+                class="nav-link active-nav h-16 flex items-center text-teal-600 border-b-2 border-teal-600">Surveys</a>
+            <a href="layouts.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Layouts</a>
+            <a href="settings.html" class="nav-link hover:text-purple-600 h-16 flex items-center">Settings</a>
+            <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
         </div>
     </nav>
 
+    <!-- Sub Navigation -->
     <div class="max-w-7xl mx-auto p-8">
 
+        <!-- Sections Navigation Tabs (Moved Inside Container) -->
+        <div class="flex gap-6 border-b border-gray-200 mb-8">
+            <button onclick="nav('view-survey-builder')" id="link-survey-builder"
+                class="sub-nav-link pb-3 px-1 text-sm font-medium text-teal-600 border-b-2 border-teal-600 transition-colors flex items-center gap-2">
+                <i data-lucide="library" class="w-4 h-4"></i> Question Library
+            </button>
+
+        </div>
+
         <!-- ============================================== -->
-        <!-- VIEW: SURVEY BUILDER (Brand Admin) -->
+        <!-- VIEW: QUESTION LIBRARY (formerly Survey Builder) -->
         <!-- ============================================== -->
         <div id="view-survey-builder" class="view block">
             <div class="flex justify-between items-center mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Layout Survey Builder</h1>
-                    <p class="text-sm text-gray-500 mt-1">Build store layout surveys with default and custom versions
-                        per store type</p>
+                    <h1 class="text-2xl font-bold text-gray-900">Question Library</h1>
+                    <p class="text-sm text-gray-500 mt-1">Manage atomic questions available for Store Layouts</p>
                 </div>
                 <div class="flex gap-2">
-                    <button
-                        class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
-                        data-tooltip="IMPORT TEMPLATE
-Action: Import survey from JSON/CSV
-Data: SurveyTemplate definition
-Blocks: Creates new SurveyTemplate">
-                        <i data-lucide="upload" class="w-4 h-4"></i> Import
-                    </button>
-                    <button onclick="document.getElementById('new-survey-modal').classList.remove('hidden')"
+                    <button onclick="document.getElementById('question-designer-modal').classList.remove('hidden')"
                         class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
-                        data-tooltip="CREATE SURVEY TEMPLATE
-Action: Create new SurveyTemplate
-Data: SurveyTemplate.id, brand_id, name
-Depends: Brand admin permissions
-Blocks: SurveyVersion creation">
-                        <i data-lucide="plus" class="w-4 h-4"></i> New Survey
+                        data-tooltip="CREATE ATOMIC QUESTION
+Action: Define new verification logic
+Data: QuestionDefinition (Type, Options)
+Blocks: Availability in Layout Builder">
+                        <i data-lucide="plus" class="w-4 h-4"></i> New Question
                     </button>
                 </div>
             </div>
 
-            <!-- Survey Templates List -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+            <!-- Question List -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                    <span class="font-bold text-gray-700">Survey Templates</span>
+                    <span class="font-bold text-gray-700 flex items-center gap-2">
+                        Active Questions <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-xs">12</span>
+                    </span>
                     <div class="flex gap-2">
-                        <input type="text" placeholder="Search surveys..."
+                        <input type="text" placeholder="Search questions..."
                             class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-64">
                         <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
-                            <option>All Status</option>
-                            <option>Active</option>
-                            <option>Draft</option>
-                            <option>Archived</option>
+                            <option>All Sources</option>
+                            <option>Inherited (Standard)</option>
+                            <option>Custom (Brand)</option>
                         </select>
                     </div>
                 </div>
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-500">
                         <tr>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="SURVEY NAME
-Data: SurveyTemplate.name
-Blocks: Survey identification">Name</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="SURVEY TYPE
-Data: SurveyTemplate.survey_type (LAYOUT, CAMPAIGN, EXCEPTION)
-Blocks: Survey workflow assignment">Type</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="STORE TYPE
-Data: SurveyTemplate.store_type_id
-Default: NULL means applies to all store types
-Custom: Specific store type variants">Store Type</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="CURRENT VERSION
-Data: MAX(SurveyVersion.version_number) WHERE published_at IS NOT NULL
-Blocks: Version tracking">Version</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="FIELD COUNT
-Data: COUNT(fields in definition_json)
-Blocks: Survey complexity indicator">Fields</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="USAGE COUNT
-Data: COUNT(Campaign WHERE survey_version_id IN template versions)
-Blocks: Template usage tracking">Used In</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="TEMPLATE STATUS
-Data: SurveyTemplate.is_active
-Blocks: Template availability">Status</th>
+                            <th class="px-6 py-3">Question Text</th>
+                            <th class="px-6 py-3">Type</th>
+                            <th class="px-6 py-3">Source</th>
+                            <th class="px-6 py-3">Usage</th>
                             <th class="px-6 py-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip bg-teal-50" data-tooltip="MASTER LAYOUT SURVEY
+                        <!-- Inherited Standard Question -->
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Fire Extinguisher Check</div>
+                                <div class="text-[10px] text-gray-400">"Is the extinguisher charged and accessible?"
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="flex items-center gap-1 text-xs font-medium text-purple-600"><i
+                                        data-lucide="check-square" class="w-3 h-3"></i> Boolean</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase"><i
+                                        data-lucide="award" class="w-3 h-3 inline mr-1"></i> Standard</span>
+                            </td>
+                            <td class="px-6 py-4 text-xs text-gray-500">Used in 3 Layouts</td>
+                            <td class="px-6 py-4 flex gap-2">
+                                <button class="text-gray-400 hover:text-gray-600" title="View (Read Only)"><i
+                                        data-lucide="eye" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                        <!-- Inherited Standard Question -->
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Condition Photo</div>
+                                <div class="text-[10px] text-gray-400">"Take a photo of the display condition"</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="flex items-center gap-1 text-xs font-medium text-blue-600"><i
+                                        data-lucide="camera" class="w-3 h-3"></i> Photo</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase"><i
+                                        data-lucide="award" class="w-3 h-3 inline mr-1"></i> Standard</span>
+                            </td>
+                            <td class="px-6 py-4 text-xs text-gray-500">Used in 12 Layouts</td>
+                            <td class="px-6 py-4 flex gap-2">
+                                <button class="text-gray-400 hover:text-gray-600" title="View (Read Only)"><i
+                                        data-lucide="eye" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                        <!-- Custom Brand Question -->
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">Promo Compliance Rating</div>
+                                <div class="text-[10px] text-gray-400">"Rate the execution of the promo 1-5"</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="flex items-center gap-1 text-xs font-medium text-teal-600"><i
+                                        data-lucide="star" class="w-3 h-3"></i> Rating</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Custom</span>
+                            </td>
+                            <td class="px-6 py-4 text-xs text-gray-500">Unused</td>
+                            <td class="px-6 py-4 flex gap-2">
+                                <button class="text-teal-600 hover:underline text-xs font-bold">Edit</button>
+                                <button class="text-red-400 hover:text-red-600"><i data-lucide="trash-2"
+                                        class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- End Question List -->
+        </div>
+        <!-- End Question Library View -- >
+    </div>
+
+    <!-- ============================================== -->
+        <!-- VIEW: CAMPAIGN SURVEY BUILDER (Legacy/Operational) -->
+        <!-- ============================================== -->
+
+        <!-- Question Designer Modal (Atomic Builder) -->
+        <div id="question-designer-modal"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-[100] flex items-center justify-center">
+            <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
+                <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-teal-900 flex items-center gap-2">
+                        <i data-lucide="settings-2" class="w-5 h-5"></i> Question Designer
+                    </h3>
+                    <button onclick="document.getElementById('question-designer-modal').classList.add('hidden')"
+                        class="text-teal-800 hover:text-teal-900">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">Question Text (The query posed to
+                            the
+                            user)</label>
+                        <input type="text"
+                            class="w-full border border-gray-300 rounded p-2 text-sm focus:border-teal-500 outline-none"
+                            placeholder="e.g., Is the display clean?">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">Input Type</label>
+                            <select class="w-full border border-gray-300 rounded p-2 text-sm bg-white">
+                                <option>Yes / No (Boolean)</option>
+                                <option>Photo Capture</option>
+                                <option>Text Input</option>
+                                <option>Rating (1-5)</option>
+                                <option>Select from List</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">Validation</label>
+                            <select class="w-full border border-gray-300 rounded p-2 text-sm bg-white">
+                                <option>Optional</option>
+                                <option>Required</option>
+                                <option>Required if Logic...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">Helper Text / Instructions</label>
+                        <textarea
+                            class="w-full border border-gray-300 rounded p-2 text-sm focus:border-teal-500 outline-none h-20"
+                            placeholder="Instructions for the person answering..."></textarea>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                        <span class="text-xs font-bold text-gray-500 uppercase block mb-2">Options</span>
+                        <div class="flex items-center gap-2 mb-2">
+                            <input type="checkbox" class="text-teal-600 rounded"> <span class="text-sm">Allow 'N/A'
+                                Response</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" class="text-teal-600 rounded"> <span class="text-sm">Capture GPS
+                                Location</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex justify-end gap-2">
+                    <button onclick="document.getElementById('question-designer-modal').classList.add('hidden')"
+                        class="px-4 py-2 text-gray-500 text-sm font-bold hover:bg-gray-100 rounded">Cancel</button>
+                    <button
+                        class="px-4 py-2 bg-teal-600 text-white text-sm font-bold rounded hover:bg-teal-700 shadow-sm">Save
+                        Question</button>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- VIEW: CAMPAIGN SURVEY BUILDER (Legacy/Operational) -->
+            <!-- ============================================== -->
+            <div id="view-campaign-builder" class="view hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <button onclick="nav('view-survey-builder')"
+                            class="text-gray-500 hover:text-gray-700 flex items-center gap-2 mb-2">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Library
+                        </button>
+                        <h1 class="text-2xl font-bold text-gray-900">Campaign Surveys</h1>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3 has-tooltip" data-tooltip="SURVEY TYPE
+Data: SurveyTemplate.survey_type (LAYOUT, CAMPAIGN, EXCEPTION)
+Blocks: Survey workflow assignment">Type</th>
+                                <th class="px-6 py-3 has-tooltip" data-tooltip="STORE TYPE
+Data: SurveyTemplate.store_type_id
+Default: NULL means applies to all store types
+Custom: Specific store type variants">Store Type</th>
+                                <th class="px-6 py-3 has-tooltip" data-tooltip="CURRENT VERSION
+Data: MAX(SurveyVersion.version_number) WHERE published_at IS NOT NULL
+Blocks: Version tracking">Version</th>
+                                <th class="px-6 py-3 has-tooltip" data-tooltip="FIELD COUNT
+Data: COUNT(fields in definition_json)
+Blocks: Survey complexity indicator">Fields</th>
+                                <th class="px-6 py-3 has-tooltip" data-tooltip="USAGE COUNT
+Data: COUNT(Campaign WHERE survey_version_id IN template versions)
+Blocks: Template usage tracking">Used In</th>
+                                <th class="px-6 py-3 has-tooltip" data-tooltip="TEMPLATE STATUS
+Data: SurveyTemplate.is_active
+Blocks: Template availability">Status</th>
+                                <th class="px-6 py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50 cursor-pointer has-tooltip bg-teal-50" data-tooltip="MASTER LAYOUT SURVEY
 Name: Default Store Layout Survey
 Usage: Done ONCE (unless remodel)
 Function: Defines the 'Canvas' for all campaigns
@@ -429,36 +591,36 @@ Version: 2.1 (published)
 Fields: 12 form fields
 Used in: 247 stores
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="lock" class="w-3 h-3 text-teal-600"></i>
-                                    <span>Default Store Layout Survey</span>
-                                </div>
-                                <div class="text-[10px] text-teal-600 font-bold ml-5">SYNCED: Master v2.1</div>
-                            </td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-500"><span class="text-teal-600 font-medium">All
-                                    (Default)</span></td>
-                            <td class="px-6 py-4 text-gray-500">v2.1</td>
-                            <td class="px-6 py-4 text-gray-500">12</td>
-                            <td class="px-6 py-4 text-gray-500">247 stores</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="RECURRING CAMPAIGN SURVEY
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="lock" class="w-3 h-3 text-teal-600"></i>
+                                        <span>Default Store Layout Survey</span>
+                                    </div>
+                                    <div class="text-[10px] text-teal-600 font-bold ml-5">SYNCED: Master v2.1</div>
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-500"><span class="text-teal-600 font-medium">All
+                                        (Default)</span></td>
+                                <td class="px-6 py-4 text-gray-500">v2.1</td>
+                                <td class="px-6 py-4 text-gray-500">12</td>
+                                <td class="px-6 py-4 text-gray-500">247 stores</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex gap-2">
+                                        <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                                class="w-4 h-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="RECURRING CAMPAIGN SURVEY
 Name: Universal Campaign Survey
 Usage: Recurring for EVERY campaign
 Function: Operational 'Paint' (Receipt, Install, Compliance)
@@ -466,29 +628,29 @@ Version: 3.0 (published)
 Fields: 8 form fields
 Used in: All active campaigns
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Universal Campaign Survey</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Layer</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-400">—</td>
-                            <td class="px-6 py-4 text-gray-500">v3.0</td>
-                            <td class="px-6 py-4 text-gray-500">8</td>
-                            <td class="px-6 py-4 text-gray-500">All campaigns</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="EXCEPTION SURVEY
+                                <td class="px-6 py-4 font-medium text-gray-900">Universal Campaign Survey</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Layer</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-400">—</td>
+                                <td class="px-6 py-4 text-gray-500">v3.0</td>
+                                <td class="px-6 py-4 text-gray-500">8</td>
+                                <td class="px-6 py-4 text-gray-500">All campaigns</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex gap-2">
+                                        <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                                class="w-4 h-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="EXCEPTION SURVEY
 Name: Exception Reporting Survey
 Usage: Triggered by Receipt Checklist
 Function: Handles Missing/Damaged Split
@@ -496,29 +658,29 @@ Version: 1.0 (published)
 Fields: 5 form fields
 Used in: All exception reports
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Exception Reporting Survey</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Exception</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-400">—</td>
-                            <td class="px-6 py-4 text-gray-500">v1.0</td>
-                            <td class="px-6 py-4 text-gray-500">5</td>
-                            <td class="px-6 py-4 text-gray-500">All exceptions</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="DRAFT CANVAS SURVEY
+                                <td class="px-6 py-4 font-medium text-gray-900">Exception Reporting Survey</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Exception</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-400">—</td>
+                                <td class="px-6 py-4 text-gray-500">v1.0</td>
+                                <td class="px-6 py-4 text-gray-500">5</td>
+                                <td class="px-6 py-4 text-gray-500">All exceptions</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex gap-2">
+                                        <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                                class="w-4 h-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="DRAFT CANVAS SURVEY
 Name: Mall Layout Survey
 Usage: One-time Physical Setup
 Function: Custom Mall Canvas
@@ -526,740 +688,352 @@ Version: DRAFT (not published)
 Fields: 10 form fields
 Status: Editing in progress
 Click: Open in builder">
-                            <td class="px-6 py-4 font-medium text-gray-900">Mall Location Layout</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-500">Mall Location</td>
-                            <td class="px-6 py-4 text-gray-500"><span class="text-amber-600">Draft</span></td>
-                            <td class="px-6 py-4 text-gray-500">10</td>
-                            <td class="px-6 py-4 text-gray-500">-</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Draft</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                <td class="px-6 py-4 font-medium text-gray-900">Mall Location Layout</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Canvas</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-500">Mall Location</td>
+                                <td class="px-6 py-4 text-gray-500"><span class="text-amber-600">Draft</span></td>
+                                <td class="px-6 py-4 text-gray-500">10</td>
+                                <td class="px-6 py-4 text-gray-500">-</td>
+                                <td class="px-6 py-4"><span
+                                        class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Draft</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex gap-2">
+                                        <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
+                                                class="w-4 h-4"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i data-lucide="more-vertical"
+                                                class="w-4 h-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Survey Builder Canvas -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                    <div class="flex items-center gap-3">
-                        <span class="font-bold text-gray-700">Editing: Campaign Operational Layer (Receipt &
-                            Install)</span>
-                        <span
-                            class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-black uppercase tracking-tighter">Layer
-                            Template</span>
-                        <span class="text-gray-400 text-sm">|</span>
-                        <span class="text-amber-600 text-sm font-medium">Unsaved changes</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button
-                            class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
-                            data-tooltip="PREVIEW SURVEY
+                <!-- Survey Builder Canvas -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <span class="font-bold text-gray-700">Editing: Campaign Operational Layer (Receipt &
+                                Install)</span>
+                            <span
+                                class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-black uppercase tracking-tighter">Layer
+                                Template</span>
+                            <span class="text-gray-400 text-sm">|</span>
+                            <span class="text-amber-600 text-sm font-medium">Unsaved changes</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button
+                                class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
+                                data-tooltip="PREVIEW SURVEY
 Action: Open mobile preview modal
 Data: Current definition_json
 Blocks: Visual testing before publish">
-                            <i data-lucide="eye" class="w-4 h-4 inline mr-1"></i> Preview
-                        </button>
-                        <button
-                            class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
-                            data-tooltip="SAVE DRAFT
+                                <i data-lucide="eye" class="w-4 h-4 inline mr-1"></i> Preview
+                            </button>
+                            <button
+                                class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 has-tooltip"
+                                data-tooltip="SAVE DRAFT
 Action: Save to SurveyVersion (unpublished)
 Data: definition_json, version_number
 Blocks: Preserves work without publishing">
-                            Save Draft
-                        </button>
-                        <button
-                            class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 has-tooltip"
-                            data-tooltip="PUBLISH VERSION
+                                Save Draft
+                            </button>
+                            <button
+                                class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 has-tooltip"
+                                data-tooltip="PUBLISH VERSION
 Action: Set published_at = NOW()
 Data: SurveyVersion.published_at
 Depends: Valid definition_json
 Blocks: Makes version available for campaigns
 WARNING: Creates immutable version">
-                            Publish v2.2
-                        </button>
+                                Publish v2.2
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="flex">
-                    <!-- Field Palette -->
-                    <div class="w-64 border-r border-gray-100 p-4 bg-gray-50">
-                        <div class="font-medium text-gray-700 mb-3 has-tooltip" data-tooltip="FIELD PALETTE
+                    <div class="flex">
+                        <!-- Field Palette -->
+                        <div class="w-64 border-r border-gray-100 p-4 bg-gray-50">
+                            <div class="font-medium text-gray-700 mb-3 has-tooltip" data-tooltip="FIELD PALETTE
 Drag fields to canvas to add
 Field types: Text, Number, Select, etc.
 Each field has configurable options">Field Types</div>
-                        <div class="space-y-2">
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="TEXT FIELD
+                            <div class="space-y-2">
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="TEXT FIELD
 Type: Short text input
 Max length: configurable
 Validation: required, pattern
 Store: response_json.field_id">
-                                <i data-lucide="type" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Text Input</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="TEXTAREA FIELD
+                                    <i data-lucide="type" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Text Input</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="TEXTAREA FIELD
 Type: Multi-line text
 Max length: configurable
 Use for: notes, descriptions
 Store: response_json.field_id">
-                                <i data-lucide="align-left" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Text Area</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="NUMBER FIELD
+                                    <i data-lucide="align-left" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Text Area</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="NUMBER FIELD
 Type: Numeric input
 Validation: min, max, step
 Use for: quantities, counts
 Store: response_json.field_id">
-                                <i data-lucide="hash" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Number</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="DROPDOWN FIELD
+                                    <i data-lucide="hash" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Number</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="DROPDOWN FIELD
 Type: Single select from options
 Options: configurable list
 Use for: status, category
 Store: response_json.field_id">
-                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Dropdown</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="CHECKBOX FIELD
+                                    <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Dropdown</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="CHECKBOX FIELD
 Type: Boolean yes/no
 Validation: required
 Use for: confirmations
 Store: response_json.field_id">
-                                <i data-lucide="check-square" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Checkbox</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="RADIO GROUP
+                                    <i data-lucide="check-square" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Checkbox</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="RADIO GROUP
 Type: Single select from options
 Displayed: All options visible
 Use for: yes/no/na, ratings
 Store: response_json.field_id">
-                                <i data-lucide="circle-dot" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Radio Group</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="DATE PICKER
+                                    <i data-lucide="circle-dot" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Radio Group</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="DATE PICKER
 Type: Date selection
 Format: configurable
 Validation: min/max date
 Store: response_json.field_id">
-                                <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Date Picker</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="PHOTO CAPTURE
+                                    <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Date Picker</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="PHOTO CAPTURE
 Type: Camera/gallery upload
 Links to: PhotoRule.id
 Validation: min/max photos
 Store: photo_uploads table">
-                                <i data-lucide="camera" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Photo Capture</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="SIGNATURE
+                                    <i data-lucide="camera" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Photo Capture</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="SIGNATURE
 Type: Touch signature capture
 Use for: acknowledgments
 Store: S3 + reference
 Format: PNG image">
-                                <i data-lucide="pen-tool" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Signature</span>
-                            </div>
-                            <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="SECTION HEADER
+                                    <i data-lucide="pen-tool" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Signature</span>
+                                </div>
+                                <div class="field-item bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="SECTION HEADER
 Type: Visual divider
 Use for: grouping fields
 Not stored: display only
 Helps organize long surveys">
-                                <i data-lucide="minus" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-sm font-medium text-gray-700">Section Header</span>
-                            </div>
-                            <div class="field-item bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="ITEM CHECKLIST (CAMPAIGN)
+                                    <i data-lucide="minus" class="w-4 h-4 text-gray-500"></i>
+                                    <span class="text-sm font-medium text-gray-700">Section Header</span>
+                                </div>
+                                <div class="field-item bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="ITEM CHECKLIST (CAMPAIGN)
 Type: Dynamic Multi-Checkbox
 Function: Maps to Kit Items
 Usage: Receipt verification
 Store: Order split logic">
-                                <i data-lucide="package-check" class="w-4 h-4 text-blue-600"></i>
-                                <span class="text-sm font-bold text-blue-700">Item Checklist</span>
-                            </div>
-                            <div class="field-item bg-teal-50 border border-teal-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
-                                data-tooltip="HOTSPOT CAPTURE (LAYOUT)
+                                    <i data-lucide="package-check" class="w-4 h-4 text-blue-600"></i>
+                                    <span class="text-sm font-bold text-blue-700">Item Checklist</span>
+                                </div>
+                                <div class="field-item bg-teal-50 border border-teal-200 rounded-lg p-3 flex items-center gap-3 has-tooltip"
+                                    data-tooltip="HOTSPOT CAPTURE (LAYOUT)
 Type: Layout-Bound Photo
 Function: Maps to Location IDs
 Usage: Compliance proof
 Store: Master Layout Truth">
-                                <i data-lucide="map-pin" class="w-4 h-4 text-teal-600"></i>
-                                <span class="text-sm font-bold text-teal-700">Hotspot Capture</span>
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-teal-600"></i>
+                                    <span class="text-sm font-bold text-teal-700">Hotspot Capture</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Survey Canvas -->
-                    <div class="flex-1 p-6">
-                        <div class="max-w-xl mx-auto space-y-4">
-                            <!-- Section: Stage 1: Receipt Verification (Logistics) -->
-                            <div class="canvas-field selected rounded-lg p-4 cursor-pointer border-l-4 border-blue-500"
-                                onclick="selectField(this)">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-blue-600 font-bold uppercase tracking-widest">Item
-                                            Checklist</span>
-                                    </div>
-                                    <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                    </div>
-                                </div>
-                                <div class="font-bold text-gray-900 flex items-center gap-2">
-                                    <i data-lucide="lock" class="w-3 h-3 text-blue-600"></i>
-                                    Stage 1: Receipt Checklist
-                                </div>
-                                <div
-                                    class="text-xs text-blue-600 mb-4 font-bold uppercase tracking-wider flex items-center gap-1">
-                                    <i data-lucide="link" class="w-3 h-3"></i> Inherited from Master
-                                </div>
-
-                                <div class="space-y-2 opacity-60">
-                                    <div
-                                        class="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-100">
-                                        <span class="text-sm font-medium">[Item Name]</span>
-                                        <div class="flex gap-2">
-                                            <span
-                                                class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded">RECVD</span>
-                                            <span
-                                                class="px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded">EXCPT</span>
+                        <!-- Survey Canvas -->
+                        <div class="flex-1 p-6">
+                            <div class="max-w-xl mx-auto space-y-4">
+                                <!-- Section: Stage 1: Receipt Verification (Logistics) -->
+                                <div class="canvas-field selected rounded-lg p-4 cursor-pointer border-l-4 border-blue-500"
+                                    onclick="selectField(this)">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="grip-vertical"
+                                                class="w-4 h-4 text-gray-300 cursor-move"></i>
+                                            <span class="text-xs text-blue-600 font-bold uppercase tracking-widest">Item
+                                                Checklist</span>
+                                        </div>
+                                        <div class="flex gap-1">
+                                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                    class="w-3 h-3 text-gray-400"></i></button>
+                                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                    class="w-3 h-3 text-gray-400"></i></button>
                                         </div>
                                     </div>
-                                </div>
-                                <div
-                                    class="mt-4 p-3 bg-blue-50 border border-blue-100 rounded text-[11px] text-blue-700">
-                                    <i data-lucide="split" class="w-3 h-3 inline mr-1"></i>
-                                    <strong>Split Order Logic</strong>: Exceptions automatically trigger a Supplemental
-                                    Order and block this item's Install Task.
-                                </div>
-                            </div>
-
-                            <!-- Section: Stage 2: Visual truth (Installation) -->
-                            <div class="canvas-field rounded-lg p-4 cursor-pointer border-l-4 border-teal-500"
-                                onclick="selectField(this)">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-teal-600 font-bold uppercase tracking-widest">Hotspot
-                                            Capture</span>
+                                    <div class="font-bold text-gray-900 flex items-center gap-2">
+                                        <i data-lucide="lock" class="w-3 h-3 text-blue-600"></i>
+                                        Stage 1: Receipt Checklist
                                     </div>
-                                    <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
-                                                class="w-3 h-3 text-gray-400"></i></button>
+                                    <div
+                                        class="text-xs text-blue-600 mb-4 font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <i data-lucide="link" class="w-3 h-3"></i> Inherited from Master
                                     </div>
-                                </div>
-                                <div class="font-bold text-gray-900">Stage 2: Compliance Proof (Photos)</div>
-                                <div class="text-xs text-gray-500 mb-4 font-medium italic">Binds photo tasks to Master
-                                    Layout Hotspots</div>
 
-                                <div
-                                    class="border-2 border-dashed border-teal-100 rounded-lg p-6 flex flex-col items-center justify-center bg-teal-50/30">
-                                    <i data-lucide="map-pin" class="w-8 h-8 text-teal-300 mb-2"></i>
-                                    <span class="text-xs text-teal-600 font-bold uppercase">Linked to Layout
-                                        Hotspots</span>
-                                </div>
-                            </div>
-
-                            <!-- Field: Package Photo -->
-                            <div class="canvas-field rounded-lg p-4 cursor-pointer" onclick="selectField(this)">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="grip-vertical" class="w-4 h-4 text-gray-300 cursor-move"></i>
-                                        <span class="text-xs text-pink-600 font-medium">PHOTO</span>
+                                    <div class="space-y-2 opacity-60">
+                                        <div
+                                            class="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-100">
+                                            <span class="text-sm font-medium">[Item Name]</span>
+                                            <div class="flex gap-2">
+                                                <span
+                                                    class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded">RECVD</span>
+                                                <span
+                                                    class="px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded">EXCPT</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex gap-1">
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
-                                                class="w-3 h-3 text-gray-400"></i></button>
-                                        <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
-                                                class="w-3 h-3 text-gray-400"></i></button>
+                                    <div
+                                        class="mt-4 p-3 bg-blue-50 border border-blue-100 rounded text-[11px] text-blue-700">
+                                        <i data-lucide="split" class="w-3 h-3 inline mr-1"></i>
+                                        <strong>Split Order Logic</strong>: Exceptions automatically trigger a
+                                        Supplemental
+                                        Order and block this item's Install Task.
                                     </div>
                                 </div>
-                                <div class="font-medium text-gray-700 mb-2">Photo of packaging (if damaged)</div>
-                                <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
-                                    <i data-lucide="camera" class="w-8 h-8 text-gray-300 mx-auto mb-2"></i>
-                                    <div class="text-sm text-gray-500">Tap to capture photo</div>
-                                    <div class="text-xs text-gray-400 mt-1">Min: 0 | Max: 3 photos</div>
-                                </div>
-                            </div>
 
-                            <!-- Drop Zone -->
-                            <div class="drop-zone p-6 text-center has-tooltip" data-tooltip="DROP ZONE
+                                <!-- Section: Stage 2: Visual truth (Installation) -->
+                                <div class="canvas-field rounded-lg p-4 cursor-pointer border-l-4 border-teal-500"
+                                    onclick="selectField(this)">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="grip-vertical"
+                                                class="w-4 h-4 text-gray-300 cursor-move"></i>
+                                            <span
+                                                class="text-xs text-teal-600 font-bold uppercase tracking-widest">Hotspot
+                                                Capture</span>
+                                        </div>
+                                        <div class="flex gap-1">
+                                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                    class="w-3 h-3 text-gray-400"></i></button>
+                                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                    class="w-3 h-3 text-gray-400"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="font-bold text-gray-900">Stage 2: Compliance Proof (Photos)</div>
+                                    <div class="text-xs text-gray-500 mb-4 font-medium italic">Binds photo tasks to
+                                        Master
+                                        Layout Hotspots</div>
+
+                                    <div
+                                        class="border-2 border-dashed border-teal-100 rounded-lg p-6 flex flex-col items-center justify-center bg-teal-50/30">
+                                        <i data-lucide="map-pin" class="w-8 h-8 text-teal-300 mb-2"></i>
+                                        <span class="text-xs text-teal-600 font-bold uppercase">Linked to Layout
+                                            Hotspots</span>
+                                    </div>
+                                </div>
+
+                                <!-- Field: Package Photo -->
+                                <div class="canvas-field rounded-lg p-4 cursor-pointer" onclick="selectField(this)">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="grip-vertical"
+                                                class="w-4 h-4 text-gray-300 cursor-move"></i>
+                                            <span class="text-xs text-pink-600 font-medium">PHOTO</span>
+                                        </div>
+                                        <div class="flex gap-1">
+                                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="settings"
+                                                    class="w-3 h-3 text-gray-400"></i></button>
+                                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="trash-2"
+                                                    class="w-3 h-3 text-gray-400"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="font-medium text-gray-700 mb-2">Photo of packaging (if damaged)</div>
+                                    <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
+                                        <i data-lucide="camera" class="w-8 h-8 text-gray-300 mx-auto mb-2"></i>
+                                        <div class="text-sm text-gray-500">Tap to capture photo</div>
+                                        <div class="text-xs text-gray-400 mt-1">Min: 0 | Max: 3 photos</div>
+                                    </div>
+                                </div>
+
+                                <!-- Drop Zone -->
+                                <div class="drop-zone p-6 text-center has-tooltip" data-tooltip="DROP ZONE
 Drag fields from palette here
 Fields added to definition_json
 Order determines display order">
-                                <i data-lucide="plus" class="w-6 h-6 text-gray-300 mx-auto mb-2"></i>
-                                <div class="text-sm text-gray-400">Drag fields here or click to add</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Field Properties Panel -->
-                    <div class="w-72 border-l border-gray-100 p-4 bg-gray-50">
-                        <div class="font-medium text-gray-700 mb-4">Field Properties</div>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-xs text-gray-500 font-medium block mb-1">Field ID</label>
-                                <input type="text" value="kit_verification_section"
-                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-100"
-                                    readonly>
-                            </div>
-                            <div>
-                                <label class="text-xs text-gray-500 font-medium block mb-1">Label</label>
-                                <input type="text" value="Kit Verification"
-                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
-                            </div>
-                            <div>
-                                <label class="text-xs text-gray-500 font-medium block mb-1">Description</label>
-                                <textarea
-                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm h-16">Verify all items received in the shipment</textarea>
-                            </div>
-                            <div class="border-t border-gray-200 pt-4">
-                                <div class="font-medium text-gray-700 mb-3 text-sm">Visibility Rules</div>
-                                <div class="space-y-2">
-                                    <label class="flex items-center gap-2">
-                                        <input type="checkbox" class="text-teal-600 rounded">
-                                        <span class="text-sm text-gray-600">Always visible</span>
-                                    </label>
-                                    <div class="text-xs text-gray-500 mt-2">Or show when:</div>
-                                    <select
-                                        class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
-                                        <option>Select field...</option>
-                                        <option>all_items_received</option>
-                                        <option>package_condition</option>
-                                    </select>
-                                    <div class="flex gap-2">
-                                        <select
-                                            class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
-                                            <option>equals</option>
-                                            <option>not equals</option>
-                                            <option>contains</option>
-                                        </select>
-                                        <input type="text" placeholder="value"
-                                            class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm">
-                                    </div>
+                                    <i data-lucide="plus" class="w-6 h-6 text-gray-300 mx-auto mb-2"></i>
+                                    <div class="text-sm text-gray-400">Drag fields here or click to add</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW: STORE LAYOUTS (Brand/Store Level) -->
-        <!-- ============================================== -->
-
-
-        <!-- ============================================== -->
-        <!-- VIEW: SURVEY RESPONSES (Brand Admin) -->
-        <!-- ============================================== -->
-        <div id="view-survey-responses" class="view hidden">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Survey Responses</h1>
-                    <p class="text-sm text-gray-500 mt-1">View and manage store survey submissions</p>
-                </div>
-                <div class="flex gap-2">
-                    <button
-                        class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2 has-tooltip"
-                        data-tooltip="EXPORT RESPONSES
-Action: Export to CSV/Excel
-Data: All filtered responses
-Includes: Store info, answers, timestamps">
-                        <i data-lucide="download" class="w-4 h-4"></i> Export
-                    </button>
-                </div>
-            </div>
-
-            <!-- Filters -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-                <div class="flex gap-4 flex-wrap">
-                    <div class="flex-1 min-w-64">
-                        <label class="text-xs text-gray-500 font-medium block mb-1">Search</label>
-                        <div class="relative">
-                            <i data-lucide="search"
-                                class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" placeholder="Store number or campaign..."
-                                class="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="text-xs text-gray-500 font-medium block mb-1">Campaign</label>
-                        <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-48">
-                            <option>All Campaigns</option>
-                            <option>Summer Promo 2025</option>
-                            <option>Holiday Display</option>
-                            <option>Back to School</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-gray-500 font-medium block mb-1">Survey Type</label>
-                        <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-40">
-                            <option>All Types</option>
-                            <option>Receipt Survey</option>
-                            <option>Install Survey</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-gray-500 font-medium block mb-1">Status</label>
-                        <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-40">
-                            <option>All Status</option>
-                            <option>Submitted</option>
-                            <option>Needs Review</option>
-                            <option>Issues Reported</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-gray-500 font-medium block mb-1">Date Range</label>
-                        <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-40">
-                            <option>Last 30 Days</option>
-                            <option>Last 7 Days</option>
-                            <option>Last 90 Days</option>
-                            <option>Custom Range</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Response Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="TOTAL RESPONSES
-Data: COUNT(StoreSurveyResponse)
-Filter: Current date range
-Includes: All survey types">
-                    <div class="text-sm text-gray-500 mb-1">Total Responses</div>
-                    <div class="text-2xl font-bold text-gray-900">1,247</div>
-                    <div class="text-xs text-green-600 mt-1">+23% vs last month</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="COMPLETION RATE
-Data: Submitted / Total Assigned
-Calculation: Responses with submitted_at
-Shows: Survey participation rate">
-                    <div class="text-sm text-gray-500 mb-1">Completion Rate</div>
-                    <div class="text-2xl font-bold text-teal-600">94.2%</div>
-                    <div class="text-xs text-green-600 mt-1">+2.1% improvement</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="ISSUES REPORTED
-Data: COUNT(responses with issues)
-Shows: Kit problems identified
-Links to: IssueRequest records">
-                    <div class="text-sm text-gray-500 mb-1">Issues Reported</div>
-                    <div class="text-2xl font-bold text-amber-600">47</div>
-                    <div class="text-xs text-gray-500 mt-1">3.8% of responses</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 has-tooltip" data-tooltip="PENDING REVIEW
-Data: COUNT(needs brand review)
-Status: Responses with flagged items
-Action: Click to view pending">
-                    <div class="text-sm text-gray-500 mb-1">Pending Review</div>
-                    <div class="text-2xl font-bold text-red-600">12</div>
-                    <div class="text-xs text-red-600 mt-1">Needs attention</div>
-                </div>
-            </div>
-
-            <!-- Responses Table -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <table class="w-full text-sm text-left">
-                    <thead class="bg-gray-50 text-gray-500">
-                        <tr>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="STORE INFO
-Data: Store.store_number, Store.name
-Click: Sort by store">Store</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="CAMPAIGN NAME
-Data: Campaign.name
-Links to: Campaign details">Campaign</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="SURVEY TYPE
-Data: SurveyTemplate.type
-Types: RECEIPT, INSTALL, CUSTOM">Survey</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="SUBMISSION STATUS
-Data: StoreSurveyResponse.submitted_at
-Status: Submitted, In Progress, Issues">Status</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="SUBMITTED DATE
-Data: StoreSurveyResponse.submitted_at
-Format: Relative time">Submitted</th>
-                            <th class="px-6 py-3 has-tooltip" data-tooltip="SUBMITTED BY
-Data: User.name (submitted_by_user_id)
-Shows: Who completed survey">By</th>
-                            <th class="px-6 py-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="SURVEY RESPONSE - ISSUES
-Store: STR-001 Downtown Main
-Campaign: Summer Promo 2025
-Survey: Receipt Survey
-Status: Issues Reported
-Issues: 2 items missing
-Click: View response details">
-                            <td class="px-6 py-4">
-                                <div class="font-medium text-gray-900">STR-001</div>
-                                <div class="text-xs text-gray-500">Downtown Main</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Summer Promo 2025</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-bold">Receipt</span>
-                            </td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-xs font-bold">Issues
-                                    Reported</span></td>
-                            <td class="px-6 py-4 text-gray-500">2 hours ago</td>
-                            <td class="px-6 py-4 text-gray-500">John D.</td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer has-tooltip" data-tooltip="SURVEY RESPONSE - SUBMITTED
-Store: STR-002 Westside Mall
-Campaign: Holiday Display
-Survey: Install Survey
-Status: Submitted successfully
-Photos: 8 photos attached
-Click: View response details">
-                            <td class="px-6 py-4">
-                                <div class="font-medium text-gray-900">STR-002</div>
-                                <div class="text-xs text-gray-500">Westside Mall</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Holiday Display</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-bold">Install</span>
-                            </td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Submitted</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-500">5 hours ago</td>
-                            <td class="px-6 py-4 text-gray-500">Jane S.</td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer bg-yellow-50 has-tooltip" data-tooltip="SURVEY RESPONSE - IN PROGRESS
-Store: STR-004 University Plaza
-Campaign: Summer Promo 2025
-Survey: Receipt Survey
-Status: Partially complete
-Progress: 3/8 questions answered
-Click: View partial response">
-                            <td class="px-6 py-4">
-                                <div class="font-medium text-gray-900">STR-004</div>
-                                <div class="text-xs text-gray-500">University Plaza</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Summer Promo 2025</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-bold">Receipt</span>
-                            </td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-bold">In
-                                    Progress</span></td>
-                            <td class="px-6 py-4 text-gray-500">1 day ago</td>
-                            <td class="px-6 py-4 text-gray-500">Mike J.</td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 cursor-pointer">
-                            <td class="px-6 py-4">
-                                <div class="font-medium text-gray-900">STR-005</div>
-                                <div class="text-xs text-gray-500">Harbor View</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Back to School</td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-bold">Install</span>
-                            </td>
-                            <td class="px-6 py-4"><span
-                                    class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Submitted</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-500">2 days ago</td>
-                            <td class="px-6 py-4 text-gray-500">Lisa M.</td>
-                            <td class="px-6 py-4">
-                                <div class="flex gap-2">
-                                    <button class="text-teal-600 hover:text-teal-700"><i data-lucide="eye"
-                                            class="w-4 h-4"></i></button>
-                                    <button class="text-gray-400 hover:text-gray-600"><i data-lucide="edit"
-                                            class="w-4 h-4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="px-6 py-4 border-t border-gray-100 flex justify-between items-center">
-                    <div class="text-sm text-gray-500">Showing 1-4 of 1,247 responses</div>
-                    <div class="flex gap-1">
-                        <button
-                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">Previous</button>
-                        <button class="px-3 py-1 bg-teal-600 text-white rounded text-sm">1</button>
-                        <button
-                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">2</button>
-                        <button
-                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">3</button>
-                        <button
-                            class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:bg-gray-50">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Response Detail Panel (Expanded View) -->
-            <div class="mt-6 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                    <div>
-                        <span class="font-bold text-gray-700">Response Detail: STR-001 - Summer Promo 2025</span>
-                        <span class="text-sm text-gray-500 ml-2">Receipt Survey v2.1</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button
-                            class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
-                            data-tooltip="EDIT RESPONSE
-Action: Edit response on behalf of store
-Creates: response_edit_audit record
-Use: Fix errors, add missing data">
-                            <i data-lucide="edit" class="w-4 h-4 inline mr-1"></i> Edit Response
-                        </button>
-                        <button
-                            class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 has-tooltip"
-                            data-tooltip="AUDIT HISTORY
-Action: View all edits to this response
-Data: response_edit_audits table
-Shows: Who changed what and when">
-                            <i data-lucide="history" class="w-4 h-4 inline mr-1"></i> Audit History
-                        </button>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Response Answers -->
-                        <div>
-                            <div class="font-medium text-gray-700 mb-4">Survey Responses</div>
+                        <!-- Field Properties Panel -->
+                        <div class="w-72 border-l border-gray-100 p-4 bg-gray-50">
+                            <div class="font-medium text-gray-700 mb-4">Field Properties</div>
                             <div class="space-y-4">
-                                <div class="border-b border-gray-100 pb-3 has-tooltip" data-tooltip="FIELD RESPONSE
-Field: all_items_received
-Type: RADIO (Yes/No)
-Value: No
-Triggers: Conditional fields">
-                                    <div class="text-xs text-gray-500 mb-1">Did you receive all items listed on the
-                                        packing slip?</div>
-                                    <div class="font-medium text-red-600">No</div>
+                                <div>
+                                    <label class="text-xs text-gray-500 font-medium block mb-1">Field ID</label>
+                                    <input type="text" value="kit_verification_section"
+                                        class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-100"
+                                        readonly>
                                 </div>
-                                <div class="border-b border-gray-100 pb-3 has-tooltip" data-tooltip="FIELD RESPONSE
-Field: missing_items_description
-Type: TEXTAREA
-Conditional: Shown because all_items = No
-Value: Description of missing items">
-                                    <div class="text-xs text-gray-500 mb-1">Which items are missing or damaged?</div>
-                                    <div class="font-medium text-gray-900">Missing: 2x Window Clings (Item #WC-2025-A).
-                                        Box was opened and items were not inside.</div>
+                                <div>
+                                    <label class="text-xs text-gray-500 font-medium block mb-1">Label</label>
+                                    <input type="text" value="Kit Verification"
+                                        class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
                                 </div>
-                                <div class="border-b border-gray-100 pb-3 has-tooltip" data-tooltip="FIELD RESPONSE
-Field: package_condition
-Type: DROPDOWN
-Value: Fair - Some damage
-Links to: PhotoUpload evidence">
-                                    <div class="text-xs text-gray-500 mb-1">Package condition on arrival</div>
-                                    <div class="font-medium text-amber-600">Fair - Some damage</div>
+                                <div>
+                                    <label class="text-xs text-gray-500 font-medium block mb-1">Description</label>
+                                    <textarea
+                                        class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm h-16">Verify all items received in the shipment</textarea>
                                 </div>
-                                <div class="border-b border-gray-100 pb-3">
-                                    <div class="text-xs text-gray-500 mb-1">Additional notes</div>
-                                    <div class="font-medium text-gray-900">Box appeared to have been opened and
-                                        resealed. Tape was cut on one side.</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Response Photos & Metadata -->
-                        <div>
-                            <div class="font-medium text-gray-700 mb-4">Attached Photos</div>
-                            <div class="grid grid-cols-3 gap-2 mb-6">
-                                <div class="aspect-square bg-gray-100 rounded-lg flex items-center justify-center has-tooltip"
-                                    data-tooltip="PHOTO: Damaged package
-Type: Evidence photo
-Status: Uploaded
-Click: View full size">
-                                    <i data-lucide="image" class="w-8 h-8 text-gray-400"></i>
-                                </div>
-                                <div class="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
-                                    <i data-lucide="image" class="w-8 h-8 text-gray-400"></i>
-                                </div>
-                                <div class="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
-                                    <i data-lucide="image" class="w-8 h-8 text-gray-400"></i>
-                                </div>
-                            </div>
-
-                            <div class="font-medium text-gray-700 mb-4">Submission Details</div>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between">
-                                    <span class="text-gray-500">Submitted by:</span>
-                                    <span class="text-gray-900">John D. (john.d@store.com)</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-500">Submitted at:</span>
-                                    <span class="text-gray-900">Dec 20, 2025 at 2:34 PM</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-500">Device:</span>
-                                    <span class="text-gray-900">iPhone 14 Pro (iOS 17.2)</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-500">Survey version:</span>
-                                    <span class="text-gray-900">v2.1</span>
-                                </div>
-                            </div>
-
-                            <!-- Issue Created Alert -->
-                            <div class="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 has-tooltip" data-tooltip="ISSUE CREATED
-Action: Auto-created from survey response
-Type: MISSING items
-Status: OPEN - awaiting triage
-Links to: IssueRequest record">
-                                <div class="flex items-start gap-3">
-                                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600 mt-0.5"></i>
-                                    <div>
-                                        <div class="font-medium text-red-800">Issue Created</div>
-                                        <div class="text-sm text-red-700 mt-1">An issue request was automatically
-                                            created for the missing items. View issue #ISS-2024-0547</div>
-                                        <button class="text-sm text-red-800 font-medium mt-2 hover:underline">View Issue
-                                            Details →</button>
+                                <div class="border-t border-gray-200 pt-4">
+                                    <div class="font-medium text-gray-700 mb-3 text-sm">Visibility Rules</div>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="text-teal-600 rounded">
+                                            <span class="text-sm text-gray-600">Always visible</span>
+                                        </label>
+                                        <div class="text-xs text-gray-500 mt-2">Or show when:</div>
+                                        <select
+                                            class="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
+                                            <option>Select field...</option>
+                                            <option>all_items_received</option>
+                                            <option>package_condition</option>
+                                        </select>
+                                        <div class="flex gap-2">
+                                            <select
+                                                class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white">
+                                                <option>equals</option>
+                                                <option>not equals</option>
+                                                <option>contains</option>
+                                            </select>
+                                            <input type="text" placeholder="value"
+                                                class="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-sm">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1267,182 +1041,15 @@ Links to: IssueRequest record">
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW: PHOTO RULES (Brand Admin) -->
-        <!-- ============================================== -->
-        <div id="view-photo-rules" class="view hidden">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Photo Rules</h1>
-                    <p class="text-sm text-gray-500 mt-1">Configure photo capture requirements for surveys and
-                        installations</p>
-                </div>
-                <button
-                    class="bg-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-700 flex items-center gap-2 has-tooltip"
-                    data-tooltip="CREATE PHOTO RULE
-Action: Create new PhotoRule
-Data: name, min/max photos, requirements
-Use: Assign to survey fields or kit items">
-                    <i data-lucide="plus" class="w-4 h-4"></i> New Photo Rule
-                </button>
-            </div>
+            <!-- ============================================== -->
+            <!-- VIEW: STORE LAYOUTS (Brand/Store Level) -->
+            <!-- ============================================== -->
 
-            <!-- Photo Rules Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden has-tooltip"
-                    data-tooltip="PHOTO RULE
-Name: Window Display Standard
-Min photos: 2
-Max photos: 5
-Flash required: No
-Ghost image: Yes
-Used in: 8 campaigns">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="font-medium text-gray-900">Window Display Standard</div>
-                                <div class="text-sm text-gray-500 mt-1">For window poster installations</div>
-                            </div>
-                            <span
-                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
-                        </div>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Min photos:</span>
-                                <span class="text-gray-900 font-medium">2</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Max photos:</span>
-                                <span class="text-gray-900 font-medium">5</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Flash required:</span>
-                                <span class="text-gray-900 font-medium">No</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Ghost image:</span>
-                                <span class="text-teal-600 font-medium">Configured</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <span class="text-xs text-gray-400">Used in 8 campaigns</span>
-                            <div class="flex gap-2">
-                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                        class="w-4 h-4"></i></button>
-                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                        class="w-4 h-4"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden has-tooltip"
-                    data-tooltip="PHOTO RULE
-Name: Cooler Door Verification
-Min photos: 1
-Max photos: 3
-Flash required: Yes (for glare reduction)
-Min resolution: 1920x1080
-Used in: 5 campaigns">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="font-medium text-gray-900">Cooler Door Verification</div>
-                                <div class="text-sm text-gray-500 mt-1">For cooler and freezer displays</div>
-                            </div>
-                            <span
-                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
-                        </div>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Min photos:</span>
-                                <span class="text-gray-900 font-medium">1</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Max photos:</span>
-                                <span class="text-gray-900 font-medium">3</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Flash required:</span>
-                                <span class="text-amber-600 font-medium">Yes</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Min resolution:</span>
-                                <span class="text-gray-900 font-medium">1920x1080</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <span class="text-xs text-gray-400">Used in 5 campaigns</span>
-                            <div class="flex gap-2">
-                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                        class="w-4 h-4"></i></button>
-                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                        class="w-4 h-4"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div> <!-- End view-campaign-builder -->
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden has-tooltip"
-                    data-tooltip="PHOTO RULE
-Name: Package Damage Evidence
-Min photos: 1
-Max photos: 10
-Flash required: No
-Instructions: Configured
-Use: Receipt survey damage documentation">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="font-medium text-gray-900">Package Damage Evidence</div>
-                                <div class="text-sm text-gray-500 mt-1">For documenting shipping damage</div>
-                            </div>
-                            <span
-                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">Active</span>
-                        </div>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Min photos:</span>
-                                <span class="text-gray-900 font-medium">1</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Max photos:</span>
-                                <span class="text-gray-900 font-medium">10</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Flash required:</span>
-                                <span class="text-gray-900 font-medium">No</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Instructions:</span>
-                                <span class="text-teal-600 font-medium">Configured</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <span class="text-xs text-gray-400">Used in 12 campaigns</span>
-                            <div class="flex gap-2">
-                                <button class="text-teal-600 hover:text-teal-700"><i data-lucide="edit"
-                                        class="w-4 h-4"></i></button>
-                                <button class="text-gray-400 hover:text-gray-600"><i data-lucide="copy"
-                                        class="w-4 h-4"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Add New Photo Rule Card -->
-                <div class="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-teal-500 hover:bg-teal-50 transition has-tooltip"
-                    data-tooltip="ADD NEW PHOTO RULE
-Action: Create new PhotoRule
-Configure: Photo requirements
-Use: Assign to surveys/items">
-                    <i data-lucide="plus" class="w-8 h-8 text-gray-400 mb-2"></i>
-                    <span class="text-sm text-gray-500">Add Photo Rule</span>
-                </div>
-            </div>
-        </div>
 
     </div>
 

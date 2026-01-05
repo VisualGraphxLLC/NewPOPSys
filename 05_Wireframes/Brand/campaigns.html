@@ -286,7 +286,7 @@
                         <td class="px-6 py-4">452</td>
                         <td class="px-6 py-4">Dec 15 - Jan 15</td>
                         <td class="px-6 py-4 text-purple-600 cursor-pointer text-xs font-bold uppercase"
-                            onclick="window.location.href='index.html'">Dashboard</td>
+                            onclick="nav('view-campaign-detail')">View Report</td>
                     </tr>
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 font-medium text-gray-900">New Year Reset</td>
@@ -312,7 +312,126 @@
             </table>
         </div>
     </div>
-    <script>lucide.createIcons();</script>
+    </div>
+
+    <!-- VIEW: CAMPAIGN DETAIL / RESPONSES -->
+    <div id="view-campaign-detail" class="view hidden max-w-7xl mx-auto p-8">
+        <div class="flex items-center gap-4 mb-6">
+            <button onclick="nav('view-campaigns-list')" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <i data-lucide="arrow-left" size="20"></i>
+            </button>
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl font-bold text-gray-900">Holiday Promo 2025</h1>
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-0.5 rounded-full">Active</span>
+                </div>
+                <p class="text-sm text-gray-500">Dec 15 - Jan 15 • 452 Stores Participating</p>
+            </div>
+            <div class="flex-1"></div>
+            <div class="flex bg-gray-100 p-1 rounded-lg">
+                <button
+                    class="px-4 py-1.5 bg-white shadow-sm rounded-md text-sm font-bold text-gray-800">Compliance</button>
+                <button class="px-4 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700">Settings</button>
+            </div>
+        </div>
+
+        <!-- Compliance Dashboard -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <div class="text-xs font-bold text-gray-400 uppercase">Completion</div>
+                <div class="text-2xl font-bold text-gray-900">84%</div>
+                <div class="text-xs text-green-600 font-medium">+12% from yesterday</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <div class="text-xs font-bold text-gray-400 uppercase">Verified Photos</div>
+                <div class="text-2xl font-bold text-gray-900">1,240</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <div class="text-xs font-bold text-gray-400 uppercase">Issues</div>
+                <div class="text-2xl font-bold text-red-600">12</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-gray-200 relative overflow-hidden">
+                <div class="absolute right-0 top-0 h-full w-1 bg-purple-600"></div>
+                <div class="text-xs font-bold text-gray-400 uppercase">Next Deadline</div>
+                <div class="text-lg font-bold text-gray-900">Jan 16 (De-install)</div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-gray-700">Store Responses</h3>
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Search stores..."
+                        class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm">
+                    <select class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm">
+                        <option>All Statuses</option>
+                        <option>Approved</option>
+                        <option>Needs Review</option>
+                    </select>
+                </div>
+            </div>
+            <table class="w-full text-sm text-left">
+                <thead class="bg-white text-gray-500 border-b border-gray-200">
+                    <tr>
+                        <th class="px-6 py-3">Store</th>
+                        <th class="px-6 py-3">Region</th>
+                        <th class="px-6 py-3">Submission</th>
+                        <th class="px-6 py-3">Photo Proof</th>
+                        <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr class="hover:bg-gray-50 cursor-pointer">
+                        <td class="px-6 py-4 font-bold text-gray-900">#1044 - Seattle</td>
+                        <td class="px-6 py-4 text-gray-500">West Coast</td>
+                        <td class="px-6 py-4">Dec 15, 10:00 AM</td>
+                        <td class="px-6 py-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-lg bg-gray-300 border-2 border-white"></div>
+                                <div class="w-8 h-8 rounded-lg bg-gray-300 border-2 border-white"></div>
+                                <div
+                                    class="w-8 h-8 rounded-lg bg-gray-300 border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                    +2</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4"><span
+                                class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Approved</span>
+                        </td>
+                        <td class="px-6 py-4 text-purple-600 font-bold hover:underline">Verify</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 cursor-pointer">
+                        <td class="px-6 py-4 font-bold text-gray-900">#8822 - Phoenix</td>
+                        <td class="px-6 py-4 text-gray-500">South</td>
+                        <td class="px-6 py-4">Dec 16, 2:30 PM</td>
+                        <td class="px-6 py-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-lg bg-red-100 border-2 border-white border-red-200"></div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4"><span
+                                class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold">Rejected</span>
+                        </td>
+                        <td class="px-6 py-4 text-purple-600 font-bold hover:underline">Review</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function nav(viewId) {
+            // Simple view toggler for this wireframe
+            if (viewId === 'view-campaign-detail') {
+                document.querySelector('.max-w-7xl').classList.add('hidden'); // Hide list
+                document.getElementById('view-campaign-detail').classList.remove('hidden');
+            } else {
+                document.querySelector('.max-w-7xl').classList.remove('hidden'); // Show list
+                document.getElementById('view-campaign-detail').classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 
 </html>

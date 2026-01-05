@@ -148,6 +148,24 @@
             color: var(--primary);
             border-bottom: 2px solid var(--primary);
         }
+
+        /* Scrollbar for properties panel */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d4d4d8;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a1a1aa;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -222,8 +240,8 @@
             </svg>
             Index
         </a>
-        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
-            feature details</span>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Click the Room/Grid to edit Zone settings.
+            Click items to edit Location settings.</span>
         <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
     </div>
 
@@ -254,38 +272,64 @@
     <div class="max-w-7xl mx-auto p-8">
 
         <!-- VIEW: STORE LAYOUTS -->
-        <div class="flex justify-between items-center mb-6">
+        <!-- Store & Version Context Header -->
+        <div class="flex justify-between items-end mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Store Layout Explorer</h1>
-                <p class="text-sm text-gray-500 mt-1">Review and manage store-specific location points and layout
-                    versions</p>
+                <div class="flex items-center gap-4 mt-2">
+                    <div class="relative group">
+                        <select
+                            class="appearance-none bg-transparent font-bold text-lg text-gray-700 pr-8 p-0 focus:ring-0 cursor-pointer hover:text-purple-600">
+                            <option>Store #1044 - Seattle (Active)</option>
+                            <option>Store #8822 - Phoenix</option>
+                        </select>
+                        <i data-lucide="chevron-down"
+                            class="w-4 h-4 text-gray-400 absolute right-0 top-1.5 pointer-events-none group-hover:text-purple-600"></i>
+                    </div>
+                    <span class="text-gray-300">|</span>
+                    <select
+                        class="bg-gray-100 border-none rounded text-xs font-mono text-gray-600 py-1 px-2 cursor-pointer hover:bg-gray-200">
+                        <option>v2.3 (Active) - 10/12/2025</option>
+                        <option>v2.4 (Draft)</option>
+                    </select>
+                </div>
             </div>
-            <div class="flex gap-2">
-                <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-[200px]">
-                    <option>Store #1044 - Seattle</option>
-                    <option>Store #8822 - Phoenix</option>
-                    <option>Store #3044 - Portland</option>
-                </select>
-                <!-- Zone/Floor Selector -->
-                <select
-                    class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white min-w-[160px] text-gray-700 font-medium">
-                    <option value="main">Main Floor (Zone A)</option>
-                    <option value="exterior">Exterior / Pump</option>
-                    <option value="level2">Level 2</option>
-                    <option value="stock">Stockroom</option>
-                    <option value="new">+ Add New Zone</option>
-                </select>
+            <div class="flex gap-3">
+                <button onclick="document.getElementById('clone-modal').classList.remove('hidden')"
+                    class="bg-white border border-purple-200 text-purple-700 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 flex items-center gap-2 shadow-sm transition-all">
+                    <i data-lucide="copy" class="w-4 h-4"></i> Clone Standard
+                </button>
                 <button onclick="window.location.href='surveys.html'"
-                    class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 flex items-center gap-2">
+                    class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 flex items-center gap-2 shadow-sm transition-all">
                     <i data-lucide="save" class="w-4 h-4"></i> Save Layout
                 </button>
             </div>
         </div>
 
+        <!-- Zone Tabs (Sub-Nav) -->
+        <div class="flex gap-6 border-b border-gray-200 mb-0">
+            <button
+                class="pb-3 px-1 text-sm font-bold text-purple-600 border-b-2 border-purple-600 flex items-center gap-2">
+                Main Floor
+            </button>
+            <button
+                class="pb-3 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 transition-colors flex items-center gap-2">
+                Exterior / Pump
+            </button>
+            <button
+                class="pb-3 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 transition-colors flex items-center gap-2">
+                Stockroom
+            </button>
+            <button
+                class="pb-3 px-1 text-sm font-medium text-purple-600 hover:text-purple-800 transition-colors flex items-center gap-2 ml-auto hover:bg-purple-50 rounded px-2">
+                <i data-lucide="plus" class="w-4 h-4"></i> Add Zone
+            </button>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <!-- Layout Builder Canvas (Grid System) -->
             <div
-                class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-200 h-[650px] flex flex-col overflow-hidden">
+                class="lg:col-span-3 bg-white rounded-b-xl rounded-tr-xl shadow-sm border-x border-b border-gray-200 h-[650px] flex flex-col overflow-hidden mt-0">
                 <!-- Toolbar -->
                 <div class="bg-gray-50 border-b border-gray-200 p-2 flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -320,43 +364,127 @@
                 </div>
 
                 <div class="flex flex-1 overflow-hidden">
-                    <!-- Shape Library Sidebar -->
-                    <div class="w-48 bg-gray-50 border-r border-gray-200 p-4 overflow-y-auto">
-                        <h4 class="text-xs font-bold text-gray-500 uppercase mb-3">Structures</h4>
-                        <div class="space-y-2">
+                    <!-- Sidebar: Toolbox & Locations -->
+                    <div
+                        class="w-56 bg-white border-r border-gray-200 flex flex-col h-full shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10 relative">
+
+                        <!-- Toolbox Section (Fixed Height) -->
+                        <div class="flex-none border-b border-gray-100 bg-gray-50/50">
                             <div
-                                class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
-                                <i data-lucide="square" class="w-4 h-4 text-gray-400"></i> <span
-                                    class="text-xs font-medium">Square Room</span>
+                                class="px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors">
+                                <h3
+                                    class="text-xs font-black text-gray-800 uppercase tracking-wide flex items-center gap-2">
+                                    <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-purple-600"></i> Builder Toolbox
+                                </h3>
+                                <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400"></i>
                             </div>
-                            <div
-                                class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
-                                <i data-lucide="layout-dashboard" class="w-4 h-4 text-gray-400"></i> <span
-                                    class="text-xs font-medium">L-Shape Room</span>
-                            </div>
-                            <div
-                                class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
-                                <i data-lucide="circle" class="w-4 h-4 text-gray-400"></i> <span
-                                    class="text-xs font-medium">Kiosk / Island</span>
+
+                            <div class="px-4 pb-4 overflow-y-auto max-h-[220px]">
+                                <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2 mt-1 tracking-wider">
+                                    Structures</h4>
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div
+                                        class="bg-white border border-gray-200 p-2 rounded-lg cursor-move hover:border-purple-500 hover:shadow-md transition-all flex flex-col items-center gap-1 text-center group">
+                                        <i data-lucide="square"
+                                            class="w-4 h-4 text-gray-400 group-hover:text-purple-500"></i>
+                                        <span class="text-[10px] font-medium text-gray-600">Room</span>
+                                    </div>
+                                    <div
+                                        class="bg-white border border-gray-200 p-2 rounded-lg cursor-move hover:border-purple-500 hover:shadow-md transition-all flex flex-col items-center gap-1 text-center group">
+                                        <i data-lucide="layout-dashboard"
+                                            class="w-4 h-4 text-gray-400 group-hover:text-purple-500"></i>
+                                        <span class="text-[10px] font-medium text-gray-600">L-Shape</span>
+                                    </div>
+                                </div>
+
+                                <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-wider">Fixtures
+                                </h4>
+                                <div class="space-y-1.5">
+                                    <div
+                                        class="bg-white border border-gray-200 px-3 py-2 rounded-md cursor-move hover:border-purple-500 hover:shadow-sm transition-all flex items-center gap-2 group">
+                                        <i data-lucide="panel-top"
+                                            class="w-3.5 h-3.5 text-gray-400 group-hover:text-purple-500"></i>
+                                        <span class="text-xs font-medium text-gray-700">Gondola</span>
+                                    </div>
+                                    <div
+                                        class="bg-white border border-gray-200 px-3 py-2 rounded-md cursor-move hover:border-purple-500 hover:shadow-sm transition-all flex items-center gap-2 group">
+                                        <i data-lucide="box"
+                                            class="w-3.5 h-3.5 text-gray-400 group-hover:text-purple-500"></i>
+                                        <span class="text-xs font-medium text-gray-700">End Cap</span>
+                                    </div>
+                                    <div
+                                        class="bg-white border border-gray-200 px-3 py-2 rounded-md cursor-move hover:border-purple-500 hover:shadow-sm transition-all flex items-center gap-2 group">
+                                        <i data-lucide="table"
+                                            class="w-3.5 h-3.5 text-gray-400 group-hover:text-purple-500"></i>
+                                        <span class="text-xs font-medium text-gray-700">Table</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <h4 class="text-xs font-bold text-gray-500 uppercase mt-6 mb-3">Fixtures</h4>
-                        <div class="space-y-2">
+                        <!-- Location List Section (Flex Grow) -->
+                        <div class="flex-1 overflow-hidden flex flex-col bg-white">
                             <div
-                                class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
-                                <i data-lucide="panel-top" class="w-4 h-4 text-gray-400"></i> <span
-                                    class="text-xs font-medium">Gondola</span>
+                                class="px-4 py-3 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-10">
+                                <h3
+                                    class="text-xs font-black text-gray-800 uppercase tracking-wide flex items-center gap-2">
+                                    <i data-lucide="list" class="w-3.5 h-3.5 text-blue-600"></i> Location List
+                                </h3>
+                                <div class="flex gap-1">
+                                    <button class="text-gray-400 hover:text-purple-600 p-0.5 rounded hover:bg-gray-100"
+                                        title="Filter"><i data-lucide="filter" class="w-3 h-3"></i></button>
+                                    <button class="text-gray-400 hover:text-purple-600 p-0.5 rounded hover:bg-gray-100"
+                                        title="Sort"><i data-lucide="arrow-down-up" class="w-3 h-3"></i></button>
+                                    <button
+                                        class="text-purple-600 hover:bg-purple-50 p-0.5 rounded border border-transparent hover:border-purple-200 ml-1"
+                                        title="Add New Location"
+                                        onclick="document.querySelector('.border-gray-100.bg-gray-50\\/50').scrollIntoView({behavior: 'smooth'}); document.querySelector('.border-b.border-gray-100.bg-gray-50\\/50').classList.add('ring-2', 'ring-purple-400'); setTimeout(() => document.querySelector('.border-b.border-gray-100.bg-gray-50\\/50').classList.remove('ring-2', 'ring-purple-400'), 1000);">
+                                        <i data-lucide="plus" class="w-3 h-3"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div
-                                class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
-                                <i data-lucide="box" class="w-4 h-4 text-gray-400"></i> <span
-                                    class="text-xs font-medium">End Cap</span>
-                            </div>
-                            <div
-                                class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
-                                <i data-lucide="table" class="w-4 h-4 text-gray-400"></i> <span
-                                    class="text-xs font-medium">Table</span>
+
+                            <div class="p-2 overflow-y-auto space-y-0.5 custom-scrollbar">
+                                <div onclick="selectLocation(event, this)"
+                                    class="location-item px-3 py-2 bg-purple-50 border border-purple-100 rounded-lg cursor-pointer flex items-center gap-2.5 group relative shadow-sm">
+                                    <div
+                                        class="w-5 h-5 bg-purple-600 rounded flex items-center justify-center text-white text-[10px] shadow-sm font-bold shrink-0">
+                                        1</div>
+                                    <div class="flex-1 min-w-0">
+                                        <span class="text-xs font-bold text-gray-900 block truncate">Front Window</span>
+                                        <span
+                                            class="text-[9px] text-purple-600 font-medium uppercase tracking-wide">Surveyed</span>
+                                    </div>
+                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-purple-400 opacity-100"></i>
+                                </div>
+
+                                <div onclick="selectLocation(event, this)"
+                                    class="location-item px-3 py-2 hover:bg-gray-50 rounded-lg cursor-pointer flex items-center gap-2.5 group border border-transparent hover:border-gray-200 transition-colors">
+                                    <div
+                                        class="w-5 h-5 bg-gray-100 rounded flex items-center justify-center text-gray-500 text-[10px] font-bold shrink-0 group-hover:bg-white group-hover:shadow-sm">
+                                        2</div>
+                                    <div class="flex-1 min-w-0">
+                                        <span
+                                            class="text-xs font-medium text-gray-600 block truncate group-hover:text-gray-900">Gondola
+                                            A</span>
+                                        <span
+                                            class="text-[9px] text-gray-400 font-medium uppercase tracking-wide">Pending</span>
+                                    </div>
+                                </div>
+
+                                <div onclick="selectLocation(event, this)"
+                                    class="location-item px-3 py-2 hover:bg-gray-50 rounded-lg cursor-pointer flex items-center gap-2.5 group border border-transparent hover:border-gray-200 transition-colors">
+                                    <div
+                                        class="w-5 h-5 bg-blue-50 rounded flex items-center justify-center text-blue-600 text-[10px] font-bold shrink-0 group-hover:bg-white group-hover:shadow-sm">
+                                        3</div>
+                                    <div class="flex-1 min-w-0">
+                                        <span
+                                            class="text-xs font-medium text-gray-600 block truncate group-hover:text-gray-900">Checkout
+                                            Zone</span>
+                                        <span
+                                            class="text-[9px] text-gray-400 font-medium uppercase tracking-wide">Pending</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -366,8 +494,9 @@
                         style="background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 20px 20px;">
 
                         <!-- Drawn Room Structure -->
-                        <div
-                            class="absolute top-10 left-10 w-[500px] h-[400px] border-4 border-gray-800 bg-white shadow-xl relative">
+                        <div onclick="selectZone(event)"
+                            class="absolute top-10 left-10 w-[500px] h-[400px] border-4 border-gray-800 bg-white shadow-xl relative cursor-pointer hover:border-purple-300 transition-colors"
+                            title="Click to Edit Zone">
                             <!-- Measurements -->
                             <div class="absolute -top-6 left-0 w-full text-center text-xs font-mono text-gray-500">50 ft
                             </div>
@@ -388,14 +517,14 @@
                                 Entrance</div>
 
                             <!-- Placed Item: Gondola -->
-                            <div
-                                class="absolute top-20 left-20 w-48 h-8 bg-gray-100 border border-gray-300 rounded shadow-sm flex items-center justify-center">
+                            <div class="absolute top-20 left-20 w-48 h-8 bg-gray-100 border border-gray-300 rounded shadow-sm flex items-center justify-center"
+                                onclick="event.stopPropagation()">
                                 <span class="text-[9px] text-gray-400">Gondola A</span>
                             </div>
 
                             <!-- Placed Item: Window Display (Selected) -->
                             <div class="absolute top-0 left-10 w-24 h-4 bg-purple-100 border-2 border-purple-500 shadow-md cursor-pointer z-10"
-                                onclick="showPropertiesPanel()">
+                                onclick="selectLocation(event, this)">
                                 <div
                                     class="absolute -top-2 -right-2 w-4 h-4 bg-purple-600 rounded-full text-white text-[9px] flex items-center justify-center font-bold">
                                     1</div>
@@ -451,51 +580,264 @@
                 </div>
 
                 <!-- Selected Node Properties Panel -->
-                <div class="bg-white border-2 border-purple-500 rounded-xl p-4 shadow-lg relative">
-                    <div
-                        class="absolute -top-3 left-4 bg-purple-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
-                        SELECTED: Front Window</div>
-
-                    <div class="grid grid-cols-2 gap-3 mb-4 mt-2">
-                        <div>
-                            <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Width</label>
-                            <div class="flex items-center">
-                                <input type="number" value="8" class="w-full text-sm border-gray-300 rounded-l p-1">
-                                <span
-                                    class="bg-gray-100 border border-l-0 border-gray-300 text-gray-500 text-xs px-2 py-1.5 rounded-r">ft</span>
+                <div class="bg-white border-2 border-purple-500 rounded-xl shadow-lg relative flex flex-col overflow-hidden max-h-[600px]"
+                    id="properties-panel">
+                    <!-- Header with Status -->
+                    <div class="bg-purple-50 px-4 py-3 border-b border-purple-100">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="text-[10px] font-bold text-purple-600 uppercase tracking-wider mb-0.5">
+                                    Selected Location</div>
+                                <h3 class="font-black text-gray-900 text-lg leading-tight" id="prop-title">Front Window
+                                </h3>
                             </div>
+                            <button class="text-gray-400 hover:text-red-500" title="Delete Location"><i
+                                    data-lucide="trash-2" class="w-4 h-4"></i></button>
                         </div>
-                        <div>
-                            <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Height</label>
-                            <div class="flex items-center">
-                                <input type="number" value="6" class="w-full text-sm border-gray-300 rounded-l p-1">
-                                <span
-                                    class="bg-gray-100 border border-l-0 border-gray-300 text-gray-500 text-xs px-2 py-1.5 rounded-r">ft</span>
-                            </div>
+
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold text-gray-500 uppercase">Status:</span>
+                            <select class="bg-white border text-xs font-bold rounded py-1 px-2 cursor-pointer
+                                border-purple-200 text-purple-700 focus:ring-2 focus:ring-purple-500">
+                                <option value="pending">Pending Survey</option>
+                                <option value="surveyed" selected>Surveyed</option>
+                                <option value="verified">Verified</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Survey Binding</label>
-                        <select class="w-full text-sm border-gray-300 rounded p-1.5 bg-gray-50">
-                            <option>Q4: Hotspot Capture (Compliance)</option>
-                            <option>Q2: Condition Check</option>
-                        </select>
-                        <div class="text-[10px] text-purple-600 mt-1 flex items-center gap-1"><i data-lucide="link"
-                                class="w-3 h-3"></i> Linked to Survey Question</div>
+                    <!-- Phase Tabs -->
+                    <div class="flex border-b border-gray-200 bg-white">
+                        <button
+                            class="flex-1 py-2 text-xs font-bold text-purple-600 border-b-2 border-purple-600 bg-purple-50/50"
+                            onclick="switchTab('layout')" id="tab-btn-layout">Layout</button>
+                        <button
+                            class="flex-1 py-2 text-xs font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                            onclick="switchTab('install')" id="tab-btn-install">Install</button>
+                        <button
+                            class="flex-1 py-2 text-xs font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                            onclick="switchTab('deinstall')" id="tab-btn-deinstall">De-Install</button>
                     </div>
 
-                    <div class="flex justify-end gap-2">
-                        <button class="text-gray-400 hover:text-red-500 p-1"><i data-lucide="trash-2"
-                                class="w-4 h-4"></i></button>
+                    <!-- Tab Content Area -->
+                    <div class="p-4 overflow-y-auto custom-scrollbar flex-1">
+
+                        <!-- LAYOUT TAB CONTENT -->
+                        <div id="tab-layout" class="space-y-4">
+                            <!-- Physical Specs Section -->
+                            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                <h4 class="text-[10px] font-bold text-gray-500 uppercase mb-2 flex items-center gap-1">
+                                    <i data-lucide="ruler" class="w-3 h-3"></i> Physical Specifications
+                                </h4>
+                                <div class="grid grid-cols-2 gap-3 mb-3">
+                                    <div>
+                                        <label class="text-[9px] text-gray-400 font-bold uppercase block mb-1">Width
+                                            (ft)</label>
+                                        <input type="number" value="8"
+                                            class="w-full text-xs border-gray-300 rounded p-1.5 font-medium text-gray-900">
+                                    </div>
+                                    <div>
+                                        <label class="text-[9px] text-gray-400 font-bold uppercase block mb-1">Height
+                                            (ft)</label>
+                                        <input type="number" value="6"
+                                            class="w-full text-xs border-gray-300 rounded p-1.5 font-medium text-gray-900">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="text-[9px] text-gray-400 font-bold uppercase block mb-1">Capacity /
+                                        Sub-locations</label>
+                                    <input type="number" value="1"
+                                        class="w-full text-xs border-gray-300 rounded p-1.5 font-medium text-gray-900">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-gray-400 font-bold uppercase block mb-1">Reference
+                                        Mockup</label>
+                                    <button
+                                        class="w-full bg-white border border-gray-300 text-gray-600 text-[10px] py-1.5 rounded hover:border-purple-400 hover:text-purple-600 transition-colors flex items-center justify-center gap-2">
+                                        <i data-lucide="image" class="w-3 h-3"></i> Select Image...
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Layout Questions Section -->
+                            <div>
+                                <h4 class="text-[10px] font-bold text-gray-500 uppercase mb-2 flex items-center gap-1">
+                                    <i data-lucide="clipboard-check" class="w-3 h-3"></i> Layout Verification Questions
+                                </h4>
+                                <div class="space-y-2">
+                                    <!-- Smart Suggestion -->
+                                    <div
+                                        class="bg-amber-50 border border-amber-100 rounded-lg p-2 flex items-start gap-2">
+                                        <i data-lucide="lightbulb" class="w-3 h-3 text-amber-500 mt-0.5"></i>
+                                        <div class="flex-1">
+                                            <div class="text-[10px] font-bold text-amber-800 mb-1">Suggested Checks
+                                            </div>
+                                            <div class="flex flex-wrap gap-1">
+                                                <button
+                                                    class="px-1.5 py-0.5 bg-white border border-amber-200 rounded text-[9px] text-amber-700 hover:border-amber-400">+
+                                                    Measure dims</button>
+                                                <button
+                                                    class="px-1.5 py-0.5 bg-white border border-amber-200 rounded text-[9px] text-amber-700 hover:border-amber-400">+
+                                                    Power check</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Added Question -->
+                                    <div
+                                        class="flex items-center gap-2 bg-white p-2 rounded border border-purple-100 shadow-sm group">
+                                        <span
+                                            class="bg-purple-100 text-purple-700 text-[9px] font-bold px-1 rounded shrink-0">REQ</span>
+                                        <span class="text-[10px] font-medium text-gray-700 flex-1">Is there power
+                                            available?</span>
+                                        <button
+                                            class="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100"><i
+                                                data-lucide="x" class="w-3 h-3"></i></button>
+                                    </div>
+
+                                    <!-- Add Button -->
+                                    <button
+                                        onclick="document.getElementById('question-picker-modal').classList.remove('hidden')"
+                                        class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-center text-purple-600 text-[10px] font-bold hover:border-purple-300 hover:bg-purple-50 transition-colors flex items-center justify-center gap-1">
+                                        <i data-lucide="plus" class="w-3 h-3"></i> Add Layout Question
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- INSTALL TAB CONTENT (Hidden by default) -->
+                        <div id="tab-install" class="space-y-4 hidden">
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4">
+                                <p class="text-[10px] text-blue-800">Define evidence required from the field team during
+                                    installation.</p>
+                            </div>
+                            <div class="space-y-2">
+                                <!-- Example Install Question -->
+                                <div
+                                    class="flex items-center gap-2 bg-white p-2 rounded border border-blue-100 shadow-sm group">
+                                    <div
+                                        class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                        <i data-lucide="camera" class="w-3 h-3"></i></div>
+                                    <span class="text-[10px] font-medium text-gray-700 flex-1">Photo of Install</span>
+                                    <button
+                                        class="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100"><i
+                                            data-lucide="x" class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+                            <button
+                                onclick="document.getElementById('question-picker-modal').classList.remove('hidden')"
+                                class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-center text-purple-600 text-[10px] font-bold hover:border-purple-300 hover:bg-purple-50 transition-colors flex items-center justify-center gap-1 mt-2">
+                                <i data-lucide="plus" class="w-3 h-3"></i> Add Install Question
+                            </button>
+                        </div>
+
+                        <!-- DE-INSTALL TAB CONTENT (Hidden by default) -->
+                        <div id="tab-deinstall" class="space-y-4 hidden">
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100 mb-4">
+                                <p class="text-[10px] text-gray-600">Define evidence required to verify removal of
+                                    materials.</p>
+                            </div>
+                            <button
+                                onclick="document.getElementById('question-picker-modal').classList.remove('hidden')"
+                                class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-center text-purple-600 text-[10px] font-bold hover:border-purple-300 hover:bg-purple-50 transition-colors flex items-center justify-center gap-1">
+                                <i data-lucide="plus" class="w-3 h-3"></i> Add De-Install Question
+                            </button>
+                        </div>
+
                     </div>
                 </div>
+
+                <!-- Zone Properties Panel (Hidden by default) -->
+                <div class="bg-white border-2 border-gray-300 rounded-xl shadow-lg relative flex flex-col overflow-hidden max-h-[600px] hidden"
+                    id="zone-properties-panel">
+                    <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                        <div class="flex justify-between items-start mb-0">
+                            <div class="w-full">
+                                <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5">
+                                    Selected Zone</div>
+                                <input type="text" value="Main Floor"
+                                    class="font-black text-gray-900 text-lg leading-tight w-full bg-transparent border-b border-transparent hover:border-gray-300 focus:border-purple-500 focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-4">
+                        <!-- Dimensions -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Width
+                                    (ft)</label>
+                                <input type="number" value="50"
+                                    class="w-full text-sm border-gray-300 rounded p-1.5 focus:ring-purple-500 focus:border-purple-500">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Depth
+                                    (ft)</label>
+                                <input type="number" value="40"
+                                    class="w-full text-sm border-gray-300 rounded p-1.5 focus:ring-purple-500 focus:border-purple-500">
+                            </div>
+                        </div>
+
+                        <!-- Shape -->
+                        <div>
+                            <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Zone Shape</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button
+                                    class="border-2 border-purple-500 bg-purple-50 rounded p-2 flex flex-col items-center justify-center gap-1">
+                                    <i data-lucide="square" class="w-4 h-4 text-purple-600"></i>
+                                    <span class="text-[9px] font-bold text-purple-700">Rect</span>
+                                </button>
+                                <button
+                                    class="border border-gray-200 bg-white rounded p-2 flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                                    <i data-lucide="layout-dashboard" class="w-4 h-4 text-gray-400"></i>
+                                    <span class="text-[9px] font-medium text-gray-600">L-Shape</span>
+                                </button>
+                                <button
+                                    class="border border-gray-200 bg-white rounded p-2 flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                                    <i data-lucide="pentagon" class="w-4 h-4 text-gray-400"></i>
+                                    <span class="text-[9px] font-medium text-gray-600">Poly</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded p-3 text-xs text-blue-800">
+                            <h4 class="font-bold mb-1 flex items-center gap-1"><i data-lucide="info"
+                                    class="w-3 h-3"></i> Auto-Resize</h4>
+                            Changing dimensions will auto-scale the grid. Existing items will maintain their relative
+                            positions.
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
+
+        // --- Tab Switching Logic ---
+        function switchTab(tabName) {
+            // Hide all contents
+            document.getElementById('tab-layout').classList.add('hidden');
+            document.getElementById('tab-install').classList.add('hidden');
+            document.getElementById('tab-deinstall').classList.add('hidden');
+
+            // Show selected content
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+            // Reset tab styles
+            const tabs = ['layout', 'install', 'deinstall'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-btn-' + t);
+                btn.classList.remove('border-purple-600', 'text-purple-600', 'font-bold', 'bg-purple-50/50');
+                btn.classList.add('text-gray-500', 'font-medium', 'hover:text-gray-700', 'hover:bg-gray-50');
+            });
+
+            // Set active tab style
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
+            activeBtn.classList.remove('text-gray-500', 'font-medium', 'hover:text-gray-700', 'hover:bg-gray-50');
+            activeBtn.classList.add('border-purple-600', 'text-purple-600', 'font-bold', 'bg-purple-50/50');
+        }
 
         // --- Simulation Logic ---
         const canvas = document.querySelector('.bg-white.relative.overflow-auto');
@@ -510,11 +852,10 @@
                     b.classList.add('text-gray-500');
                 });
                 // Set active
-                const button = e.currentTarget;
-                button.classList.remove('text-gray-500');
-                button.classList.add('bg-purple-50', 'text-purple-600');
-                activeTool = button.getAttribute('title');
-                console.log('Active tool:', activeTool);
+                const btn = e.currentTarget;
+                btn.classList.add('bg-purple-50', 'text-purple-600');
+                btn.classList.remove('text-gray-500');
+                activeTool = btn.getAttribute('title');
             });
         });
 
@@ -547,34 +888,190 @@
                     mockNode.classList.add('bg-white', 'border-4', 'border-gray-800');
                 }
 
-                mockNode.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showPropertiesPanel();
-                    document.querySelectorAll('.absolute').forEach(el => el.classList.remove('border-purple-500', 'border-2'));
-                    mockNode.classList.add('border-purple-500', 'border-2');
-                });
+                mockNode.onclick = function (e) {
+                    selectLocation(e, this);
+                }
 
                 canvas.appendChild(mockNode);
             });
         });
 
         // Properties Panel Simulation
-        function showPropertiesPanel() {
-            // In a real app, this would populate based on selection.
-            // For wireframe, we just toggle highlighting or show a toast.
-            const panel = document.querySelector('.bg-white.border-2.border-purple-500');
-            panel.classList.add('ring-2', 'ring-purple-200');
-            setTimeout(() => panel.classList.remove('ring-2', 'ring-purple-200'), 500);
+        // Select Zone (Background/Room)
+        function selectZone(e) {
+            e.stopPropagation();
+
+            // Toggle Panels
+            document.getElementById('properties-panel').classList.add('hidden');
+            document.getElementById('zone-properties-panel').classList.remove('hidden');
+
+            // Highlight Zone (Visual Feedback)
+            // Remove highlighting from locations
+            document.querySelectorAll('.absolute').forEach(el => el.classList.remove('border-purple-500', 'border-2'));
         }
 
-        // Canvas Click (Deselect)
+        // Select Location (Item)
+        function selectLocation(e, el) {
+            e.stopPropagation();
+
+            // Toggle Panels
+            document.getElementById('properties-panel').classList.remove('hidden');
+            document.getElementById('zone-properties-panel').classList.add('hidden');
+
+            // Highlight Item
+            document.querySelectorAll('.absolute').forEach(el => el.classList.remove('border-purple-500', 'border-2'));
+            if (el) el.classList.add('border-purple-500', 'border-2');
+
+            // Also highlight in list (mock)
+            document.querySelectorAll('.location-item').forEach(item => {
+                item.classList.remove('bg-purple-50', 'border-purple-100');
+                item.classList.add('hover:bg-gray-50', 'border-transparent');
+            });
+            // Just highlight the first one for demo if clicked
+        }
+
+        // Canvas Click (Deselect/Select Zone)
         canvas.addEventListener('click', (e) => {
             if (e.target === canvas) {
-                document.querySelectorAll('.absolute').forEach(el => el.classList.remove('border-purple-500', 'border-2'));
+                // If clicking empty canvas, maybe deselect all? 
+                // Or select zone by default? 
+                // Let's select zone by default.
+                selectZone(e);
             }
         });
 
     </script>
+    <!-- Clone Modal -->
+    <div id="clone-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-[100] flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
+            <div class="p-6 border-b border-gray-100">
+                <h3 class="font-bold text-lg text-gray-900">Clone Standard Layout</h3>
+                <p class="text-sm text-gray-500">Kickstart your store with a PSP standard template.</p>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-gray-700">Select Standard</label>
+                    <div
+                        class="border border-purple-200 rounded-lg p-3 bg-purple-50 cursor-pointer flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-purple-900">Mall Kiosk (Standard)</div>
+                            <div class="text-xs text-purple-700">4 Zones • 8 Questions</div>
+                        </div>
+                        <i data-lucide="check-circle" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <div
+                        class="border border-gray-200 rounded-lg p-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-gray-900">Inline Retail (Small)</div>
+                            <div class="text-xs text-gray-500">2 Zones • 5 Questions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-end gap-2 rounded-b-xl pb-6">
+                <button onclick="document.getElementById('clone-modal').classList.add('hidden')"
+                    class="px-4 py-2 text-gray-500 text-sm font-bold hover:bg-gray-100 rounded">Cancel</button>
+                <button onclick="document.getElementById('clone-modal').classList.add('hidden')"
+                    class="px-4 py-2 bg-purple-600 text-white text-sm font-bold rounded hover:bg-purple-700 shadow-sm">Clone
+                    & Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Picker Modal -->
+    <div id="question-picker-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-[100] flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 overflow-hidden flex flex-col max-h-[80vh]">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center shrink-0">
+                <h3 class="font-bold text-lg text-gray-800">Select Questions</h3>
+                <button onclick="document.getElementById('question-picker-modal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-4 border-b border-gray-100 shrink-0">
+                <div class="relative">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search library (e.g. 'Photo', 'Measure', 'Safety')..."
+                        class="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                </div>
+                <div class="flex gap-2 mt-3 overflow-x-auto pb-1">
+                    <button
+                        class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold whitespace-nowrap">Recommended</button>
+                    <button
+                        class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold hover:bg-gray-200 whitespace-nowrap">Measurements</button>
+                    <button
+                        class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold hover:bg-gray-200 whitespace-nowrap">Photos</button>
+                    <button
+                        class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold hover:bg-gray-200 whitespace-nowrap">Checklist</button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+                <div class="space-y-2">
+                    <!-- Question Item -->
+                    <div
+                        class="border border-gray-200 rounded-lg p-3 hover:border-purple-300 hover:bg-purple-50 cursor-pointer flex items-center gap-3 group transition-colors">
+                        <div
+                            class="w-8 h-8 rounded bg-blue-100 flex items-center justify-center text-blue-600 font-bold shrink-0">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm font-bold text-gray-900">Standard Installation Photo</div>
+                            <div class="text-xs text-gray-500">Requires a wide-angle photo of the completed install.
+                            </div>
+                        </div>
+                        <button
+                            class="bg-white border border-gray-300 text-gray-600 px-3 py-1 rounded text-xs font-bold group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600 transition-colors">
+                            Select
+                        </button>
+                    </div>
+
+                    <!-- Question Item -->
+                    <div
+                        class="border border-gray-200 rounded-lg p-3 hover:border-purple-300 hover:bg-purple-50 cursor-pointer flex items-center gap-3 group transition-colors">
+                        <div
+                            class="w-8 h-8 rounded bg-green-100 flex items-center justify-center text-green-600 font-bold shrink-0">
+                            <i data-lucide="ruler" class="w-4 h-4"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm font-bold text-gray-900">Confirm Dimensions</div>
+                            <div class="text-xs text-gray-500">Verify height and width of the available space.</div>
+                        </div>
+                        <button
+                            class="bg-white border border-gray-300 text-gray-600 px-3 py-1 rounded text-xs font-bold group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600 transition-colors">
+                            Select
+                        </button>
+                    </div>
+
+                    <!-- Question Item -->
+                    <div
+                        class="border border-gray-200 rounded-lg p-3 hover:border-purple-300 hover:bg-purple-50 cursor-pointer flex items-center gap-3 group transition-colors">
+                        <div
+                            class="w-8 h-8 rounded bg-yellow-100 flex items-center justify-center text-yellow-600 font-bold shrink-0">
+                            <i data-lucide="zap" class="w-4 h-4"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm font-bold text-gray-900">Power Source Check</div>
+                            <div class="text-xs text-gray-500">Is there a functioning power outlet within 6ft?</div>
+                        </div>
+                        <button
+                            class="bg-white border border-gray-300 text-gray-600 px-3 py-1 rounded text-xs font-bold group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600 transition-colors">
+                            Select
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-between items-center">
+                <div class="text-xs text-gray-500">Showing 3 of 42 library questions</div>
+                <button class="text-purple-600 text-xs font-bold hover:underline">Create New Question</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

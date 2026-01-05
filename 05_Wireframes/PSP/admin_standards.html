@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSP Admin Portal - Standards Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../theme-config.js"></script>
+    <script src="../theme-loader.js"></script>
+    <style>
+        /* Theme CSS Variables */
+        :root {
+            --primary: #eab308;
+            --primary-light: #facc15;
+            --primary-dark: #ca8a04;
+            --accent: #4f46e5;
+        }
+
+        [data-theme="shelfsync"] {
+            --primary: #00ABB9;
+            --primary-light: #14b8a6;
+            --primary-dark: #012D3A;
+            --accent: #FCD732;
+        }
+
+        /* Apply theme colors - Primary (header/nav) */
+        .bg-yellow-800,
+        .bg-yellow-700,
+        .bg-yellow-600,
+        .bg-yellow-500 {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .hover\:bg-yellow-900:hover,
+        .hover\:bg-yellow-700:hover {
+            background-color: var(--primary) !important;
+        }
+
+        .text-yellow-500,
+        .text-yellow-400,
+        .text-yellow-100 {
+            color: var(--primary-light) !important;
+        }
+
+        .hover\:text-yellow-100:hover {
+            color: var(--accent) !important;
+        }
+
+        .border-yellow-700,
+        .border-yellow-600,
+        .border-yellow-500,
+        .border-yellow-400 {
+            border-color: var(--primary) !important;
+        }
+
+        /* Apply theme colors - Accent (buttons) */
+        .bg-purple-600,
+        .bg-indigo-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-purple-700:hover,
+        .hover\:bg-indigo-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .bg-blue-600 {
+            background-color: var(--primary-light) !important;
+        }
+
+        .hover\:bg-blue-700:hover {
+            background-color: var(--primary) !important;
+        }
+
+        .bg-green-600 {
+            background-color: var(--accent) !important;
+        }
+
+        .hover\:bg-green-700:hover {
+            background-color: color-mix(in srgb, var(--accent) 85%, black) !important;
+        }
+
+        .text-purple-600,
+        .text-indigo-600 {
+            color: var(--accent) !important;
+        }
+
+        .active-nav {
+            color: var(--primary-light) !important;
+            border-bottom: 2px solid var(--primary-light) !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tooltip Styles */
+        .tooltips-enabled [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltips-enabled .has-tooltip {
+            outline: 2px dashed #eab308;
+            outline-offset: 2px;
+        }
+
+        .tooltip-help-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tooltip-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tooltip-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .tooltip-toggle.active {
+            background: white;
+            color: #ca8a04;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('tooltip-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    document.body.classList.toggle('tooltips-enabled');
+                    this.classList.toggle('active');
+                    this.textContent = document.body.classList.contains('tooltips-enabled') ? 'ON' : 'OFF';
+                });
+            }
+            // Lucide
+            lucide.createIcons();
+        });
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <!-- Tooltip Help Banner -->
+    <div class="tooltip-help-banner">
+        <a href="../index.html"
+            style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(255,255,255,0.15); border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Index
+        </a>
+        <span style="margin-left: 8px;">💡 <strong>Interactive Mode:</strong> Hover over highlighted elements for
+            details</span>
+        <button id="tooltip-toggle" class="tooltip-toggle">OFF</button>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav
+        class="bg-yellow-600 border-b border-yellow-700 h-16 flex items-center px-4 justify-between sticky top-0 z-50 text-white shadow-md">
+        <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='admin_dashboard.html'">
+            <div id="brand-logo" class="flex items-center">
+                <img src="../logos/newpopsys-logo.svg" alt="Logo" style="height: 32px; width: auto;">
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-medium opacity-90">
+            <a href="admin_dashboard.html"
+                class="nav-link text-yellow-100 hover:text-yellow-100 h-16 flex items-center">Dashboard</a>
+            <a href="admin_dashboard.html"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center">Brands</a>
+            <a href="#" class="nav-link text-white border-b-2 border-white h-16 flex items-center active-nav">Standards
+                & Templates</a>
+            <a href="admin_users.html"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center">Users</a>
+            <a href="admin_dashboard.html"
+                class="nav-link hover:text-yellow-100 text-yellow-100 h-16 flex items-center">Settings</a>
+            <div class="w-8 h-8 bg-yellow-700 rounded-full flex items-center justify-center text-xs font-bold">PA</div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-6">
+
+        <!-- VIEW: STANDARDS LIBRARY -->
+        <div id="view-library" class="view-section">
+            <div class="flex justify-between items-end border-b pb-2 mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Standards Library</h1>
+                    <p class="text-sm text-gray-500">Manage generic layout templates and recommended questions</p>
+                </div>
+                <button onclick="switchView('builder')"
+                    class="bg-yellow-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-yellow-700 flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Create New Standard
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Standards List -->
+                <div class="lg:col-span-3 space-y-4">
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-50 text-gray-500 uppercase text-[10px] font-bold">
+                                <tr>
+                                    <th class="px-6 py-3">Standard Name</th>
+                                    <th class="px-6 py-3">Layout Type</th>
+                                    <th class="px-6 py-3">Includes</th>
+                                    <th class="px-6 py-3">Adoption</th>
+                                    <th class="px-6 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4">
+                                        <div class="font-bold text-gray-900">Mall Kiosk (Standard)</div>
+                                        <div class="text-[10px] text-gray-400">Master v2.1 • Last updated 2 days ago
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Island
+                                            / 360</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <span class="text-xs text-gray-600 bg-gray-100 px-2 rounded">4 Zones</span>
+                                            <span class="text-xs text-gray-600 bg-gray-100 px-2 rounded">8 Rec.
+                                                Questions</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-xs font-bold text-gray-700">12 Brands</div>
+                                    </td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <button onclick="switchView('builder')"
+                                            class="text-yellow-600 hover:underline text-xs font-bold">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4">
+                                        <div class="font-bold text-gray-900">Inline Retail (Small)</div>
+                                        <div class="text-[10px] text-gray-400">Master v1.0 • Basic strip mall layout
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Rectangular</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <span class="text-xs text-gray-600 bg-gray-100 px-2 rounded">2 Zones</span>
+                                            <span class="text-xs text-gray-600 bg-gray-100 px-2 rounded">5 Rec.
+                                                Questions</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-xs font-bold text-gray-700">5 Brands</div>
+                                    </td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <button class="text-yellow-600 hover:underline text-xs font-bold">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: BUILDER (Standard Creator) -->
+        <div id="view-builder" class="view-section hidden">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-4">
+                    <button onclick="switchView('library')" class="text-gray-400 hover:text-gray-600"><i
+                            data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Editing: Mall Kiosk (Standard)</h1>
+                        <p class="text-sm text-gray-500">Define the Generic Layout and Recommended Questions</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="switchView('library')"
+                        class="px-4 py-2 border border-gray-300 rounded text-gray-600 text-sm font-bold hover:bg-gray-50">Cancel</button>
+                    <button onclick="switchView('library')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded text-sm font-bold hover:bg-yellow-700">Save
+                        Standard</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+                <!-- PHASE 1: GENERIC LAYOUT BUILDER -->
+                <div
+                    class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-200 h-[650px] flex flex-col overflow-hidden">
+                    <div class="bg-gray-50 border-b border-gray-200 p-2 flex items-center justify-between">
+                        <span class="text-xs font-bold text-yellow-700 uppercase px-2">Generic Layout Canvas</span>
+                        <div class="flex items-center gap-2">
+                            <div class="bg-white border boundary-gray-200 rounded p-1 flex gap-1">
+                                <button class="p-1.5 hover:bg-gray-100 rounded text-purple-600 bg-purple-50"
+                                    title="Select Tool"><i data-lucide="mouse-pointer" class="w-4 h-4"></i></button>
+                                <button class="p-1.5 hover:bg-gray-100 rounded text-gray-500" title="Draw Wall"><i
+                                        data-lucide="bricks" class="w-4 h-4"></i></button>
+                                <button class="p-1.5 hover:bg-gray-100 rounded text-gray-500" title="Draw Zone"><i
+                                        data-lucide="square-dashed" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-1 overflow-hidden">
+                        <!-- Generic Shapes -->
+                        <div class="w-40 bg-gray-50 border-r border-gray-200 p-4 overflow-y-auto">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase mb-3">Generic Zones</h4>
+                            <div class="space-y-2">
+                                <div
+                                    class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
+                                    <i data-lucide="square" class="w-4 h-4 text-gray-400"></i> <span
+                                        class="text-xs font-medium">Sales Floor</span>
+                                </div>
+                                <div
+                                    class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
+                                    <i data-lucide="archive" class="w-4 h-4 text-gray-400"></i> <span
+                                        class="text-xs font-medium">Stock Room</span>
+                                </div>
+                                <div
+                                    class="bg-white border border-gray-200 p-2 rounded cursor-move hover:border-purple-500 flex items-center gap-2">
+                                    <i data-lucide="door-open" class="w-4 h-4 text-gray-400"></i> <span
+                                        class="text-xs font-medium">Entrance</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Canvas -->
+                        <div class="flex-1 bg-white relative overflow-auto"
+                            style="background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 20px 20px;">
+                            <!-- Mock Content -->
+                            <div
+                                class="absolute top-20 left-20 w-[400px] h-[300px] border-4 border-gray-800 bg-white shadow-xl flex items-center justify-center">
+                                <span class="text-gray-300 font-bold text-2xl uppercase">Generic Mall Kiosk</span>
+                                <!-- Zone -->
+                                <div
+                                    class="absolute bottom-4 right-4 w-32 h-20 bg-blue-50 border-2 border-dashed border-blue-200 rounded flex items-center justify-center">
+                                    <span class="text-[10px] font-bold text-blue-400 uppercase">Checkout Zone</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE 2: RECOMMENDED QUESTIONS -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full">
+                        <h3 class="font-bold text-gray-900 mb-2 text-sm">Recommended Questions</h3>
+                        <p class="text-xs text-gray-500 mb-4">Questions defined here will be suggested to Brands when
+                            they clone this layout.</p>
+
+                        <div class="space-y-3">
+                            <!-- Question Item -->
+                            <div class="border border-gray-200 rounded-lg p-3 bg-gray-50">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span class="text-xs font-bold text-gray-700">Fire Extinguisher Check</span>
+                                    <span
+                                        class="bg-purple-100 text-purple-700 text-[9px] px-1.5 py-0.5 rounded font-bold">SAFETY</span>
+                                </div>
+                                <p class="text-[10px] text-gray-500 italic mb-2">"Is the extinguisher present and
+                                    charged?"</p>
+                                <div class="flex gap-1">
+                                    <span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">Suggested Zone:
+                                        Checkout</span>
+                                </div>
+                            </div>
+
+                            <!-- Question Item -->
+                            <div class="border border-gray-200 rounded-lg p-3 bg-gray-50">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span class="text-xs font-bold text-gray-700">Cleanliness Rating</span>
+                                    <span
+                                        class="bg-green-100 text-green-700 text-[9px] px-1.5 py-0.5 rounded font-bold">OPS</span>
+                                </div>
+                                <p class="text-[10px] text-gray-500 italic mb-2">"Rate area cleanliness 1-5"</p>
+                                <div class="flex gap-1">
+                                    <span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">Suggested Zone:
+                                        All</span>
+                                </div>
+                            </div>
+
+                            <button
+                                class="w-full py-2 border border-dashed border-gray-300 text-gray-400 text-xs font-bold rounded hover:bg-gray-50 hover:text-gray-600">
+                                + Add Recommended Question
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
